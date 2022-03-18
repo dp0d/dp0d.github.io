@@ -1,0 +1,10 @@
+# output directory
+/public
+
+# OSX MacOS
+.DS_Store
+.config.toml.swp
+.hugo_build.lock
+/resources/_gen
+
+blog
