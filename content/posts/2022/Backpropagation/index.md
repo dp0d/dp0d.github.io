@@ -20,6 +20,7 @@ draft: false
 ​	那么反向传播算法是啥？↓
 
 ​	**反向传播**（英语：Backpropagation，缩写为**BP**）是“误差反向传播”的简称，是一种与[最优化方法](https://zh.wikipedia.org/wiki/最优化)（如[梯度下降法](https://zh.wikipedia.org/wiki/梯度下降法)）结合使用的，用来训练[人工神经网络](https://zh.wikipedia.org/wiki/人工神经网络)的常见方法。该方法对网络中所有权重计算[损失函数](https://zh.wikipedia.org/wiki/损失函数)的梯度。这个梯度会回馈给最佳化方法，用来更新权值以最小化损失函数。
+$A$
 
 ## 推导
 
@@ -30,14 +31,13 @@ draft: false
 
 $$
 \textbf{A} = 
-\left[
-    \begin{matrix}
-	1 & 2 \\
-	3 & 4 \\
-    \end{matrix}
-\right]
 
-\qquad \qquad \qquad \qquad \qquad 
+\begin{bmatrix}
+1 & 2 \\
+3 & 4 \\
+\end{bmatrix}
+
+,
 \textbf{B}=\left[
     \begin{matrix}
 	-1 & -2 \\
@@ -51,7 +51,6 @@ $$
 
 **点积**（通常省略  ·   符号）计算如下
 
-{{< math >}}
 $$
 \textbf{AB} =
 \left[
@@ -68,11 +67,9 @@ $$
 \right]
 $$
 
-{{< /math >}}
 
 **逐元素乘法**如下
 
-{{< math >}}
 $$
 \textbf{A}\odot\textbf{B} =
 \left[
@@ -89,7 +86,6 @@ $$
 \right]
 $$
 
-{{< /math >}}
 
 ### b.了解神经网络
 
