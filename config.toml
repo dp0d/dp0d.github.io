@@ -29,7 +29,7 @@ theme = "DoIt"
   #  date format
   dateFormat = "2006-01-02"
   # website images for Open Graph and Twitter Cards
-  images = ["/image/logo.jpg"]
+  images = ["/image/logo.png"]
   #  enable PWA support
   enablePWA = false
   #  App icon config
@@ -160,7 +160,7 @@ theme = "DoIt"
       # URL of avatar shown in home page
       # Place your avatar file under static or assets directory
       # The filepath is relative to the static or assets directory
-      avatarURL = "/images/tiger.png"
+      avatarURL = "/images/logo.png"
       #  title shown in home page (HTML format is supported)
       title = "dp0d"
       # subtitle shown in home page
@@ -308,11 +308,11 @@ theme = "DoIt"
     [params.page.math]
       enable = true
       # default block delimiter is $$ ... $$ and \\[ ... \\]
-      blockLeftDelimiter = ""
-      blockRightDelimiter = ""
+      blockLeftDelimiter = "$$"
+      blockRightDelimiter = "$$"
       # default inline delimiter is $ ... $ and \\( ... \\)
-      inlineLeftDelimiter = ""
-      inlineRightDelimiter = ""
+      inlineLeftDelimiter = "$"
+      inlineRightDelimiter = "$"
       # KaTeX extension copy_tex
       copyTex = true
       # KaTeX extension mhchem
@@ -522,7 +522,7 @@ theme = "DoIt"
     #  Page SEO config
     [params.page.seo]
       # image URL
-      images = ["/images/logo.jpg"]
+      images = ["/images/logo.png"]
       # Publisher info
       [params.page.seo.publisher]
         name = "dp0d"
@@ -559,9 +559,9 @@ theme = "DoIt"
   #  Site SEO config
   [params.seo]
     # image URL
-    image = "/images/logo.jpg"
+    image = "/images/logo.png"
     # thumbnail URL
-    thumbnailUrl = "/images/logo.jpg"
+    thumbnailUrl = "/images/logo.png"
 
   #  Analytics config
   [params.analytics]
