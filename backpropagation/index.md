@@ -23,16 +23,16 @@
 
 假设👇
 
+{{< math >}}
 
 $$
-\textbf{A} = 
+\textbf{A} =
 
 \begin{bmatrix}
 1 & 2 \\
 3 & 4 \\
 \end{bmatrix}
-
-,
+\quad
 \textbf{B}=\left[
     \begin{matrix}
 	-1 & -2 \\
@@ -40,6 +40,8 @@ $$
     \end{matrix}
 \right]
 $$
+
+{{< /math >}}
 
 
 
@@ -226,8 +228,6 @@ $$
 ![image-20220320194609869](image-20220320194609869.png)
 
 以此类推，反向传播的过程就结束啦~
-
-
 
 
 
