@@ -8,11 +8,19 @@
     <title class="pjax-title">反向传播算法 - dp0d&#39;s blog</title><meta name="Description" content="This is My New Hugo Site"><meta property="og:title" content="反向传播算法" />
 <meta property="og:description" content="反向传播算法作为一位机器学习领域的博主，第一篇博客肯定要从反向传播算法开始啦~
 简介​	来自维基百科
+<<<<<<< HEAD
 ​	首先是反向传播算法的历史沿用👇
 ​	弗拉基米尔·瓦普尼克引用（Bryson, A.E.; W.F. Denham; S.E. Dreyfus. Optimal programming problems with inequality constraints. I: Necessary conditions for extremal solutions. AIAA J. 1, 11 (1963) 2544-2550）在他的书《支持向量机》中首次发表反向传播算法。在1969年Arthur E. Bryson和何毓琦将其描述为多级动态系统优化方法。直到1974年以后在神经网络的背景下应用，并由Paul Werbos[7]、David E. Rumelhart、杰弗里·辛顿和Ronald J. Williams[1][8]的著作，它才获得认可，并引发了一场人工神经网络的研究领域的“文艺复兴”。在21世纪初人们对其失去兴趣，但在2010年后又拥有了兴趣，如今可以通过GPU等大型现代运算器件用于训练更大的网络。例如在2013年，顶级语音识别器现在使用反向传播算法训练神经网络。
 ​	那么反向传播算法是啥？👇
 ​	反向传播（英语：Backpropagation，缩写为BP）是“误差反向传播”的简称，是一种与最优化方法（如梯度下降法）结合使用的，用来训练人工神经网络的常见方法。该方法对网络中所有权重计算损失函数的梯度。这个梯度会回馈给最佳化方法，用来更新权值以最小化损失函数。
 前向传播推导a. 了解矩阵乘法假设👇
+=======
+​	首先是反向传播算法的历史沿用↓
+​	弗拉基米尔·瓦普尼克引用（Bryson, A.E.; W.F. Denham; S.E. Dreyfus. Optimal programming problems with inequality constraints. I: Necessary conditions for extremal solutions. AIAA J. 1, 11 (1963) 2544-2550）在他的书《支持向量机》中首次发表反向传播算法。在1969年Arthur E. Bryson和何毓琦将其描述为多级动态系统优化方法。直到1974年以后在神经网络的背景下应用，并由Paul Werbos[7]、David E. Rumelhart、杰弗里·辛顿和Ronald J. Williams[1][8]的著作，它才获得认可，并引发了一场人工神经网络的研究领域的“文艺复兴”。在21世纪初人们对其失去兴趣，但在2010年后又拥有了兴趣，如今可以通过GPU等大型现代运算器件用于训练更大的网络。例如在2013年，顶级语音识别器现在使用反向传播算法训练神经网络。
+​	那么反向传播算法是啥？↓
+​	反向传播（英语：Backpropagation，缩写为BP）是“误差反向传播”的简称，是一种与最优化方法（如梯度下降法）结合使用的，用来训练人工神经网络的常见方法。该方法对网络中所有权重计算损失函数的梯度。这个梯度会回馈给最佳化方法，用来更新权值以最小化损失函数。 $A$
+推导a. 了解矩阵乘法假设
+>>>>>>> ac5c9362a90b8936b582b9535a4dd1021d356ef4
 $$ \textbf{A} =
 \begin{bmatrix} 1 &amp; 2 \ 3 &amp; 4 \ \end{bmatrix}
 , \textbf{B}=\left[ \begin{matrix} -1 &amp; -2 \ -3 &amp; -4 \ \end{matrix} \right] $$" />
@@ -27,11 +35,19 @@ $$ \textbf{A} =
 <meta name="twitter:title" content="反向传播算法"/>
 <meta name="twitter:description" content="反向传播算法作为一位机器学习领域的博主，第一篇博客肯定要从反向传播算法开始啦~
 简介​	来自维基百科
+<<<<<<< HEAD
 ​	首先是反向传播算法的历史沿用👇
 ​	弗拉基米尔·瓦普尼克引用（Bryson, A.E.; W.F. Denham; S.E. Dreyfus. Optimal programming problems with inequality constraints. I: Necessary conditions for extremal solutions. AIAA J. 1, 11 (1963) 2544-2550）在他的书《支持向量机》中首次发表反向传播算法。在1969年Arthur E. Bryson和何毓琦将其描述为多级动态系统优化方法。直到1974年以后在神经网络的背景下应用，并由Paul Werbos[7]、David E. Rumelhart、杰弗里·辛顿和Ronald J. Williams[1][8]的著作，它才获得认可，并引发了一场人工神经网络的研究领域的“文艺复兴”。在21世纪初人们对其失去兴趣，但在2010年后又拥有了兴趣，如今可以通过GPU等大型现代运算器件用于训练更大的网络。例如在2013年，顶级语音识别器现在使用反向传播算法训练神经网络。
 ​	那么反向传播算法是啥？👇
 ​	反向传播（英语：Backpropagation，缩写为BP）是“误差反向传播”的简称，是一种与最优化方法（如梯度下降法）结合使用的，用来训练人工神经网络的常见方法。该方法对网络中所有权重计算损失函数的梯度。这个梯度会回馈给最佳化方法，用来更新权值以最小化损失函数。
 前向传播推导a. 了解矩阵乘法假设👇
+=======
+​	首先是反向传播算法的历史沿用↓
+​	弗拉基米尔·瓦普尼克引用（Bryson, A.E.; W.F. Denham; S.E. Dreyfus. Optimal programming problems with inequality constraints. I: Necessary conditions for extremal solutions. AIAA J. 1, 11 (1963) 2544-2550）在他的书《支持向量机》中首次发表反向传播算法。在1969年Arthur E. Bryson和何毓琦将其描述为多级动态系统优化方法。直到1974年以后在神经网络的背景下应用，并由Paul Werbos[7]、David E. Rumelhart、杰弗里·辛顿和Ronald J. Williams[1][8]的著作，它才获得认可，并引发了一场人工神经网络的研究领域的“文艺复兴”。在21世纪初人们对其失去兴趣，但在2010年后又拥有了兴趣，如今可以通过GPU等大型现代运算器件用于训练更大的网络。例如在2013年，顶级语音识别器现在使用反向传播算法训练神经网络。
+​	那么反向传播算法是啥？↓
+​	反向传播（英语：Backpropagation，缩写为BP）是“误差反向传播”的简称，是一种与最优化方法（如梯度下降法）结合使用的，用来训练人工神经网络的常见方法。该方法对网络中所有权重计算损失函数的梯度。这个梯度会回馈给最佳化方法，用来更新权值以最小化损失函数。 $A$
+推导a. 了解矩阵乘法假设
+>>>>>>> ac5c9362a90b8936b582b9535a4dd1021d356ef4
 $$ \textbf{A} =
 \begin{bmatrix} 1 &amp; 2 \ 3 &amp; 4 \ \end{bmatrix}
 , \textbf{B}=\left[ \begin{matrix} -1 &amp; -2 \ -3 &amp; -4 \ \end{matrix} \right] $$"/>
@@ -51,7 +67,11 @@ $$ \textbf{A} =
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/dp0d.github.io\/backpropagation\/"
+<<<<<<< HEAD
         },"image": ["https:\/\/dp0d.github.io\/images\/logo.png"],"genre": "posts","wordcount":  264 ,
+=======
+        },"image": ["https:\/\/dp0d.github.io\/images\/logo.png"],"genre": "posts","wordcount":  134 ,
+>>>>>>> ac5c9362a90b8936b582b9535a4dd1021d356ef4
         "url": "https:\/\/dp0d.github.io\/backpropagation\/","datePublished": "2022-03-18T11:29:42+08:00","dateModified": "2022-03-18T11:29:42+08:00","publisher": {
             "@type": "Organization",
             "name": "dp0d"},"author": {
@@ -158,8 +178,13 @@ $$ \textbf{A} =
             <div class="post-meta-line">
                 <span class="post-author"><i class="author fas fa-user-circle fa-fw"></i><a href="/" title="Author" rel=" author" class="author">dp0d</a>
                 </span></div>
+<<<<<<< HEAD
             <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-03-18">2022-03-18</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2022-03-18">2022-03-18</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;264 words&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;2 minutes&nbsp;</div>
+=======
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-03-18">2022-03-18</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2022-03-18">2022-03-18</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;134 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;One minute&nbsp;</div>
+>>>>>>> ac5c9362a90b8936b582b9535a4dd1021d356ef4
         </div><div class="details toc" id="toc-static"  kept="true">
                 <div class="details-summary toc-title">
                     <span>Contents</span>
@@ -168,19 +193,27 @@ $$ \textbf{A} =
                 <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
     <li><a href="#简介">简介</a></li>
+<<<<<<< HEAD
     <li><a href="#前向传播推导">前向传播推导</a>
+=======
+    <li><a href="#推导">推导</a>
+>>>>>>> ac5c9362a90b8936b582b9535a4dd1021d356ef4
       <ul>
         <li><a href="#a-了解矩阵乘法">a. 了解矩阵乘法</a></li>
         <li><a href="#b了解神经网络">b.了解神经网络</a></li>
       </ul>
     </li>
+<<<<<<< HEAD
     <li><a href="#误差反向传播">误差反向传播</a></li>
+=======
+>>>>>>> ac5c9362a90b8936b582b9535a4dd1021d356ef4
   </ul>
 </nav></div>
             </div><div class="content" id="content"><h1 id="反向传播算法" class="headerLink">
     <a href="#%e5%8f%8d%e5%90%91%e4%bc%a0%e6%92%ad%e7%ae%97%e6%b3%95" class="header-mark"></a>反向传播算法</h1><p>作为一位机器学习领域的博主，第一篇博客肯定要从反向传播算法开始啦~</p>
 <h2 id="简介" class="headerLink">
     <a href="#%e7%ae%80%e4%bb%8b" class="header-mark"></a>简介</h2><p>​	来自<a href="https://zh.wikipedia.org/wiki/%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD%E7%AE%97%E6%B3%95#cite_note-Alpaydin2010-10" target="_blank" rel="noopener noreffer">维基百科</a></p>
+<<<<<<< HEAD
 <p>​	首先是反向传播算法的历史沿用👇</p>
 <p>​	<a href="https://zh.wikipedia.org/wiki/%e5%bc%97%e6%8b%89%e5%9f%ba%e7%b1%b3%e5%b0%94%c2%b7%e7%93%a6%e6%99%ae%e5%b0%bc%e5%85%8b" target="_blank" rel="noopener noreffer">弗拉基米尔·瓦普尼克</a>引用（Bryson, A.E.; W.F. Denham; S.E. Dreyfus. Optimal programming problems with inequality constraints. I: Necessary conditions for extremal solutions. AIAA J. 1, 11 (1963) 2544-2550）在他的书《支持向量机》中首次发表反向传播算法。在1969年<a href="https://zh.wikipedia.org/w/index.php?title=Arthur_E._Bryson&amp;action=edit&amp;redlink=1" target="_blank" rel="noopener noreffer">Arthur E. Bryson</a>和<a href="https://zh.wikipedia.org/wiki/%e4%bd%95%e6%af%93%e7%90%a6" target="_blank" rel="noopener noreffer">何毓琦</a>将其描述为多级动态系统优化方法。直到1974年以后在神经网络的背景下应用，并由<a href="https://zh.wikipedia.org/w/index.php?title=Paul_Werbos&amp;action=edit&amp;redlink=1" target="_blank" rel="noopener noreffer">Paul Werbos</a>[<a href="https://zh.wikipedia.org/wiki/%e5%8f%8d%e5%90%91%e4%bc%a0%e6%92%ad%e7%ae%97%e6%b3%95#cite_note-9" target="_blank" rel="noopener noreffer">7]</a>、<a href="https://zh.wikipedia.org/w/index.php?title=David_E._Rumelhart&amp;action=edit&amp;redlink=1" target="_blank" rel="noopener noreffer">David E. Rumelhart</a>、<a href="https://zh.wikipedia.org/wiki/%e6%9d%b0%e5%bc%97%e9%87%8c%c2%b7%e8%be%9b%e9%a1%bf" target="_blank" rel="noopener noreffer">杰弗里·辛顿</a>和<a href="https://zh.wikipedia.org/w/index.php?title=Ronald_J._Williams&amp;action=edit&amp;redlink=1" target="_blank" rel="noopener noreffer">Ronald J. Williams</a>[<a href="https://zh.wikipedia.org/wiki/%e5%8f%8d%e5%90%91%e4%bc%a0%e6%92%ad%e7%ae%97%e6%b3%95#cite_note-Rumelhart1986-1" target="_blank" rel="noopener noreffer">1]</a>[<a href="https://zh.wikipedia.org/wiki/%e5%8f%8d%e5%90%91%e4%bc%a0%e6%92%ad%e7%ae%97%e6%b3%95#cite_note-Alpaydin2010-10" target="_blank" rel="noopener noreffer">8]</a>的著作，它才获得认可，并引发了一场人工神经网络的研究领域的“文艺复兴”。在21世纪初人们对其失去兴趣，但在2010年后又拥有了兴趣，如今可以通过<a href="https://zh.wikipedia.org/wiki/%e5%9c%96%e5%bd%a2%e8%99%95%e7%90%86%e5%99%a8" target="_blank" rel="noopener noreffer">GPU</a>等大型现代运算器件用于训练更大的网络。例如在2013年，顶级语音识别器现在使用反向传播算法训练神经网络。</p>
 <p>​	那么反向传播算法是啥？👇</p>
@@ -188,6 +221,16 @@ $$ \textbf{A} =
 <h2 id="前向传播推导" class="headerLink">
     <a href="#%e5%89%8d%e5%90%91%e4%bc%a0%e6%92%ad%e6%8e%a8%e5%af%bc" class="header-mark"></a>前向传播推导</h2><h3 id="a-了解矩阵乘法" class="headerLink">
     <a href="#a-%e4%ba%86%e8%a7%a3%e7%9f%a9%e9%98%b5%e4%b9%98%e6%b3%95" class="header-mark"></a>a. 了解矩阵乘法</h3><p>假设👇</p>
+=======
+<p>​	首先是反向传播算法的历史沿用↓</p>
+<p>​	<a href="https://zh.wikipedia.org/wiki/%e5%bc%97%e6%8b%89%e5%9f%ba%e7%b1%b3%e5%b0%94%c2%b7%e7%93%a6%e6%99%ae%e5%b0%bc%e5%85%8b" target="_blank" rel="noopener noreffer">弗拉基米尔·瓦普尼克</a>引用（Bryson, A.E.; W.F. Denham; S.E. Dreyfus. Optimal programming problems with inequality constraints. I: Necessary conditions for extremal solutions. AIAA J. 1, 11 (1963) 2544-2550）在他的书《支持向量机》中首次发表反向传播算法。在1969年<a href="https://zh.wikipedia.org/w/index.php?title=Arthur_E._Bryson&amp;action=edit&amp;redlink=1" target="_blank" rel="noopener noreffer">Arthur E. Bryson</a>和<a href="https://zh.wikipedia.org/wiki/%e4%bd%95%e6%af%93%e7%90%a6" target="_blank" rel="noopener noreffer">何毓琦</a>将其描述为多级动态系统优化方法。直到1974年以后在神经网络的背景下应用，并由<a href="https://zh.wikipedia.org/w/index.php?title=Paul_Werbos&amp;action=edit&amp;redlink=1" target="_blank" rel="noopener noreffer">Paul Werbos</a>[<a href="https://zh.wikipedia.org/wiki/%e5%8f%8d%e5%90%91%e4%bc%a0%e6%92%ad%e7%ae%97%e6%b3%95#cite_note-9" target="_blank" rel="noopener noreffer">7]</a>、<a href="https://zh.wikipedia.org/w/index.php?title=David_E._Rumelhart&amp;action=edit&amp;redlink=1" target="_blank" rel="noopener noreffer">David E. Rumelhart</a>、<a href="https://zh.wikipedia.org/wiki/%e6%9d%b0%e5%bc%97%e9%87%8c%c2%b7%e8%be%9b%e9%a1%bf" target="_blank" rel="noopener noreffer">杰弗里·辛顿</a>和<a href="https://zh.wikipedia.org/w/index.php?title=Ronald_J._Williams&amp;action=edit&amp;redlink=1" target="_blank" rel="noopener noreffer">Ronald J. Williams</a>[<a href="https://zh.wikipedia.org/wiki/%e5%8f%8d%e5%90%91%e4%bc%a0%e6%92%ad%e7%ae%97%e6%b3%95#cite_note-Rumelhart1986-1" target="_blank" rel="noopener noreffer">1]</a>[<a href="https://zh.wikipedia.org/wiki/%e5%8f%8d%e5%90%91%e4%bc%a0%e6%92%ad%e7%ae%97%e6%b3%95#cite_note-Alpaydin2010-10" target="_blank" rel="noopener noreffer">8]</a>的著作，它才获得认可，并引发了一场人工神经网络的研究领域的“文艺复兴”。在21世纪初人们对其失去兴趣，但在2010年后又拥有了兴趣，如今可以通过<a href="https://zh.wikipedia.org/wiki/%e5%9c%96%e5%bd%a2%e8%99%95%e7%90%86%e5%99%a8" target="_blank" rel="noopener noreffer">GPU</a>等大型现代运算器件用于训练更大的网络。例如在2013年，顶级语音识别器现在使用反向传播算法训练神经网络。</p>
+<p>​	那么反向传播算法是啥？↓</p>
+<p>​	<strong>反向传播</strong>（英语：Backpropagation，缩写为<strong>BP</strong>）是“误差反向传播”的简称，是一种与<a href="https://zh.wikipedia.org/wiki/%e6%9c%80%e4%bc%98%e5%8c%96" target="_blank" rel="noopener noreffer">最优化方法</a>（如<a href="https://zh.wikipedia.org/wiki/%e6%a2%af%e5%ba%a6%e4%b8%8b%e9%99%8d%e6%b3%95" target="_blank" rel="noopener noreffer">梯度下降法</a>）结合使用的，用来训练<a href="https://zh.wikipedia.org/wiki/%e4%ba%ba%e5%b7%a5%e7%a5%9e%e7%bb%8f%e7%bd%91%e7%bb%9c" target="_blank" rel="noopener noreffer">人工神经网络</a>的常见方法。该方法对网络中所有权重计算<a href="https://zh.wikipedia.org/wiki/%e6%8d%9f%e5%a4%b1%e5%87%bd%e6%95%b0" target="_blank" rel="noopener noreffer">损失函数</a>的梯度。这个梯度会回馈给最佳化方法，用来更新权值以最小化损失函数。
+$A$</p>
+<h2 id="推导" class="headerLink">
+    <a href="#%e6%8e%a8%e5%af%bc" class="header-mark"></a>推导</h2><h3 id="a-了解矩阵乘法" class="headerLink">
+    <a href="#a-%e4%ba%86%e8%a7%a3%e7%9f%a9%e9%98%b5%e4%b9%98%e6%b3%95" class="header-mark"></a>a. 了解矩阵乘法</h3><p>假设</p>
+>>>>>>> ac5c9362a90b8936b582b9535a4dd1021d356ef4
 <p>$$
 \textbf{A} =</p>
 <p>\begin{bmatrix}
@@ -202,8 +245,13 @@ $$ \textbf{A} =
 \end{matrix}
 \right]
 $$</p>
+<<<<<<< HEAD
 <p><strong>点积</strong>（通常省略  ·   符号）计算如下👇
 $$
+=======
+<p><strong>点积</strong>（通常省略  ·   符号）计算如下</p>
+<p>$$
+>>>>>>> ac5c9362a90b8936b582b9535a4dd1021d356ef4
 \textbf{AB} =
 \left[
 \begin{matrix}
@@ -218,8 +266,13 @@ $$
 \end{matrix}
 \right]
 $$</p>
+<<<<<<< HEAD
 <p><strong>逐元素乘法</strong>如下👇
 $$
+=======
+<p><strong>逐元素乘法</strong>如下</p>
+<p>$$
+>>>>>>> ac5c9362a90b8936b582b9535a4dd1021d356ef4
 \textbf{A}\odot\textbf{B} =
 \left[
 \begin{matrix}
@@ -235,7 +288,11 @@ $$
 \right]
 $$</p>
 <h3 id="b了解神经网络" class="headerLink">
+<<<<<<< HEAD
     <a href="#b%e4%ba%86%e8%a7%a3%e7%a5%9e%e7%bb%8f%e7%bd%91%e7%bb%9c" class="header-mark"></a>b.了解神经网络</h3><p>如下图所示，这是一个神经网络👇</p>
+=======
+    <a href="#b%e4%ba%86%e8%a7%a3%e7%a5%9e%e7%bb%8f%e7%bd%91%e7%bb%9c" class="header-mark"></a>b.了解神经网络</h3><p>如下图所示，这是一个神经网络</p>
+>>>>>>> ac5c9362a90b8936b582b9535a4dd1021d356ef4
 <p><img
         class="lazyload"
         data-src="Sample_Neural_Network.png"
@@ -243,6 +300,7 @@ $$</p>
         data-sizes="auto"
         alt="/backpropagation/Sample_Neural_Network.png"
         title="Sample_Neural_Network"></p>
+<<<<<<< HEAD
 <p>可以看到，这个神经网络的隐藏层（除了第一层输入层和最后一层输出层之外都是隐藏层）与所有上一层的神经元都连接了，我们一般称这样的层为全连接层。可以看到，图中的神经网络较为复杂，接下来，我们对网络进行拆解至最小单元。</p>
 <p>先看看最基本的<strong>神经元</strong>是如何进行内部计算的。👇</p>
 <p><img
@@ -424,6 +482,9 @@ $$</p>
         alt="/backpropagation/image-20220320194609869.png"
         title="image-20220320194609869"></p>
 <p>以此类推，反向传播的过程就结束啦~</p>
+=======
+<p>可以看到，这个神经网络的隐藏层（除了第一层输入层和最后一层输出层之外都是隐藏层）与所有上一层的神经元都连接了，我们一般称这样的层为全连接层。可以看到，图中的神经网络较为复杂，接下来，我们先看看最基本的神经元是什么样的。</p>
+>>>>>>> ac5c9362a90b8936b582b9535a4dd1021d356ef4
 </div>
 
         <div class="post-footer" id="post-footer">

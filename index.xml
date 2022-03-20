@@ -3,6 +3,7 @@
         <title>dp0d&#39;s blog</title>
         <link>https://dp0d.github.io/</link>
         <description>This is My New Hugo Site</description>
+<<<<<<< HEAD
         <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Fri, 18 Mar 2022 11:29:42 &#43;0800</lastBuildDate>
             <atom:link href="https://dp0d.github.io/index.xml" rel="self" type="application/rss+xml" />
         <item>
@@ -22,4 +23,9 @@ $$ \textbf{A} =
 \begin{bmatrix} 1 &amp; 2 \ 3 &amp; 4 \ \end{bmatrix}
 , \textbf{B}=\left[ \begin{matrix} -1 &amp; -2 \ -3 &amp; -4 \ \end{matrix} \right] $$]]></description>
 </item></channel>
+=======
+        <generator>Hugo -- gohugo.io</generator><language>en</language>
+            <atom:link href="https://dp0d.github.io/index.xml" rel="self" type="application/rss+xml" />
+        </channel>
+>>>>>>> ac5c9362a90b8936b582b9535a4dd1021d356ef4
 </rss>
