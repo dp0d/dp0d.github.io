@@ -3,14 +3,7 @@
         <title>All Posts - dp0d&#39;s blog</title>
         <link>https://dp0d.github.io/posts/</link>
         <description>All Posts | dp0d&#39;s blog</description>
-        <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Fri, 18 Mar 2022 20:31:36 &#43;0800</lastBuildDate><atom:link href="https://dp0d.github.io/posts/" rel="self" type="application/rss+xml" /><item>
-    <title>New</title>
-    <link>https://dp0d.github.io/new/</link>
-    <pubDate>Fri, 18 Mar 2022 20:31:36 &#43;0800</pubDate><author>
-        <name>dp0d</name>
-    </author><guid>https://dp0d.github.io/new/</guid>
-    <description><![CDATA[hello~]]></description>
-</item><item>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Fri, 18 Mar 2022 11:29:42 &#43;0800</lastBuildDate><atom:link href="https://dp0d.github.io/posts/" rel="self" type="application/rss+xml" /><item>
     <title>反向传播算法</title>
     <link>https://dp0d.github.io/backpropagation/</link>
     <pubDate>Fri, 18 Mar 2022 11:29:42 &#43;0800</pubDate><author>
