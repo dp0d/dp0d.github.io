@@ -93,9 +93,9 @@ theme = "DoIt"
     #  Header title config
     [params.header.title]
       # URL of the LOGO
-      logo = "tiger.png"
+      logo = ""
       # title name
-      name = "NLP"
+      name = "Natural Language Processing"
       # you can add extra information before the name (HTML format is supported), such as icons
       pre = ""
       # you can add extra information after the name (HTML format is supported), such as icons
