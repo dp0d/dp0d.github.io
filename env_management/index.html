@@ -8,7 +8,8 @@
     <title class="pjax-title">Python 工程环境管理 - dp0d&#39;s blog</title><meta name="Description" content="This is My New Hugo Site"><meta property="og:title" content="Python 工程环境管理" />
 <meta property="og:description" content="前言在Python工程中，特别是对于要复现一些项目时、需要测试特定环境下程序表现时、同一个服务器上多人进行跑程序时需要自己的独立环境时等，我们可能需要用到特定版本的库，而这时，我们可以使用虚拟环境安装依赖。这样依赖，我们就不会影响到主环境，诶这样就
  不用重复卸载重装主环境， 也不会使得主环境日渐臃肿； 还可以安装多版本python（如经典的pyenv 包管理软件便可以实现）； 如有需要直接删掉虚拟环境，然后建新的即可。  由于系统配置的不确定性，建议友友们在linux下食用。
-环境管理途径介绍Conda 查看我们当前conda里有的环境 ，三种方式都可👇🏻  1 2 3 4 5  conda info --envs conda info -e conda env list   输出如下👇🏻  可以看到，我们目前只有一个base的基础环境。接下来我们试着查看一下该环境下的包列表👇🏻  Conda创建虚拟环境创建时指定 conda下的虚拟环境名字为env_name，python版本为3.6👇
+环境管理途径介绍Conda 查看我们当前conda里有的环境 ，三种方式都可👇🏻  1 2 3 4 5  conda info --envs conda info -e conda env list   输出如下👇🏻
+ 可以看到，我们目前只有一个base的基础环境。接下来我们试着查看一下该环境下的包列表👇🏻  Conda创建虚拟环境创建时指定 conda下的虚拟环境名字为env_name，python版本为3.6👇
 1  conda create -n env_name python=3.6   或者，你也可以通过yml文件来构建自己想要的环境，比如你想要如下配置的环境（name指的是你的虚拟环境叫啥，与上条命令中的env_name效果一样）👇
 那么，你则需要在当前目录创建一个yml后缀的文件，然后写入上图类似的你需要的环境内容，并运行如下命令👇
 1  conda env create -f conda_env.yml   再次查看conda下的环境列表
@@ -29,7 +30,8 @@ Conda激活虚拟环境输入activate指令👇
 <meta name="twitter:title" content="Python 工程环境管理"/>
 <meta name="twitter:description" content="前言在Python工程中，特别是对于要复现一些项目时、需要测试特定环境下程序表现时、同一个服务器上多人进行跑程序时需要自己的独立环境时等，我们可能需要用到特定版本的库，而这时，我们可以使用虚拟环境安装依赖。这样依赖，我们就不会影响到主环境，诶这样就
  不用重复卸载重装主环境， 也不会使得主环境日渐臃肿； 还可以安装多版本python（如经典的pyenv 包管理软件便可以实现）； 如有需要直接删掉虚拟环境，然后建新的即可。  由于系统配置的不确定性，建议友友们在linux下食用。
-环境管理途径介绍Conda 查看我们当前conda里有的环境 ，三种方式都可👇🏻  1 2 3 4 5  conda info --envs conda info -e conda env list   输出如下👇🏻  可以看到，我们目前只有一个base的基础环境。接下来我们试着查看一下该环境下的包列表👇🏻  Conda创建虚拟环境创建时指定 conda下的虚拟环境名字为env_name，python版本为3.6👇
+环境管理途径介绍Conda 查看我们当前conda里有的环境 ，三种方式都可👇🏻  1 2 3 4 5  conda info --envs conda info -e conda env list   输出如下👇🏻
+ 可以看到，我们目前只有一个base的基础环境。接下来我们试着查看一下该环境下的包列表👇🏻  Conda创建虚拟环境创建时指定 conda下的虚拟环境名字为env_name，python版本为3.6👇
 1  conda create -n env_name python=3.6   或者，你也可以通过yml文件来构建自己想要的环境，比如你想要如下配置的环境（name指的是你的虚拟环境叫啥，与上条命令中的env_name效果一样）👇
 那么，你则需要在当前目录创建一个yml后缀的文件，然后写入上图类似的你需要的环境内容，并运行如下命令👇
 1  conda env create -f conda_env.yml   再次查看conda下的环境列表
@@ -208,8 +210,8 @@ Conda激活虚拟环境输入activate指令👇
 </span></span><span class="line"><span class="cl">conda env list
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>输出如下👇🏻
-<img src="20210716190224507.png" alt="image-20220322093653365" style="zoom: 110%;" /></p>
+</div><p>输出如下👇🏻</p>
+<img src="20210716190224507.png" alt="image-20220322093653365" style="zoom: 110%;" />
 <ul>
 <li>可以看到，我们目前只有一个base的基础环境。接下来我们试着查看一下该环境下的包列表👇🏻</li>
 </ul>
