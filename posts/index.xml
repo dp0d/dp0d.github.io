@@ -3,7 +3,25 @@
         <title>All Posts - dp0d&#39;s blog</title>
         <link>https://dp0d.github.io/posts/</link>
         <description>All Posts | dp0d&#39;s blog</description>
-        <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Fri, 18 Mar 2022 11:29:42 &#43;0800</lastBuildDate><atom:link href="https://dp0d.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Tue, 22 Mar 2022 09:11:07 &#43;0800</lastBuildDate><atom:link href="https://dp0d.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>Python 工程环境管理</title>
+    <link>https://dp0d.github.io/env_management/</link>
+    <pubDate>Tue, 22 Mar 2022 09:11:07 &#43;0800</pubDate><author>
+        <name>dp0d</name>
+    </author><guid>https://dp0d.github.io/env_management/</guid>
+    <description><![CDATA[前言在Python工程中，特别是对于要复现一些项目时、需要测试特定环境下程序表现时、同一个服务器上多人进行跑程序时需要自己的独立环境时等，我们可能需要用到特定版本的库，而这时，我们可以使用虚拟环境安装依赖。这样依赖，我们就不会影响到主环境，诶这样就
+ 不用重复卸载重装主环境， 也不会使得主环境日渐臃肿； 还可以安装多版本python（如经典的pyenv 包管理软件便可以实现）； 如有需要直接删掉虚拟环境，然后建新的即可。  由于系统配置的不确定性，建议友友们在linux下食用。
+环境管理途径介绍Conda 查看我们当前conda里有的环境 ，三种方式都可👇🏻  1 2 3 4 5  conda info --envs conda info -e conda env list   输出如下👇🏻  可以看到，我们目前只有一个base的基础环境。接下来我们试着查看一下该环境下的包列表👇🏻  Conda创建虚拟环境创建时指定 conda下的虚拟环境名字为env_name，python版本为3.6👇
+1  conda create -n env_name python=3.6   或者，你也可以通过yml文件来构建自己想要的环境，比如你想要如下配置的环境（name指的是你的虚拟环境叫啥，与上条命令中的env_name效果一样）👇
+那么，你则需要在当前目录创建一个yml后缀的文件，然后写入上图类似的你需要的环境内容，并运行如下命令👇
+1  conda env create -f conda_env.yml   再次查看conda下的环境列表
+可以看到创建了一个新的env_name环境。
+Conda激活虚拟环境输入activate指令👇
+1  conda activate env_name   可以看到
+命令行前的括号内容已经改变(base)👉(env_name)，此时已经是基于该虚拟环境了。
+然后呢，我们就可以进入这个环境乱装一通了，此处省略一万行操作……
+好了，这个环境的使命已经结束了，我们再把它删掉👇]]></description>
+</item><item>
     <title>反向传播算法</title>
     <link>https://dp0d.github.io/backpropagation/</link>
     <pubDate>Fri, 18 Mar 2022 11:29:42 &#43;0800</pubDate><author>
