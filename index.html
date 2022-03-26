@@ -124,6 +124,21 @@
         alt="/images/logo.png"
         title="/images/logo.png" height="6rem" width="6rem"></div><h1 class="home-title">dp0d</h1><h2 class="home-subtitle"><div id="id-1" class="typeit"></div></h2><div class="links"><a href="https://github.com/dp0d" title="GitHub" target="_blank" rel="noopener noreffer me"><i class="fab fa-github-alt fa-fw"></i></a><a href="mailto:draftpaperofgod@gmail.com" title="Email" rel=" me"><i class="far fa-envelope fa-fw"></i></a><a href="/index.xml" title="RSS" target="_blank" rel="noopener noreffer me"><i class="fas fa-rss fa-fw"></i></a></div></div>
 <article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
+        <a href="/file_read_py/">Python中常见的文件读写</a>
+    </h1><div class="post-meta">
+        <span class="post-author"><i class="author fas fa-user-circle fa-fw"></i><a href="/" title="Author" rel=" author" class="author">dp0d</a>
+        </span>&nbsp;<span class="post-publish">published on <time datetime="2022-03-26">2022-03-26</time></span></div><div class="content">说明
+本文根据常见的读写进行方法阐述，本文实验环境基于python3.8，并需要提前告知各类读写方式的文件操作效果，如下列出：
+r : 读取文件，文件需要手动创建
+w: 写入文件，若文件不存在则会自动创建再写入，会覆盖原文件
+a : 写入文件，若文件不存在则会自动创建再写入，但不会覆盖原文件，而是追加在文件末尾
+rb,wb： 分别于r, w类似，但是用于读写二进制文件，此类型可用于保存变量。
+r+ : 可读、可写，文件需要手动创建，写操作时会覆盖原文件。
+w+ : 可读，可写，文件不存在自动创建，会覆盖原文件。
+a+ : 可读、可写，文件不存在自动创建，不会覆盖原文件，追加在末尾。
+csv格式文件csv库列表读写1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20  # 将以下两个列表作为两列写入CSV，用 &#39; &#39; 空格隔开： import csv list1=[1,2] list2=[&#39;1&#39;,&#39;2&#39;] with open(&#39;filename.csv&#39;, &#34;w&#34;, newline=&#39;&#39;, encoding=&#39;utf-8&#39;) as f1: writer = csv.writer(f1, delimiter=&#39; &#39;) writer.writerows(zip(list1,list2)) print(&#39;文件写入完成……&#39;) # 从上述写成的CSV中读出两个列表, 同样用 &#39; &#39; 空格隔开读取： import csv with open(&#39;filename.</div><div class="post-footer">
+        <a href="/file_read_py/">Read more...</a></div>
+</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
         <a href="/env_management/">Python 工程环境管理</a>
     </h1><div class="post-meta">
         <span class="post-author"><i class="author fas fa-user-circle fa-fw"></i><a href="/" title="Author" rel=" author" class="author">dp0d</a>
