@@ -11,19 +11,10 @@ tags: []
 categories: []
 series: []
 
-hiddenFromHomePage: false
-hiddenFromSearch: false
 
-featuredImage: ""
-featuredImagePreview: ""
-
-toc:
-  enable: true
-math:
-  enable: false
-lightgallery: false
-license: ""
 ---
+
+要访问内网资源，内网资源缺少公网ip被墙，现在我们假设需要在内网主机上运行python，我们需要在公网访问到它，并考虑安全性。
 
 # **原理图**
 
