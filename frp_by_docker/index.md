@@ -18,9 +18,11 @@
 wget https://github.com/fatedier/frp/releases/download/v0.41.0/frp_0.41.0_linux_amd64.tar.gz
 ```
 
-​		**目录树**👇
+​		
 
-<img src="image-20220328182405111.png" alt="image-20220328182405111" style="zoom:67%;" align = 'left'/>
+**目录树**👇
+
+<img src="image-20220328182405111.png" alt="image-20220328182405111" style="zoom:67%;" />
 
 + **保证在公网服务器上经过设置的所有端口不被防火墙限制。**
 

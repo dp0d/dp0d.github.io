@@ -13,7 +13,8 @@
 原理图准备工作  一台公网服务器，以及本地内网需要穿透到的主机
   一个域名，本次配置中的web服务需要注册域名
   下载好了最新版本的frp 发布，如：博主使用的是v0.41.0👇(现阶段github被墙，科学上网或使用其他方式下载)
-  1  wget https://github.com/fatedier/frp/releases/download/v0.41.0/frp_0.41.0_linux_amd64.tar.gz   ​	目录树👇
+  1  wget https://github.com/fatedier/frp/releases/download/v0.41.0/frp_0.41.0_linux_amd64.tar.gz   ​
+目录树👇
  保证在公网服务器上经过设置的所有端口不被防火墙限制。  搭建流程1.web服务基础版 如果需要搭建ssh服务等操作类似，Demo详情见官方文档，此处博主仅进行web服务搭建。
    含有公网ip的服务器端将刚刚下载的文件解压到~/frps下👇
 1 2 3  mkdir ~/frp tar zxvf frp_0.41.0_linux_amd64.tar.gz -C ~/frp cd ~/frp/frp_0.41.0_linux_amd64   然后编辑文件**frps.ini**，写入以下内容👇
