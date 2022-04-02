@@ -6,9 +6,8 @@ date: 2022-03-26T10:02:10+08:00
 lastmod: 2022-03-26T10:02:10+08:00
 authors: []
 description: ""
-
-tags: []
-categories: []
+tags: [python]
+categories: [tutorial]
 series: []
 
 hiddenFromHomePage: false
