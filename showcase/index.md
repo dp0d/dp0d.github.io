@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Showcase
 
 
@@ -6,4 +7,11 @@
 {{< showcase "Theme Documentation - Content" "Find out how to create and organize your content quickly and intuitively in DoIt theme." "/theme-documentation-content/featured-image.webp" "/theme-documentation-content/" >}}
 
 {{< showcase "Theme Documentation - Extended Shortcodes" "DoIt theme provides multiple shortcodes on top of built-in ones in Hugo." "/theme-documentation-extended-shortcodes/featured-image.webp" "/theme-documentation-extended-shortcodes/" >}}
+=======
+# 作品
+
+
+{{< showcase "zu1k" "我的弟弟"  >}}
+
+>>>>>>> 267016e645a5a2047c36b80f5f65f3563708bebf
 
