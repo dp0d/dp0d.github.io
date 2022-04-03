@@ -503,11 +503,11 @@ enableEmoji = true
 
       # Utterances comment (github) 评论系统设置 (https://utteranc.es/)
       [params.page.comment.utterances]
-        enable = false
+        enable = true
         # owner/repo
-        repo = ""
+        repo = "https://github.com/dp0d/dp0d.github.io"
         issueTerm = "pathname"
-        label = ""
+        label = "Comment"
         lightTheme = "github-light"
         darkTheme = "github-dark"
 
