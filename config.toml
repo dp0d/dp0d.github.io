@@ -132,122 +132,17 @@ keywords = ["Theme", "Hugo"]
     ignoreLocation = true
     useExtendedSearch = false
     ignoreFieldNorm = false
-# 主页信息设置
-[languages.zh-cn.params.home]
-  # RSS 文章数目
-  rss = 10
-  # 主页个人信息
-  [languages.zh-cn.params.home.profile]
-    enable = true
-    # Gravatar 邮箱，用于优先在主页显示的头像
-    gravatarEmail = ""
-    # 主页显示头像的 URL
-    avatarURL = "/images/logo.png"
-    # 主页显示的网站标题 (支持 HTML 格式)
-    title = "dp0d"
-    # 主页显示的网站副标题
-    subtitle = "A little boy wanna change the world by coding."
-    # 是否为副标题显示打字机动画
-    typeit = true
-    # 是否显示社交账号
-    social = true
-    # 免责声明 (支持 HTML 格式)
-    disclaimer = ""
-  # 主页文章列表
-  [languages.zh-cn.params.home.posts]
-    enable = true
-    # 主页每页显示文章数量
-    paginate = 7
-# 主页的社交信息设置
-[languages.zh-cn.params.social]
-  GitHub = "dp0d"
-  Linkedin = ""
-  Twitter = ""
-  Instagram = ""
-  Facebook = ""
-  Telegram = ""
-  Medium = ""
-  Gitlab = ""
-  Youtubelegacy = ""
-  Youtubecustom = ""
-  Youtubechannel = ""
-  Tumblr = ""
-  Quora = ""
-  Keybase = ""
-  Pinterest = ""
-  Reddit = ""
-  Codepen = ""
-  FreeCodeCamp = ""
-  Bitbucket = ""
-  Stackoverflow = ""
-  Weibo = "xxxx"
-  Odnoklassniki = ""
-  VK = ""
-  Flickr = ""
-  Xing = ""
-  Snapchat = ""
-  Soundcloud = ""
-  Spotify = ""
-  Bandcamp = ""
-  Paypal = ""
-  Fivehundredpx = ""
-  Mix = ""
-  Goodreads = ""
-  Lastfm = ""
-  Foursquare = ""
-  Hackernews = ""
-  Kickstarter = ""
-  Patreon = ""
-  Steam = ""
-  Twitch = ""
-  Strava = ""
-  Skype = ""
-  Whatsapp = ""
-  Zhihu = ""
-  Douban = ""
-  Angellist = ""
-  Slidershare = ""
-  Jsfiddle = ""
-  Deviantart = ""
-  Behance = ""
-  Dribbble = ""
-  Wordpress = ""
-  Vine = ""
-  Googlescholar = ""
-  Researchgate = ""
-  Mastodon = ""
-  Thingiverse = ""
-  Devto = ""
-  Gitea = ""
-  XMPP = ""
-  Matrix = ""
-  Bilibili = ""
-  ORCID = ""
-  Liberapay = ""
-  Ko-Fi = ""
-  BuyMeACoffee = ""
-  Linktree = ""
-  QQ = ""
-  QQGroup = ""
-  Email = "draftpaperofgod@gmail.com"
-  RSS = true
-  # 赞助设置
-[languages.zh-cn.params.sponsor]
-  enable = true
-  bio = "如果你觉得这篇文章对你有所帮助，欢迎赞赏~"
-  link = "https://github.com/dp0d"
-  # custom = "<a href=\"https://www.buymeacoffee.com/PCloud\" target=\"_blank\"><img src=\"https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png\" alt=\"Buy Me A Coffee\" style=\"height: 40px !important;width: 145 !important;\" ></a>"
 
 
 [params]
   #  DoIt theme version
   version = "0.2.X"
   # website title
-  title = "My New Hugo Site"
+  title = "dp0d's blog"
   # site description
-  description = "This is My New Hugo Site"
+  description = "a little guy wanna change the world by coding."
   # site keywords
-  keywords = ["Theme", "Hugo"]
+  keywords = ["dp0d", "NLP", "python", "deeplearning", "graduatestudent"]
   #  site default theme ("light", "dark", "black", "auto")
   defaultTheme = "auto"
   # public git repo url only then enableGitInfo is true
@@ -256,7 +151,7 @@ keywords = ["Theme", "Hugo"]
   # ("sha256", "sha384", "sha512", "md5")
   fingerprint = ""
   #  date for
-  dateFormat = "2006-01-02"
+  dateFormat = "2022-01-02"
   # website images for Open Graph and Twitter Cards
   images = ["/image/logo.png"]
   #  enable PWA support
@@ -338,7 +233,7 @@ keywords = ["Theme", "Hugo"]
     #  Custom content (HTML format is supported)
     custom = ''
     #  whether to show Hugo and theme info
-    hugo = true
+    hugo = false
     #  Hosted on (HTML format is supported)
     # <a title="Github Pages" href="https://docs.github.com/en/pages/" target="_blank" rel="noopener noreffer">GitHub Pages</a>
     hostedOn = '' 
@@ -349,7 +244,7 @@ keywords = ["Theme", "Hugo"]
     # Site creation time
     since = 2019
     # ICP info only in China (HTML format is supported)
-    icp = '<a href="https://beian.miit.gov.cn/" target="_blank">赣ICP备2022002313号-1</a>'
+    icp = '<a href="https://beian.miit.gov.cn/" target="_blank">赣ICP备2022002313号</a>'
     # license info (HTML format is supported)
     license = '<a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a>'
 
@@ -481,7 +376,7 @@ keywords = ["Theme", "Hugo"]
     QQ = ""
     QQGroup = ""
     Email = "draftpaperofgod@gmail.com"
-    RSS = true # 
+    RSS = false # 
 
   #  Page config
   [params.page]
@@ -759,10 +654,11 @@ keywords = ["Theme", "Hugo"]
 
   #  Sponsor config
   [params.sponsor]
-    enable = false
-    bio = "If you find this post helpful, please consider sponsoring."
-    link = "https://www.buymeacoffee.com" # The link to your sponsor page
-    custom = "" # Custom HTML button
+    enable = true
+    bio = "如果你觉得这篇文章对你有所帮助，欢迎赞赏~"
+    link = "https://github.com/dp0d"
+    # custom = "<a href=\"https://www.buymeacoffee.com/PCloud\" target=\"_blank\"><img src=\"https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png\" alt=\"Buy Me A Coffee\" style=\"height: 40px !important;width: 145 !important;\" ></a>"
+
 
   #  TypeIt config
   [params.typeit]
@@ -878,8 +774,8 @@ keywords = ["Theme", "Hugo"]
 # Author config
 [author]
   name = "dp0d"
-  email = ""
-  link = ""
+  email = "draftpaperofgod@gmail.com"
+  link = "github.com/dp0d"
   avatar = ""
   gravatarEmail = ""
 
