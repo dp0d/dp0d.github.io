@@ -200,7 +200,7 @@ enableEmoji = true
   defaultTheme = "auto"
 
   # 公共 git 仓库路径，仅在 enableGitInfo 设为 true 时有效
-  gitRepo = "https://github.com/dp0d/github.io"
+  gitRepo = "https://github.com/dp0d/dp0d.github.io"
 
   # 哪种哈希函数用来 SRI, 为空时表示不使用 SRI ("sha256", "sha384", "sha512", "md5")
   fingerprint = ""
@@ -468,6 +468,7 @@ enableEmoji = true
     [params.page.comment]
       enable = true
 
+
         # emoji data file name, default is "google.yml"
         # ("apple.yml", "google.yml", "facebook.yml", "twitter.yml")
         # located in "themes/DoIt/assets/data/emoji/" directory
@@ -503,13 +504,21 @@ enableEmoji = true
 
       # Utterances comment (github) 评论系统设置 (https://utteranc.es/)
       [params.page.comment.utterances]
-        enable = true
+        enable = false
         # owner/repo
-        repo = "https://github.com/dp0d/dp0d.github.io"
-        issueTerm = "pathname"
+        repo = "dp0d/dp0d.github.io"
+        issueTerm = "title"
         label = "Comment"
         lightTheme = "github-light"
         darkTheme = "github-dark"
+
+      [params.comment.giscus]
+        enable = true
+        repo = "dp0d/dp0d.github.io"
+        repoId = "R_kgDOHB3uWw"
+        category = "Ideas"
+        categoryId = "DIC_kwDOHB3uW84COZbN"
+        mapping = "title"
 
 
 
