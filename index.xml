@@ -2,57 +2,37 @@
     <channel>
         <title>dp0d&#39;s blog</title>
         <link>https://dp0d.github.io/</link>
-        <description>This is My New Hugo Site</description>
-        <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Sat, 26 Mar 2022 10:02:10 &#43;0800</lastBuildDate>
+        <description>Hugo DoIt 主题官方文档</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>draftpaperofgod@gmail.com (dp0d)</managingEditor>
+            <webMaster>draftpaperofgod@gmail.com (dp0d)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sun, 27 Mar 2022 20:19:52 &#43;0800</lastBuildDate>
             <atom:link href="https://dp0d.github.io/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>Linux下配置frp内网穿透</title>
+    <link>https://dp0d.github.io/frp_by_docker/</link>
+    <pubDate>Sun, 27 Mar 2022 20:19:52 &#43;0800</pubDate><author>
+        <name>dp0d</name>
+    </author><guid>https://dp0d.github.io/frp_by_docker/</guid>
+    <description><![CDATA[要访问内网资源，内网资源缺少公网ip被墙，现在我们假设需要在内网主机上运行python，我们需要在公网访问到它，并考虑安全性。 原理图准备工作]]></description>
+</item><item>
     <title>Python中常见的文件读写</title>
     <link>https://dp0d.github.io/file_read_py/</link>
     <pubDate>Sat, 26 Mar 2022 10:02:10 &#43;0800</pubDate><author>
         <name>dp0d</name>
     </author><guid>https://dp0d.github.io/file_read_py/</guid>
-    <description><![CDATA[说明
-本文根据常见的读写进行方法阐述，本文实验环境基于python3.8，并需要提前告知各类读写方式的文件操作效果，如下列出：
-r : 读取文件，文件需要手动创建
-w: 写入文件，若文件不存在则会自动创建再写入，会覆盖原文件
-a : 写入文件，若文件不存在则会自动创建再写入，但不会覆盖原文件，而是追加在文件末尾
-rb,wb： 分别于r, w类似，但是用于读写二进制文件，此类型可用于保存变量。
-r+ : 可读、可写，文件需要手动创建，写操作时会覆盖原文件。
-w+ : 可读，可写，文件不存在自动创建，会覆盖原文件。
-a+ : 可读、可写，文件不存在自动创建，不会覆盖原文件，追加在末尾。
-csv格式文件csv库列表读写1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20  # 将以下两个列表作为两列写入CSV，用 &#39; &#39; 空格隔开： import csv list1=[1,2] list2=[&#39;1&#39;,&#39;2&#39;] with open(&#39;filename.csv&#39;, &#34;w&#34;, newline=&#39;&#39;, encoding=&#39;utf-8&#39;) as f1: writer = csv.writer(f1, delimiter=&#39; &#39;) writer.writerows(zip(list1,list2)) print(&#39;文件写入完成……&#39;) # 从上述写成的CSV中读出两个列表, 同样用 &#39; &#39; 空格隔开读取： import csv with open(&#39;filename.]]></description>
+    <description><![CDATA[说明 本文根据常见的读写进行方法阐述，本文实验环境基于python3.8，并需要提前告知各类读写方式的文件操作效果，如下列出： r : 读取文件，文]]></description>
 </item><item>
     <title>Python 工程环境管理</title>
     <link>https://dp0d.github.io/env_management/</link>
     <pubDate>Tue, 22 Mar 2022 09:11:07 &#43;0800</pubDate><author>
         <name>dp0d</name>
     </author><guid>https://dp0d.github.io/env_management/</guid>
-    <description><![CDATA[前言在Python工程中，特别是对于要复现一些项目时、需要测试特定环境下程序表现时、同一个服务器上多人进行跑程序时需要自己的独立环境时等，我们可能需要用到特定版本的库，而这时，我们可以使用虚拟环境安装依赖。这样依赖，我们就不会影响到主环境，诶这样就
- 不用重复卸载重装主环境， 也不会使得主环境日渐臃肿； 还可以安装多版本python（如经典的pyenv 包管理软件便可以实现）； 如有需要直接删掉虚拟环境，然后建新的即可。  由于系统配置的不确定性，建议友友们在linux下食用。
-环境管理途径介绍Conda 查看我们当前conda里有的环境 ，三种方式都可👇🏻  1 2 3 4 5  conda info --envs conda info -e conda env list   输出如下👇🏻
- 可以看到，我们目前只有一个base的基础环境。接下来我们试着查看一下该环境下的包列表👇🏻  Conda创建虚拟环境创建时指定 conda下的虚拟环境名字为env_name，python版本为3.6👇
-1  conda create -n env_name python=3.6   或者，你也可以通过yml文件来构建自己想要的环境，比如你想要如下配置的环境（name指的是你的虚拟环境叫啥，与上条命令中的env_name效果一样）👇
-那么，你则需要在当前目录创建一个yml后缀的文件，然后写入上图类似的你需要的环境内容，并运行如下命令👇
-1  conda env create -f conda_env.yml   再次查看conda下的环境列表
-可以看到创建了一个新的env_name环境。
-Conda激活虚拟环境输入activate指令👇
-1  conda activate env_name   可以看到
-命令行前的括号内容已经改变(base)👉(env_name)，此时已经是基于该虚拟环境了。
-然后呢，我们就可以进入这个环境乱装一通了，此处省略一万行操作……
-好了，这个环境的使命已经结束了，我们再把它删掉👇]]></description>
+    <description><![CDATA[前言在Python工程中，特别是对于要复现一些项目时、需要测试特定环境下程序表现时、同一个服务器上多人进行跑程序时需要自己的独立环境时等，我]]></description>
 </item><item>
     <title>反向传播算法</title>
     <link>https://dp0d.github.io/backpropagation/</link>
     <pubDate>Fri, 18 Mar 2022 11:29:42 &#43;0800</pubDate><author>
         <name>dp0d</name>
     </author><guid>https://dp0d.github.io/backpropagation/</guid>
-    <description><![CDATA[反向传播算法作为一位机器学习领域的博主，第一篇博客肯定要从反向传播算法开始啦~
-简介​	来自维基百科
-​	首先是反向传播算法的历史沿用👇
-​	弗拉基米尔·瓦普尼克引用（Bryson, A.E.; W.F. Denham; S.E. Dreyfus. Optimal programming problems with inequality constraints. I: Necessary conditions for extremal solutions. AIAA J. 1, 11 (1963) 2544-2550）在他的书《支持向量机》中首次发表反向传播算法。在1969年Arthur E. Bryson和何毓琦将其描述为多级动态系统优化方法。直到1974年以后在神经网络的背景下应用，并由Paul Werbos[7]、David E. Rumelhart、杰弗里·辛顿和Ronald J. Williams[1][8]的著作，它才获得认可，并引发了一场人工神经网络的研究领域的“文艺复兴”。在21世纪初人们对其失去兴趣，但在2010年后又拥有了兴趣，如今可以通过GPU等大型现代运算器件用于训练更大的网络。例如在2013年，顶级语音识别器现在使用反向传播算法训练神经网络。
-​	那么反向传播算法是啥？👇
-​	反向传播（英语：Backpropagation，缩写为BP）是“误差反向传播”的简称，是一种与最优化方法（如梯度下降法）结合使用的，用来训练人工神经网络的常见方法。该方法对网络中所有权重计算损失函数的梯度。这个梯度会回馈给最佳化方法，用来更新权值以最小化损失函数。
-前向传播推导a. 了解矩阵乘法假设👇
-$$ \textbf{A} = \begin{bmatrix} 1 & 2 \\ 3 & 4 \\ \end{bmatrix} \quad \textbf{B}=\left[ \begin{matrix} -1 & -2 \\ -3 & -4 \\ \end{matrix} \right] $$ 点积（通常省略 · 符号）计算如下👇]]></description>
+    <description><![CDATA[反向传播算法作为一位机器学习领域的博主，第一篇博客肯定要从反向传播算法开始啦~ 简介​ 来自维基百科 ​ 首先是反向传播算法的历史沿用👇 ​ 弗拉基米尔]]></description>
 </item></channel>
 </rss>
