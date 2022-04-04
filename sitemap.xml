@@ -2,6 +2,7 @@
     xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     ><url>
+            <loc>https://dp0d.github.io/collection/</loc><lastmod>2022-04-04T21:19:36&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://dp0d.github.io/copyright/</loc><lastmod>2022-04-03T21:43:57&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://dp0d.github.io/</loc><lastmod>2022-04-04T15:51:39&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://dp0d.github.io/frp_by_docker/</loc><lastmod>2022-04-04T15:51:39&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
