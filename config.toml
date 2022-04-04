@@ -518,15 +518,16 @@ enableEmoji = true
         # owner/repo
         dataRepo = "dp0d/dp0d.github.io"
         dataRepoId = "R_kgDOHB3uWw"
-        dataCategory = "General"
-        dataCategoryId = "DIC_kwDOHB3uW84COZbO"
+        dataCategory = "og:title"
+        dataCategoryId = "DIC_kwDOHB3uW84COZbL"
         dataMapping = "title"
         dataReactionsEnabled = "1"
-        dataEmitMetadata = "0"
+        dataEmitMetadata = "1"
         dataInputPosition = "top"
         lightTheme = "light"
         darkTheme = "dark"
         dataLang = "zh-CN"
+        dataLoading="lazy"
 
 
 
