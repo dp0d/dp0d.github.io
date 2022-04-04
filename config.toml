@@ -94,7 +94,7 @@ enableEmoji = true
         identifier = "about"
         pre = ""
         post = ""
-        name = "关于"
+        name = "关于123"
         url = "/about/"
         title = ""
         weight = 8
@@ -195,7 +195,7 @@ enableEmoji = true
 
   # DoIt 主题版本
   version = "0.2.X"
-  
+
   # 网站默认主题 ("light", "dark", "black", "auto")
   defaultTheme = "auto"
 
@@ -216,7 +216,7 @@ enableEmoji = true
 
   # 许可协议信息 (支持 HTML 格式)
   license = '<a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a>'
-  
+
   # [Experimental] Bundle js  #报错
   bundle = false
 
@@ -225,28 +225,28 @@ enableEmoji = true
 
     # 桌面端导航栏模式 ("fixed", "normal", "auto")
     desktopMode = "fixed"
-
+    
     # 移动端导航栏模式 ("fixed", "normal", "auto")
     mobileMode = "auto"
-
+    
     # 主题切换模式 ("switch", "select")
     themeChangeMode = "select"
-
+    
     # 页面头部导航栏标题配置
     [params.header.title]
       # URL of the LOGO
       # LOGO 的 URL
       logo = ""
-
+    
       # 标题名称
       name = "Natural Language Processing"
-
+    
       # 你可以在名称 (允许 HTML 格式) 之前添加其他信息, 例如图标
       pre = "<i class='far fa-edit fa-fw'></i>"
-
+    
       # 你可以在名称 (允许 HTML 格式) 之后添加其他信息, 例如图标
       post = ""
-
+    
       # 是否为标题显示打字机动画
       typeit = false
 
@@ -257,26 +257,26 @@ enableEmoji = true
 
     # 自定义内容 (支持 HTML 格式)
     custom = ''
-
+    
     # 是否显示 Hugo 和主题信息
     hugo = false
-
+    
     # 托管服务信息 (支持 HTML 格式)
     # <a title="Github Pages" href="https://docs.github.com/en/pages/" target="_blank" rel="noopener noreffer">GitHub Pages</a>
     hostedOn = '' 
-
+    
     # 是否显示版权信息
     copyright = true
-
+    
     # 是否显示作者
     author = true
-
+    
     # 网站创立年份
     since = 2022
-
+    
     # ICP 备案信息，仅在中国使用 (支持 HTML 格式)
     icp = '<a href="https://beian.miit.gov.cn/" target="_blank">赣ICP备2022002313号-1</a>'
-
+    
     # 许可协议信息 (支持 HTML 格式)
     license= '<a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a>'
 
@@ -286,13 +286,13 @@ enableEmoji = true
 
     # section 页面每页显示文章数量
     paginate = 20
-
+    
     # 日期格式 (月和日)
     dateFormat = "01-02"
-
+    
     # RSS 文章数目
     rss = 10
-
+    
     # 最近更新文章设置
     [params.section.recentlyUpdated]
       enable = true
@@ -306,10 +306,10 @@ enableEmoji = true
 
     # list 页面每页显示文章数量
     paginate = 20
-
+    
     # 日期格式 (月和日)
     dateFormat = "01-02"
-
+    
     # RSS 文章数目
     rss = 10
 
@@ -318,32 +318,32 @@ enableEmoji = true
 
     # 是否在主页隐藏一篇文章
     hiddenFromHomePage = false
-
+    
     # 是否在搜索结果中隐藏一篇文章
     hiddenFromSearch = false
-
+    
     # 是否使用 twemoji
     twemoji = false
-
+    
     # 是否使用 lightgallery
     lightgallery = false
-
+    
     # 是否使用 ruby 扩展语法
     ruby = true
-
+    
     # 是否使用 fraction 扩展语法
     fraction = true
-
+    
     # 是否使用 fontawesome 扩展语法
     fontawesome = true
-
+    
     # 是否显示原始 Markdown 文档内容的链接
     linkToMarkdown = true
-
+    
     # 配置文章原始文件的链接
     linkToSource = ""
     # "https://github.com/user/repo/blob/main/{path}"
-
+    
     # 配置编辑文章的链接
     linkToEdit = ""
     # https://github.com/HEIGE-PCloud/DoIt/edit/main/exampleSite/content/{path}
@@ -356,54 +356,54 @@ enableEmoji = true
     linkToReport = "https://github.com/dp0d/dp0d.github.io/issues/new?title=[bug]%20{title}&body=|Field|Value|%0A|-|-|%0A|Title|{title}|%0A|Url|{url}|%0A|Filename|https://github.com/dp0d/dp0d.github.io/{path}|"
     
     # https://gitlab.com/user/repo/-/issues/new?issue[title]=[bug]%20{title}&issue[description]=|Field|Value|%0A|-|-|%0A|Title|{title}|%0A|Url|{url}|%0A|Filename|https://gitlab.com/user/repo/-/edit/main/{path}|
-   
+       
     # 是否在 RSS 中显示全文内容
     rssFullText = false
-
+    
     # 页面样式 ("normal", "wide")
     pageStyle = "normal"
-
+    
     # 是否使用系列导航
     seriesNavigation = false
 
   # 在文章开头显示提示信息，提醒读者文章内容可能过时。
     [params.page.outdatedArticleReminder]
       enable = false
-
+    
       # 如果文章最后更新于这天数之前，显示提醒
       reminder = 90
-
+    
       # 如果文章最后更新于这天数之前，显示警告
       warning = 180
     # Table of the contents config
     # 目录配置
     [params.page.toc]
-
+    
       # 是否使用目录
       enable = true
-
+    
       # 是否保持使用文章前面的静态目录
       keepStatic = false
-
+    
       # 是否使侧边目录自动折叠展开
       auto = true
-
+    
     # 代码配置
     [params.page.code]
-
+    
       # 是否显示代码块的复制按钮
       copy = true
-
+    
       # 默认展开显示的代码行数
       maxShownLines = 100
-
+    
     # 表格配置
     [params.page.table]
-
+    
       # 是否开启表格排序
       sort = true
     [params.page.header]
-
+    
       # 是否开启标题自动编号
       [params.page.header.number]
         enable = true
@@ -413,43 +413,43 @@ enableEmoji = true
           h4 = "{h2}.{h3}.{h4} {title}"
           h5 = "{h2}.{h3}.{h4}.{h5} {title}"
           h6 = "{h2}.{h3}.{h4}.{h5}.{h6} {title}"
-
+    
     # KaTeX 数学公式配置 (KaTeX https://katex.org/)
     [params.page.math]
       enable = true
-
+    
       # 默认块定界符是 $$ ... $$ 和 \\[ ... \\]
       blockLeftDelimiter = ""
       blockRightDelimiter = ""
-
+    
       # 默认行内定界符是 $ ... $ 和 \\( ... \\)
       inlineLeftDelimiter = ""
       inlineRightDelimiter = ""
-
+    
       # KaTeX 插件 copy_tex
       copyTex = true
-
+    
       # KaTeX 插件 mhchem
       mhchem = true
-
+    
     # Mapbox GL JS 配置 (Mapbox GL JS https://docs.mapbox.com/mapbox-gl-js)
     [params.page.mapbox]
-
+    
       # Mapbox GL JS 的 access token
       accessToken = "pk.eyJ1IjoiZGlsbG9uenEiLCJhIjoiY2s2czd2M2x3MDA0NjNmcGxmcjVrZmc2cyJ9.aSjv2BNuZUfARvxRYjSVZQ"
-
+    
       # 浅色主题的地图样式
       lightStyle = "mapbox://styles/mapbox/light-v10?optimize=true"
-
+    
       # 深色主题的地图样式
       darkStyle = "mapbox://styles/mapbox/dark-v10?optimize=true"
-  
+      
       # 是否添加 NavigationControl (https://docs.mapbox.com/mapbox-gl-js/api/#navigationcontrol)
       navigation = true
-
+    
       # 是否添加 GeolocateControl (https://docs.mapbox.com/mapbox-gl-js/api/#geolocatecontrol)
       geolocate = true
-
+    
       # 是否添加 ScaleControl (https://docs.mapbox.com/mapbox-gl-js/api/#scalecontrol)
       scale = true
       
@@ -463,7 +463,7 @@ enableEmoji = true
       Facebook = true
       Weibo = true
       Telegram = true
-
+    
     # 评论系统设置 #需要后续设置 参考 https://github.com/HEIGE-PCloud/DoIt/blob/main/README.zh-cn.md?ref=https://githubhelp.com
     [params.page.comment]
       enable = true
@@ -489,7 +489,7 @@ enableEmoji = true
         numPosts = 10
         appId = ""
         languageCode = ""
-
+    
       # Telegram comments 评论系统设置 (https://comments.app/)
       [params.page.comment.telegram]
         enable = false
@@ -501,7 +501,7 @@ enableEmoji = true
         dislikes = false
         outlined = false
         dark = false
-
+    
       # Utterances comment (github) 评论系统设置 (https://utteranc.es/)
       [params.page.comment.utterances]
         enable = false
@@ -511,7 +511,7 @@ enableEmoji = true
         label = "Comment"
         lightTheme = "github-light"
         darkTheme = "github-dark"
-
+    
       [params.comment.giscus]
         enable = true
         repo = "dp0d/dp0d.github.io"
@@ -547,13 +547,13 @@ enableEmoji = true
           # located in "assets/" 位于 "assets/"
           # Or 或者
           # someJavascript = "https://cdn.example.com/some.js"
-
+    
       # 页面 SEO 配置
       [params.page.seo]
-
+    
         # 图片 URL
         images = []
-
+    
         # 出版者信息
         [params.page.seo.publisher]
           name = "dp0d"
@@ -665,7 +665,7 @@ enableEmoji = true
 
     # 是否使用 Polyfill.io 来兼容旧式浏览器
     polyfill = false
-
+    
     # 是否使用 object-fit-images 来兼容旧式浏览器
     objectFit = true
 
