@@ -1,6 +1,0 @@
-# installation
-
----
-title: "installation"
----
-
