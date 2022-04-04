@@ -16,11 +16,11 @@ series: []
 
 要访问内网资源，内网资源缺少公网ip被墙，现在我们假设需要在内网主机上运行python，我们需要在公网访问到它，并考虑安全性。
 
-# **原理图**
+# 原理图
 
 ![img](architecture.png)
 
-# **准备工作**
+# 准备工作
 
 + **一台公网服务器，以及本地内网需要穿透到的主机**
 + **一个域名，本次配置中的web服务需要注册域名**
@@ -39,7 +39,7 @@ wget https://github.com/fatedier/frp/releases/download/v0.41.0/frp_0.41.0_linux_
 
 + **保证在公网服务器上经过设置的所有端口不被防火墙限制。**
 
-# **搭建流程**
+# 搭建流程
 
 ## 1.web服务基础版
 
@@ -55,7 +55,7 @@ wget https://github.com/fatedier/frp/releases/download/v0.41.0/frp_0.41.0_linux_
   cd ~/frp/frp_0.41.0_linux_amd64
   ```
 
-  然后编辑文件**`frps.ini`**，写入以下内容👇
+  然后编辑文件`frps.ini`，写入以下内容👇
 
   ```ini
   [common]
@@ -85,7 +85,7 @@ wget https://github.com/fatedier/frp/releases/download/v0.41.0/frp_0.41.0_linux_
   cd ~/frp/frp_0.41.0_linux_amd64
   ```
 
-  然后编辑文件**`frpc.ini`**，写入以下内容👇
+  然后编辑文件`frpc.ini`，写入以下内容👇
 
   ```ini
   [common]
@@ -110,15 +110,15 @@ wget https://github.com/fatedier/frp/releases/download/v0.41.0/frp_0.41.0_linux_
   ./frpc -c ./frpc.ini
   ```
 
-  > ![image-20220328190409653](image-20220328190409653.png)
+  ![image-20220328190409653](image-20220328190409653.png)
 
 + 服务器端反应👇
 
-  > <img src="image-20220328190542133.png" alt="image-20220328190542133" style="zoom:80%;" />
+  <img src="image-20220328190542133.png" alt="image-20220328190542133" style="zoom:80%;" />
 
-+ 浏览器访问公网域名http://xxxx.com:vhost_http_port端口号
++ 浏览器访问公网域名http://xxxx.com:vhost_http_port端口号👇
 
-  > ![image-20220328193117511](image-20220328193117511.png)
+  ![image-20220328193117511](image-20220328193117511.png)
 
 ## 2.web服务Docker版（Jupyter lab款）
 
@@ -175,7 +175,7 @@ tar zxvf frp_0.41.0_linux_amd64.tar.gz -C ~/frp
 cd ~/frp/frp_0.41.0_linux_amd64
 ```
 
-然后编辑文件**`frps.ini`**，写入以下内容👇
+然后编辑文件`frps.ini`，写入以下内容👇
 
 ```ini
 [common]
@@ -191,7 +191,7 @@ vhost_http_port = 4231
 ./frps -c ./frps.ini
 ```
 
-> ![image-20220328185023448](image-20220328185023448.png)
+<img src="image-20220328185023448.png" alt="image-20220328185023448" style="zoom: 80%;" />
 
 如显示frps started successfully即为成功，端口也会写明
 
@@ -201,7 +201,7 @@ vhost_http_port = 4231
 
 ### 内网主机端
 
-#### 到[`dockerhub`](https://hub.docker.com/)寻找合适的仓库
+#### 到dockerhub寻找合适的仓库[`dockerhub`](https://hub.docker.com/)
 
 这里选择unbuntu作为我们的基础镜像
 

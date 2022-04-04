@@ -11,7 +11,7 @@ themesDir = "themes/"
 
 # website title
 # 网站标题
-title = "DoIt"
+title = "dp0d's blog"
 
 # whether to use robots.txt
 # 是否使用 robots.txt
@@ -108,13 +108,13 @@ enableEmoji = true
         weight = 9
     [languages.zh-cn.params]
       # 网站描述
-      description = "Hugo DoIt 主题官方文档"
+      description = "dp0d's blog to share life as well as technology of nlp."
       # 网站关键词
       keywords = ["Theme", "Hugo"]
       # 应用图标配置
       [languages.zh-cn.params.app]
         # 当添加到 iOS 主屏幕或者 Android 启动器时的标题, 覆盖默认标题
-        title = "DoIt"
+        title = "dp0d's blog"
         # 是否隐藏网站图标资源链接
         noFavicon = false
         # 更现代的 SVG 网站图标, 可替代旧的 .png 和 .ico 文件
@@ -323,10 +323,10 @@ enableEmoji = true
     hiddenFromSearch = false
     
     # 是否使用 twemoji
-    twemoji = false
+    twemoji = true
     
     # 是否使用 lightgallery
-    lightgallery = false
+    lightgallery = true
     
     # 是否使用 ruby 扩展语法
     ruby = true
@@ -406,7 +406,7 @@ enableEmoji = true
     
       # 是否开启标题自动编号
       [params.page.header.number]
-        enable = true
+        enable = false
         [params.page.header.number.format]
           h2 = "{h2} {title}"
           h3 = "{h2}.{h3} {title}"
@@ -464,7 +464,7 @@ enableEmoji = true
       Weibo = true
       Telegram = true
     
-    # 评论系统设置 #需要后续设置 参考 https://github.com/HEIGE-PCloud/DoIt/blob/main/README.zh-cn.md?ref=https://githubhelp.com
+    # 评论系统设置 #需要后续设置 
     [params.page.comment]
       enable = true
 
@@ -512,13 +512,21 @@ enableEmoji = true
         lightTheme = "github-light"
         darkTheme = "github-dark"
     
-      [params.comment.giscus]
+      # giscus comment 评论系统设置 (https://giscus.app/)
+      [params.page.comment.giscus]
         enable = true
-        repo = "dp0d/dp0d.github.io"
-        repoId = "R_kgDOHB3uWw"
-        category = "Ideas"
-        categoryId = "DIC_kwDOHB3uW84COZbN"
-        mapping = "title"
+        # owner/repo
+        dataRepo = "dp0d/dp0d.github.io"
+        dataRepoId = "R_kgDOHB3uWw"
+        dataCategory = "General"
+        dataCategoryId = "DIC_kwDOHB3uW84COZbO"
+        dataMapping = "title"
+        dataReactionsEnabled = "1"
+        dataEmitMetadata = "0"
+        dataInputPosition = "top"
+        lightTheme = "light"
+        darkTheme = "dark"
+        dataLang = "zh-CN"
 
 
 
