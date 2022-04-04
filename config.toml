@@ -26,6 +26,7 @@ enableEmoji = true
 [languages]
   [languages.zh-cn]
     weight = 2
+
     # 网站语言, 仅在这里 CN 大写
     languageCode = "zh-CN"
     # 语言名称
@@ -46,7 +47,7 @@ enableEmoji = true
         pre = ""
         # 你可以在名称 (允许 HTML 格式) 之后添加其他信息, 例如图标
         post = ""
-        name = "所有文章"
+        name = "文章"
         url = "/posts/"
         title = ""
         weight = 1
@@ -82,23 +83,33 @@ enableEmoji = true
         url = "/friends/"
         title = ""
         weight = 5
-      [[languages.zh-cn.menu.main]]
+
+       [[languages.zh-cn.menu.main]]
+        identifier = "collection"
+        pre = ""
+        post = ""
+        name = "收藏"
+        url = "/collection/"
+        title = ""
+        weight = 6
+
+       [[languages.zh-cn.menu.main]]
         identifier = "copyright"
         pre = ""
         post = ""
         name = "版权"
         url = "/copyright/"
         title = ""
-        weight = 6
-      [[languages.zh-cn.menu.main]]
+        weight = 7
+       [[languages.zh-cn.menu.main]]
         identifier = "about"
         pre = ""
         post = ""
-        name = "关于"
+        name = "关于我"
         url = "/about/"
         title = ""
         weight = 8
-      [[languages.zh-cn.menu.main]]
+       [[languages.zh-cn.menu.main]]
         identifier = "github"
         pre = "<i class='fab fa-github fa-fw'></i>"
         post = ""
@@ -107,6 +118,7 @@ enableEmoji = true
         title = "GitHub"
         weight = 9
     [languages.zh-cn.params]
+
       # 网站描述
       description = "dp0d's blog,where to share life as well as technology of nlp."
       # 网站关键词
@@ -512,7 +524,6 @@ enableEmoji = true
         lightTheme = "github-light"
         darkTheme = "github-dark"
     
-      # giscus comment config (https://giscus.app/)
       # giscus comment 评论系统设置 (https://giscus.app/)
       [params.page.comment.giscus]
         enable = true
@@ -528,14 +539,9 @@ enableEmoji = true
         lightTheme = "light"
         darkTheme = "dark"
         dataLang = "zh-CN"
-
-
-
-
-
-
-
-          # 第三方库配置
+        dataLoading="lazy"
+    
+      # 第三方库配置
       [params.page.library]
         [params.page.library.css]
           # someCSS = "some.css"
