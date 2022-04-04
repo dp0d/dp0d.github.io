@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noodp" />
     <title class="pjax-title">反向传播算法 - DoIt</title><meta name="Description" content="Hugo DoIt 主题官方文档"><meta property="og:title" content="反向传播算法" />
-<meta property="og:description" content="反向传播算法作为一位机器学习领域的博主，第一篇博客肯定要从反向传播算法开始啦~ 1 简介​ 来自维基百科 ​ 首先是反向传播算法的历史沿用👇 ​ 弗拉基米" />
+<meta property="og:description" content="反向传播算法作为一位机器学习领域的博主，第一篇博客肯定要从反向传播算法开始啦~ 简介​ 来自维基百科 ​ 首先是反向传播算法的历史沿用👇 ​ 弗拉基米尔" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://dp0d.github.io/backpropagation/" /><meta property="og:image" content="https://dp0d.github.io/images/logo.png"/><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2022-03-18T11:29:42+08:00" />
@@ -16,7 +16,7 @@
 <meta name="twitter:image" content="https://dp0d.github.io/images/logo.png"/>
 
 <meta name="twitter:title" content="反向传播算法"/>
-<meta name="twitter:description" content="反向传播算法作为一位机器学习领域的博主，第一篇博客肯定要从反向传播算法开始啦~ 1 简介​ 来自维基百科 ​ 首先是反向传播算法的历史沿用👇 ​ 弗拉基米"/>
+<meta name="twitter:description" content="反向传播算法作为一位机器学习领域的博主，第一篇博客肯定要从反向传播算法开始啦~ 简介​ 来自维基百科 ​ 首先是反向传播算法的历史沿用👇 ​ 弗拉基米尔"/>
 <meta name="application-name" content="DoIt">
 <meta name="apple-mobile-web-app-title" content="DoIt">
 
@@ -37,7 +37,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/dp0d.github.io\/backpropagation\/"
-        },"image": ["https:\/\/dp0d.github.io\/images\/logo.png"],"genre": "posts","wordcount":  2404 ,
+        },"image": ["https:\/\/dp0d.github.io\/images\/logo.png"],"genre": "posts","wordcount":  2398 ,
         "url": "https:\/\/dp0d.github.io\/backpropagation\/","datePublished": "2022-03-18T11:29:42+08:00","dateModified": "2022-03-20T21:05:15+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "dp0d","logo": "https:\/\/dp0d.github.io\/images\/logo.png"},"author": {
@@ -146,7 +146,7 @@
             <div class="post-meta-line">
                 <span class="post-author"><i class="author fas fa-user-circle fa-fw"></i><a href="https://github.com/dp0d" title="Author" target="_blank" rel="noopener noreffer author" class="author">dp0d</a>
                 </span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-03-18">2022-03-18</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2022-03-20">2022-03-20</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 2404 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-03-18">2022-03-18</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2022-03-20">2022-03-20</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 2398 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 5 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
@@ -168,14 +168,14 @@
             </div><div class="content" id="content"><h1 id="反向传播算法" class="headerLink">
     <a href="#%e5%8f%8d%e5%90%91%e4%bc%a0%e6%92%ad%e7%ae%97%e6%b3%95" class="header-mark"></a>反向传播算法</h1><p>作为一位机器学习领域的博主，第一篇博客肯定要从反向传播算法开始啦~</p>
 <h2 id="简介" class="headerLink">
-    <a href="#%e7%ae%80%e4%bb%8b" class="header-mark"></a>1 简介</h2><p>​	来自<a href="https://zh.wikipedia.org/wiki/%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD%E7%AE%97%E6%B3%95#cite_note-Alpaydin2010-10" target="_blank" rel="noopener noreffer">维基百科</a></p>
+    <a href="#%e7%ae%80%e4%bb%8b" class="header-mark"></a>简介</h2><p>​	来自<a href="https://zh.wikipedia.org/wiki/%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD%E7%AE%97%E6%B3%95#cite_note-Alpaydin2010-10" target="_blank" rel="noopener noreffer">维基百科</a></p>
 <p>​	首先是反向传播算法的历史沿用👇</p>
 <p>​	<a href="https://zh.wikipedia.org/wiki/%e5%bc%97%e6%8b%89%e5%9f%ba%e7%b1%b3%e5%b0%94%c2%b7%e7%93%a6%e6%99%ae%e5%b0%bc%e5%85%8b" target="_blank" rel="noopener noreffer">弗拉基米尔·瓦普尼克</a>引用（Bryson, A.E.; W.F. Denham; S.E. Dreyfus. Optimal programming problems with inequality constraints. I: Necessary conditions for extremal solutions. AIAA J. 1, 11 (1963) 2544-2550）在他的书《支持向量机》中首次发表反向传播算法。在1969年<a href="https://zh.wikipedia.org/w/index.php?title=Arthur_E._Bryson&amp;action=edit&amp;redlink=1" target="_blank" rel="noopener noreffer">Arthur E. Bryson</a>和<a href="https://zh.wikipedia.org/wiki/%e4%bd%95%e6%af%93%e7%90%a6" target="_blank" rel="noopener noreffer">何毓琦</a>将其描述为多级动态系统优化方法。直到1974年以后在神经网络的背景下应用，并由<a href="https://zh.wikipedia.org/w/index.php?title=Paul_Werbos&amp;action=edit&amp;redlink=1" target="_blank" rel="noopener noreffer">Paul Werbos</a>[<a href="https://zh.wikipedia.org/wiki/%e5%8f%8d%e5%90%91%e4%bc%a0%e6%92%ad%e7%ae%97%e6%b3%95#cite_note-9" target="_blank" rel="noopener noreffer">7]</a>、<a href="https://zh.wikipedia.org/w/index.php?title=David_E._Rumelhart&amp;action=edit&amp;redlink=1" target="_blank" rel="noopener noreffer">David E. Rumelhart</a>、<a href="https://zh.wikipedia.org/wiki/%e6%9d%b0%e5%bc%97%e9%87%8c%c2%b7%e8%be%9b%e9%a1%bf" target="_blank" rel="noopener noreffer">杰弗里·辛顿</a>和<a href="https://zh.wikipedia.org/w/index.php?title=Ronald_J._Williams&amp;action=edit&amp;redlink=1" target="_blank" rel="noopener noreffer">Ronald J. Williams</a>[<a href="https://zh.wikipedia.org/wiki/%e5%8f%8d%e5%90%91%e4%bc%a0%e6%92%ad%e7%ae%97%e6%b3%95#cite_note-Rumelhart1986-1" target="_blank" rel="noopener noreffer">1]</a>[<a href="https://zh.wikipedia.org/wiki/%e5%8f%8d%e5%90%91%e4%bc%a0%e6%92%ad%e7%ae%97%e6%b3%95#cite_note-Alpaydin2010-10" target="_blank" rel="noopener noreffer">8]</a>的著作，它才获得认可，并引发了一场人工神经网络的研究领域的“文艺复兴”。在21世纪初人们对其失去兴趣，但在2010年后又拥有了兴趣，如今可以通过<a href="https://zh.wikipedia.org/wiki/%e5%9c%96%e5%bd%a2%e8%99%95%e7%90%86%e5%99%a8" target="_blank" rel="noopener noreffer">GPU</a>等大型现代运算器件用于训练更大的网络。例如在2013年，顶级语音识别器现在使用反向传播算法训练神经网络。</p>
 <p>​	那么反向传播算法是啥？👇</p>
 <p>​	<strong>反向传播</strong>（英语：Backpropagation，缩写为<strong>BP</strong>）是“误差反向传播”的简称，是一种与<a href="https://zh.wikipedia.org/wiki/%e6%9c%80%e4%bc%98%e5%8c%96" target="_blank" rel="noopener noreffer">最优化方法</a>（如<a href="https://zh.wikipedia.org/wiki/%e6%a2%af%e5%ba%a6%e4%b8%8b%e9%99%8d%e6%b3%95" target="_blank" rel="noopener noreffer">梯度下降法</a>）结合使用的，用来训练<a href="https://zh.wikipedia.org/wiki/%e4%ba%ba%e5%b7%a5%e7%a5%9e%e7%bb%8f%e7%bd%91%e7%bb%9c" target="_blank" rel="noopener noreffer">人工神经网络</a>的常见方法。该方法对网络中所有权重计算<a href="https://zh.wikipedia.org/wiki/%e6%8d%9f%e5%a4%b1%e5%87%bd%e6%95%b0" target="_blank" rel="noopener noreffer">损失函数</a>的梯度。这个梯度会回馈给最佳化方法，用来更新权值以最小化损失函数。</p>
 <h2 id="前向传播推导" class="headerLink">
-    <a href="#%e5%89%8d%e5%90%91%e4%bc%a0%e6%92%ad%e6%8e%a8%e5%af%bc" class="header-mark"></a>2 前向传播推导</h2><h3 id="a-了解矩阵乘法" class="headerLink">
-    <a href="#a-%e4%ba%86%e8%a7%a3%e7%9f%a9%e9%98%b5%e4%b9%98%e6%b3%95" class="header-mark"></a>2.1 a. 了解矩阵乘法</h3><p>假设👇</p>
+    <a href="#%e5%89%8d%e5%90%91%e4%bc%a0%e6%92%ad%e6%8e%a8%e5%af%bc" class="header-mark"></a>前向传播推导</h2><h3 id="a-了解矩阵乘法" class="headerLink">
+    <a href="#a-%e4%ba%86%e8%a7%a3%e7%9f%a9%e9%98%b5%e4%b9%98%e6%b3%95" class="header-mark"></a>a. 了解矩阵乘法</h3><p>假设👇</p>
 
 
 $$
@@ -234,7 +234,7 @@ $$
 
 
 <h3 id="b了解神经网络" class="headerLink">
-    <a href="#b%e4%ba%86%e8%a7%a3%e7%a5%9e%e7%bb%8f%e7%bd%91%e7%bb%9c" class="header-mark"></a>2.2 b.了解神经网络</h3><p>如下图所示，这是一个神经网络👇</p>
+    <a href="#b%e4%ba%86%e8%a7%a3%e7%a5%9e%e7%bb%8f%e7%bd%91%e7%bb%9c" class="header-mark"></a>b.了解神经网络</h3><p>如下图所示，这是一个神经网络👇</p>
 <p><img
         class="lazyload"
         data-src="Sample_Neural_Network.png"
@@ -342,7 +342,7 @@ $$
 
 
 <h2 id="误差反向传播" class="headerLink">
-    <a href="#%e8%af%af%e5%b7%ae%e5%8f%8d%e5%90%91%e4%bc%a0%e6%92%ad" class="header-mark"></a>3 误差反向传播</h2><p>为误差对神经元输入的值（激活前）$z$    做如下假设👇</p>
+    <a href="#%e8%af%af%e5%b7%ae%e5%8f%8d%e5%90%91%e4%bc%a0%e6%92%ad" class="header-mark"></a>误差反向传播</h2><p>为误差对神经元输入的值（激活前）$z$    做如下假设👇</p>
 <img src="image-20220320194036816.png" alt="image-20220320194036816" style="zoom:35%;" />
 <p><img
         class="lazyload"
@@ -468,7 +468,9 @@ $$
     <div class="post-nav">
             <a href="/env_management/" class="next" rel="next" title="Python 工程环境管理">Python 工程环境管理<i class="fas fa-angle-right fa-fw"></i></a></div>
 </div>
-<div id="comments"></div></article></div>
+<div id="comments"><div id="giscus"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://giscus.app/">giscus</a>.
+            </noscript></div></article></div>
         </main><footer class="footer">
         <div class="footer-container"><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/dp0d" target="_blank" rel="noopener noreferrer">dp0d</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
                     <span class="icp"><a href="https://beian.miit.gov.cn/" target="_blank">赣ICP备2022002313号-1</a></span></div>
@@ -496,7 +498,7 @@ $$
         </a>
     </div><div class="assets"><script type="text/javascript" src="/lib/object-fit-images/ofi.min.js"></script><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/algoliasearch/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/tablesort/tablesort.min.js"></script><script type="text/javascript" src="/lib/topbar/topbar.min.js"></script><script type="text/javascript" src="/lib/pjax/pjax.min.js"></script><script type="text/javascript" src="/js/theme.min.js" defer></script></div>
 
-<div class="pjax-assets"><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":100},"comment":{},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"5YGRNRQK1G","algoliaIndex":"zh_cn_index","algoliaSearchKey":"0ff6874805de24b84aa1d5ebccad56cd","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"},"sharerjs":true,"table":{"sort":true}};</script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js" defer></script><script type="text/javascript" src="/lib/katex/auto-render.min.js" defer></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js" defer></script><script type="text/javascript" src="/lib/katex/mhchem.min.js" defer></script><script type="text/javascript" src="/js/katex.min.js" defer></script><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/katex/copy-tex.min.css">
+<div class="pjax-assets"><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":100},"comment":{"giscus":{"darkTheme":"dark","dataCategory":"Show and tell","dataCategoryId":"DIC_kwDOHB3uW84COZbO","dataEmitMetadata":"0","dataInputPosition":"top","dataLang":"zh-CN","dataMapping":"title","dataReactionsEnabled":"1","dataRepo":"dp0d/dp0d.github.io","dataRepoId":"R_kgDOHB3uWw","lightTheme":"light"}},"lightGallery":{"actualSize":false,"exThumbImage":"data-thumbnail","hideBarsDelay":2000,"selector":".lightgallery","speed":400,"thumbContHeight":80,"thumbWidth":80,"thumbnail":true},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"5YGRNRQK1G","algoliaIndex":"zh_cn_index","algoliaSearchKey":"0ff6874805de24b84aa1d5ebccad56cd","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"},"sharerjs":true,"table":{"sort":true},"twemoji":true};</script><script type="text/javascript" src="/js/giscus.min.js" defer></script><script type="text/javascript" src="/lib/twemoji/twemoji.min.js" defer></script><script type="text/javascript" src="/js/twemoji.min.js" defer></script><script type="text/javascript" src="/lib/lightgallery/lightgallery.min.js"></script><script type="text/javascript" src="/lib/lightgallery/lg-thumbnail.min.js"></script><script type="text/javascript" src="/lib/lightgallery/lg-zoom.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js" defer></script><script type="text/javascript" src="/lib/katex/auto-render.min.js" defer></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js" defer></script><script type="text/javascript" src="/lib/katex/mhchem.min.js" defer></script><script type="text/javascript" src="/js/katex.min.js" defer></script><link rel="stylesheet" href="/lib/lightgallery/lightgallery.min.css"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/katex/copy-tex.min.css">
         <noscript><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"></noscript></div>
 </body>
 
