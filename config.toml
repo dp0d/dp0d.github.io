@@ -108,7 +108,7 @@ enableEmoji = true
         weight = 9
     [languages.zh-cn.params]
       # 网站描述
-      description = "dp0d's blog to share life as well as technology of nlp."
+      description = "dp0d's blog,where to share life as well as technology of nlp."
       # 网站关键词
       keywords = ["Theme", "Hugo"]
       # 应用图标配置
@@ -512,22 +512,22 @@ enableEmoji = true
         lightTheme = "github-light"
         darkTheme = "github-dark"
     
+      # giscus comment config (https://giscus.app/)
       # giscus comment 评论系统设置 (https://giscus.app/)
       [params.page.comment.giscus]
         enable = true
         # owner/repo
         dataRepo = "dp0d/dp0d.github.io"
         dataRepoId = "R_kgDOHB3uWw"
-        dataCategory = "og:title"
+        dataCategory = "General"
         dataCategoryId = "DIC_kwDOHB3uW84COZbL"
         dataMapping = "title"
         dataReactionsEnabled = "1"
-        dataEmitMetadata = "1"
+        dataEmitMetadata = "0"
         dataInputPosition = "top"
         lightTheme = "light"
         darkTheme = "dark"
         dataLang = "zh-CN"
-        dataLoading="lazy"
 
 
 
