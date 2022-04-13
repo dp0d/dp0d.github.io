@@ -87,7 +87,21 @@ $$
 
 {{< /math >}}
 
-### b.了解神经网络
+### b. 了解连式法则
+
+如果将复合函数f(g(x))对x求导，需要使用链式法则，
+$$
+\frac{\partial f(g(x))}{\partial x} = \frac{\partial f(g(x))}{\partial g(x)} \frac{\partial g(x)}{\partial x}
+$$
+
+
+举个栗子，
+$$
+\frac{\partial e^{-x}}{\partial x} = \frac{\partial e^{-x}}{\partial (-x)} \frac{\partial (-x)}{\partial x}=e^{-x}\cdot(-1) = -e^{-x}
+$$
+这也是神经网络根据结果来更新前面n层参数的基础。
+
+### c.了解神经网络
 
 如下图所示，这是一个神经网络👇
 

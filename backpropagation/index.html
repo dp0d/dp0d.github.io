@@ -10,7 +10,7 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://dp0d.github.io/backpropagation/" /><meta property="og:image" content="https://dp0d.github.io/images/logo.png"/><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2022-03-18T11:29:42+08:00" />
-<meta property="article:modified_time" content="2022-03-20T21:05:15+08:00" /><meta property="og:site_name" content="dp0d&#39;s blog" />
+<meta property="article:modified_time" content="2022-04-07T11:15:44+08:00" /><meta property="og:site_name" content="dp0d&#39;s blog" />
 
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://dp0d.github.io/images/logo.png"/>
@@ -37,8 +37,8 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/dp0d.github.io\/backpropagation\/"
-        },"image": ["https:\/\/dp0d.github.io\/images\/logo.png"],"genre": "posts","wordcount":  2398 ,
-        "url": "https:\/\/dp0d.github.io\/backpropagation\/","datePublished": "2022-03-18T11:29:42+08:00","dateModified": "2022-03-20T21:05:15+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+        },"image": ["https:\/\/dp0d.github.io\/images\/logo.png"],"genre": "posts","wordcount":  2488 ,
+        "url": "https:\/\/dp0d.github.io\/backpropagation\/","datePublished": "2022-03-18T11:29:42+08:00","dateModified": "2022-04-07T11:15:44+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "dp0d","logo": "https:\/\/dp0d.github.io\/images\/logo.png"},"author": {
                 "@type": "Person",
@@ -136,7 +136,8 @@
     <li><a href="#前向传播推导">前向传播推导</a>
       <ul>
         <li><a href="#a-了解矩阵乘法">a. 了解矩阵乘法</a></li>
-        <li><a href="#b了解神经网络">b.了解神经网络</a></li>
+        <li><a href="#b-了解连式法则">b. 了解连式法则</a></li>
+        <li><a href="#c了解神经网络">c.了解神经网络</a></li>
       </ul>
     </li>
     <li><a href="#误差反向传播">误差反向传播</a></li>
@@ -146,7 +147,7 @@
             <div class="post-meta-line">
                 <span class="post-author"><i class="author fas fa-user-circle fa-fw"></i><a href="https://github.com/dp0d" title="Author" target="_blank" rel="noopener noreffer author" class="author">dp0d</a>
                 </span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-03-18">2022-03-18</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2022-03-20">2022-03-20</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 2398 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-03-18">2022-03-18</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2022-04-07">2022-04-07</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 2488 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 5 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
@@ -159,7 +160,8 @@
     <li><a href="#前向传播推导">前向传播推导</a>
       <ul>
         <li><a href="#a-了解矩阵乘法">a. 了解矩阵乘法</a></li>
-        <li><a href="#b了解神经网络">b.了解神经网络</a></li>
+        <li><a href="#b-了解连式法则">b. 了解连式法则</a></li>
+        <li><a href="#c了解神经网络">c.了解神经网络</a></li>
       </ul>
     </li>
     <li><a href="#误差反向传播">误差反向传播</a></li>
@@ -233,8 +235,18 @@ $$
 $$
 
 
-<h3 id="b了解神经网络" class="headerLink">
-    <a href="#b%e4%ba%86%e8%a7%a3%e7%a5%9e%e7%bb%8f%e7%bd%91%e7%bb%9c" class="header-mark"></a>b.了解神经网络</h3><p>如下图所示，这是一个神经网络👇</p>
+<h3 id="b-了解连式法则" class="headerLink">
+    <a href="#b-%e4%ba%86%e8%a7%a3%e8%bf%9e%e5%bc%8f%e6%b3%95%e5%88%99" class="header-mark"></a>b. 了解连式法则</h3><p>如果将复合函数f(g(x))对x求导，需要使用链式法则，
+$$
+\frac{\partial f(g(x))}{\partial x} = \frac{\partial f(g(x))}{\partial g(x)} \frac{\partial g(x)}{\partial x}
+$$</p>
+<p>举个栗子，
+$$
+\frac{\partial e^{-x}}{\partial x} = \frac{\partial e^{-x}}{\partial (-x)} \frac{\partial (-x)}{\partial x}=e^{-x}\cdot(-1) = -e^{-x}
+$$
+这也是神经网络根据结果来更新前面n层参数的基础。</p>
+<h3 id="c了解神经网络" class="headerLink">
+    <a href="#c%e4%ba%86%e8%a7%a3%e7%a5%9e%e7%bb%8f%e7%bd%91%e7%bb%9c" class="header-mark"></a>c.了解神经网络</h3><p>如下图所示，这是一个神经网络👇</p>
 <p><img
         class="lazyload"
         data-src="Sample_Neural_Network.png"
@@ -443,8 +455,8 @@ $$
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>更新于 2022-03-20&nbsp;<a class="git-hash" href="https://github.com/dp0d/dp0d.github.io/commit/b00d40c7709e9e9ab84936fe8323e6701eddc19c" target="_blank" title="commit by draftpaperofgod(1171612379@qq.com) b00d40c7709e9e9ab84936fe8323e6701eddc19c: update" rel="noopener noreferrer">
-                                    <i class="fas fa-hashtag fa-fw"></i>b00d40c</a></span>
+                <span>更新于 2022-04-07&nbsp;<a class="git-hash" href="https://github.com/dp0d/dp0d.github.io/commit/7916cad51de8e49dfc033367a26d3b42f4ba83ef" target="_blank" title="commit by dp0d(draftpaperofgod@gmailcom) 7916cad51de8e49dfc033367a26d3b42f4ba83ef: update" rel="noopener noreferrer">
+                                    <i class="fas fa-hashtag fa-fw"></i>7916cad</a></span>
             </div>
             <div class="post-info-license"></div>
         </div>
