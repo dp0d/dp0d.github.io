@@ -143,7 +143,7 @@ curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer 
 ```
 
 ```bas
-echo 'export PATH="/home/oliver/.pyenv/bin:$PATH"' >> ~/.bashrc
+echo 'export PATH="$HOME/.pyenv/bin:$PATH"' >> ~/.bashrc
 ```
 
 
