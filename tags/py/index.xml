@@ -1,0 +1,15 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Python - 标签 - dp0d&#39;s blog</title>
+        <link>https://dp0d.github.io/tags/py/</link>
+        <description>Python - 标签 - dp0d&#39;s blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>draftpaperofgod@gmail.com (dp0d)</managingEditor>
+            <webMaster>draftpaperofgod@gmail.com (dp0d)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><atom:link href="https://dp0d.github.io/tags/py/" rel="self" type="application/rss+xml" /><item>
+    <title>Python中常见的文件读写</title>
+    <link>https://dp0d.github.io/file_read_py/</link>
+    <pubDate>Sat, 26 Mar 2022 10:02:10 &#43;0800</pubDate><author>
+        <name>dp0d</name>
+    </author><guid>https://dp0d.github.io/file_read_py/</guid>
+    <description><![CDATA[说明 本文根据常见的读写进行方法阐述，本文实验环境基于python3.8，并需要提前告知各类读写方式的文件操作效果，如下列出： r : 读取文件，文]]></description>
+</item></channel>
+</rss>
