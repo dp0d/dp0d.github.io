@@ -6,7 +6,7 @@ date: 2022-03-26T10:02:10+08:00
 lastmod: 2022-03-26T10:02:10+08:00
 authors: []
 description: ""
-tags: [python]
+tags: [py]
 categories: [tutorial]
 series: []
 
@@ -68,6 +68,13 @@ with open('filename.csv','r',encoding='utf-8') as f2:
         list1.append(i[0])
         list2.append(i[1])
 print('文件读取完成……')
+
+# 其他模式
+list = [[1,2,3],[4,5,6]]
+with open('filename.csv', "w", newline='', encoding='utf-8') as f1:
+    writer = csv.writer(f1, delimiter=' ')
+    writer.writerows(list)
+print('文件写入完成……')
 ```
 ### pandas库
 #### 读出多个文件并按列连接写入一个文件
@@ -162,4 +169,3 @@ with open('filename.json', 'r') as f2:
         crossorigin="anonymous"
         async>
 </script>
-

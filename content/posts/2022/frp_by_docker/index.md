@@ -406,3 +406,16 @@ OK，通了
 ##### 附加篇，按需取用
 
 https://blog.csdn.net/weixin_43975924/article/details/104046790
+
+###### SSH映射
+
+情景1：用户通过主机A访问C
+
+<img src="MD_img/image-20220414185407978.png" alt="image-20220414185407978" style="zoom:67%;" />
+
+待续……
+
+
+
+
+
