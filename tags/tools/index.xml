@@ -4,5 +4,11 @@
         <link>https://dp0d.github.io/tags/tools/</link>
         <description>工具 - 标签 - dp0d&#39;s blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>draftpaperofgod@gmail.com (dp0d)</managingEditor>
-            <webMaster>draftpaperofgod@gmail.com (dp0d)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><atom:link href="https://dp0d.github.io/tags/tools/" rel="self" type="application/rss+xml" /></channel>
+            <webMaster>draftpaperofgod@gmail.com (dp0d)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><atom:link href="https://dp0d.github.io/tags/tools/" rel="self" type="application/rss+xml" /><item>
+    <title>记一次clash for linux配置</title>
+    <link>https://dp0d.github.io/clash/</link>
+    <pubDate>Sat, 23 Apr 2022 18:49:23 &#43;0800</pubDate><author>
+                    <name>dp0d</name><uri>https://dp0d.github.io/authors/dp0d</uri></author><guid>https://dp0d.github.io/clash/</guid>
+    <description><![CDATA[室友帮忙弄的clash又不行了，今天打算自己修修（重装）这个梯子软件，记录一下。 现在的病情就是谷歌上不去，如下图所示。 clash的网页配置端]]></description>
+</item></channel>
 </rss>

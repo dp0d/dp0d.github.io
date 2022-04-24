@@ -5,6 +5,12 @@
         <description>教程 - 分类 - dp0d&#39;s blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>draftpaperofgod@gmail.com (dp0d)</managingEditor>
             <webMaster>draftpaperofgod@gmail.com (dp0d)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><atom:link href="https://dp0d.github.io/categories/tutorial/" rel="self" type="application/rss+xml" /><item>
+    <title>记一次clash for linux配置</title>
+    <link>https://dp0d.github.io/clash/</link>
+    <pubDate>Sat, 23 Apr 2022 18:49:23 &#43;0800</pubDate><author>
+                    <name>dp0d</name><uri>https://dp0d.github.io/authors/dp0d</uri></author><guid>https://dp0d.github.io/clash/</guid>
+    <description><![CDATA[室友帮忙弄的clash又不行了，今天打算自己修修（重装）这个梯子软件，记录一下。 现在的病情就是谷歌上不去，如下图所示。 clash的网页配置端]]></description>
+</item><item>
     <title>Python中常见的文件读写</title>
     <link>https://dp0d.github.io/file_read_py/</link>
     <pubDate>Sat, 26 Mar 2022 10:02:10 &#43;0800</pubDate><author>
