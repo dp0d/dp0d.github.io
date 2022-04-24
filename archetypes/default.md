@@ -4,24 +4,16 @@ title: "{{ replace .TranslationBaseName "-" " " | title }}"
 subtitle: ""
 date: {{ .Date }}
 lastmod: {{ .Date }}
-authors: []
 description: ""
 
-tags: []
-categories: []
+tags: [] # env linux mac py tools win
+categories: [] # tutorial
 series: []
-
-hiddenFromHomePage: false
-hiddenFromSearch: false
-
-featuredImage: ""
-featuredImagePreview: ""
 
 toc:
   enable: true
 math:
-  enable: false
-lightgallery: false
+  enable: true
 license: ""
 ---
 

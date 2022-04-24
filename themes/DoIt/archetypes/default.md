@@ -1,24 +1,27 @@
 ---
+draft: true
 title: "{{ replace .TranslationBaseName "-" " " | title }}"
 subtitle: ""
 date: {{ .Date }}
 lastmod: {{ .Date }}
-draft: true
-authors: [dp0d]
+authors: []
 description: ""
 
-tags: [] # env linux mac py tools win
-categories: [] # tutorial
+tags: []
+categories: []
 series: []
+
+hiddenFromHomePage: false
+hiddenFromSearch: false
+
+featuredImage: ""
+featuredImagePreview: ""
 
 toc:
   enable: true
 math:
-  enable: true
+  enable: false
 lightgallery: false
 license: ""
 ---
 
-<!--more-->
-
-TODO
