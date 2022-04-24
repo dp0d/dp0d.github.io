@@ -4,13 +4,14 @@
         <link>https://dp0d.github.io/</link>
         <description>dp0d&#39;s blog,where to share life as well as technology of nlp.</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>draftpaperofgod@gmail.com (dp0d)</managingEditor>
-            <webMaster>draftpaperofgod@gmail.com (dp0d)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sat, 23 Apr 2022 18:49:23 &#43;0800</lastBuildDate>
+            <webMaster>draftpaperofgod@gmail.com (dp0d)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sun, 24 Apr 2022 13:52:59 &#43;0800</lastBuildDate>
             <atom:link href="https://dp0d.github.io/index.xml" rel="self" type="application/rss+xml" />
         <item>
-    <title>记一次clash for linux配置</title>
+    <title>记一次Clash for Linux 的配置</title>
     <link>https://dp0d.github.io/clash/</link>
-    <pubDate>Sat, 23 Apr 2022 18:49:23 &#43;0800</pubDate><author>
-                    <name>dp0d</name><uri>https://dp0d.github.io/authors/dp0d</uri></author><guid>https://dp0d.github.io/clash/</guid>
+    <pubDate>Sun, 24 Apr 2022 13:52:59 &#43;0800</pubDate><author>
+        <name>dp0d</name>
+    </author><guid>https://dp0d.github.io/clash/</guid>
     <description><![CDATA[室友帮忙弄的clash又不行了，今天打算自己修修（重装）这个梯子软件，记录一下。 现在的病情就是谷歌上不去，如下图所示。 clash的网页配置端]]></description>
 </item><item>
     <title>语言模型预训练方法</title>
