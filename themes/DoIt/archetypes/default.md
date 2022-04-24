@@ -4,23 +4,17 @@ subtitle: ""
 date: {{ .Date }}
 lastmod: {{ .Date }}
 draft: true
-authors: []
+authors: [dp0d]
 description: ""
 
-tags: []
-categories: []
+tags: [] # env linux mac py tools win
+categories: [] # tutorial
 series: []
-
-hiddenFromHomePage: false
-hiddenFromSearch: false
-
-featuredImage: ""
-featuredImagePreview: ""
 
 toc:
   enable: true
 math:
-  enable: false
+  enable: true
 lightgallery: false
 license: ""
 ---
