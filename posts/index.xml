@@ -5,6 +5,13 @@
         <description>所有文章 | dp0d&#39;s blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>draftpaperofgod@gmail.com (dp0d)</managingEditor>
             <webMaster>draftpaperofgod@gmail.com (dp0d)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sun, 24 Apr 2022 13:52:59 &#43;0800</lastBuildDate><atom:link href="https://dp0d.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>记一次Clash for Linux 的配置</title>
+    <link>https://dp0d.github.io/clash/</link>
+    <pubDate>Sun, 24 Apr 2022 13:52:59 &#43;0800</pubDate><author>
+        <name>dp0d</name>
+    </author><guid>https://dp0d.github.io/clash/</guid>
+    <description><![CDATA[室友帮忙弄的clash又不行了，今天打算自己修修（重装）这个梯子软件，记录一下。 现在的病情就是谷歌上不去，如下图所示。 clash的网页配置端]]></description>
+</item><item>
     <title>语言模型预训练方法</title>
     <link>https://dp0d.github.io/lm_pretraining/</link>
     <pubDate>Mon, 18 Apr 2022 11:04:18 &#43;0800</pubDate><author>
