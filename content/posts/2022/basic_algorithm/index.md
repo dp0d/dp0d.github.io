@@ -1,5 +1,5 @@
 ---
-draft: true
+draft: false
 title: "好用的Python基础算法应用技巧"
 subtitle: "将日常使用的python技巧记录下来"
 date: 2022-04-26T19:17:07+08:00
