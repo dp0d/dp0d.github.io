@@ -61,7 +61,7 @@ lis_b = [3,4,1,2]
 
 new_lis_a = []
 new_lis_b = []
-c = sorted(enumerate(lis),key = lambda x:x[1]) # x[1] 根据元组的第二个元素排序
+c = sorted(enumerate(lis_a),key = lambda x:x[1]) # x[1] 根据元组的第二个元素排序
 
 for i in range(len(c)):
     new_lis_a.append(c[i][1])
