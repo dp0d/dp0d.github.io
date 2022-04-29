@@ -22,6 +22,8 @@ license: ""
 ## 相对熵（也称KL散度）
 
 [**维基百科：**](https://zh.wikipedia.org/wiki/%E7%9B%B8%E5%AF%B9%E7%86%B5)KL散度（Kullback-Leibler divergence，简称KLD），在讯息系统中称为相对熵（relative entropy），在连续时间序列中称为随机性（randomness），在统计模型推断中称为讯息增益（information gain）。也称讯息散度（information divergence）。它是两个几率分布$P$和$Q$差别的非对称性的度量。 KL散度是用来度量使用基于$Q$的分布来编码服从$P$的分布的样本所需的额外的平均比特数，注意$P$,$Q$先后顺序。
+
+{{< math >}}
 $$
 \begin{equation}
 \begin{aligned}
@@ -31,6 +33,8 @@ D_{KL}(P||Q) &= -\sum_iP(i)ln\frac{Q(i)}{P(i)} \\
 \end{aligned}
 \end{equation}
 $$
+{{<\ math >}}
+
 相对熵的值为非负数：
 $$
 D_{KL}(P||Q)\geq 0
@@ -60,6 +64,8 @@ $$
 J=-\frac{1}{N}\sum_{i=1}^{N}[y\log\hat{y}+(1-y)\log(1-\hat{y})]
 $$
 假设真实分布为$p(i)$(真实标签$y$的分布)，模型预测的分布为$q(i)$(预测标签$\hat{y}$的分布，推导如下，
+
+{{< math >}}
 $$
 \begin{equation}
 \begin{aligned}
@@ -72,7 +78,11 @@ H(p,q) &=-\sum_x p(x)\cdot \log({q(x)}) \\
 \end{aligned}
 \end{equation}
 $$
+{{<\ math >}}
+
 最后乘上$\frac{1}{N}$进行平均操作。
+
+
 
 ### 多分类交叉熵
 
