@@ -4,9 +4,16 @@
         <link>https://dp0d.github.io/</link>
         <description>dp0d&#39;s blog,where to share life as well as technology of nlp.</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>draftpaperofgod@gmail.com (dp0d)</managingEditor>
-            <webMaster>draftpaperofgod@gmail.com (dp0d)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Tue, 26 Apr 2022 19:17:07 &#43;0800</lastBuildDate>
+            <webMaster>draftpaperofgod@gmail.com (dp0d)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Fri, 29 Apr 2022 10:34:04 &#43;0800</lastBuildDate>
             <atom:link href="https://dp0d.github.io/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>Loss_function</title>
+    <link>https://dp0d.github.io/loss_function/</link>
+    <pubDate>Fri, 29 Apr 2022 10:34:04 &#43;0800</pubDate><author>
+        <name>dp0d</name>
+    </author><guid>https://dp0d.github.io/loss_function/</guid>
+    <description><![CDATA[经典损失函数相对熵（也称KL散度）维基百科：KL散度（Kullback-Leibler divergence，简称KLD），在讯息系统中称为相]]></description>
+</item><item>
     <title>好用的Python基础算法应用技巧</title>
     <link>https://dp0d.github.io/basic_algorithm/</link>
     <pubDate>Tue, 26 Apr 2022 19:17:07 &#43;0800</pubDate><author>
