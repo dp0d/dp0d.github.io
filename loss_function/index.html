@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noodp" />
-    <title class="pjax-title">Loss_function - dp0d&#39;s blog</title><meta name="Description" content="dp0d&#39;s blog,where to share life as well as technology of nlp."><meta property="og:title" content="Loss_function" />
+    <title class="pjax-title">损失函数 - dp0d&#39;s blog</title><meta name="Description" content="dp0d&#39;s blog,where to share life as well as technology of nlp."><meta property="og:title" content="损失函数" />
 <meta property="og:description" content="经典损失函数相对熵（也称KL散度）维基百科：KL散度（Kullback-Leibler divergence，简称KLD），在讯息系统中称为相" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://dp0d.github.io/loss_function/" /><meta property="og:image" content="https://dp0d.github.io/images/logo.png"/><meta property="article:section" content="posts" />
@@ -15,7 +15,7 @@
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://dp0d.github.io/images/logo.png"/>
 
-<meta name="twitter:title" content="Loss_function"/>
+<meta name="twitter:title" content="损失函数"/>
 <meta name="twitter:description" content="经典损失函数相对熵（也称KL散度）维基百科：KL散度（Kullback-Leibler divergence，简称KLD），在讯息系统中称为相"/>
 <meta name="application-name" content="dp0d&#39;s blog">
 <meta name="apple-mobile-web-app-title" content="dp0d&#39;s blog">
@@ -32,12 +32,12 @@
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
-        "headline": "Loss_function",
+        "headline": "损失函数",
         "inLanguage": "zh-CN",
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/dp0d.github.io\/loss_function\/"
-        },"image": ["https:\/\/dp0d.github.io\/images\/logo.png"],"genre": "posts","keywords": "math","wordcount":  1003 ,
+        },"image": ["https:\/\/dp0d.github.io\/images\/logo.png"],"genre": "posts","keywords": "math","wordcount":  939 ,
         "url": "https:\/\/dp0d.github.io\/loss_function\/","datePublished": "2022-04-29T10:34:04+08:00","dateModified": "2022-04-29T10:34:04+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "dp0d","logo": "https:\/\/dp0d.github.io\/images\/logo.png"},"author": {
@@ -132,16 +132,25 @@
         <h2 class="toc-title">目录</h2>
         <div class="toc-content" id="toc-content-auto"><nav id="TableOfContents">
   <ul>
-    <li><a href="#经典损失函数">经典损失函数</a></li>
-    <li><a href="#相对熵也称kl散度">相对熵（也称KL散度）</a></li>
+    <li><a href="#经典损失函数">经典损失函数</a>
+      <ul>
+        <li><a href="#相对熵也称kl散度">相对熵（也称KL散度）</a></li>
+        <li><a href="#交叉熵cross-entropy">交叉熵——Cross Entropy</a>
+          <ul>
+            <li><a href="#二分类交叉熵">二分类交叉熵</a></li>
+            <li><a href="#多分类交叉熵">多分类交叉熵</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
   </ul>
 </nav></div>
-    </div><script>document.getElementsByTagName("main")[0].setAttribute("pageStyle", "normal")</script><script>document.getElementsByTagName("main")[0].setAttribute("autoTOC", "true")</script><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Loss_function</h1><h2 class="single-subtitle">实际任务中使用到的损失函数记录</h2><div class="post-meta">
+    </div><script>document.getElementsByTagName("main")[0].setAttribute("pageStyle", "normal")</script><script>document.getElementsByTagName("main")[0].setAttribute("autoTOC", "true")</script><article class="page single"><h1 class="single-title animate__animated animate__flipInX">损失函数</h1><h2 class="single-subtitle">实际任务中使用到的损失函数记录</h2><div class="post-meta">
             <div class="post-meta-line">
                 <span class="post-author"><i class="author fas fa-user-circle fa-fw"></i><a href="https://github.com/dp0d" title="Author" target="_blank" rel="noopener noreffer author" class="author">dp0d</a>
                 </span>&nbsp;<span class="post-category">收录于 </span>&nbsp;<span class="post-category">类别 <a href="/categories/machine_learning/"><i class="far fa-folder fa-fw"></i>机器学习</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-04-29">2022-04-29</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2022-04-29">2022-04-29</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1003 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 3 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-04-29">2022-04-29</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2022-04-29">2022-04-29</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 939 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 2 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -149,55 +158,59 @@
                 </div>
                 <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
-    <li><a href="#经典损失函数">经典损失函数</a></li>
-    <li><a href="#相对熵也称kl散度">相对熵（也称KL散度）</a></li>
+    <li><a href="#经典损失函数">经典损失函数</a>
+      <ul>
+        <li><a href="#相对熵也称kl散度">相对熵（也称KL散度）</a></li>
+        <li><a href="#交叉熵cross-entropy">交叉熵——Cross Entropy</a>
+          <ul>
+            <li><a href="#二分类交叉熵">二分类交叉熵</a></li>
+            <li><a href="#多分类交叉熵">多分类交叉熵</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><h2 id="经典损失函数" class="headerLink">
-    <a href="#%e7%bb%8f%e5%85%b8%e6%8d%9f%e5%a4%b1%e5%87%bd%e6%95%b0" class="header-mark"></a>经典损失函数</h2><h2 id="相对熵也称kl散度" class="headerLink">
-    <a href="#%e7%9b%b8%e5%af%b9%e7%86%b5%e4%b9%9f%e7%a7%b0kl%e6%95%a3%e5%ba%a6" class="header-mark"></a>相对熵（也称KL散度）</h2><p><a href="https://zh.wikipedia.org/wiki/%E7%9B%B8%E5%AF%B9%E7%86%B5" target="_blank" rel="noopener noreffer"><strong>维基百科：</strong></a>KL散度（Kullback-Leibler divergence，简称KLD），在讯息系统中称为相对熵（relative entropy），在连续时间序列中称为随机性（randomness），在统计模型推断中称为讯息增益（information gain）。也称讯息散度（information divergence）。它是两个几率分布$P$和$Q$差别的非对称性的度量。 KL散度是用来度量使用基于$Q$的分布来编码服从$P$的分布的样本所需的额外的平均比特数，注意$P$,$Q$先后顺序。</p>
+    <a href="#%e7%bb%8f%e5%85%b8%e6%8d%9f%e5%a4%b1%e5%87%bd%e6%95%b0" class="header-mark"></a>经典损失函数</h2><h3 id="相对熵也称kl散度" class="headerLink">
+    <a href="#%e7%9b%b8%e5%af%b9%e7%86%b5%e4%b9%9f%e7%a7%b0kl%e6%95%a3%e5%ba%a6" class="header-mark"></a>相对熵（也称KL散度）</h3><p><a href="https://zh.wikipedia.org/wiki/%E7%9B%B8%E5%AF%B9%E7%86%B5" target="_blank" rel="noopener noreffer"><strong>维基百科</strong></a>：KL散度（Kullback-Leibler divergence，简称KLD），在讯息系统中称为相对熵（relative entropy），在连续时间序列中称为随机性（randomness），在统计模型推断中称为讯息增益（information gain）。也称讯息散度（information divergence）。它是两个几率分布$P$和$Q$差别的非对称性的度量。 KL散度是用来度量使用基于$Q$的分布来编码服从$P$的分布的样本所需的额外的平均比特数，注意$P$,$Q$先后顺序。</p>
 
 $$
 \begin{equation}
 \begin{aligned}
 D_{KL}(P||Q) &= -\sum_iP(i)ln\frac{Q(i)}{P(i)} \\
 			&= \sum_iP(i)ln\frac{P(i)}{Q(i)}
-
 \end{aligned}
 \end{equation}
 $$
 
-
-相对熵的值为非负数：
-$$
+<p>相对熵的值为非负数：</p>
+<p>$$
 D_{KL}(P||Q)\geq 0
 $$
-另，概率都为零时取零。
+另，概率都为零时取零。</p>
+<h3 id="交叉熵cross-entropy" class="headerLink">
+    <a href="#%e4%ba%a4%e5%8f%89%e7%86%b5cross-entropy" class="header-mark"></a>交叉熵——Cross Entropy</h3><p><strong><a href="https://zh.m.wikipedia.org/wiki/%E4%BA%A4%E5%8F%89%E7%86%B5" target="_blank" rel="noopener noreffer">维基百科</a></strong>：在信息论中，基于相同事件测度的两个概率分布$p$和$q$的交叉熵是指，当基于一个“非自然”（相对于“真实”分布$p$而言）的概率分布$q$进行编码时，在事件集合中唯一标识一个事件所需要的平均比特数（bit）。</p>
+<p>给定两个概率分布$p$和$q$，$p$相对于$q$的交叉熵定义为：</p>
 
-## 交叉熵——Cross Entropy
-
-[**维基百科：**](https://zh.wikipedia.org/wiki/%E7%9B%B8%E5%AF%B9%E7%86%B5)在信息论中，基于相同事件测度的两个概率分布$p$和$q$的交叉熵是指，当基于一个“非自然”（相对于“真实”分布$p$而言）的概率分布$q$进行编码时，在事件集合中唯一标识一个事件所需要的平均比特数（bit）。
-
-给定两个概率分布$p$和$q$，$p$相对于$q$的交叉熵定义为：
 $$
 H(p,q) = E_p[-\log q] = H(p) + D_{KL}(p||q),
 $$
-其中，$H(p)$是$p$的熵，$D_{KL}(p||q)$是从$p$与$q$的KL散度（也被称为$p$，相对于$q$的相对熵）。
 
-对于离散分布$p$和$q$，交叉熵可以定义为：
+<p>其中，$H(p)$是$p$的熵，$D_{KL}(p||q)$是从$p$与$q$的KL散度（也被称为$p$，相对于$q$的相对熵）。</p>
+<p>对于离散分布$p$和$q$，交叉熵可以定义为：</p>
+
 $$
 H(p,q)=-\sum_xp(x)\log q(x).
 $$
-其中求和是指在样本空间进行计算求和。记住这个计算方法，因为后续介绍分类任务的交叉熵损失是基于此的。
 
-### 二分类交叉熵
-
-假设在二分类任务时，真实标签$y$和预测标签$\hat{y}$取值空间为$\{0,1\}$。根据交叉熵定义，可以将交叉熵损失函数定义如下。
+<p>其中求和是指在样本空间进行计算求和。记住这个计算方法，因为后续介绍分类任务的交叉熵损失是基于此的。</p>
+<h4 id="二分类交叉熵" class="headerLink">
+    <a href="#%e4%ba%8c%e5%88%86%e7%b1%bb%e4%ba%a4%e5%8f%89%e7%86%b5" class="header-mark"></a>二分类交叉熵</h4><p>假设在二分类任务时，真实标签$y$和预测标签$\hat{y}$取值空间为${0,1}$。根据交叉熵定义，可以将交叉熵损失函数定义如下。
 $$
 J=-\frac{1}{N}\sum_{i=1}^{N}[y\log\hat{y}+(1-y)\log(1-\hat{y})]
 $$
-假设真实分布为$p(i)$(真实标签$y$的分布)，模型预测的分布为$q(i)$(预测标签$\hat{y}$的分布，推导如下，
-
+假设真实分布为$p(i)$(真实标签$y$的分布)，模型预测的分布为$q(i)$(预测标签$\hat{y}$的分布，推导如下，</p>
 
 $$
 \begin{equation}
@@ -212,18 +225,12 @@ H(p,q) &=-\sum_x p(x)\cdot \log({q(x)}) \\
 \end{equation}
 $$
 
-
-最后乘上$\frac{1}{N}$进行平均操作。
-
-
-
-### 多分类交叉熵
-
-与二分类交叉熵类似，多分类交叉熵同样是计算标签分布的熵值，基于此，我们需要把多分类考虑在内，也就是多一步求和，即每个类别上的交叉熵求和并在样本空间上进行求和，基于二分类交叉熵的参数定义，定义分类的标签种类为$n$，则多分类交叉熵损失可以表示如下
+<p>最后乘上$\frac{1}{N}$进行平均操作。</p>
+<h4 id="多分类交叉熵" class="headerLink">
+    <a href="#%e5%a4%9a%e5%88%86%e7%b1%bb%e4%ba%a4%e5%8f%89%e7%86%b5" class="header-mark"></a>多分类交叉熵</h4><p>与二分类交叉熵类似，多分类交叉熵同样是计算标签分布的熵值，基于此，我们需要把多分类考虑在内，也就是多一步求和，即每个类别上的交叉熵求和并在样本空间上进行求和，基于二分类交叉熵的参数定义，定义分类的标签种类为$n$，则多分类交叉熵损失可以表示如下
 $$
 J = -\frac{1}{N}\sum_{i=1}^N\sum_{j=1}^ny_j^{(i)}\cdot \log\hat{y}_j^{(i)}
-$$
-
+$$</p>
 </div>
 
         <div class="sponsor">
@@ -246,10 +253,10 @@ $$
         </div>
         <div class="post-info-line">
             <div class="post-info-md"><span><a class="link-to-mardown" href=/loss_function/index.md target="_blank" rel="noopener noreferrer">阅读原始文档</a>
-                    </span><span>|&nbsp;<a class="link-to-report" href=https://github.com/dp0d/dp0d.github.io/issues/new?title=[bug]%20Loss_function&body=|Field|Value|%0A|-|-|%0A|Title|Loss_function|%0A|Url|https://dp0d.github.io/loss_function/|%0A|Filename|https://github.com/dp0d/dp0d.github.io/posts/2022/Loss_function.md| target="_blank" rel="noopener noreferrer">报告问题</a>
+                    </span><span>|&nbsp;<a class="link-to-report" href=https://github.com/dp0d/dp0d.github.io/issues/new?title=[bug]%20%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0&body=|Field|Value|%0A|-|-|%0A|Title|%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0|%0A|Url|https://dp0d.github.io/loss_function/|%0A|Filename|https://github.com/dp0d/dp0d.github.io/posts/2022/Loss_function.md| target="_blank" rel="noopener noreferrer">报告问题</a>
                     </span></div>
             <div class="post-info-share">
-                <span><a href="#" onclick="return false;" title="分享到 Twitter" data-sharer="twitter" data-url="https://dp0d.github.io/loss_function/" data-title="Loss_function" data-hashtags="math"><i class="fab fa-twitter fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Facebook" data-sharer="facebook" data-url="https://dp0d.github.io/loss_function/" data-hashtag="math"><i class="fab fa-facebook-square fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 微博" data-sharer="weibo" data-url="https://dp0d.github.io/loss_function/" data-title="Loss_function"><i class="fab fa-weibo fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Telegram" data-sharer="telegram" data-url="https://dp0d.github.io/loss_function/" data-title="Loss_function" data-web><i class="fab fa-telegram-plane fa-fw"></i></a></span>
+                <span><a href="#" onclick="return false;" title="分享到 Twitter" data-sharer="twitter" data-url="https://dp0d.github.io/loss_function/" data-title="损失函数" data-hashtags="math"><i class="fab fa-twitter fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Facebook" data-sharer="facebook" data-url="https://dp0d.github.io/loss_function/" data-hashtag="math"><i class="fab fa-facebook-square fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 微博" data-sharer="weibo" data-url="https://dp0d.github.io/loss_function/" data-title="损失函数"><i class="fab fa-weibo fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Telegram" data-sharer="telegram" data-url="https://dp0d.github.io/loss_function/" data-title="损失函数" data-web><i class="fab fa-telegram-plane fa-fw"></i></a></span>
             </div>
         </div>
     </div>
