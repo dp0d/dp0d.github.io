@@ -2,33 +2,22 @@
     xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     ><url>
-            <loc>https://dp0d.github.io/categories/</loc><lastmod>2022-04-29T10:34:04&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://dp0d.github.io/</loc><lastmod>2022-04-29T10:34:04&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://dp0d.github.io/tags/math/</loc><lastmod>2022-04-29T10:34:04&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://dp0d.github.io/posts/</loc><lastmod>2022-04-29T10:34:04&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://dp0d.github.io/tags/</loc><lastmod>2022-04-29T10:34:04&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://dp0d.github.io/loss_function/</loc><lastmod>2022-04-29T10:34:04&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://dp0d.github.io/categories/machine_learning/</loc><lastmod>2022-04-29T10:34:04&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://dp0d.github.io/tags/py/</loc><lastmod>2022-04-26T19:17:07&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://dp0d.github.io/basic_algorithm/</loc><lastmod>2022-04-26T19:17:07&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://dp0d.github.io/tags/linux/</loc><lastmod>2022-04-24T13:52:59&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://dp0d.github.io/tags/tools/</loc><lastmod>2022-04-24T13:52:59&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://dp0d.github.io/categories/tutorial/</loc><lastmod>2022-04-24T13:52:59&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://dp0d.github.io/clash/</loc><lastmod>2022-04-24T13:52:59&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://dp0d.github.io/tags/nlp/</loc><lastmod>2022-04-18T11:04:18&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url><url>
-            <loc>https://dp0d.github.io/lm_pretraining/</loc><lastmod>2022-04-18T11:04:18&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url><url>
-            <loc>https://dp0d.github.io/collection/</loc><lastmod>2022-04-04T20:18:20&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url><url>
-            <loc>https://dp0d.github.io/copyright/</loc><lastmod>2022-04-03T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url><url>
-            <loc>https://dp0d.github.io/frp_by_docker/</loc><lastmod>2022-03-27T20:19:52&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url><url>
-            <loc>https://dp0d.github.io/file_read_py/</loc><lastmod>2022-03-26T10:02:10&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url><url>
-            <loc>https://dp0d.github.io/env_management/</loc><lastmod>2022-03-22T09:11:07&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
-            <loc>https://dp0d.github.io/backpropagation/</loc><lastmod>2022-03-18T11:29:42&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://dp0d.github.io/collection/</loc><lastmod>2022-04-04T20:18:20&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://dp0d.github.io/copyright/</loc><lastmod>2022-04-03T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://dp0d.github.io/authors/</loc><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://dp0d.github.io/categories/</loc><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://dp0d.github.io/</loc><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://dp0d.github.io/tags/linux/</loc><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://dp0d.github.io/tags/mac/</loc><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://dp0d.github.io/offline/</loc><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://dp0d.github.io/tags/py/</loc><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://dp0d.github.io/series/</loc><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://dp0d.github.io/tags/</loc><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://dp0d.github.io/tags/win/</loc><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://dp0d.github.io/about/</loc><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://dp0d.github.io/tags/tools/</loc><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://dp0d.github.io/categories/tutorial/</loc><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://dp0d.github.io/friends/</loc><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://dp0d.github.io/charge/</loc><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://dp0d.github.io/categories/machine_learning/</loc><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://dp0d.github.io/tags/env/</loc><changefreq>weekly</changefreq><priority>0.5</priority></url></urlset>
