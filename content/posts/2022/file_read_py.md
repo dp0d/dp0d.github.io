@@ -44,7 +44,7 @@ w+ :   可读，可写，文件不存在自动创建，会覆盖原文件。
 
 a+ :  可读、可写，文件不存在自动创建，不会覆盖原文件，追加在末尾。
 
-# csv格式文件
+## csv格式文件
 ### csv库
 #### 列表读写
 ```python
@@ -102,7 +102,7 @@ out_csv.to_csv(outputfile, index=False)
 
 按列读入四个文件并按列合并：
 
-# txt格式文件
+## txt格式文件
 
 	注：txt格式文件可以用于存放字典。
 ```python
@@ -124,7 +124,7 @@ with open('filename.txt', 'r', encoding = 'utf-8') as f2:
 print('字典读取完成……')
 ```
 
-# pickle格式文件
+## pickle格式文件
 
 	注：pickle可以将很多格式的数据保存到一个文件中以二进制保存。重新加载之后还是之前的格式。此种方式通常用于保存生成花销较大的中间变量，以提升工作效率。
 ```python
@@ -141,7 +141,7 @@ with open('filename.pickle', 'rb') as f2:
 	var = pickle.load(f2)
 print('变量读取完成……')
 ```
-# json格式文件
+## json格式文件
 
 ```python
 # 写json文件，可以保存字典等类型的变量
