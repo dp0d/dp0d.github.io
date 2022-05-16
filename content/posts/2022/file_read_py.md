@@ -10,12 +10,6 @@ tags: [py]
 categories: [tutorial]
 series: []
 
-hiddenFromHomePage: false
-hiddenFromSearch: false
-
-featuredImage: ""
-featuredImagePreview: ""
-
 toc:
   enable: true
 math:
@@ -53,9 +47,16 @@ import csv
 list1=[1,2]
 list2=['1','2']
 with open('filename.csv', "w", newline='', encoding='utf-8') as f1:
-    writer = csv.writer(f1, delimiter=' ')
+    writer = csv.writer(f1, delimiter=',')
     writer.writerows(zip(list1,list2))
 print('文件写入完成……')
+
+# 作为两行呢
+lis = [[1,2],['1','2']]
+with open('filename.csv', "w", newline='', encoding='utf-8') as f1:
+    writer = csv.writer(f1, delimiter=',')
+    for data in lis:
+        writer.writerow(data)
 	
 	
 # 从上述写成的CSV中读出两个列表, 同样用 ' ' 空格隔开读取：
@@ -63,7 +64,7 @@ import csv
 with open('filename.csv','r',encoding='utf-8') as f2:
     list1 = []
     list2 = []  # 这里注意，之前int类型的列表写入和读取之后都会变为str类型的列表
-    reader = csv.reader(f2, delimiter = ' ')
+    reader = csv.reader(f2, delimiter = ',')
     for i in reader:
         list1.append(i[0])
         list2.append(i[1])
@@ -72,7 +73,7 @@ print('文件读取完成……')
 # 其他模式
 list = [[1,2,3],[4,5,6]]
 with open('filename.csv', "w", newline='', encoding='utf-8') as f1:
-    writer = csv.writer(f1, delimiter=' ')
+    writer = csv.writer(f1, delimiter=',')
     writer.writerows(list)
 print('文件写入完成……')
 ```
