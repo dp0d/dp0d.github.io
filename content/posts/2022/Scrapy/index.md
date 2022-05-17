@@ -5,7 +5,7 @@ subtitle: "Scrapy2.6"
 date: 2022-04-09T10:40:45+08:00
 lastmod: 2022-04-09T10:40:45+08:00
 authors: []
-description: "爬虫应该是python使用者比较重要的一门技能，学会这个也能进厂了，本项目婴儿级别，实现不了你打我。"
+description: "爬虫应该是python使用者比较重要的一门技能，学会这个也能进厂了，本项目较为详细，实现不了你打我。"
 
 tags: [Scrapy2.6]
 categories: [tutorial]
@@ -16,9 +16,9 @@ categories: [tutorial]
 
 + https://www.bilibili.com/video/BV1jx411b7E3?p=1
 
-## Scrapy框架overview
+## Scrapy框架概览
 
-使用了Twisted异步网络框架来处理网络通讯，可以加快我们的下载速度，不用自己去实现异步框架，并且包含了各种中间件接口，可以灵活完成各种需求。
+Scrapy使用了Twisted异步网络框架来处理网络通讯，可以加快我们的下载速度，不用自己去实现异步框架，并且包含了各种中间件接口，可以灵活完成各种需求。
 
 
 
@@ -36,11 +36,11 @@ categories: [tutorial]
 
 ### Scrapy工作数据流
 
-> 简略框架
++ **简略框架**
 
 ![scrapy_architecture_01](MD_img/scrapy_architecture_01.png)
 
-> 详细框架
++ **详细框架**
 
 ![scrapy_architecture_02](MD_img/scrapy_architecture_02.png)
 
@@ -785,309 +785,668 @@ scrapy crawl esf
 
 ![image-20220506104545674](MD_img/image-20220506104545674.png)
 
-## 多城市二手房详情页爬虫——下一页URL获取方式
+## 多城市二手房详情页爬虫
 
-## selenium模拟拖动验证码
+### 完整爬取流程
 
-使用时间戳命名来保存拖动的背景图片和目标图片，并用opencv来识别边界，获取准确的像素坐标，使用driver模拟拖动动作，完成验证码绕过。(如果需要高匿性质服务，建议挂上代理，由于要下载图片以及模拟网页操作，建议上稳定延迟的爬虫，最好带宽也大些，本次项目就直接用本地网络解了，未挂代理，因为我能保证本地是稳定的，当然，你也可以自己测开放代理池择优拿来用。)
+<center>从城市页拿到各城市二手房链接页的基础URL</center>
+
+![image-20220517091511727](MD_img/image-20220517091511727.png)
+
+![image-20220517091617896](MD_img/image-20220517091617896.png)
+
+<center>进入列表页拿到基本信息以及指向详情页的URL</center>
+
+![image-20220517092051387](MD_img/image-20220517092051387.png)
+
+![image-20220517091617896](MD_img/image-20220517091617896.png)
+
+<center>从详情页获取有关二手房的详情信息</center>
+
+![image-20220517092606171](MD_img/image-20220517092606171.png)
+
+![image-20220517092635138](MD_img/image-20220517092635138.png)
+
+![image-20220517092712483](MD_img/image-20220517092712483.png)
+
+
+
+### 矛与盾
+
+由于网站的防护，房天下网站有一系列反爬机制，有些隐藏的很深，也是通过实践才发现的。本节主要介绍作者对于反爬验证的主要解决方法，robot协议，延时爬取这种就不在这里展开详细阐述了。
+
+#### IP代理
+
+IP代理是爬虫的一个关键技术，通常情况下，网站会通过同一个IP地址的并发请求量来判断这是否为一个爬虫，因此，IP代理便可以使用其他代理IP进行请求的转发，来隐藏发出请求的原始IP，以达到持续爬取而不被检测到的目的。接下来介绍尝试过的两种IP代理方法。
+
++ **IP代理池方法**
+
+  简述：通过向代理商获取一定数量的IP作为代理池，每次请求使用代理池其中的一个IP进行转发。在请求时进行代理，创建IP代理中间件方法如下
+
+  ```python
+  class ProxyDownloaderMiddleware:
+      def process_request(self, request, spider):
+          proxy = pro.get_next_proxy()
+          request.meta['proxy'] = "http://%(proxy)s" % {'proxy': proxy}
+          print("*****************使用代理*****************")
+          print("***", proxy, "***")
+          print("*****************************************")
+          # 用户名密码认证(私密代理/独享代理)
+          request.headers['Proxy-Authorization'] = basic_auth_header('a15179737600', 'p8x7284f')  # 白名单认证可注释此行
+          return None
+  ```
+
+  获取IP代理池程序（每过60s获取一次），从服务商获取到可用的IP列表之后，我们也可以自行进行可用性检测，以免所使用的代理IP无效。本人采用的方法是使用代理IP访问http://icanhazip.com，此网站会返回当前的IP地址，如果状态码为200表明成功访问，于是成功加入代理池。
+
+  ```python
+  # -- coding: utf-8 --
+  import time
+  import threading
+  import requests
+  
+  from scrapy import signals
+  
+  # 提取代理IP的api
+  api_url = 'https://dps.kdlapi.com/api/getdps/?orderid=965208072230596&num=10&signature=bqcsohuyc0qcmz1446bn3jt234sbcezq&pt=1&format=json&sep=1'
+  foo = True
+  
+  class Proxy:
+  
+      def __init__(self, ):
+          self.api_url = api_url
+          self.username = 'a15179737600'
+          self.password = 'p8x7284f'
+          self._proxy_list = self.get_proxy_lis()
+  
+      def get_proxy_lis(self):
+  
+          print(
+              "-------------------------------------------------从代理商获取IP代理池--------------------------------------------------")
+          proxy_lis = requests.get(self.api_url).json().get('data').get('proxy_list')
+          print(
+              "-------------------------------------------------获取成功，开始测试IP代理池--------------------------------------------------")
+          
+          # 测试连通性
+          proxy_lis = [proxy for proxy in proxy_lis if self.verification(proxy)]
+          
+          # 可用代理列表长度为零则重新获取
+          while not len(proxy_lis):
+              print(
+                  "-------------------------------------------------可用IP代理获取失败，重新获取中------------\
+                  --------------------------------------")
+              proxy_lis = requests.get(self.api_url).json().get('data').get('proxy_list')
+              print(
+                  "-------------------------------------------------开始测试新获IP代理池--------------------------------------------------")
+          
+              # 测试连通性
+              proxy_lis = [proxy for proxy in proxy_lis if self.verification(proxy)]
+          print(
+              "-------------------------------------------------成功获得可用IP代理池（大小为%d）如下--------------------------------------------------" % len(proxy_lis))
+          print(proxy_lis)
+          self.index_ = 1
+  
+          return proxy_lis
+  
+      def get_next_proxy(self):
+          self.index_ += 1
+          proxy = self._proxy_list[self.index_ % len(self._proxy_list)]
+          return proxy
+  
+      @property
+      def proxy_list(self):
+          return self._proxy_list
+  
+      @proxy_list.setter
+      def proxy_list(self, list):
+          self._proxy_list = list
+  
+      # 测试IP代理是否正常响应
+      def verification(self, proxy):
+          head = {
+              'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36',
+              'Connection': 'keep-alive'}
+          '''http://icanhazip.com会返回当前的IP地址'''
+  
+          proxies = {
+              "http": "http://%(user)s:%(pwd)s@%(proxy)s/" % {"user": self.username, "pwd": self.password, "proxy": proxy},
+              "https": "http://%(user)s:%(pwd)s@%(proxy)s/" % {"user": self.username, "pwd": self.password, "proxy": proxy}
+          }
+          try:
+              p = requests.get('http://icanhazip.com', headers=head, proxies=proxies, timeout=2)
+              if p.status_code == 200:
+                  return True
+              return False
+          except:
+              return False
+  
+  
+  pro = Proxy()
+  print(pro.proxy_list)
+  
+  
+  class MyExtend:
+  
+      def __init__(self, crawler):
+          self.crawler = crawler
+          # 将自定义方法绑定到scrapy信号上,使程序与spider引擎同步启动与关闭
+          # scrapy信号文档: https://www.osgeo.cn/scrapy/topics/signals.html
+          # scrapy自定义拓展文档: https://www.osgeo.cn/scrapy/topics/extensions.html
+          crawler.signals.connect(self.start, signals.engine_started)
+          crawler.signals.connect(self.close, signals.spider_closed)
+  
+      @classmethod
+      def from_crawler(cls, crawler):
+          return cls(crawler)
+  
+      def start(self):
+          t = threading.Thread(target=self.extract_proxy)
+          t.start()
+  
+      def extract_proxy(self):
+          while foo:
+              # 设置每60秒提取一次ip
+              time.sleep(60)
+              pro.proxy_list = pro.get_proxy_lis()
+  
+      def close(self):
+          global foo
+          foo = False
+  ```
+
++ **TUN隧道IP代理方法**
+
+  隧道代理是通过代理商的链接直接获取一个代理IP，可以选择每次访问切换以及每几分钟切换IP等，使用较为便捷，以下是中间件的代理方法实现。
+
+  ```python
+  # 隧道代理
+  class TUNProxyDownloaderMiddleware:
+  
+      def process_request(self, request, spider):
+          proxy = "tps553.kdlapi.com:15818"
+          request.meta['proxy'] = "http://%(proxy)s" % {'proxy': proxy}
+          # 用户名密码认证
+          request.headers['Proxy-Authorization'] = basic_auth_header('t15209935663171', 'obs96q91')  # 白名单认证可注释此行
+          request.headers["Connection"] = "close"
+          return None
+  ```
+
+  在隧道代理的使用中，可以重写Retry方法（代理池操作类似），在目标页面访问失败时，更换代理IP，减小由于代理IP失效带来的影响，使得爬取的成功率更高。
+
+  ```python
+  # TUN模式更换代理
+  class My_RetryMiddleware(RetryMiddleware):
+      get_head = GetRandomUserAgent()
+      def process_exception(self, request, exception, spider):
+          if isinstance(exception, self.EXCEPTIONS_TO_RETRY):
+              proxy = "tps553.kdlapi.com:15818"
+              request.meta['proxy'] = "http://%(proxy)s" % {'proxy': proxy}
+              # 用户名密码认证
+              request.headers['Proxy-Authorization'] = basic_auth_header('t15209935663171', 'obs96q91')  # 白名单认证可注释此行
+              request.headers["Connection"] = "close"
+  
+              UserAgent = self.get_head.agent_head()['User-Agent']
+              request.headers["User-Agent"] = UserAgent
+              print("出现异常%s，触发自定义重试中间件，更换ip代理" % exception, "*" * 200)
+  
+              return self._retry(request, exception, spider)
+  ```
+
+  
+
+#### selenium模拟拖动，绕过验证码
+
+在访问量大的时候，难免遇到验证码的情况，房天下久经沙场，已经拥有了很强的反爬机制。
+
+在遇到验证码的时候，不妨使用Selenium来模拟浏览器操作，然后对通过后的页面进行解析，详细验证操作如下。
+
+使用时间戳命名来保存拖动的背景图片和目标图片，并用opencv来识别边界，获取准确的像素坐标，使用driver模拟拖动动作，来完成验证码绕过。(如果需要高匿性质服务，建议挂上代理，由于要下载图片以及模拟网页操作，建议上稳定延迟的爬虫，最好带宽也大些，本次项目就直接用本地网络解了，未挂代理，因为我能保证本地是稳定的，当然，你也可以自己测开放代理池择优拿来用。)
+
+在拖动的时候，为防止人机识别，模拟人拖动的操作，利用加速度公式，得到每次进行拖动的距离，分段拖动，并加入停顿设置，使得验证过程更为拟人化，提高验证的通过率。关键实现如下，通过提前为拖动指针设置轨迹来完成。
+
+```python
+def get_track(self, distance):
+"""
+根据偏移量获取移动轨迹
+:param distance: 偏移量
+:return: 移动轨迹
+相关公式：
+x = x0 * t + 0.5 * a * t * t
+v = v0 + a * t
+"""
+v = 0  # 初速度
+t = 2  # 单位时间为0.2s来统计轨迹，轨迹即0.2内的位移
+tracks = []  # 位移/轨迹列表，列表内的一个元素代表0.2s的位移
+current = 0  # 当前的位移
+mid = distance * 1 / 2  # 到达mid值开始减速
+distance += 20  # 先滑过一点，最后再反着滑动回来
+
+while current < distance:
+    if current < mid:
+        # 加速度越小，单位时间的位移越小,模拟的轨迹就越多越详细
+        a = 0.1  # 加速运动
+    else:
+        a = -0.1  # 减速运动
+    v0 = v  # 初速度
+    s = v0 * t + 0.5 * a * (t ** 2)  # 0.2秒时间内的位移
+    current += s  # 当前的位置
+    tracks.append(round(s))  # 添加到轨迹列表
+    # 实现停顿
+    tracks.append(0)
+    v = 0.2
+    # v = v0 + a * t  # 速度已经达到v,该速度作为下次的初速度
+
+# 反着滑动到大概准确位置
+for i in range(3):
+    tracks.append(-2)
+for i in range(4):
+    tracks.append(-1)
+return tracks
+```
+
+同时，由于失败后的刷新机制，也可设置拖动次数，如果一个页面拖动不成功，我们就再试几次，因为可能遇到更好通过的图形，有助于成功验证。成功后，我们返回对HTML源码的解析得到的有关二手房详情页信息。
+
+```python
+def run(self):
+    try:
+        self.driver.get(self.url)
+        # 隐式等待
+        self.driver.implicitly_wait(10)
+        time.sleep(3)
+        verification_code = self.driver.find_element(by=By.CSS_SELECTOR, value='.info p').text
+        if verification_code == "请拖动滑块进行验证：":
+            sucess = self.driver.find_element(by=By.CSS_SELECTOR, value='.drag-text').text
+            # print(sucess, '*'*200)
+            # 下载验证码
+            # 识别次数大于3次换页
+            locate_time = 0
+            while sucess != '验证通过啦！' and locate_time < 3:
+                self.get_captcha()
+                x, y = self.template_matching(self.bg_jpg_path, self.block_png_path)
+                self.move_to_gap([x])
+                print(x, y, self.url, '*' * 200)
+                time.sleep(2)
+                sucess = self.driver.find_element(by=By.CSS_SELECTOR, value='.drag-text').text
+
+                # 定位次数+1
+                locate_time += 1
+                print("验证码循环1，-第%d次" % locate_time, '*' * 200)
+                print(sucess, '*' * 200)
+            self.driver.find_element(by=By.ID, value="captcha_submit_btn").click()
+            time.sleep(1)
+            Html_document = self.driver.execute_script("return document.documentElement.outerHTML")
+            self.driver.close()
+            if self.parse_target == 'page_num':
+                return self.parse_page_num(Html_document)
+            elif self.parse_target == 'EsfItem':
+                # print(self.parse_lis_page(Html_document))
+                return self.parse_lis_page(Html_document)
+            elif self.parse_target == 'EsfInfoItem':
+                # print(self.parse_info_page(Html_document))
+                return self.parse_info_page(Html_document)
+            else:
+                return None
+        # 刷新页面得到新图
+        print('验证码处理超3次退出！', '*' * 200)
+        self.driver.close()
+        return None
+    except Exception as ex:
+        print('验证码处理异常！%s' % ex, '*' * 200)
+        # 尝试关闭driver
+        try:
+            self.driver.close()
+            return None
+        except:
+            return None
+```
 
 <img src="MD_img/iShot2022-05-09_16.40.32.png" alt="iShot2022-05-09_16.40.32" style="zoom:50%;" />
 
-<img src="MD_img/image-20220511204336061.png" alt="image-20220511204336061" style="zoom: 80%;" />
+<center><img src="MD_img/image-20220511204336061.png" alt="image-20220511204336061" style="zoom: 80%;" /><img src="MD_img/6.png" alt="6" style="zoom:80%;" /><img src="MD_img/3.png" alt="3" style="zoom:80%;" /></center>
 
-**类定义如下**
+
+
+### 主要类定义
+
+#### 爬虫文件
+
+```python
+class EsfSpider(scrapy.Spider):
+    # 别名，后续用来其启动爬虫
+    name = 'esf'
+    # 允许爬取的页面
+    allowed_domains = ['fang.com']
+    # 启动爬取的页面
+    start_urls = ['https://www.fang.com/SoufunFamily.htm']
+    # 获取随机请求头
+    get_random_UserAgent = GetRandomUserAgent()
+	# 重定向链接获取方法
+    def get_redirected_url(self, url):
+        head = self.get_random_UserAgent.agent_head()
+        # 构造scrapy的response对象。
+        req_response = requests.get(url, headers=head)
+        response = HtmlResponse(url=url, body=req_response.content)
+
+        # 处理重定向
+        redirected_url = response.xpath("//a[@class='btn-redir']//@href").get()
+
+        # 如果抓取成功，则说明进行了重定向，发送一个新的请求而不是将得到的响应发给爬虫程序
+        if redirected_url:
+            print("重定向", redirected_url, "*" * 200)
+            return redirected_url
+        return url
+
+    # Scrapy框架默认调用这个方法。response.body是html源码
+    def parse(self, response):
+        df = pd.read_csv('esf_info.csv')
+        esfhousenews_urls = df[['esfhousenews_url']].values
+        provinces = df[['province']].values
+        cities = df[['city']].values
+        k = 1
+        for u, p, c in zip(esfhousenews_urls, provinces, cities):
+            if k > 5:
+                break
+            esfhousenews_url = u[0]
+            province = p[0]
+            city = c[0]
+            try:
+                directed_url = self.get_redirected_url(esfhousenews_url)
+                yield scrapy.Request(url=directed_url, callback=self.parse_esfhouseInfo,
+                                 meta={"info": (province, city, directed_url)}, dont_filter=True)
+            except Exception as ex:
+                print("捕获异常%s" % ex)
+
+    # 对于二手房详情页面的解析
+    def parse_esfhouseInfo(self, response):
+        province, city, esf_link = response.meta.get("info")
+        print(
+            "-------------------------------------------------对于%s二手房 %s 详情页的解析--------------------------------------------------" % (
+                province + ' ' + city, esf_link))
+
+        # 验证码
+        response_url = str(response.url)
+        print(response)
+
+        house_info_divs = response.xpath(
+            "//div[contains(@class, 'tr-line clearfix')]//div[contains(@class,'trl-item1')]")
+
+        if 'captcha' in response_url and not house_info_divs:
+            with open('captcha.txt', 'a', encoding='utf-8') as f:
+                f.write(response_url + '\n')
+            print('处理验证码', '*' * 200)
+            deal_captcha = DealCaptcha(parse_target='EsfInfoItem', url=response_url)
+            item = deal_captcha.run()
+            if item:
+                item['province'] = province
+                item['city'] = city
+                item['esf_link'] = esf_link
+                return item
+        elif house_info_divs:
+            print('链接解析成功了', '*' * 200)
+            item = EsfInfoItem()
+            item['province'] = province
+            item['city'] = city
+            item['esf_link'] = esf_link
+
+            title = response.xpath("//span[@class='tit_text']//text()").get()
+            if title:
+                item['title'] = title.strip()
+            if len(house_info_divs) == 6:
+                # 户型
+                room_type = house_info_divs[0].xpath(".//div[@class='tt']//text()").get()
+                if room_type:
+                    item['room_type'] = room_type.strip()
+                # 面积
+                area = house_info_divs[1].xpath(".//div[@class='tt']//text()").get()
+                if area:
+                    item['area'] = area.strip()
+                # 单价
+                unit_price = house_info_divs[2].xpath(".//div[@class='tt']//text()").get()
+                if unit_price:
+                    item['unit_price'] = unit_price.strip()
+                # 朝向
+                orientation = house_info_divs[3].xpath(".//div[@class='tt']//text()").get()
+                if orientation:
+                    item['orientation'] = orientation.strip()
+                # 楼层
+                floor_info = house_info_divs[4].xpath(".//div[@class='tt']//text()").get()
+                floor_info_a = house_info_divs[4].xpath(".//div[@class='tt']//a//text()").get()
+                floor_type = house_info_divs[4].xpath(".//div[@class='font14']//text()").get()
+                if floor_info_a and floor_type:
+                    item['floor'] = floor_info_a.strip() + ',' + floor_type.strip()
+                elif floor_info and floor_type:
+                    item['floor'] = floor_info.strip() + ',' + floor_type.strip()
+                # 装修
+                decoration = house_info_divs[5].xpath(".//div[@class='tt']//text()").get()
+                decoration_a = house_info_divs[5].xpath(".//div[@class='tt']/a//text()").get()
+                if decoration_a:
+                    item['decoration'] = decoration_a.strip()
+                elif decoration:
+                    item['decoration'] = decoration.strip()
+
+            # 总价
+            total_price = response.xpath("//div[contains(@class, 'price_esf')]/i//text()").get()
+            if total_price:
+                item['total_price'] = total_price.strip() + '万元'
+            # 房源信息
+            xpath_house_info_lis = response.xpath(
+                "//div[contains(@class, 'content-item fydes-item')]//div[contains(@class, 'cont clearfix')]//div")
+            for div in xpath_house_info_lis:
+                if len(div.xpath(".//span//text()")) == 2:
+                    # 建筑年代
+                    if div.xpath(".//span//text()")[0].get().strip() == '建筑年代':
+                        build_year = div.xpath(".//span//text()")[1].get()
+                        item['build_year'] = build_year.strip()
+            # 小区
+            community = response.xpath("//a[@id='kesfsfbxq_A01_01_05']//text()").get()
+            if community:
+                item['community'] = community
+            # 小区信息
+            xpath_community_info_lis = response.xpath("//div[contains(@class, 'cont pt30')]")
+            # 小区信息顶栏
+            for div in xpath_community_info_lis.xpath(".//div[contains(@class, 'topt clearfix')]//div"):
+                # 小区参考均价
+                if div.xpath(".//span//text()")[0].get().strip() == '参考均价':
+                    community_price = div.xpath(".//span")[1].xpath(".//i//text()").get()
+                    if community_price:
+                        item['community_price'] = community_price.strip() + ' 元/平米'
+
+                # 小区均价同比去年
+                if div.xpath(".//span//text()")[0].get().strip() == '同比去年':
+                    community_price_to_last_year = div.xpath(".//span")[1].xpath(".//em//span//text()").get()
+                    if community_price_to_last_year:
+                        item['community_price_to_last_year'] = community_price_to_last_year.strip()
+                # 小区均价环比上月
+                if div.xpath(".//span//text()")[0].get().strip() == '环比上月':
+                    community_price_to_last_month = div.xpath(".//span")[1].xpath(".//em//span//text()").get()
+                    if community_price_to_last_month:
+                        item['community_price_to_last_month'] = community_price_to_last_month.strip()
+            for div in xpath_community_info_lis.xpath(".//div[@class='clearfix']//div"):
+                if len(div.xpath(".//span")) == 2:
+                    # 绿化率
+                    if '绿' in div.xpath(".//span//text()")[0].get().strip():
+                        plant_rate = div.xpath(".//span//text()")[1].get()
+                        if plant_rate:
+                            item['plant_rate'] = plant_rate.strip()
+                    # 小区容积率
+                    if '容' in div.xpath(".//span//text()")[0].get().strip():
+                        community_volume_rate = div.xpath(".//span//text()")[1].get()
+                        if community_volume_rate:
+                            item['community_volume_rate'] = community_volume_rate.strip()
+                    # 小区总户数
+                    if '户' in div.xpath(".//span//text()")[0].get().strip():
+                        community_total_family_num = div.xpath(".//span//text()")[1].get()
+                        if community_total_family_num:
+                            item['community_total_family_num'] = community_total_family_num.strip()
+                    # 产权年限
+                    if div.xpath(".//span//text()")[0].get().strip() == '产权年限':
+                        property_tenure = div.xpath(".//span//text()")[1].get()
+                        if property_tenure:
+                            item['property_tenure'] = property_tenure.strip() + '年'
+                    # 小区总楼栋数
+                    if div.xpath(".//span//text()")[0].get().strip() == '总楼栋数':
+                        community_total_building_num = div.xpath(".//span//text()")[1].get()
+                        if community_total_building_num:
+                            item['community_total_building_num'] = community_total_building_num.strip()
+                    # 小区物业费用
+                    if div.xpath(".//span//text()")[0].get().strip() == '物业费用':
+                        community_property_expenses = div.xpath(".//span//text()")[1].get()
+                        if community_property_expenses:
+                            item['community_property_expenses'] = community_property_expenses.strip()
+                    # 小区人车分流
+                    if div.xpath(".//span//text()")[0].get().strip() == '人车分流':
+                        community_people_vehicles_depart = div.xpath(".//span//text()")[1].get()
+                        if community_people_vehicles_depart:
+                            item['community_people_vehicles_depart'] = community_people_vehicles_depart.strip()
+            return item
 
 ```
-class DealCaptcha():
-    def __init__(self):
-        self.dir_path = '/home/oliver/PycharmProjects/scrapy_fang/img/'
-        options = webdriver.ChromeOptions()
-        options.add_argument('user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:55.0) Gecko/20100101 Firefox/55.0')
-        proxy = random.choice(pro.proxy_list)
-        proxy_ip, proxy_port = proxy.split(':')
-        proxyauth_plugin_path = self.create_proxyauth_extension(
-            proxy_host=proxy_ip,  # 代理IP
-            proxy_port=proxy_port,  # 端口号
-            # 用户名密码(私密代理/独享代理)
-            proxy_username=pro.username,
-            proxy_password=pro.password
-        )
-        options.add_extension(proxyauth_plugin_path)
 
+#### 管道文件
 
+```python
+class ScrapyFangPipeline(object):
 
-        self.bg_jpg_path = self.dir_path + hashlib.md5(str(time.time()).encode("UTF-8")).hexdigest() + 'bg.jpg'
-        self.block_png_path = self.dir_path + hashlib.md5(str(time.time()).encode("UTF-8")).hexdigest() + 'block.png'
-        self.driver = webdriver.Chrome(chrome_options=options, executable_path='/usr/local/driver/chromedriver',)  # desired_capabilities=caps)
-        self.driver.execute_cdp_cmd("Page.addScriptToEvaluateOnNewDocument", {
-            "source": """
-                Object.defineProperty(navigator, 'webdriver', {
-                get: () => undefined
-                })
-            """
-        })
+    def open_spider(self, spider):
+        # # URL
+        self.url_fp = open('esf_url.csv', 'wb')
+        self.url_exporter = CsvItemExporter(self.url_fp)
 
-    def create_proxyauth_extension(self, proxy_host, proxy_port, proxy_username, proxy_password, scheme='http',
-                                   plugin_path=None):
-        """代理认证插件
+        # # 二手房信息
+        self.esf_info_fp = open('esf_info.csv', 'wb')
+        self.esf_info_exporter = CsvItemExporter(self.esf_info_fp)
 
-        args:
-            proxy_host (str): 你的代理地址或者域名（str类型）
-            proxy_port (int): 代理端口号（int类型）
-            # 用户名密码认证(私密代理/独享代理)
-            proxy_username (str):用户名（字符串）
-            proxy_password (str): 密码 （字符串）
-        kwargs:
-            scheme (str): 代理方式 默认http
-            plugin_path (str): 扩展的绝对路径
+        # 二手房详情信息
+        self.esf_detail_info_fp = open('esf_detail_info.csv', 'wb')
+        self.esf_detail_info_exporter = CsvItemExporter(self.esf_detail_info_fp)
 
-        return str -> plugin_path
-        """
+    def process_item(self, item, spider):
+        # # 处理URL
+        if isinstance(item, UrlItem):
+            print("存放二手房链接信息")
+            self.url_exporter.export_item(item)
 
-        if plugin_path is None:
-            plugin_path = self.dir_path + 'vimm_chrome_proxyauth_plugin.zip'
+        # # 处理二手房信息
+        if isinstance(item, EsfItem):
+            print("存放二手房房源信息")
+            self.esf_info_exporter.export_item(item)
 
-        manifest_json = """
-        {
-            "version": "1.0.0",
-            "manifest_version": 2,
-            "name": "Chrome Proxy",
-            "permissions": [
-                "proxy",
-                "tabs",
-                "unlimitedStorage",
-                "storage",
-                "<all_urls>",
-                "webRequest",
-                "webRequestBlocking"
-            ],
-            "background": {
-                "scripts": ["background.js"]
-            },
-            "minimum_chrome_version":"22.0.0"
-        }
-        """
+        # 处理详情页信息
+        if isinstance(item, EsfInfoItem):
+            print("存放二手房房源详情信息")
+            self.esf_detail_info_exporter.export_item(item)
 
-        background_js = string.Template(
-            """
-            var config = {
-                    mode: "fixed_servers",
-                    rules: {
-                    singleProxy: {
-                        scheme: "${scheme}",
-                        host: "${host}",
-                        port: parseInt(${port})
-                    },
-                    bypassList: ["foobar.com"]
-                    }
-                };
+        # 返回是必须的，告诉引擎item已经处理完成了，可以继续执行后面代码。
+        return item
 
-            chrome.proxy.settings.set({value: config, scope: "regular"}, function() {});
+    def close_spider(self, spider):
+        self.esf_info_fp.close()
+        self.url_fp.close()
+        self.esf_detail_info_fp.close()
 
-            function callbackFn(details) {
-                return {
-                    authCredentials: {
-                        username: "${username}",
-                        password: "${password}"
-                    }
-                };
-            }
-
-            chrome.webRequest.onAuthRequired.addListener(
-                        callbackFn,
-                        {urls: ["<all_urls>"]},
-                        ['blocking']
-            );
-            """
-        ).substitute(
-            host=proxy_host,
-            port=proxy_port,
-            username=proxy_username,
-            password=proxy_password,
-            scheme=scheme,
-        )
-        with zipfile.ZipFile(plugin_path, 'w') as zp:
-            zp.writestr("manifest.json", manifest_json)
-            zp.writestr("background.js", background_js)
-        return plugin_path
-
-    def get_captcha(self):
-        # 背景图片
-        bg = self.driver.find_element(by=By.CLASS_NAME, value="img-bg").get_attribute('src')
-        with open(self.bg_jpg_path, mode='wb') as f:
-            f.write(requests.get(bg).content)
-        # 滑动图片
-        block = self.driver.find_element(by=By.CLASS_NAME, value='img-block').get_attribute('src')
-        with open(self.block_png_path, mode='wb') as f:
-            f.write(requests.get(block).content)
-
-        image = cv2.imread(self.block_png_path, cv2.IMREAD_UNCHANGED)  # 读取图片
-        # cv2.imshow('1', image)
-        # 保存裁剪后图片
-        box = self.get_transparency_location(image)
-        result = self.cv2_crop(image, box)
-        cv2.imwrite(self.block_png_path, result)
-
-    def move_to_gap(self, tracks):
-        # 移动滑块
-        drop = self.driver.find_element(by=By.CLASS_NAME, value="verifyicon")
-        ActionChains(self.driver).click_and_hold(drop).perform()
-        for x in tracks:
-            ActionChains(self.driver).move_by_offset(xoffset=x, yoffset=0).perform()
-        time.sleep(0.5)
-        ActionChains(self.driver).release().perform()
-
-    def cv2_crop(self, im, box):
-        '''cv2实现类似PIL的裁剪
-
-        :param im: cv2加载好的图像
-        :param box: 裁剪的矩形，(left, upper, right, lower)元组
-        '''
-        return im.copy()[box[1]:box[3], box[0]:box[2], :]
-
-    def get_transparency_location(self, image):
-        '''获取基于透明元素裁切图片的左上角、右下角坐标
-
-        :param image: cv2加载好的图像
-        :return: (left, upper, right, lower)元组
-        '''
-        # 1. 扫描获得最左边透明点和最右边透明点坐标
-        height, width, channel = image.shape  # 高、宽、通道数
-        assert channel == 4  # 无透明通道报错
-        first_location = None  # 最先遇到的透明点
-        last_location = None  # 最后遇到的透明点
-        first_transparency = []  # 从左往右最先遇到的透明点，元素个数小于等于图像高度
-        last_transparency = []  # 从左往右最后遇到的透明点，元素个数小于等于图像高度
-        for y, rows in enumerate(image):
-            for x, BGRA in enumerate(rows):
-                alpha = BGRA[3]
-                if alpha != 0:
-                    if not first_location or first_location[1] != y:  # 透明点未赋值或为同一列
-                        first_location = (x, y)  # 更新最先遇到的透明点
-                        first_transparency.append(first_location)
-                    last_location = (x, y)  # 更新最后遇到的透明点
-            if last_location:
-                last_transparency.append(last_location)
-
-        # 2. 矩形四个边的中点
-        top = first_transparency[0]
-        bottom = first_transparency[-1]
-        left = None
-        right = None
-        for first, last in zip(first_transparency, last_transparency):
-            if not left:
-                left = first
-            if not right:
-                right = last
-            if first[0] < left[0]:
-                left = first
-            if last[0] > right[0]:
-                right = last
-
-        # 3. 左上角、右下角
-        upper_left = (left[0], top[1])  # 左上角
-        bottom_right = (right[0], bottom[1])  # 右下角
-
-        return upper_left[0], upper_left[1], bottom_right[0], bottom_right[1]
-
-    def template_matching(self, bg, block):
-        # 读取目标图片
-        target = cv2.imread(bg)
-        # 读取模板图片
-        template = cv2.imread(block)
-        # 获得模板图片的高宽尺寸
-        theight, twidth = template.shape[:2]
-        # 执行模板匹配，采用的匹配方式cv2.TM_SQDIFF_NORMED
-        # result = cv2.matchTemplate(target,template,cv2.TM_SQDIFF_NORMED)
-        result = cv2.matchTemplate(target, template, cv2.TM_SQDIFF_NORMED)
-
-        # 归一化处理
-        cv2.normalize(result, result, 0, 1, cv2.NORM_MINMAX, -1)
-        # 寻找矩阵（一维数组当做向量，用Mat定义）中的最大值和最小值的匹配结果及其位置
-        min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(result)
-        return min_loc[0], min_loc[1]
-
-    def get_track(self, distance):
-        """
-        根据偏移量获取移动轨迹
-        :param distance: 偏移量
-        :return: 移动轨迹
-        相关公式：
-        x = x0 * t + 0.5 * a * t * t
-        v = v0 + a * t
-        """
-        v = 0  # 初速度
-        t = 2  # 单位时间为0.2s来统计轨迹，轨迹即0.2内的位移
-        tracks = []  # 位移/轨迹列表，列表内的一个元素代表0.2s的位移
-        current = 0  # 当前的位移
-        mid = distance * 4 / 5  # 到达mid值开始减速
-        distance += 10  # 先滑过一点，最后再反着滑动回来
-
-        while current < distance:
-            if current < mid:
-                # 加速度越小，单位时间的位移越小,模拟的轨迹就越多越详细
-                a = 2  # 加速运动
-            else:
-                a = -3  # 减速运动
-            v0 = v  # 初速度
-            s = v0 * t + 0.5 * a * (t ** 2)  # 0.2秒时间内的位移
-            current += s  # 当前的位置
-            tracks.append(round(s))  # 添加到轨迹列表
-            v = v0 + a * t  # 速度已经达到v,该速度作为下次的初速度
-
-        # 反着滑动到大概准确位置
-        for i in range(3):
-            tracks.append(-2)
-        for i in range(4):
-            tracks.append(-1)
-        print(tracks)
-        return tracks
-
-    def run(self, url):
-        try:
-            self.driver.get(url)
-            # 隐式等待
-            self.driver.implicitly_wait(10)
-            time.sleep(2)
-
-            verification_code = self.driver.find_element(by=By.CSS_SELECTOR, value='.info p').text
-            if verification_code == "请拖动滑块进行验证：":
-                sucess = self.driver.find_element(by=By.CSS_SELECTOR, value='.drag-text').text 
-                print(sucess)
-                # 下载验证码
-                while sucess != '验证通过啦！':
-                        self.get_captcha()  
-                        x, y = self.template_matching(self.bg_jpg_path, self.block_png_path)
-                        self.move_to_gap([x])
-                        print(x, y)
-                        time.sleep(2)
-                        sucess = self.driver.find_element(by=By.CSS_SELECTOR, value='.drag-text').text
-                        print(sucess)
-
-                self.driver.find_element(by=By.ID, value="captcha_submit_btn").click() 
-                time.sleep(1)
-                Html_document = self.driver.execute_script("return document.documentElement.outerHTML")
-
-        except:
-            self.driver.close()
-            return None
-        self.driver.close()
-        return Html_document
 ```
 
+#### Item文件
+
+```python
+class UrlItem(scrapy.Item):
+    # 省份
+    province = scrapy.Field()
+    # 城市
+    city = scrapy.Field()
+    # 二手房链接
+    esfhouse_url = scrapy.Field()
 
 
-## ip代理池爬取
+#二手房页面的Item
+class EsfItem(scrapy.Item):
+      # 省份
+      province = scrapy.Field()
+      # 城市
+      city = scrapy.Field()
+      #二手房的标题
+      title = scrapy.Field()
+      # 二手房详细信息的链接
+      esfhousenews_url = scrapy.Field()
+      # 户型
+      room_type = scrapy.Field()
+      # 面积
+      area = scrapy.Field()
+      # 楼层
+      floor = scrapy.Field()
+      # 朝向
+      orientation = scrapy.Field()
+      # 建筑时间
+      build_year = scrapy.Field()
+      # 小区名字
+      village_name = scrapy.Field()
+      # 地址
+      address = scrapy.Field()
+      # 总价
+      total = scrapy.Field()
+      #每平米的价格
+      unit = scrapy.Field()
 
-由于房天下的反爬机制，我们现在自行构建一个代理池，去往快代理爬取。
 
+class EsfInfoItem(scrapy.Item):
+    # 详情页链接
+    esf_link = scrapy.Field()
+    # 省份
+    province = scrapy.Field()
+    # 城市
+    city = scrapy.Field()
+    # 二手房的标题
+    title = scrapy.Field()
+    # 户型
+    room_type = scrapy.Field()
+    # 面积
+    area = scrapy.Field()
+    # 单价
+    unit_price = scrapy.Field()
+    # 朝向
+    orientation = scrapy.Field()
+    # 楼层
+    floor = scrapy.Field()
+    # 装修
+    decoration = scrapy.Field()
+    # 总价
+    total_price = scrapy.Field()
+    # 小区
+    community = scrapy.Field()
+    # 建筑年代
+    build_year = scrapy.Field()
+    # 绿化率
+    plant_rate = scrapy.Field()
+    # 产权年限
+    property_tenure = scrapy.Field()
+    # 小区参考均价
+    community_price = scrapy.Field()
+    # 小区均价同比去年
+    community_price_to_last_year = scrapy.Field()
+    # 小区均价同比上月
+    community_price_to_last_month = scrapy.Field()
+    # 小区容积率
+    community_volume_rate = scrapy.Field()
+    # 小区总楼栋数
+    community_total_building_num = scrapy.Field()
+    # 小区总户数
+    community_total_family_num = scrapy.Field()
+    # 小区物业费用
+    community_property_expenses = scrapy.Field()
+    # 小区物业费用
+    community_people_vehicles_depart = scrapy.Field()
+```
 
+入口页解析示例
 
-
+<img src="MD_img/image-20220517104203697.png" alt="image-20220517104203697" style="zoom:67%;" />
 
 **列表页解析示例**
 
-<img src="MD_img/image-20220509210916613.png" alt="image-20220509210916613" style="zoom: 67%;" />
+<img src="MD_img/image-20220517104251707.png" alt="image-20220517104251707" style="zoom:67%;" />
+
+详情页解析示例
+
+<img src="MD_img/image-20220517104736217.png" alt="image-20220517104736217" style="zoom:67%;" />
 
 
 
