@@ -1,6 +1,6 @@
 ---
 draft: true
-title: "Scrapy使用案例——房天下"
+title: "Scrapy实战案例——房天下"
 subtitle: "Scrapy2.6"
 date: 2022-04-09T10:40:45+08:00
 lastmod: 2022-04-09T10:40:45+08:00
@@ -9,12 +9,7 @@ description: "爬虫应该是python使用者比较重要的一门技能，学会
 
 tags: [Scrapy2.6]
 categories: [tutorial]
-
 ---
-
-参考：
-
-+ https://www.bilibili.com/video/BV1jx411b7E3?p=1
 
 ## Scrapy框架概览
 
@@ -91,9 +86,10 @@ pip install scrapy
 ```flow
 st=>start: 开始
 op1=>operation: 进入城市列表页，获取每个城市房源的进入链接
-op2=>operation: 进入每个城市对应的房源页面。
-e=>end
-st->op1->op2->e
+op2=>operation: 进入每个城市对应的二手房源列表页面。
+op3=>operation: 进入列表页每个二手房的详情页。
+e=>end: 结束
+st->op1->op2->op3->e
 
 ```
 
@@ -507,7 +503,7 @@ scrapy crawl esf
 
 基本Scrapy框架实现完成了单个页面上的数据爬取，省份，城市，链接……
 
-## 特定城市二手房概要信息爬虫—构造URL方式
+## 特定城市二手房概要信息爬虫
 
 我们在本次尝试直接拼接页码得到url，观察得到，北京二手房首页URL为http://bj.esf.fang.com/，也可以在页码中写为https://bj.esf.fang.com/house/i31/，第二页就是https://bj.esf.fang.com/house/i32/，依次类推……
 
@@ -1099,10 +1095,6 @@ def run(self):
             return None
 ```
 
-<img src="MD_img/iShot2022-05-09_16.40.32.png" alt="iShot2022-05-09_16.40.32" style="zoom:50%;" />
-
-<center><img src="MD_img/image-20220511204336061.png" alt="image-20220511204336061" style="zoom: 80%;" /><img src="MD_img/6.png" alt="6" style="zoom:80%;" /><img src="MD_img/3.png" alt="3" style="zoom:80%;" /></center>
-
 
 
 ### 主要类定义
@@ -1436,17 +1428,32 @@ class EsfInfoItem(scrapy.Item):
     community_people_vehicles_depart = scrapy.Field()
 ```
 
-入口页解析示例
+### 爬虫程序运行结果示例
+
+#### 解析示例
+
++ **入口页解析示例**
 
 <img src="MD_img/image-20220517104203697.png" alt="image-20220517104203697" style="zoom:67%;" />
 
-**列表页解析示例**
++ **列表页解析示例**
 
 <img src="MD_img/image-20220517104251707.png" alt="image-20220517104251707" style="zoom:67%;" />
 
-详情页解析示例
++ **详情页解析示例**
 
 <img src="MD_img/image-20220517104736217.png" alt="image-20220517104736217" style="zoom:67%;" />
 
++ **验证码通过示例**
 
+<img src="MD_img/image-20220517200130646.png" alt="image-20220517200130646" style="zoom: 50%;" />
 
++ **OpenCV目标图像示例**
+
+<img src="MD_img/iShot2022-05-09_16.40.32.png" alt="iShot2022-05-09_16.40.32" style="zoom:50%;" />
+
+<center><img src="MD_img/image-20220511204336061.png" alt="image-20220511204336061" style="zoom: 80%;" /><img src="MD_img/6.png" alt="6" style="zoom:80%;" /><img src="MD_img/3.png" alt="3" style="zoom:80%;" /></center>
+
+# 参考资料
+
++ https://www.bilibili.com/video/BV1jx411b7E3?p=1
