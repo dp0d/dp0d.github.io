@@ -117,3 +117,35 @@ print(next(_iter))
 > 1
 > 2
 > ```
+
+```python
+def test_yield():
+    for i in [3, 5, 6, 1, 3, 516, 6321, 1]:
+        yield i
+
+
+_iter = test_yield()
+num = 0
+try:
+    while True:
+        num += 1
+        print(next(_iter))
+except Exception as ex:
+    pass
+
+print("列表的元素个数%d" % num)
+```
+
+> ```
+> 3
+> 5
+> 6
+> 1
+> 3
+> 516
+> 6321
+> 1
+> 列表的元素个数9
+> ```
+
+==问，为什么要这么干，直接len()不就好了吗？答，除了获取长度，还可以进行其他操作，而不用先获取列表长度进行。==
