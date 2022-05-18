@@ -21,7 +21,7 @@ w+ :   可读，可写，文件不存在自动创建，会覆盖原文件。
 
 a+ :  可读、可写，文件不存在自动创建，不会覆盖原文件，追加在末尾。
 
-# csv格式文件
+## csv格式文件
 ### csv库
 #### 列表读写
 ```python
@@ -30,9 +30,16 @@ import csv
 list1=[1,2]
 list2=['1','2']
 with open('filename.csv', "w", newline='', encoding='utf-8') as f1:
-    writer = csv.writer(f1, delimiter=' ')
+    writer = csv.writer(f1, delimiter=',')
     writer.writerows(zip(list1,list2))
 print('文件写入完成……')
+
+# 作为两行呢
+lis = [[1,2],['1','2']]
+with open('filename.csv', "w", newline='', encoding='utf-8') as f1:
+    writer = csv.writer(f1, delimiter=',')
+    for data in lis:
+        writer.writerow(data)
 	
 	
 # 从上述写成的CSV中读出两个列表, 同样用 ' ' 空格隔开读取：
@@ -40,7 +47,7 @@ import csv
 with open('filename.csv','r',encoding='utf-8') as f2:
     list1 = []
     list2 = []  # 这里注意，之前int类型的列表写入和读取之后都会变为str类型的列表
-    reader = csv.reader(f2, delimiter = ' ')
+    reader = csv.reader(f2, delimiter = ',')
     for i in reader:
         list1.append(i[0])
         list2.append(i[1])
@@ -49,7 +56,7 @@ print('文件读取完成……')
 # 其他模式
 list = [[1,2,3],[4,5,6]]
 with open('filename.csv', "w", newline='', encoding='utf-8') as f1:
-    writer = csv.writer(f1, delimiter=' ')
+    writer = csv.writer(f1, delimiter=',')
     writer.writerows(list)
 print('文件写入完成……')
 ```
@@ -79,7 +86,7 @@ out_csv.to_csv(outputfile, index=False)
 
 按列读入四个文件并按列合并：
 
-# txt格式文件
+## txt格式文件
 
 	注：txt格式文件可以用于存放字典。
 ```python
@@ -101,7 +108,7 @@ with open('filename.txt', 'r', encoding = 'utf-8') as f2:
 print('字典读取完成……')
 ```
 
-# pickle格式文件
+## pickle格式文件
 
 	注：pickle可以将很多格式的数据保存到一个文件中以二进制保存。重新加载之后还是之前的格式。此种方式通常用于保存生成花销较大的中间变量，以提升工作效率。
 ```python
@@ -118,7 +125,7 @@ with open('filename.pickle', 'rb') as f2:
 	var = pickle.load(f2)
 print('变量读取完成……')
 ```
-# json格式文件
+## json格式文件
 
 ```python
 # 写json文件，可以保存字典等类型的变量

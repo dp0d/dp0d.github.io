@@ -37,7 +37,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/dp0d.github.io\/file_read_py\/"
-        },"image": ["https:\/\/dp0d.github.io\/images\/logo.png"],"genre": "posts","keywords": "py","wordcount":  1299 ,
+        },"image": ["https:\/\/dp0d.github.io\/images\/logo.png"],"genre": "posts","keywords": "py","wordcount":  1328 ,
         "url": "https:\/\/dp0d.github.io\/file_read_py\/","datePublished": "2022-03-26T10:02:10+08:00","dateModified": "2022-03-26T10:02:10+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "dp0d","logo": "https:\/\/dp0d.github.io\/images\/logo.png"},"author": {
@@ -132,7 +132,7 @@
         <h2 class="toc-title">目录</h2>
         <div class="toc-content" id="toc-content-auto"><nav id="TableOfContents">
   <ul>
-    <li>
+    <li><a href="#csv格式文件">csv格式文件</a>
       <ul>
         <li><a href="#csv库">csv库</a>
           <ul>
@@ -146,13 +146,16 @@
         </li>
       </ul>
     </li>
+    <li><a href="#txt格式文件">txt格式文件</a></li>
+    <li><a href="#pickle格式文件">pickle格式文件</a></li>
+    <li><a href="#json格式文件">json格式文件</a></li>
   </ul>
 </nav></div>
     </div><script>document.getElementsByTagName("main")[0].setAttribute("pageStyle", "normal")</script><script>document.getElementsByTagName("main")[0].setAttribute("autoTOC", "true")</script><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Python中常见的文件读写</h1><div class="post-meta">
             <div class="post-meta-line">
                 <span class="post-author"><i class="author fas fa-user-circle fa-fw"></i><a href="https://github.com/dp0d" title="Author" target="_blank" rel="noopener noreffer author" class="author">dp0d</a>
                 </span>&nbsp;<span class="post-category">收录于 </span>&nbsp;<span class="post-category">类别 <a href="/categories/tutorial/"><i class="far fa-folder fa-fw"></i>教程</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-03-26">2022-03-26</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2022-03-26">2022-03-26</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1299 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-03-26">2022-03-26</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2022-03-26">2022-03-26</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1328 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 3 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
@@ -161,7 +164,7 @@
                 </div>
                 <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
-    <li>
+    <li><a href="#csv格式文件">csv格式文件</a>
       <ul>
         <li><a href="#csv库">csv库</a>
           <ul>
@@ -175,6 +178,9 @@
         </li>
       </ul>
     </li>
+    <li><a href="#txt格式文件">txt格式文件</a></li>
+    <li><a href="#pickle格式文件">pickle格式文件</a></li>
+    <li><a href="#json格式文件">json格式文件</a></li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><p><em>说明</em></p>
@@ -186,8 +192,8 @@
 <p>r+ :   可读、可写，文件需要手动创建，写操作时会覆盖原文件。</p>
 <p>w+ :   可读，可写，文件不存在自动创建，会覆盖原文件。</p>
 <p>a+ :  可读、可写，文件不存在自动创建，不会覆盖原文件，追加在末尾。</p>
-<h1 id="csv格式文件" class="headerLink">
-    <a href="#csv%e6%a0%bc%e5%bc%8f%e6%96%87%e4%bb%b6" class="header-mark"></a>csv格式文件</h1><h3 id="csv库" class="headerLink">
+<h2 id="csv格式文件" class="headerLink">
+    <a href="#csv%e6%a0%bc%e5%bc%8f%e6%96%87%e4%bb%b6" class="header-mark"></a>csv格式文件</h2><h3 id="csv库" class="headerLink">
     <a href="#csv%e5%ba%93" class="header-mark"></a>csv库</h3><h4 id="列表读写" class="headerLink">
     <a href="#%e5%88%97%e8%a1%a8%e8%af%bb%e5%86%99" class="header-mark"></a>列表读写</h4><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -218,6 +224,13 @@
 </span><span class="lnt">25
 </span><span class="lnt">26
 </span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># 将以下两个列表作为两列写入CSV，用 &#39; &#39; 空格隔开：</span>
@@ -225,9 +238,16 @@
 </span></span><span class="line"><span class="cl"><span class="n">list1</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span>
 </span></span><span class="line"><span class="cl"><span class="n">list2</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;1&#39;</span><span class="p">,</span><span class="s1">&#39;2&#39;</span><span class="p">]</span>
 </span></span><span class="line"><span class="cl"><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;filename.csv&#39;</span><span class="p">,</span> <span class="s2">&#34;w&#34;</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f1</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">    <span class="n">writer</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">writer</span><span class="p">(</span><span class="n">f1</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">writer</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">writer</span><span class="p">(</span><span class="n">f1</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="n">writer</span><span class="o">.</span><span class="n">writerows</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">list1</span><span class="p">,</span><span class="n">list2</span><span class="p">))</span>
 </span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;文件写入完成……&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 作为两行呢</span>
+</span></span><span class="line"><span class="cl"><span class="n">lis</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],[</span><span class="s1">&#39;1&#39;</span><span class="p">,</span><span class="s1">&#39;2&#39;</span><span class="p">]]</span>
+</span></span><span class="line"><span class="cl"><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;filename.csv&#39;</span><span class="p">,</span> <span class="s2">&#34;w&#34;</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f1</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">writer</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">writer</span><span class="p">(</span><span class="n">f1</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">lis</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">	
 </span></span><span class="line"><span class="cl">	
 </span></span><span class="line"><span class="cl"><span class="c1"># 从上述写成的CSV中读出两个列表, 同样用 &#39; &#39; 空格隔开读取：</span>
@@ -235,7 +255,7 @@
 </span></span><span class="line"><span class="cl"><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;filename.csv&#39;</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">,</span><span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f2</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">    <span class="n">list1</span> <span class="o">=</span> <span class="p">[]</span>
 </span></span><span class="line"><span class="cl">    <span class="n">list2</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># 这里注意，之前int类型的列表写入和读取之后都会变为str类型的列表</span>
-</span></span><span class="line"><span class="cl">    <span class="n">reader</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">reader</span><span class="p">(</span><span class="n">f2</span><span class="p">,</span> <span class="n">delimiter</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">reader</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">reader</span><span class="p">(</span><span class="n">f2</span><span class="p">,</span> <span class="n">delimiter</span> <span class="o">=</span> <span class="s1">&#39;,&#39;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">reader</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">        <span class="n">list1</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 </span></span><span class="line"><span class="cl">        <span class="n">list2</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
@@ -244,7 +264,7 @@
 </span></span><span class="line"><span class="cl"><span class="c1"># 其他模式</span>
 </span></span><span class="line"><span class="cl"><span class="nb">list</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],[</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">]]</span>
 </span></span><span class="line"><span class="cl"><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;filename.csv&#39;</span><span class="p">,</span> <span class="s2">&#34;w&#34;</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f1</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">    <span class="n">writer</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">writer</span><span class="p">(</span><span class="n">f1</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">writer</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">writer</span><span class="p">(</span><span class="n">f1</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="n">writer</span><span class="o">.</span><span class="n">writerows</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;文件写入完成……&#39;</span><span class="p">)</span>
 </span></span></code></pre></td></tr></table>
@@ -290,8 +310,8 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>按列读入四个文件并按列合并：</p>
-<h1 id="txt格式文件" class="headerLink">
-    <a href="#txt%e6%a0%bc%e5%bc%8f%e6%96%87%e4%bb%b6" class="header-mark"></a>txt格式文件</h1><pre><code>注：txt格式文件可以用于存放字典。
+<h2 id="txt格式文件" class="headerLink">
+    <a href="#txt%e6%a0%bc%e5%bc%8f%e6%96%87%e4%bb%b6" class="header-mark"></a>txt格式文件</h2><pre><code>注：txt格式文件可以用于存放字典。
 </code></pre>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -331,8 +351,8 @@
 </span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;字典读取完成……&#39;</span><span class="p">)</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h1 id="pickle格式文件" class="headerLink">
-    <a href="#pickle%e6%a0%bc%e5%bc%8f%e6%96%87%e4%bb%b6" class="header-mark"></a>pickle格式文件</h1><pre><code>注：pickle可以将很多格式的数据保存到一个文件中以二进制保存。重新加载之后还是之前的格式。此种方式通常用于保存生成花销较大的中间变量，以提升工作效率。
+</div><h2 id="pickle格式文件" class="headerLink">
+    <a href="#pickle%e6%a0%bc%e5%bc%8f%e6%96%87%e4%bb%b6" class="header-mark"></a>pickle格式文件</h2><pre><code>注：pickle可以将很多格式的数据保存到一个文件中以二进制保存。重新加载之后还是之前的格式。此种方式通常用于保存生成花销较大的中间变量，以提升工作效率。
 </code></pre>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -364,8 +384,8 @@
 </span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;变量读取完成……&#39;</span><span class="p">)</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h1 id="json格式文件" class="headerLink">
-    <a href="#json%e6%a0%bc%e5%bc%8f%e6%96%87%e4%bb%b6" class="header-mark"></a>json格式文件</h1><div class="highlight"><div class="chroma">
+</div><h2 id="json格式文件" class="headerLink">
+    <a href="#json%e6%a0%bc%e5%bc%8f%e6%96%87%e4%bb%b6" class="header-mark"></a>json格式文件</h2><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2

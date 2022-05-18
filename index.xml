@@ -4,7 +4,77 @@
         <link>https://dp0d.github.io/</link>
         <description>dp0d&#39;s blog,where to share life as well as technology of nlp.</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>draftpaperofgod@gmail.com (dp0d)</managingEditor>
-            <webMaster>draftpaperofgod@gmail.com (dp0d)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+            <webMaster>draftpaperofgod@gmail.com (dp0d)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Wed, 18 May 2022 09:26:19 &#43;0800</lastBuildDate>
             <atom:link href="https://dp0d.github.io/index.xml" rel="self" type="application/rss+xml" />
-        </channel>
+        <item>
+    <title>Python中一些语法的使用</title>
+    <link>https://dp0d.github.io/python_using/</link>
+    <pubDate>Wed, 18 May 2022 09:26:19 &#43;0800</pubDate><author>
+        <name>dp0d</name>
+    </author><guid>https://dp0d.github.io/python_using/</guid>
+    <description><![CDATA[*args 和 **kwargs传参方法*args元组传参 1 2 3 4 def add(*args): print(args, type(args)) add(2, 3) 1 (2, 3) &lt;class &#39;tuple&#39;&gt; 1 2 3 4 5 6 7 8 9 10 def add(*numbers): total = 0 for num in numbers: total += num return total print(add(2, 3)) print(add(2, 3, 5)) print(add(2, 3, 5,]]></description>
+</item><item>
+    <title>正则表达式</title>
+    <link>https://dp0d.github.io/regular_expression/</link>
+    <pubDate>Fri, 13 May 2022 19:33:58 &#43;0800</pubDate><author>
+        <name>dp0d</name>
+    </author><guid>https://dp0d.github.io/regular_expression/</guid>
+    <description><![CDATA[re用法示例1 2 3 4 # 过多换行替换为&#39;￥￥￥中English$$$&#39; sub_text = re.sub(r&#39;\n{2,}&#39;,&]]></description>
+</item><item>
+    <title>损失函数</title>
+    <link>https://dp0d.github.io/loss_function/</link>
+    <pubDate>Fri, 29 Apr 2022 10:34:04 &#43;0800</pubDate><author>
+        <name>dp0d</name>
+    </author><guid>https://dp0d.github.io/loss_function/</guid>
+    <description><![CDATA[经典损失函数相对熵（也称KL散度）维基百科：KL散度（Kullback-Leibler divergence，简称KLD），在讯息系统中称为相]]></description>
+</item><item>
+    <title>好用的Python基础算法应用技巧</title>
+    <link>https://dp0d.github.io/basic_algorithm/</link>
+    <pubDate>Tue, 26 Apr 2022 19:17:07 &#43;0800</pubDate><author>
+        <name>dp0d</name>
+    </author><guid>https://dp0d.github.io/basic_algorithm/</guid>
+    <description><![CDATA[排序列表内置排序方法 sort() 1 2 3 lis = [4,2,3,1] lis.sort() print(lis) [1, 2, 3, 4] sorted() 1 2 3 4 5 6 7 lis = [4,2,3,1] sorted(lis) print(lis) lis = sorted(lis) print(lis) lis.reverse() print(lis) [4, 2, 3, 1] [1, 2, 3, 4] [4, 3, 2, 1] 带原索引一起排序这种方法的好处是]]></description>
+</item><item>
+    <title>记一次Clash for Linux 的配置</title>
+    <link>https://dp0d.github.io/clash/</link>
+    <pubDate>Sun, 24 Apr 2022 13:52:59 &#43;0800</pubDate><author>
+        <name>dp0d</name>
+    </author><guid>https://dp0d.github.io/clash/</guid>
+    <description><![CDATA[室友帮忙弄的clash又不行了，今天打算自己修修（重装）这个梯子软件，记录一下。 现在的病情就是谷歌上不去，如下图所示。 clash的网页配置端]]></description>
+</item><item>
+    <title>语言模型预训练方法</title>
+    <link>https://dp0d.github.io/lm_pretraining/</link>
+    <pubDate>Mon, 18 Apr 2022 11:04:18 &#43;0800</pubDate><author>
+        <name>dp0d</name>
+    </author><guid>https://dp0d.github.io/lm_pretraining/</guid>
+    <description><![CDATA[模型权重保存重载示例1 2 3 4 5 6 7 8 9 10 11 # 自己定义的网络， encoder = BertModel.from_pretrained(bert_model_path) model = EffiGlobalPointer(encoder, ENT_CLS_NUM, args.pointer_num).to(device) prev_state_dict = torch.load(&#39;./outputs/best.model&#39;) model.load_state_dict(prev_state_dict) # BertModel内置方法 # 注意特定的模型种类需要使用]]></description>
+</item><item>
+    <title>Linux下配置frp内网穿透</title>
+    <link>https://dp0d.github.io/frp_by_docker/</link>
+    <pubDate>Sun, 27 Mar 2022 20:19:52 &#43;0800</pubDate><author>
+        <name>dp0d</name>
+    </author><guid>https://dp0d.github.io/frp_by_docker/</guid>
+    <description><![CDATA[要访问内网资源，内网资源缺少公网ip被墙，现在我们假设需要在内网主机上运行python，我们需要在公网访问到它，并考虑安全性。 原理图准备工作]]></description>
+</item><item>
+    <title>Python中常见的文件读写</title>
+    <link>https://dp0d.github.io/file_read_py/</link>
+    <pubDate>Sat, 26 Mar 2022 10:02:10 &#43;0800</pubDate><author>
+        <name>dp0d</name>
+    </author><guid>https://dp0d.github.io/file_read_py/</guid>
+    <description><![CDATA[说明 本文根据常见的读写进行方法阐述，本文实验环境基于python3.8，并需要提前告知各类读写方式的文件操作效果，如下列出： r : 读取文件，文]]></description>
+</item><item>
+    <title>Python 工程环境管理</title>
+    <link>https://dp0d.github.io/env_management/</link>
+    <pubDate>Tue, 22 Mar 2022 09:11:07 &#43;0800</pubDate><author>
+        <name>dp0d</name>
+    </author><guid>https://dp0d.github.io/env_management/</guid>
+    <description><![CDATA[前言在Python工程中，特别是对于要复现一些项目时、需要测试特定环境下程序表现时、同一个服务器上多人进行跑程序时需要自己的独立环境时等，我]]></description>
+</item><item>
+    <title>反向传播算法</title>
+    <link>https://dp0d.github.io/backpropagation/</link>
+    <pubDate>Fri, 18 Mar 2022 11:29:42 &#43;0800</pubDate><author>
+        <name>dp0d</name>
+    </author><guid>https://dp0d.github.io/backpropagation/</guid>
+    <description><![CDATA[反向传播算法作为一位机器学习领域的博主，第一篇博客肯定要从反向传播算法开始啦~ 简介​ 来自维基百科 ​ 首先是反向传播算法的历史沿用👇 ​ 弗拉基米尔]]></description>
+</item></channel>
 </rss>
