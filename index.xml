@@ -4,9 +4,16 @@
         <link>https://dp0d.github.io/</link>
         <description>dp0d&#39;s blog,where to share life as well as technology of nlp.</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>draftpaperofgod@gmail.com (dp0d)</managingEditor>
-            <webMaster>draftpaperofgod@gmail.com (dp0d)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Wed, 18 May 2022 09:26:19 &#43;0800</lastBuildDate>
+            <webMaster>draftpaperofgod@gmail.com (dp0d)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Wed, 18 May 2022 15:20:58 &#43;0800</lastBuildDate>
             <atom:link href="https://dp0d.github.io/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>深度学习优化策略</title>
+    <link>https://dp0d.github.io/deep_learning_optimize/</link>
+    <pubDate>Wed, 18 May 2022 15:20:58 &#43;0800</pubDate><author>
+        <name>dp0d</name>
+    </author><guid>https://dp0d.github.io/deep_learning_optimize/</guid>
+    <description><![CDATA[训练优化策略梯度裁剪梯度裁剪策略是解决模型训练过程中梯度爆炸策略的一个有效方法，为什么会导致梯度爆炸呢？我们知道，如果模型如下 $$ f(x)=wx+b $$ 省略b的]]></description>
+</item><item>
     <title>Python中一些语法的使用</title>
     <link>https://dp0d.github.io/python_using/</link>
     <pubDate>Wed, 18 May 2022 09:26:19 &#43;0800</pubDate><author>
@@ -69,12 +76,5 @@
         <name>dp0d</name>
     </author><guid>https://dp0d.github.io/env_management/</guid>
     <description><![CDATA[前言在Python工程中，特别是对于要复现一些项目时、需要测试特定环境下程序表现时、同一个服务器上多人进行跑程序时需要自己的独立环境时等，我]]></description>
-</item><item>
-    <title>反向传播算法</title>
-    <link>https://dp0d.github.io/backpropagation/</link>
-    <pubDate>Fri, 18 Mar 2022 11:29:42 &#43;0800</pubDate><author>
-        <name>dp0d</name>
-    </author><guid>https://dp0d.github.io/backpropagation/</guid>
-    <description><![CDATA[反向传播算法作为一位机器学习领域的博主，第一篇博客肯定要从反向传播算法开始啦~ 简介​ 来自维基百科 ​ 首先是反向传播算法的历史沿用👇 ​ 弗拉基米尔]]></description>
 </item></channel>
 </rss>
