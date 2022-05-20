@@ -4,7 +4,14 @@
         <link>https://dp0d.github.io/tags/linux/</link>
         <description>Linux - 标签 - dp0d&#39;s blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>draftpaperofgod@gmail.com (dp0d)</managingEditor>
-            <webMaster>draftpaperofgod@gmail.com (dp0d)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Thu, 19 May 2022 09:33:48 &#43;0800</lastBuildDate><atom:link href="https://dp0d.github.io/tags/linux/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>draftpaperofgod@gmail.com (dp0d)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Fri, 20 May 2022 14:43:54 &#43;0800</lastBuildDate><atom:link href="https://dp0d.github.io/tags/linux/" rel="self" type="application/rss+xml" /><item>
+    <title>Python项目包引用与环境设置</title>
+    <link>https://dp0d.github.io/py_project_env/</link>
+    <pubDate>Fri, 20 May 2022 14:43:54 &#43;0800</pubDate><author>
+        <name>dp0d</name>
+    </author><guid>https://dp0d.github.io/py_project_env/</guid>
+    <description><![CDATA[说明通常，我们在项目中，需要把代码文件作为一个包来用，比如代码文件是code文件夹，如果使用Pycharm等IDE，只需要在里面加入一个空的]]></description>
+</item><item>
     <title>记一次生产事故</title>
     <link>https://dp0d.github.io/production_catastrophe/</link>
     <pubDate>Thu, 19 May 2022 09:33:48 &#43;0800</pubDate><author>

@@ -4,9 +4,16 @@
         <link>https://dp0d.github.io/</link>
         <description>dp0d&#39;s blog,where to share life as well as technology of nlp.</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>draftpaperofgod@gmail.com (dp0d)</managingEditor>
-            <webMaster>draftpaperofgod@gmail.com (dp0d)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Thu, 19 May 2022 09:33:48 &#43;0800</lastBuildDate>
+            <webMaster>draftpaperofgod@gmail.com (dp0d)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Fri, 20 May 2022 14:43:54 &#43;0800</lastBuildDate>
             <atom:link href="https://dp0d.github.io/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>Python项目包引用与环境设置</title>
+    <link>https://dp0d.github.io/py_project_env/</link>
+    <pubDate>Fri, 20 May 2022 14:43:54 &#43;0800</pubDate><author>
+        <name>dp0d</name>
+    </author><guid>https://dp0d.github.io/py_project_env/</guid>
+    <description><![CDATA[说明通常，我们在项目中，需要把代码文件作为一个包来用，比如代码文件是code文件夹，如果使用Pycharm等IDE，只需要在里面加入一个空的]]></description>
+</item><item>
     <title>记一次生产事故</title>
     <link>https://dp0d.github.io/production_catastrophe/</link>
     <pubDate>Thu, 19 May 2022 09:33:48 &#43;0800</pubDate><author>
@@ -69,12 +76,5 @@
         <name>dp0d</name>
     </author><guid>https://dp0d.github.io/frp_by_docker/</guid>
     <description><![CDATA[要访问内网资源，内网资源缺少公网ip被墙，现在我们假设需要在内网主机上运行python，我们需要在公网访问到它，并考虑安全性。 原理图准备工作]]></description>
-</item><item>
-    <title>Python中常见的文件读写</title>
-    <link>https://dp0d.github.io/file_read_py/</link>
-    <pubDate>Sat, 26 Mar 2022 10:02:10 &#43;0800</pubDate><author>
-        <name>dp0d</name>
-    </author><guid>https://dp0d.github.io/file_read_py/</guid>
-    <description><![CDATA[说明 本文根据常见的读写进行方法阐述，本文实验环境基于python3.8，并需要提前告知各类读写方式的文件操作效果，如下列出： r : 读取文件，文]]></description>
 </item></channel>
 </rss>
