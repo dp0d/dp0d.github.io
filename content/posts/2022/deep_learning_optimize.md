@@ -7,7 +7,7 @@ lastmod: 2022-05-18T15:20:58+08:00
 description: ""
 
 tags: [] # env linux mac py tools win
-categories: [deep_learning] # tutorial
+categories: [machine_learning] # tutorial
 series: []
 
 toc:

@@ -7,7 +7,7 @@ lastmod: {{ .Date }}
 description: ""
 
 tags: [] # env linux mac py tools win
-categories: [] # tutorial
+categories: [] # tutorial, technology_log, machine_learning
 series: []
 
 toc:

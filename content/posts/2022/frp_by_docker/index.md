@@ -7,7 +7,7 @@ lastmod: 2022-03-27T20:19:52+08:00
 authors: []
 description: ""
 
-tags: []
+tags: [linux]
 categories: []
 series: []
 
@@ -359,6 +359,46 @@ nohup jupyter lab --allow-root --no-browser --ip '*' --port '8888' > ~/.jupyter/
 ![image-20220329151708196](image-20220329151708196.png)
 
 乖乖在后台呆着
+
+更好一点，设置jupyter服务并让它开机自启动
+
+增加system配置，创建并编辑名为jupyterlab的服务
+
+```bash
+sudo vi /etc/systemd/system/jupyterlab.service
+```
+
+注意ExecStart一定要精确到jupyterlab的执行文件，后续可以自行添加指定端口等命令-p等，指定启动路径直接跟在后面就好了。
+
+```service
+[Unit]
+Description=jupyterlab service
+After=network.target
+
+[Service]
+Type=simple
+User=oliver
+ExecStart=/home/oliver/.pyenv/versions/jupyterlab/bin/jupyter-lab p 9001 /home/
+
+Restart=on-failure
+RestartPreventExitStatus=23
+
+[Install]
+WantedBy=multi-user.target
+```
+
+然后保存退出，继续执行如下命令
+
+```bash
+sudo systemctl daemon-reload
+sudo systemctl enable jupyterlab
+sudo systemctl start jupyterlab
+sudo systemctl status jupyterlab
+```
+
+![image-20220522112228683](MD_img/image-20220522112228683.png)
+
+ok，服务设置完成
 
 #### 然后退出但不关闭这个容器，使用快捷键Ctrl+Q+P
 
