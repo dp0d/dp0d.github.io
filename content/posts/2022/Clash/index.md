@@ -188,10 +188,21 @@ WantedBy=multi-user.target
 
 ```bash
 sudo systemctl daemon-reload
-sudo systemctl enable clash
-sudo systemctl start clash
-sudo systemctl status clash
 ```
+
+```bash
+sudo systemctl enable jupyterlab
+```
+
+```bash
+sudo systemctl start jupyterlab
+```
+
+```bash
+sudo systemctl status jupyterlab
+```
+
+
 
 ![image-20220424110642415](MD_img/image-20220424110642415.png)
 

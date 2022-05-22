@@ -391,8 +391,17 @@ WantedBy=multi-user.target
 
 ```bash
 sudo systemctl daemon-reload
+```
+
+```bash
 sudo systemctl enable jupyterlab
+```
+
+```bash
 sudo systemctl start jupyterlab
+```
+
+```bash
 sudo systemctl status jupyterlab
 ```
 
