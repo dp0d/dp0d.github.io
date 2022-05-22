@@ -37,7 +37,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/dp0d.github.io\/frp_by_docker\/"
-        },"image": ["https:\/\/dp0d.github.io\/images\/logo.png"],"genre": "posts","wordcount":  2261 ,
+        },"image": ["https:\/\/dp0d.github.io\/images\/logo.png"],"genre": "posts","keywords": "linux","wordcount":  2460 ,
         "url": "https:\/\/dp0d.github.io\/frp_by_docker\/","datePublished": "2022-03-27T20:19:52+08:00","dateModified": "2022-03-27T20:19:52+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "dp0d","logo": "https:\/\/dp0d.github.io\/images\/logo.png"},"author": {
@@ -180,7 +180,7 @@
             <div class="post-meta-line">
                 <span class="post-author"><i class="author fas fa-user-circle fa-fw"></i><a href="https://github.com/dp0d" title="Author" target="_blank" rel="noopener noreffer author" class="author">dp0d</a>
                 </span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-03-27">2022-03-27</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2022-03-27">2022-03-27</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 2261 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-03-27">2022-03-27</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2022-03-27">2022-03-27</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 2460 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 5 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
@@ -740,6 +740,74 @@
         alt="/frp_by_docker/image-20220329151708196.png"
         title="image-20220329151708196"></p>
 <p>乖乖在后台呆着</p>
+<p>更好一点，设置jupyter服务并让它开机自启动</p>
+<p>增加system配置，创建并编辑名为jupyterlab的服务</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo vi /etc/systemd/system/jupyterlab.service
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>注意ExecStart一定要精确到jupyterlab的执行文件，后续可以自行添加指定端口等命令-p等，指定启动路径直接跟在后面就好了。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-service" data-lang="service"><span class="line"><span class="cl"><span class="k">[Unit]</span>
+</span></span><span class="line"><span class="cl"><span class="na">Description</span><span class="o">=</span><span class="s">jupyterlab service</span>
+</span></span><span class="line"><span class="cl"><span class="na">After</span><span class="o">=</span><span class="s">network.target</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">[Service]</span>
+</span></span><span class="line"><span class="cl"><span class="na">Type</span><span class="o">=</span><span class="s">simple</span>
+</span></span><span class="line"><span class="cl"><span class="na">User</span><span class="o">=</span><span class="s">oliver</span>
+</span></span><span class="line"><span class="cl"><span class="na">ExecStart</span><span class="o">=</span><span class="s">/home/oliver/.pyenv/versions/jupyterlab/bin/jupyter-lab p 9001 /home/</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="na">Restart</span><span class="o">=</span><span class="s">on-failure</span>
+</span></span><span class="line"><span class="cl"><span class="na">RestartPreventExitStatus</span><span class="o">=</span><span class="s">23</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">[Install]</span>
+</span></span><span class="line"><span class="cl"><span class="na">WantedBy</span><span class="o">=</span><span class="s">multi-user.target</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后保存退出，继续执行如下命令</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo systemctl daemon-reload
+</span></span><span class="line"><span class="cl">sudo systemctl <span class="nb">enable</span> jupyterlab
+</span></span><span class="line"><span class="cl">sudo systemctl start jupyterlab
+</span></span><span class="line"><span class="cl">sudo systemctl status jupyterlab
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img
+        class="lazyload"
+        data-src="MD_img/image-20220522112228683.png"
+        data-srcset="/frp_by_docker/MD_img/image-20220522112228683.png, MD_img/image-20220522112228683.png 1.5x, /frp_by_docker/MD_img/image-20220522112228683.png 2x"
+        data-sizes="auto"
+        alt="/frp_by_docker/MD_img/image-20220522112228683.png"
+        title="image-20220522112228683"></p>
+<p>ok，服务设置完成</p>
 <h4 id="然后退出但不关闭这个容器使用快捷键ctrlqp" class="headerLink">
     <a href="#%e7%84%b6%e5%90%8e%e9%80%80%e5%87%ba%e4%bd%86%e4%b8%8d%e5%85%b3%e9%97%ad%e8%bf%99%e4%b8%aa%e5%ae%b9%e5%99%a8%e4%bd%bf%e7%94%a8%e5%bf%ab%e6%8d%b7%e9%94%aectrlqp" class="header-mark"></a>然后退出但不关闭这个容器，使用快捷键Ctrl+Q+P</h4><p><img
         class="lazyload"
@@ -837,13 +905,13 @@
                     </span><span>|&nbsp;<a class="link-to-report" href=https://github.com/dp0d/dp0d.github.io/issues/new?title=[bug]%20Linux%E4%B8%8B%E9%85%8D%E7%BD%AEfrp%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F&body=|Field|Value|%0A|-|-|%0A|Title|Linux%E4%B8%8B%E9%85%8D%E7%BD%AEfrp%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F|%0A|Url|https://dp0d.github.io/frp_by_docker/|%0A|Filename|https://github.com/dp0d/dp0d.github.io/posts/2022/frp_by_docker/index.md| target="_blank" rel="noopener noreferrer">报告问题</a>
                     </span></div>
             <div class="post-info-share">
-                <span><a href="#" onclick="return false;" title="分享到 Twitter" data-sharer="twitter" data-url="https://dp0d.github.io/frp_by_docker/" data-title="Linux下配置frp内网穿透"><i class="fab fa-twitter fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Facebook" data-sharer="facebook" data-url="https://dp0d.github.io/frp_by_docker/"><i class="fab fa-facebook-square fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 微博" data-sharer="weibo" data-url="https://dp0d.github.io/frp_by_docker/" data-title="Linux下配置frp内网穿透"><i class="fab fa-weibo fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Telegram" data-sharer="telegram" data-url="https://dp0d.github.io/frp_by_docker/" data-title="Linux下配置frp内网穿透" data-web><i class="fab fa-telegram-plane fa-fw"></i></a></span>
+                <span><a href="#" onclick="return false;" title="分享到 Twitter" data-sharer="twitter" data-url="https://dp0d.github.io/frp_by_docker/" data-title="Linux下配置frp内网穿透" data-hashtags="linux"><i class="fab fa-twitter fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Facebook" data-sharer="facebook" data-url="https://dp0d.github.io/frp_by_docker/" data-hashtag="linux"><i class="fab fa-facebook-square fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 微博" data-sharer="weibo" data-url="https://dp0d.github.io/frp_by_docker/" data-title="Linux下配置frp内网穿透"><i class="fab fa-weibo fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Telegram" data-sharer="telegram" data-url="https://dp0d.github.io/frp_by_docker/" data-title="Linux下配置frp内网穿透" data-web><i class="fab fa-telegram-plane fa-fw"></i></a></span>
             </div>
         </div>
     </div>
 
     <div class="post-info-more">
-        <section class="post-tags"></section>
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/linux/">Linux</a></section>
         <section>
             <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
         </section>
