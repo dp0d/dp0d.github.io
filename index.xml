@@ -4,9 +4,16 @@
         <link>https://dp0d.github.io/</link>
         <description>dp0d&#39;s blog,where to share life as well as technology of nlp.</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>draftpaperofgod@gmail.com (dp0d)</managingEditor>
-            <webMaster>draftpaperofgod@gmail.com (dp0d)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Fri, 20 May 2022 14:43:54 &#43;0800</lastBuildDate>
+            <webMaster>draftpaperofgod@gmail.com (dp0d)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sun, 22 May 2022 21:52:26 &#43;0800</lastBuildDate>
             <atom:link href="https://dp0d.github.io/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>Jupyter使用教程</title>
+    <link>https://dp0d.github.io/jupyter/</link>
+    <pubDate>Sun, 22 May 2022 21:52:26 &#43;0800</pubDate><author>
+        <name>dp0d</name>
+    </author><guid>https://dp0d.github.io/jupyter/</guid>
+    <description><![CDATA[Jupyter 已经被人们广泛使用来作为开发，由于其能够步运行和可视化等，带来了良好的教学和交互体验。 Jupyter Lab设置代理来源 找了很多实现方法，以下方法有效。]]></description>
+</item><item>
     <title>Python项目包引用与环境设置</title>
     <link>https://dp0d.github.io/py_project_env/</link>
     <pubDate>Fri, 20 May 2022 14:43:54 &#43;0800</pubDate><author>
@@ -69,12 +76,5 @@
         <name>dp0d</name>
     </author><guid>https://dp0d.github.io/lm_pretraining/</guid>
     <description><![CDATA[模型权重保存重载示例1 2 3 4 5 6 7 8 9 10 11 # 自己定义的网络， encoder = BertModel.from_pretrained(bert_model_path) model = EffiGlobalPointer(encoder, ENT_CLS_NUM, args.pointer_num).to(device) prev_state_dict = torch.load(&#39;./outputs/best.model&#39;) model.load_state_dict(prev_state_dict) # BertModel内置方法 # 注意特定的模型种类需要使用]]></description>
-</item><item>
-    <title>Linux下配置frp内网穿透</title>
-    <link>https://dp0d.github.io/frp_by_docker/</link>
-    <pubDate>Sun, 27 Mar 2022 20:19:52 &#43;0800</pubDate><author>
-        <name>dp0d</name>
-    </author><guid>https://dp0d.github.io/frp_by_docker/</guid>
-    <description><![CDATA[要访问内网资源，内网资源缺少公网ip被墙，现在我们假设需要在内网主机上运行python，我们需要在公网访问到它，并考虑安全性。 原理图准备工作]]></description>
 </item></channel>
 </rss>
