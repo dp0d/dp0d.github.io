@@ -37,7 +37,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/dp0d.github.io\/clash\/"
-        },"image": ["https:\/\/dp0d.github.io\/images\/logo.png"],"genre": "posts","keywords": "linux, tools","wordcount":  1062 ,
+        },"image": ["https:\/\/dp0d.github.io\/images\/logo.png"],"genre": "posts","keywords": "linux, tools","wordcount":  1167 ,
         "url": "https:\/\/dp0d.github.io\/clash\/","datePublished": "2022-04-24T13:52:59+08:00","dateModified": "2022-04-24T13:52:59+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "dp0d","logo": "https:\/\/dp0d.github.io\/images\/logo.png"},"author": {
@@ -139,14 +139,22 @@
         <li><a href="#改完config之后后续更新url的操作至此完成">改完config之后，后续更新URL的操作至此完成</a></li>
       </ul>
     </li>
-    <li><a href="#基本功能完成后续设置开机启动">基本功能完成，后续设置开机启动。</a></li>
+    <li><a href="#基本功能完成后续设置开机启动">基本功能完成，后续设置开机启动。</a>
+      <ul>
+        <li><a href="#配置定时更新订阅">配置定时更新订阅</a>
+          <ul>
+            <li><a href="#每天更新">每天更新</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
   </ul>
 </nav></div>
     </div><script>document.getElementsByTagName("main")[0].setAttribute("pageStyle", "normal")</script><script>document.getElementsByTagName("main")[0].setAttribute("autoTOC", "true")</script><article class="page single"><h1 class="single-title animate__animated animate__flipInX">记一次Clash for Linux 的配置</h1><div class="post-meta">
             <div class="post-meta-line">
                 <span class="post-author"><i class="author fas fa-user-circle fa-fw"></i><a href="https://github.com/dp0d" title="Author" target="_blank" rel="noopener noreffer author" class="author">dp0d</a>
                 </span>&nbsp;<span class="post-category">收录于 </span>&nbsp;<span class="post-category">类别 <a href="/categories/tutorial/"><i class="far fa-folder fa-fw"></i>教程</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-04-24">2022-04-24</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2022-04-24">2022-04-24</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1062 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-04-24">2022-04-24</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2022-04-24">2022-04-24</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1167 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 3 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
@@ -162,7 +170,15 @@
         <li><a href="#改完config之后后续更新url的操作至此完成">改完config之后，后续更新URL的操作至此完成</a></li>
       </ul>
     </li>
-    <li><a href="#基本功能完成后续设置开机启动">基本功能完成，后续设置开机启动。</a></li>
+    <li><a href="#基本功能完成后续设置开机启动">基本功能完成，后续设置开机启动。</a>
+      <ul>
+        <li><a href="#配置定时更新订阅">配置定时更新订阅</a>
+          <ul>
+            <li><a href="#每天更新">每天更新</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><p>室友帮忙弄的clash又不行了，今天打算自己修修（重装）这个梯子软件，记录一下。</p>
@@ -304,7 +320,15 @@
         alt="/clash/MD_img/image-20220423223206029.png"
         title="image-20220423223206029"></p>
 <p>然后重定向写入config.yaml文件，一秒钟搞定</p>
-<p><img
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">cat ~/sub.txt &gt; ~/.config/clash/config.yaml
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img
         class="lazyload"
         data-src="MD_img/image-20220423223355043.png"
         data-srcset="/clash/MD_img/image-20220423223355043.png, MD_img/image-20220423223355043.png 1.5x, /clash/MD_img/image-20220423223355043.png 2x"
@@ -380,10 +404,10 @@
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">vi /etc/systemd/system/clash.service
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">sudo vi /etc/systemd/system/clash.service
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>写入以下内容,注意，一定</p>
+</div><p>写入以下内容</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -458,7 +482,83 @@
         title="image-20220424110642415"></p>
 <p>OK，成功了，图中端口9090是UI的端口，意味着访问http://127.0.0.1:9090就能出现如下界面</p>
 <img src="MD_img/image-20220424110950514.png" alt="image-20220424110950514" style="zoom:50%;" />
-<p>至此结束~</p>
+<h3 id="配置定时更新订阅" class="headerLink">
+    <a href="#%e9%85%8d%e7%bd%ae%e5%ae%9a%e6%97%b6%e6%9b%b4%e6%96%b0%e8%ae%a2%e9%98%85" class="header-mark"></a>配置定时更新订阅</h3><p>创建config.yaml更新脚本</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">vi /home/oliver/.config/clash/get_clash_config.py
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">requests</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 订阅链接</span>
+</span></span><span class="line"><span class="cl"><span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://xxxx.com&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="n">config_yaml_content</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span><span class="o">.</span><span class="n">text</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 写入文件</span>
+</span></span><span class="line"><span class="cl"><span class="n">config_yaml_path</span> <span class="o">=</span> <span class="s1">&#39;/home/oliver/.config/clash/config.yaml&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">config_yaml_path</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">config_yaml_content</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="每天更新" class="headerLink">
+    <a href="#%e6%af%8f%e5%a4%a9%e6%9b%b4%e6%96%b0" class="header-mark"></a>每天更新</h4><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo vi /etc/cron.daily/clash.sh
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>向其中写入如下脚本</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="ch">#!/bin/bash</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">systemctl</span> <span class="n">stop</span> <span class="n">clash</span>
+</span></span><span class="line"><span class="cl"><span class="n">python3</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">oliver</span><span class="o">/.</span><span class="n">config</span><span class="o">/</span><span class="n">clash</span><span class="o">/</span><span class="n">get_clash_config</span><span class="o">.</span><span class="n">py</span>
+</span></span><span class="line"><span class="cl"><span class="n">systemctl</span> <span class="n">start</span> <span class="n">clash</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo chmod +x /etc/cron.daily/clash.sh
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>至此结束~</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
