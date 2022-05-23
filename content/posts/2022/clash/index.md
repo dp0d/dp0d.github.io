@@ -109,6 +109,10 @@ vi ~/.config/clash/config.yaml（不推荐直接复制粘贴网页内容，建�
 
 然后重定向写入config.yaml文件，一秒钟搞定
 
+```
+cat ~/sub.txt > ~/.config/clash/config.yaml
+```
+
 ![image-20220423223355043](MD_img/image-20220423223355043.png)
 
 ### 改完config之后，后续更新URL的操作至此完成
@@ -162,11 +166,11 @@ wget https://github.com/pyenv/pyenv/archive/refs/tags/v2.2.5.zip
 增加system配置
 
 ```ba
-vi /etc/systemd/system/clash.service
+sudo vi /etc/systemd/system/clash.service
 
 ```
 
-写入以下内容,注意，一定
+写入以下内容
 
 ```ba
 [Unit]
@@ -209,6 +213,55 @@ sudo systemctl status jupyterlab
 OK，成功了，图中端口9090是UI的端口，意味着访问http://127.0.0.1:9090就能出现如下界面
 
 <img src="MD_img/image-20220424110950514.png" alt="image-20220424110950514" style="zoom:50%;" />
+
+### 配置定时更新订阅
+
+创建config.yaml更新脚本
+
+```bash
+vi /home/oliver/.config/clash/get_clash_config.py
+```
+
+```python
+import requests
+
+# 订阅链接
+url = 'https://xxxx.com'
+config_yaml_content = requests.get(url).text
+
+# 写入文件
+config_yaml_path = '/home/oliver/.config/clash/config.yaml'
+f = open(config_yaml_path, 'w', encoding='utf-8')
+
+f.write(config_yaml_content)
+
+f.close()
+```
+
+
+
+#### 每天更新
+
+```bash
+sudo vi /etc/cron.daily/clash.sh
+```
+
+向其中写入如下脚本
+
+```python
+#!/bin/bash
+
+systemctl stop clash
+python3 /home/oliver/.config/clash/get_clash_config.py
+systemctl start clash
+
+```
+
+```bash
+sudo chmod +x /etc/cron.daily/clash.sh
+```
+
+
 
 至此结束~
 
