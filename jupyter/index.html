@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noodp" />
     <title class="pjax-title">Jupyter使用教程 - dp0d&#39;s blog</title><meta name="Description" content="dp0d&#39;s blog,where to share life as well as technology of nlp."><meta property="og:title" content="Jupyter使用教程" />
-<meta property="og:description" content="Jupyter 已经被人们广泛使用来作为开发，由于其能够步运行和可视化等，带来了良好的教学和交互体验。 Jupyter Lab设置代理来源 找了很多实现方法，以下方法有效。" />
+<meta property="og:description" content="Jupyter 已经被人们广泛使用来作为生产力工具，由于其能够步运行和可视化等，带来了良好的教学和交互体验。 Jupyter Lab设置代理方法一（便捷指数1）不难知道，" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://dp0d.github.io/jupyter/" /><meta property="og:image" content="https://dp0d.github.io/images/logo.png"/><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2022-05-22T21:52:26+08:00" />
@@ -16,7 +16,7 @@
 <meta name="twitter:image" content="https://dp0d.github.io/images/logo.png"/>
 
 <meta name="twitter:title" content="Jupyter使用教程"/>
-<meta name="twitter:description" content="Jupyter 已经被人们广泛使用来作为开发，由于其能够步运行和可视化等，带来了良好的教学和交互体验。 Jupyter Lab设置代理来源 找了很多实现方法，以下方法有效。"/>
+<meta name="twitter:description" content="Jupyter 已经被人们广泛使用来作为生产力工具，由于其能够步运行和可视化等，带来了良好的教学和交互体验。 Jupyter Lab设置代理方法一（便捷指数1）不难知道，"/>
 <meta name="application-name" content="dp0d&#39;s blog">
 <meta name="apple-mobile-web-app-title" content="dp0d&#39;s blog">
 
@@ -37,7 +37,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/dp0d.github.io\/jupyter\/"
-        },"image": ["https:\/\/dp0d.github.io\/images\/logo.png"],"genre": "posts","keywords": "py, tools","wordcount":  276 ,
+        },"image": ["https:\/\/dp0d.github.io\/images\/logo.png"],"genre": "posts","keywords": "py, tools","wordcount":  413 ,
         "url": "https:\/\/dp0d.github.io\/jupyter\/","datePublished": "2022-05-22T21:52:26+08:00","dateModified": "2022-05-22T21:52:26+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "dp0d","logo": "https:\/\/dp0d.github.io\/images\/logo.png"},"author": {
@@ -134,7 +134,13 @@
   <ul>
     <li><a href="#jupyter-lab">Jupyter Lab</a>
       <ul>
-        <li><a href="#设置代理">设置代理</a></li>
+        <li><a href="#设置代理">设置代理</a>
+          <ul>
+            <li><a href="#方法一便捷指数1">方法一（便捷指数1）</a></li>
+            <li><a href="#方法二便捷指数2">方法二（便捷指数2）</a></li>
+            <li><a href="#方法三便捷指数3">方法三（便捷指数3）</a></li>
+          </ul>
+        </li>
         <li><a href="#将ipynb文件输出为其他格式文件">将ipynb文件输出为其他格式文件</a>
           <ul>
             <li><a href="#html">Html</a></li>
@@ -150,7 +156,7 @@
             <div class="post-meta-line">
                 <span class="post-author"><i class="author fas fa-user-circle fa-fw"></i><a href="https://github.com/dp0d" title="Author" target="_blank" rel="noopener noreffer author" class="author">dp0d</a>
                 </span>&nbsp;<span class="post-category">收录于 </span>&nbsp;<span class="post-category">类别 <a href="/categories/tutorial/"><i class="far fa-folder fa-fw"></i>教程</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-05-22">2022-05-22</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2022-05-22">2022-05-22</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 276 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-05-22">2022-05-22</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2022-05-22">2022-05-22</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 413 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 1 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
@@ -161,7 +167,13 @@
   <ul>
     <li><a href="#jupyter-lab">Jupyter Lab</a>
       <ul>
-        <li><a href="#设置代理">设置代理</a></li>
+        <li><a href="#设置代理">设置代理</a>
+          <ul>
+            <li><a href="#方法一便捷指数1">方法一（便捷指数1）</a></li>
+            <li><a href="#方法二便捷指数2">方法二（便捷指数2）</a></li>
+            <li><a href="#方法三便捷指数3">方法三（便捷指数3）</a></li>
+          </ul>
+        </li>
         <li><a href="#将ipynb文件输出为其他格式文件">将ipynb文件输出为其他格式文件</a>
           <ul>
             <li><a href="#html">Html</a></li>
@@ -173,34 +185,11 @@
     </li>
   </ul>
 </nav></div>
-            </div><div class="content" id="content"><p>Jupyter 已经被人们广泛使用来作为开发，由于其能够步运行和可视化等，带来了良好的教学和交互体验。</p>
+            </div><div class="content" id="content"><p>Jupyter 已经被人们广泛使用来作为生产力工具，由于其能够步运行和可视化等，带来了良好的教学和交互体验。</p>
 <h2 id="jupyter-lab" class="headerLink">
     <a href="#jupyter-lab" class="header-mark"></a>Jupyter Lab</h2><h3 id="设置代理" class="headerLink">
-    <a href="#%e8%ae%be%e7%bd%ae%e4%bb%a3%e7%90%86" class="header-mark"></a>设置代理</h3><p><a href="https://www.jayakumar.org/linux/how-to-configure-httphttps-proxy-for-ipython-notebook-server/" target="_blank" rel="noopener noreffer">来源</a></p>
-<p>找了很多实现方法，以下方法有效。</p>
-<p>因为jupyter是基于ipython模式的，所以在ipython的启动文件中创建如下文件，前缀越小代表优先级越高。</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">vi ~/.ipython/profile_default/startup/00-first.py
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>向其中写入</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="l">import os</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="l">os.environ[&#39;HTTP_PROXY&#39;]=&#34;http://127.0.0.1:7890&#34;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="l">os.environ[&#39;HTTPS_PROXY&#39;]=&#34;http://127.0.0.1:7890&#34;</span><span class="w">
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><p>然后每次启动之前就会运行这个文件，不难知道，直接在jupyter的开头写上这句也有效。</p>
+    <a href="#%e8%ae%be%e7%bd%ae%e4%bb%a3%e7%90%86" class="header-mark"></a>设置代理</h3><h4 id="方法一便捷指数1" class="headerLink">
+    <a href="#%e6%96%b9%e6%b3%95%e4%b8%80%e4%be%bf%e6%8d%b7%e6%8c%87%e6%95%b01" class="header-mark"></a>方法一（便捷指数1）</h4><p>不难知道，直接在jupyter的开头写上这句有效。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -228,6 +217,63 @@
 </div>
 </div></blockquote>
 <p>ok，正常访问。</p>
+<h4 id="方法二便捷指数2" class="headerLink">
+    <a href="#%e6%96%b9%e6%b3%95%e4%ba%8c%e4%be%bf%e6%8d%b7%e6%8c%87%e6%95%b02" class="header-mark"></a>方法二（便捷指数2）</h4><p>此方法设置完成后需要重新启动jupyter程序。</p>
+<p>将这几行代码写入jupyter对应的配置文件。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">vi ~/.jupyter/jupyter_lab_config.py 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">os</span>
+</span></span><span class="line"><span class="cl"><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;HTTP_PROXY&#39;</span><span class="p">]</span><span class="o">=</span><span class="s2">&#34;http://127.0.0.1:7890&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;HTTPS_PROXY&#39;</span><span class="p">]</span><span class="o">=</span><span class="s2">&#34;http://127.0.0.1:7890&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="方法三便捷指数3" class="headerLink">
+    <a href="#%e6%96%b9%e6%b3%95%e4%b8%89%e4%be%bf%e6%8d%b7%e6%8c%87%e6%95%b03" class="header-mark"></a>方法三（便捷指数3）</h4><p><a href="https://www.jayakumar.org/linux/how-to-configure-httphttps-proxy-for-ipython-notebook-server/" target="_blank" rel="noopener noreffer">来源</a></p>
+<p>找了很多实现方法，以下方法有效。</p>
+<p>因为jupyter是基于ipython模式的，所以在ipython的启动文件中创建如下文件，前缀越小代表优先级越高。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">vi ~/.ipython/profile_default/startup/00-first.py
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>向其中写入</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="l">import os</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="l">os.environ[&#39;HTTP_PROXY&#39;]=&#34;http://127.0.0.1:7890&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="l">os.environ[&#39;HTTPS_PROXY&#39;]=&#34;http://127.0.0.1:7890&#34;</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后重新运行notebook，注意要把kernel关掉重开，否则不会执行此文件。</p>
+<p><img
+        class="lazyload"
+        data-src="MD_img/image-20220523092134130.png"
+        data-srcset="/jupyter/MD_img/image-20220523092134130.png, MD_img/image-20220523092134130.png 1.5x, /jupyter/MD_img/image-20220523092134130.png 2x"
+        data-sizes="auto"
+        alt="/jupyter/MD_img/image-20220523092134130.png"
+        title="image-20220523092134130"></p>
+<p>然后每次启动notebook之前就会运行这个文件。</p>
 <h3 id="将ipynb文件输出为其他格式文件" class="headerLink">
     <a href="#%e5%b0%86ipynb%e6%96%87%e4%bb%b6%e8%be%93%e5%87%ba%e4%b8%ba%e5%85%b6%e4%bb%96%e6%a0%bc%e5%bc%8f%e6%96%87%e4%bb%b6" class="header-mark"></a>将ipynb文件输出为其他格式文件</h3><h4 id="html" class="headerLink">
     <a href="#html" class="header-mark"></a>Html</h4><div class="highlight"><div class="chroma">

@@ -10,7 +10,7 @@
     <pubDate>Sun, 22 May 2022 21:52:26 &#43;0800</pubDate><author>
         <name>dp0d</name>
     </author><guid>https://dp0d.github.io/jupyter/</guid>
-    <description><![CDATA[Jupyter 已经被人们广泛使用来作为开发，由于其能够步运行和可视化等，带来了良好的教学和交互体验。 Jupyter Lab设置代理来源 找了很多实现方法，以下方法有效。]]></description>
+    <description><![CDATA[Jupyter 已经被人们广泛使用来作为生产力工具，由于其能够步运行和可视化等，带来了良好的教学和交互体验。 Jupyter Lab设置代理方法一（便捷指数1）不难知道，]]></description>
 </item><item>
     <title>记一次Clash for Linux 的配置</title>
     <link>https://dp0d.github.io/clash/</link>
