@@ -1,6 +1,6 @@
 ---
 draft: false
-title: "Index"
+title: "CUDA相关问题和设置"
 subtitle: ""
 date: 2022-05-23T21:18:18+08:00
 lastmod: 2022-05-23T21:18:18+08:00
