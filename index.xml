@@ -4,9 +4,16 @@
         <link>https://dp0d.github.io/</link>
         <description>dp0d&#39;s blog,where to share life as well as technology of nlp.</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>draftpaperofgod@gmail.com (dp0d)</managingEditor>
-            <webMaster>draftpaperofgod@gmail.com (dp0d)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Mon, 23 May 2022 15:39:35 &#43;0800</lastBuildDate>
+            <webMaster>draftpaperofgod@gmail.com (dp0d)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Mon, 23 May 2022 21:18:18 &#43;0800</lastBuildDate>
             <atom:link href="https://dp0d.github.io/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>Index</title>
+    <link>https://dp0d.github.io/cuda/</link>
+    <pubDate>Mon, 23 May 2022 21:18:18 &#43;0800</pubDate><author>
+        <name>dp0d</name>
+    </author><guid>https://dp0d.github.io/cuda/</guid>
+    <description><![CDATA[报错lookup 报错 原因 解决方案 RuntimeError: CUDA error: no kernel image is available for execution on the device torch版本与CUDA不匹配 找对应版本的torch进行安装]]></description>
+</item><item>
     <title>python中的数据处理</title>
     <link>https://dp0d.github.io/data_processing/</link>
     <pubDate>Mon, 23 May 2022 15:39:35 &#43;0800</pubDate><author>
@@ -69,12 +76,5 @@
         <name>dp0d</name>
     </author><guid>https://dp0d.github.io/loss_function/</guid>
     <description><![CDATA[经典损失函数相对熵（也称KL散度）维基百科：KL散度（Kullback-Leibler divergence，简称KLD），在讯息系统中称为相]]></description>
-</item><item>
-    <title>好用的Python基础算法应用技巧</title>
-    <link>https://dp0d.github.io/basic_algorithm/</link>
-    <pubDate>Tue, 26 Apr 2022 19:17:07 &#43;0800</pubDate><author>
-        <name>dp0d</name>
-    </author><guid>https://dp0d.github.io/basic_algorithm/</guid>
-    <description><![CDATA[排序列表内置排序方法 sort() 1 2 3 lis = [4,2,3,1] lis.sort() print(lis) [1, 2, 3, 4] sorted() 1 2 3 4 5 6 7 lis = [4,2,3,1] sorted(lis) print(lis) lis = sorted(lis) print(lis) lis.reverse() print(lis) [4, 2, 3, 1] [1, 2, 3, 4] [4, 3, 2, 1] 带原索引一起排序这种方法的好处是]]></description>
 </item></channel>
 </rss>
