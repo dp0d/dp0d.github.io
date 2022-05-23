@@ -25,7 +25,7 @@ license: ""
 
 在py文件顶端加入如下代码
 
-```
+```python
 import sys
 project_path = '/home/mw/project'  # 这里设置自己的项目路径
 sys.path.append(project_path) 
@@ -33,14 +33,38 @@ from code import *
 import code
 ```
 
-如果报错：ModuleNotFoundError: No module named code code is not a package，在考虑有没有进入code同级目录下的同时，是否系统环境中含有code名字冲突等，更换自己的代码文件夹code为mycode等名字来解决。
+如果报错：ModuleNotFoundError: No module named code code is not a package，在考虑有没有进入code同级目录下的同时，是否系统环境中含有code名字冲突等。
 
+验证是否存在code包思路
+
+```python
+import code
+print(code.__file__)
 ```
+
+如果存在，有两种思路
+
+1.更换自己的代码文件夹code为mycode等名字来解决。
+
+```python
 import sys
 project_path = '/home/mw/project'  # 这里设置自己的项目路径
 sys.path.append(project_path) 
 from mycode import *
 import mycode
+```
+
+2.指定上级目录进行导包
+
+比如目录树是这样子
+
+![image-20220523095449043](MD_img/image-20220523095449043.png)
+
+```python
+import sys
+project_path = '/home/GAIIC2022-64_1700'  # 这里设置自己的项目路径
+sys.path.append(project_path) 
+from project.code import xxx
 ```
 
 
