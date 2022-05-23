@@ -37,7 +37,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/dp0d.github.io\/jupyter\/"
-        },"image": ["https:\/\/dp0d.github.io\/images\/logo.png"],"genre": "posts","keywords": "py, tools","wordcount":  207 ,
+        },"image": ["https:\/\/dp0d.github.io\/images\/logo.png"],"genre": "posts","keywords": "py, tools","wordcount":  276 ,
         "url": "https:\/\/dp0d.github.io\/jupyter\/","datePublished": "2022-05-22T21:52:26+08:00","dateModified": "2022-05-22T21:52:26+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "dp0d","logo": "https:\/\/dp0d.github.io\/images\/logo.png"},"author": {
@@ -135,6 +135,13 @@
     <li><a href="#jupyter-lab">Jupyter Lab</a>
       <ul>
         <li><a href="#设置代理">设置代理</a></li>
+        <li><a href="#将ipynb文件输出为其他格式文件">将ipynb文件输出为其他格式文件</a>
+          <ul>
+            <li><a href="#html">Html</a></li>
+            <li><a href="#markdown">Markdown</a></li>
+            <li><a href="#pdf">PDF</a></li>
+          </ul>
+        </li>
       </ul>
     </li>
   </ul>
@@ -143,7 +150,7 @@
             <div class="post-meta-line">
                 <span class="post-author"><i class="author fas fa-user-circle fa-fw"></i><a href="https://github.com/dp0d" title="Author" target="_blank" rel="noopener noreffer author" class="author">dp0d</a>
                 </span>&nbsp;<span class="post-category">收录于 </span>&nbsp;<span class="post-category">类别 <a href="/categories/tutorial/"><i class="far fa-folder fa-fw"></i>教程</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-05-22">2022-05-22</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2022-05-22">2022-05-22</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 207 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-05-22">2022-05-22</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2022-05-22">2022-05-22</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 276 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 1 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
@@ -155,6 +162,13 @@
     <li><a href="#jupyter-lab">Jupyter Lab</a>
       <ul>
         <li><a href="#设置代理">设置代理</a></li>
+        <li><a href="#将ipynb文件输出为其他格式文件">将ipynb文件输出为其他格式文件</a>
+          <ul>
+            <li><a href="#html">Html</a></li>
+            <li><a href="#markdown">Markdown</a></li>
+            <li><a href="#pdf">PDF</a></li>
+          </ul>
+        </li>
       </ul>
     </li>
   </ul>
@@ -214,7 +228,44 @@
 </div>
 </div></blockquote>
 <p>ok，正常访问。</p>
+<h3 id="将ipynb文件输出为其他格式文件" class="headerLink">
+    <a href="#%e5%b0%86ipynb%e6%96%87%e4%bb%b6%e8%be%93%e5%87%ba%e4%b8%ba%e5%85%b6%e4%bb%96%e6%a0%bc%e5%bc%8f%e6%96%87%e4%bb%b6" class="header-mark"></a>将ipynb文件输出为其他格式文件</h3><h4 id="html" class="headerLink">
+    <a href="#html" class="header-mark"></a>Html</h4><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">jupyter nbconvert --to html notebook.ipynb
+</span></span></code></pre></td></tr></table>
 </div>
+</div><p>只展示markdown，适用于生成数据分析报告</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">jupyter nbconvert --to html --no-input data_analy_4.ipynb
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="markdown" class="headerLink">
+    <a href="#markdown" class="header-mark"></a>Markdown</h4><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">jupyter nbconvert --to markdown notebook.ipynb
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="pdf" class="headerLink">
+    <a href="#pdf" class="header-mark"></a>PDF</h4><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">jupyter nbconvert --to pdf notebook.ipynb
+</span></span></code></pre></td></tr></table>
+</div>
+</div></div>
 
         <div class="sponsor">
         <div class="sponsor-avatar"><img
