@@ -56,3 +56,30 @@ requests.get("http://google.com")
 > ```
 
 ok，正常访问。
+
+### 将ipynb文件输出为其他格式文件
+
+#### Html
+
+```bash
+jupyter nbconvert --to html notebook.ipynb
+```
+
+只展示markdown，适用于生成数据分析报告
+
+```bash
+jupyter nbconvert --to html --no-input data_analy_4.ipynb
+```
+
+#### Markdown
+
+```bash
+jupyter nbconvert --to markdown notebook.ipynb
+```
+
+#### PDF
+
+```bash
+jupyter nbconvert --to pdf notebook.ipynb
+```
+
