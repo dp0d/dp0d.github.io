@@ -6,7 +6,7 @@ date: {{ .Date }}
 lastmod: {{ .Date }}
 description: ""
 
-tags: [] # env linux mac py tools win
+tags: [] # env linux mac py tools win task
 categories: [] # tutorial, technology_log, machine_learning, nlp
 series: []
 
