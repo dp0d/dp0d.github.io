@@ -37,7 +37,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/dp0d.github.io\/py_project_env\/"
-        },"image": ["https:\/\/dp0d.github.io\/images\/logo.png"],"genre": "posts","keywords": "py, linux","wordcount":  401 ,
+        },"image": ["https:\/\/dp0d.github.io\/images\/logo.png"],"genre": "posts","keywords": "py, linux","wordcount":  478 ,
         "url": "https:\/\/dp0d.github.io\/py_project_env\/","datePublished": "2022-05-20T14:43:54+08:00","dateModified": "2022-05-20T14:43:54+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "dp0d","logo": "https:\/\/dp0d.github.io\/images\/logo.png"},"author": {
@@ -141,7 +141,7 @@
             <div class="post-meta-line">
                 <span class="post-author"><i class="author fas fa-user-circle fa-fw"></i><a href="https://github.com/dp0d" title="Author" target="_blank" rel="noopener noreffer author" class="author">dp0d</a>
                 </span>&nbsp;<span class="post-category">收录于 </span>&nbsp;<span class="post-category">类别 <a href="/categories/technology_log/"><i class="far fa-folder fa-fw"></i>开发日志</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-05-20">2022-05-20</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2022-05-20">2022-05-20</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 401 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-05-20">2022-05-20</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2022-05-20">2022-05-20</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 478 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 1 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
@@ -174,14 +174,27 @@
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">import sys
-</span></span><span class="line"><span class="cl">project_path = &#39;/home/mw/project&#39;  # 这里设置自己的项目路径
-</span></span><span class="line"><span class="cl">sys.path.append(project_path) 
-</span></span><span class="line"><span class="cl">from code import *
-</span></span><span class="line"><span class="cl">import code
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">sys</span>
+</span></span><span class="line"><span class="cl"><span class="n">project_path</span> <span class="o">=</span> <span class="s1">&#39;/home/mw/project&#39;</span>  <span class="c1"># 这里设置自己的项目路径</span>
+</span></span><span class="line"><span class="cl"><span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">project_path</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">code</span> <span class="kn">import</span> <span class="o">*</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">code</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>如果报错：ModuleNotFoundError: No module named code code is not a package，在考虑有没有进入code同级目录下的同时，是否系统环境中含有code名字冲突等，更换自己的代码文件夹code为mycode等名字来解决。</p>
+</div><p>如果报错：ModuleNotFoundError: No module named code code is not a package，在考虑有没有进入code同级目录下的同时，是否系统环境中含有code名字冲突等。</p>
+<p>验证是否存在code包思路</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">code</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">code</span><span class="o">.</span><span class="vm">__file__</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>如果存在，有两种思路</p>
+<p>1.更换自己的代码文件夹code为mycode等名字来解决。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -191,11 +204,34 @@
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">import sys
-</span></span><span class="line"><span class="cl">project_path = &#39;/home/mw/project&#39;  # 这里设置自己的项目路径
-</span></span><span class="line"><span class="cl">sys.path.append(project_path) 
-</span></span><span class="line"><span class="cl">from mycode import *
-</span></span><span class="line"><span class="cl">import mycode
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">sys</span>
+</span></span><span class="line"><span class="cl"><span class="n">project_path</span> <span class="o">=</span> <span class="s1">&#39;/home/mw/project&#39;</span>  <span class="c1"># 这里设置自己的项目路径</span>
+</span></span><span class="line"><span class="cl"><span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">project_path</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">mycode</span> <span class="kn">import</span> <span class="o">*</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">mycode</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>2.指定上级目录进行导包</p>
+<p>比如目录树是这样子</p>
+<p><img
+        class="lazyload"
+        data-src="MD_img/image-20220523095449043.png"
+        data-srcset="/py_project_env/MD_img/image-20220523095449043.png, MD_img/image-20220523095449043.png 1.5x, /py_project_env/MD_img/image-20220523095449043.png 2x"
+        data-sizes="auto"
+        alt="/py_project_env/MD_img/image-20220523095449043.png"
+        title="image-20220523095449043"></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">sys</span>
+</span></span><span class="line"><span class="cl"><span class="n">project_path</span> <span class="o">=</span> <span class="s1">&#39;/home/GAIIC2022-64_1700&#39;</span>  <span class="c1"># 这里设置自己的项目路径</span>
+</span></span><span class="line"><span class="cl"><span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">project_path</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">project.code</span> <span class="kn">import</span> <span class="n">xxx</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="项目入口是sh文件" class="headerLink">
