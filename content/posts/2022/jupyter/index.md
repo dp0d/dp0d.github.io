@@ -8,7 +8,7 @@ description: ""
 
 tags: [py, tools] # env linux mac py tools win
 categories: [tutorial] # tutorial, technology_log, machine_learning
-series: [Jupyter]
+series: [jupyter] #jupyter
 
 toc:
   enable: true

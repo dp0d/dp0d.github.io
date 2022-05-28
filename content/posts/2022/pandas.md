@@ -1,14 +1,14 @@
 ---
 draft: false
-title: "python中的数据处理"
+title: "Pandas的使用方法"
 subtitle: ""
 date: 2022-05-23T15:39:35+08:00
 lastmod: 2022-05-23T15:39:35+08:00
 description: ""
 
-tags: [tools] # env linux mac py tools win task
+tags: [tools, py] # env linux mac py tools win task
 categories: [] # tutorial, technology_log, machine_learning, nlp
-series: []
+series: [python_data_analysis]
 
 toc:
   enable: true
@@ -39,7 +39,7 @@ df = pd.read_csv('file')
 df = pd.read_csv('file', header=None)
 ```
 
-### DataFrame
+### Dataframe形状处理
 
 #### 打印开头几行数据
 
@@ -53,6 +53,22 @@ input_path = 'data/contest_data/' #input need be adjusted
 df = pd.read_csv(input_path+'train.csv')
 df_title = pd.read_csv(input_path+'titles.csv')
 ```
+
+#### 去除空值数据行
+
+```python
+df = df.dropna()
+```
+
+#### 根据特定列数据特征删除数据行
+
+例如，删除unit列值为'参考价'的行
+
+```python
+df = df.drop(df[df['unit']=='参考价'].index)
+```
+
+
 
 #### 合并两个Dataframe
 
@@ -232,4 +248,71 @@ df
 |  ... |       ...        |    ...    |          ...           |   ...   |  ...  |                        ...                        |
 
 
+
+### Dataframe数据处理
+
+#### 隐函数方法
+
+举个最简单的例子，total里都是899万元的形式，把万元替换掉，并转为float格式，其实隐函数干的远不止这些……
+
+```python
+format_fun = lambda x: float(x.replace('万元', ''))
+df["price"] = df["total"].apply(format_fun)
+```
+
+
+
+#### 合并两列字符串
+
+```python
+df["Full Name"] = df["province"].map(str) +','+ df["city"]
+city_lis = list(set(list(df['Full Name'].values)))
+print(city_lis[:3])
+```
+
+>```
+>['山东,青岛', '江西,赣州', '甘肃,兰州']
+>```
+
+相同功能
+
+```python
+df["Full Name"] = df["First"] + " " + df["Last"]
+
+df['Full Name'] = df[['First', 'Last']].apply(' '.join, axis=1)
+
+df['Full Name'] = df['First'].str.cat(df['Last'],sep=" ")
+
+df['Full Name'] = df[['First', 'Last']].agg(' '.join, axis=1)
+```
+
+#### 列间数据计算
+
+举个例子，通过总价和面积得到单价列
+
+```python
+df["total_price"] = df["total"].apply(lambda x: float(x.replace('万元', '')))
+
+df['area_num'] = df["area"].apply(lambda x: float(x.replace('㎡', '')))
+
+df['unit_pice'] = df['total_price'].map(float) / df['area_num'] * 10000
+```
+
+#### 分组数据计算
+
+##### 计算均值
+
+举例，按列Full Name 分组，计算各组的unit_price均值
+
+```python
+df.groupby('Full Name')['unit_pice'].mean()
+```
+
+#### 数据转换
+
+强转就好了dict(),int(),float()……
+
+```python
+dic = dict(df.groupby('Full Name')['unit_pice'].mean())
+```
 
