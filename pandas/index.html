@@ -38,7 +38,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/dp0d.github.io\/pandas\/"
-        },"image": ["https:\/\/dp0d.github.io\/images\/logo.png"],"genre": "posts","keywords": "tools, py","wordcount":  915 ,
+        },"image": ["https:\/\/dp0d.github.io\/images\/logo.png"],"genre": "posts","keywords": "tools, py","wordcount":  848 ,
         "url": "https:\/\/dp0d.github.io\/pandas\/","datePublished": "2022-05-23T15:39:35+08:00","dateModified": "2022-05-23T15:39:35+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "dp0d","logo": "https:\/\/dp0d.github.io\/images\/logo.png"},"author": {
@@ -157,6 +157,11 @@
             <li><a href="#数据转换">数据转换</a></li>
           </ul>
         </li>
+        <li><a href="#dataframe打印属性">Dataframe打印属性</a>
+          <ul>
+            <li><a href="#显示所有行和列">显示所有行和列</a></li>
+          </ul>
+        </li>
       </ul>
     </li>
   </ul>
@@ -165,7 +170,7 @@
             <div class="post-meta-line">
                 <span class="post-author"><i class="author fas fa-user-circle fa-fw"></i><a href="https://github.com/dp0d" title="Author" target="_blank" rel="noopener noreffer author" class="author">dp0d</a>
                 </span>&nbsp;<span class="post-category">收录于 </span>&nbsp;<span class="post-series">系列 <a href="/series/python_data_analysis/"><i class="far fa-list-alt fa-fw"></i>Python数据分析</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-05-23">2022-05-23</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2022-05-23">2022-05-23</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 915 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-05-23">2022-05-23</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2022-05-23">2022-05-23</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 848 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 2 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
@@ -196,6 +201,11 @@
               </ul>
             </li>
             <li><a href="#数据转换">数据转换</a></li>
+          </ul>
+        </li>
+        <li><a href="#dataframe打印属性">Dataframe打印属性</a>
+          <ul>
+            <li><a href="#显示所有行和列">显示所有行和列</a></li>
           </ul>
         </li>
       </ul>
@@ -307,47 +317,16 @@
       <td>0.50</td>
     </tr>
     <tr>
-      <th>1</th>
-      <td>7b9652b17b68b7a4</td>
-      <td>abatement</td>
-      <td>act of abating</td>
-      <td>A47</td>
-      <td>0.75</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>36d72442aefd8232</td>
-      <td>abatement</td>
-      <td>active catalyst</td>
-      <td>A47</td>
-      <td>0.25</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>5296b0c19e1ce60e</td>
-      <td>abatement</td>
-      <td>eliminating process</td>
-      <td>A47</td>
-      <td>0.50</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>54c1e3b9184cb5b6</td>
-      <td>abatement</td>
-      <td>forest region</td>
-      <td>A47</td>
-      <td>0.00</td>
-    </tr>
-    <tr>
       <th>...</th>
       <td>...</td>
       <td>...</td>
       <td>...</td>
       <td>...</td>
       <td>...</td>
-  </tbody>
+		</tr>
+   </tbody>
 </table>
-第二个df
+<p>第二个df</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -379,46 +358,6 @@
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>A01</td>
-      <td>AGRICULTURE; FORESTRY; ANIMAL HUSBANDRY; HUNTI...</td>
-      <td>A</td>
-      <td>1.0</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>A01B</td>
-      <td>SOIL WORKING IN AGRICULTURE OR FORESTRY; PARTS...</td>
-      <td>A</td>
-      <td>1.0</td>
-      <td>B</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>A01B1/00</td>
-      <td>Hand tools (edge trimmers for lawns A01G3/06  ...</td>
-      <td>A</td>
-      <td>1.0</td>
-      <td>B</td>
-      <td>1.0</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>A01B1/02</td>
-      <td>Spades; Shovels {(hand-operated dredgers E02F3...</td>
-      <td>A</td>
-      <td>1.0</td>
-      <td>B</td>
-      <td>1.0</td>
-      <td>2.0</td>
     </tr>
     <tr>
       <th>...</th>
@@ -472,42 +411,6 @@
 <td style="text-align:center">abatement of pollution</td>
 <td style="text-align:center">A47</td>
 <td style="text-align:center">0.50</td>
-<td style="text-align:center">FURNITURE; DOMESTIC ARTICLES OR APPLIANCES; CO&hellip;</td>
-</tr>
-<tr>
-<td style="text-align:right">1</td>
-<td style="text-align:center">7b9652b17b68b7a4</td>
-<td style="text-align:center">abatement</td>
-<td style="text-align:center">act of abating</td>
-<td style="text-align:center">A47</td>
-<td style="text-align:center">0.75</td>
-<td style="text-align:center">FURNITURE; DOMESTIC ARTICLES OR APPLIANCES; CO&hellip;</td>
-</tr>
-<tr>
-<td style="text-align:right">2</td>
-<td style="text-align:center">36d72442aefd8232</td>
-<td style="text-align:center">abatement</td>
-<td style="text-align:center">active catalyst</td>
-<td style="text-align:center">A47</td>
-<td style="text-align:center">0.25</td>
-<td style="text-align:center">FURNITURE; DOMESTIC ARTICLES OR APPLIANCES; CO&hellip;</td>
-</tr>
-<tr>
-<td style="text-align:right">3</td>
-<td style="text-align:center">5296b0c19e1ce60e</td>
-<td style="text-align:center">abatement</td>
-<td style="text-align:center">eliminating process</td>
-<td style="text-align:center">A47</td>
-<td style="text-align:center">0.50</td>
-<td style="text-align:center">FURNITURE; DOMESTIC ARTICLES OR APPLIANCES; CO&hellip;</td>
-</tr>
-<tr>
-<td style="text-align:right">4</td>
-<td style="text-align:center">54c1e3b9184cb5b6</td>
-<td style="text-align:center">abatement</td>
-<td style="text-align:center">forest region</td>
-<td style="text-align:center">A47</td>
-<td style="text-align:center">0.00</td>
 <td style="text-align:center">FURNITURE; DOMESTIC ARTICLES OR APPLIANCES; CO&hellip;</td>
 </tr>
 <tr>
@@ -615,6 +518,30 @@
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">dic</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;Full Name&#39;</span><span class="p">)[</span><span class="s1">&#39;unit_pice&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="dataframe打印属性" class="headerLink">
+    <a href="#dataframe%e6%89%93%e5%8d%b0%e5%b1%9e%e6%80%a7" class="header-mark"></a>Dataframe打印属性</h3><h4 id="显示所有行和列" class="headerLink">
+    <a href="#%e6%98%be%e7%a4%ba%e6%89%80%e6%9c%89%e8%a1%8c%e5%92%8c%e5%88%97" class="header-mark"></a>显示所有行和列</h4><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1">#显示所有列</span>
+</span></span><span class="line"><span class="cl"><span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s1">&#39;display.max_columns&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">#显示所有行</span>
+</span></span><span class="line"><span class="cl"><span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s1">&#39;display.max_rows&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">#设置value的显示长度为100，默认为50</span>
+</span></span><span class="line"><span class="cl"><span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s1">&#39;max_colwidth&#39;</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div></div>
