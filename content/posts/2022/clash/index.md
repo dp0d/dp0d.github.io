@@ -227,7 +227,8 @@ import requests
 
 # 订阅链接
 url = 'https://xxxx.com'
-config_yaml_content = requests.get(url).text
+head = {'User-Agent': "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.75.14 (KHTML, like Gecko) Version/7.0.3 Safari/7046A194A"}
+config_yaml_content = requests.get(url, headers=head).text
 
 # 写入文件
 config_yaml_path = '/home/oliver/.config/clash/config.yaml'

@@ -243,6 +243,19 @@ df.groupby('Full Name')['unit_pice'].mean()
 dic = dict(df.groupby('Full Name')['unit_pice'].mean())
 ```
 
+转化为numpy.ndarray
+
+array
+
+```
+array = df['text'].values
+
+array = df['text'].values.astype(str)
+
+```
+
+
+
 ### Dataframe打印属性
 
 #### 显示所有行和列
