@@ -37,7 +37,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/dp0d.github.io\/clash\/"
-        },"image": ["https:\/\/dp0d.github.io\/images\/logo.png"],"genre": "posts","keywords": "linux, tools","wordcount":  1167 ,
+        },"image": ["https:\/\/dp0d.github.io\/images\/logo.png"],"genre": "posts","keywords": "linux, tools","wordcount":  1185 ,
         "url": "https:\/\/dp0d.github.io\/clash\/","datePublished": "2022-04-24T13:52:59+08:00","dateModified": "2022-04-24T13:52:59+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "dp0d","logo": "https:\/\/dp0d.github.io\/images\/logo.png"},"author": {
@@ -154,7 +154,7 @@
             <div class="post-meta-line">
                 <span class="post-author"><i class="author fas fa-user-circle fa-fw"></i><a href="https://github.com/dp0d" title="Author" target="_blank" rel="noopener noreffer author" class="author">dp0d</a>
                 </span>&nbsp;<span class="post-category">收录于 </span>&nbsp;<span class="post-category">类别 <a href="/categories/tutorial/"><i class="far fa-folder fa-fw"></i>教程</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-04-24">2022-04-24</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2022-04-24">2022-04-24</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1167 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-04-24">2022-04-24</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2022-04-24">2022-04-24</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1185 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 3 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
@@ -507,13 +507,15 @@
 </span><span class="lnt">11
 </span><span class="lnt">12
 </span><span class="lnt">13
+</span><span class="lnt">14
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">requests</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># 订阅链接</span>
 </span></span><span class="line"><span class="cl"><span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://xxxx.com&#39;</span>
-</span></span><span class="line"><span class="cl"><span class="n">config_yaml_content</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span><span class="o">.</span><span class="n">text</span>
+</span></span><span class="line"><span class="cl"><span class="n">head</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;User-Agent&#39;</span><span class="p">:</span> <span class="s2">&#34;Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.75.14 (KHTML, like Gecko) Version/7.0.3 Safari/7046A194A&#34;</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="n">config_yaml_content</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">head</span><span class="p">)</span><span class="o">.</span><span class="n">text</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># 写入文件</span>
 </span></span><span class="line"><span class="cl"><span class="n">config_yaml_path</span> <span class="o">=</span> <span class="s1">&#39;/home/oliver/.config/clash/config.yaml&#39;</span>

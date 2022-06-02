@@ -38,7 +38,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/dp0d.github.io\/pandas\/"
-        },"image": ["https:\/\/dp0d.github.io\/images\/logo.png"],"genre": "posts","keywords": "tools, py","wordcount":  848 ,
+        },"image": ["https:\/\/dp0d.github.io\/images\/logo.png"],"genre": "posts","keywords": "tools, py","wordcount":  874 ,
         "url": "https:\/\/dp0d.github.io\/pandas\/","datePublished": "2022-05-23T15:39:35+08:00","dateModified": "2022-05-23T15:39:35+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "dp0d","logo": "https:\/\/dp0d.github.io\/images\/logo.png"},"author": {
@@ -170,7 +170,7 @@
             <div class="post-meta-line">
                 <span class="post-author"><i class="author fas fa-user-circle fa-fw"></i><a href="https://github.com/dp0d" title="Author" target="_blank" rel="noopener noreffer author" class="author">dp0d</a>
                 </span>&nbsp;<span class="post-category">收录于 </span>&nbsp;<span class="post-series">系列 <a href="/series/python_data_analysis/"><i class="far fa-list-alt fa-fw"></i>Python数据分析</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-05-23">2022-05-23</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2022-05-23">2022-05-23</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 848 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-05-23">2022-05-23</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2022-05-23">2022-05-23</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 874 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 2 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
@@ -518,6 +518,20 @@
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">dic</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;Full Name&#39;</span><span class="p">)[</span><span class="s1">&#39;unit_pice&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>转化为numpy.ndarray</p>
+<p>array</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">array = df[&#39;text&#39;].values
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">array = df[&#39;text&#39;].values.astype(str)
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="dataframe打印属性" class="headerLink">
