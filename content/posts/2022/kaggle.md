@@ -19,7 +19,29 @@ license: ""
 
 ## 命令行的使用
 
+### Kaggle API 安装
+
++ 第一步，本地
+
+```bash
+pip install kaggle
+```
+
++ 第二步，kaggle
+
+点击头像->Account->API->Create New API Token（如果想要删除以往使用过的Token可以点击API下的Expire API Token）
+
++ 第三步，本地
+
+把下载的kaggle.json放在用户根目录的.kaggle/文件夹下
+
+安装完成。
+
+
+
 ### 关于数据集
+
+数据集可以用来上传本地的数据以及在本地训练好的模型文件。
 
 #### 创建并上传数据集
 
