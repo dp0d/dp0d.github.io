@@ -4,9 +4,16 @@
         <link>https://dp0d.github.io/</link>
         <description>dp0d&#39;s blog,where to share life as well as technology of nlp.</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>draftpaperofgod@gmail.com (dp0d)</managingEditor>
-            <webMaster>draftpaperofgod@gmail.com (dp0d)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Mon, 23 May 2022 21:18:18 &#43;0800</lastBuildDate>
+            <webMaster>draftpaperofgod@gmail.com (dp0d)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sat, 04 Jun 2022 10:03:26 &#43;0800</lastBuildDate>
             <atom:link href="https://dp0d.github.io/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>Kaggle使用介绍</title>
+    <link>https://dp0d.github.io/kaggle/</link>
+    <pubDate>Sat, 04 Jun 2022 10:03:26 &#43;0800</pubDate><author>
+        <name>dp0d</name>
+    </author><guid>https://dp0d.github.io/kaggle/</guid>
+    <description><![CDATA[命令行的使用关于数据集创建并上传数据集 第一步，本地初始化 ，将data_dir换成你自己的路径名字 1 kaggle datasets init -p &#39;data_dir&#39; 第二步，数据集改名 第一步之后会在]]></description>
+</item><item>
     <title>CUDA相关问题和设置</title>
     <link>https://dp0d.github.io/cuda/</link>
     <pubDate>Mon, 23 May 2022 21:18:18 &#43;0800</pubDate><author>
@@ -69,12 +76,5 @@
         <name>dp0d</name>
     </author><guid>https://dp0d.github.io/regular_expression/</guid>
     <description><![CDATA[re用法示例1 2 3 4 # 过多换行替换为&#39;￥￥￥中English$$$&#39; sub_text = re.sub(r&#39;\n{2,}&#39;,&]]></description>
-</item><item>
-    <title>损失函数</title>
-    <link>https://dp0d.github.io/loss_function/</link>
-    <pubDate>Fri, 29 Apr 2022 10:34:04 &#43;0800</pubDate><author>
-        <name>dp0d</name>
-    </author><guid>https://dp0d.github.io/loss_function/</guid>
-    <description><![CDATA[经典损失函数相对熵（也称KL散度）维基百科：KL散度（Kullback-Leibler divergence，简称KLD），在讯息系统中称为相]]></description>
 </item></channel>
 </rss>
