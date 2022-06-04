@@ -8,7 +8,7 @@ description: ""
 
 tags: [] # env linux mac py tools win task
 categories: [] # tutorial, technology_log, machine_learning, nlp
-series: [] #python_data_analysis, jupyter
+series: [] # python_data_analysis, jupyter, data_science_contest
 
 toc:
   enable: true
