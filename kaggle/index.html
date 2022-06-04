@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noodp" />
     <title class="pjax-title">Kaggle使用介绍 - dp0d&#39;s blog</title><meta name="Description" content="dp0d&#39;s blog,where to share life as well as technology of nlp."><meta property="og:title" content="Kaggle使用介绍" />
-<meta property="og:description" content="命令行的使用关于数据集创建并上传数据集 第一步，本地初始化 ，将data_dir换成你自己的路径名字 1 kaggle datasets init -p &#39;data_dir&#39; 第二步，数据集改名 第一步之后会在" />
+<meta property="og:description" content="命令行的使用Kaggle API 安装 第一步，本地 1 pip install kaggle 第二步，kaggle 点击头像-&gt;Account-&gt;API-&gt;Create" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://dp0d.github.io/kaggle/" /><meta property="og:image" content="https://dp0d.github.io/images/logo.png"/><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2022-06-04T10:03:26+08:00" />
@@ -17,7 +17,7 @@
 <meta name="twitter:image" content="https://dp0d.github.io/images/logo.png"/>
 
 <meta name="twitter:title" content="Kaggle使用介绍"/>
-<meta name="twitter:description" content="命令行的使用关于数据集创建并上传数据集 第一步，本地初始化 ，将data_dir换成你自己的路径名字 1 kaggle datasets init -p &#39;data_dir&#39; 第二步，数据集改名 第一步之后会在"/>
+<meta name="twitter:description" content="命令行的使用Kaggle API 安装 第一步，本地 1 pip install kaggle 第二步，kaggle 点击头像-&gt;Account-&gt;API-&gt;Create"/>
 <meta name="application-name" content="dp0d&#39;s blog">
 <meta name="apple-mobile-web-app-title" content="dp0d&#39;s blog">
 
@@ -38,7 +38,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/dp0d.github.io\/kaggle\/"
-        },"image": ["https:\/\/dp0d.github.io\/images\/logo.png"],"genre": "posts","wordcount":  448 ,
+        },"image": ["https:\/\/dp0d.github.io\/images\/logo.png"],"genre": "posts","wordcount":  633 ,
         "url": "https:\/\/dp0d.github.io\/kaggle\/","datePublished": "2022-06-04T10:03:26+08:00","dateModified": "2022-06-04T10:03:26+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "dp0d","logo": "https:\/\/dp0d.github.io\/images\/logo.png"},"author": {
@@ -135,6 +135,7 @@
   <ul>
     <li><a href="#命令行的使用">命令行的使用</a>
       <ul>
+        <li><a href="#kaggle-api-安装">Kaggle API 安装</a></li>
         <li><a href="#关于数据集">关于数据集</a>
           <ul>
             <li><a href="#创建并上传数据集">创建并上传数据集</a></li>
@@ -148,9 +149,9 @@
     </div><script>document.getElementsByTagName("main")[0].setAttribute("pageStyle", "normal")</script><script>document.getElementsByTagName("main")[0].setAttribute("autoTOC", "true")</script><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Kaggle使用介绍</h1><div class="post-meta">
             <div class="post-meta-line">
                 <span class="post-author"><i class="author fas fa-user-circle fa-fw"></i><a href="https://github.com/dp0d" title="Author" target="_blank" rel="noopener noreffer author" class="author">dp0d</a>
-                </span>&nbsp;<span class="post-category">收录于 </span>&nbsp;<span class="post-series">系列 <a href="/series/data_science_contest/"><i class="far fa-list-alt fa-fw"></i>data_science_contest</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-06-04">2022-06-04</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2022-06-04">2022-06-04</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 448 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 1 分钟&nbsp;</div>
+                </span>&nbsp;<span class="post-category">收录于 </span>&nbsp;<span class="post-series">系列 <a href="/series/data_science_contest/"><i class="far fa-list-alt fa-fw"></i>数据科学竞赛</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-06-04">2022-06-04</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2022-06-04">2022-06-04</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 633 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 2 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -160,6 +161,7 @@
   <ul>
     <li><a href="#命令行的使用">命令行的使用</a>
       <ul>
+        <li><a href="#kaggle-api-安装">Kaggle API 安装</a></li>
         <li><a href="#关于数据集">关于数据集</a>
           <ul>
             <li><a href="#创建并上传数据集">创建并上传数据集</a></li>
@@ -171,8 +173,30 @@
   </ul>
 </nav></div>
             </div><div class="content" id="content"><h2 id="命令行的使用" class="headerLink">
-    <a href="#%e5%91%bd%e4%bb%a4%e8%a1%8c%e7%9a%84%e4%bd%bf%e7%94%a8" class="header-mark"></a>命令行的使用</h2><h3 id="关于数据集" class="headerLink">
-    <a href="#%e5%85%b3%e4%ba%8e%e6%95%b0%e6%8d%ae%e9%9b%86" class="header-mark"></a>关于数据集</h3><h4 id="创建并上传数据集" class="headerLink">
+    <a href="#%e5%91%bd%e4%bb%a4%e8%a1%8c%e7%9a%84%e4%bd%bf%e7%94%a8" class="header-mark"></a>命令行的使用</h2><h3 id="kaggle-api-安装" class="headerLink">
+    <a href="#kaggle-api-%e5%ae%89%e8%a3%85" class="header-mark"></a>Kaggle API 安装</h3><ul>
+<li>第一步，本地</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">pip install kaggle
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>第二步，kaggle</li>
+</ul>
+<p>点击头像-&gt;Account-&gt;API-&gt;Create New API Token（如果想要删除以往使用过的Token可以点击API下的Expire API Token）</p>
+<ul>
+<li>第三步，本地</li>
+</ul>
+<p>把下载的kaggle.json放在用户根目录的.kaggle/文件夹下</p>
+<p>安装完成。</p>
+<h3 id="关于数据集" class="headerLink">
+    <a href="#%e5%85%b3%e4%ba%8e%e6%95%b0%e6%8d%ae%e9%9b%86" class="header-mark"></a>关于数据集</h3><p>数据集可以用来上传本地的数据以及在本地训练好的模型文件。</p>
+<h4 id="创建并上传数据集" class="headerLink">
     <a href="#%e5%88%9b%e5%bb%ba%e5%b9%b6%e4%b8%8a%e4%bc%a0%e6%95%b0%e6%8d%ae%e9%9b%86" class="header-mark"></a>创建并上传数据集</h4><ul>
 <li>第一步，本地初始化 ，将data_dir换成你自己的路径名字</li>
 </ul>

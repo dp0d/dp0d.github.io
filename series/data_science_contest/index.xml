@@ -10,6 +10,6 @@
     <pubDate>Sat, 04 Jun 2022 10:03:26 &#43;0800</pubDate><author>
         <name>dp0d</name>
     </author><guid>https://dp0d.github.io/kaggle/</guid>
-    <description><![CDATA[命令行的使用关于数据集创建并上传数据集 第一步，本地初始化 ，将data_dir换成你自己的路径名字 1 kaggle datasets init -p &#39;data_dir&#39; 第二步，数据集改名 第一步之后会在]]></description>
+    <description><![CDATA[命令行的使用Kaggle API 安装 第一步，本地 1 pip install kaggle 第二步，kaggle 点击头像-&gt;Account-&gt;API-&gt;Create]]></description>
 </item></channel>
 </rss>
