@@ -1,11 +1,11 @@
 ---
-draft: true
+draft: false
 title: "Scrapy实战案例——房天下"
 subtitle: "Scrapy2.6"
 date: 2022-04-09T10:40:45+08:00
 lastmod: 2022-04-09T10:40:45+08:00
 authors: []
-description: "爬虫应该是python使用者比较重要的一门技能，学会这个也能进厂了，本项目较为详细，实现不了你打我。"
+description: "Scrapy信息检索大作业驱动，爬虫应该是python使用者比较重要的一门技能，学会这个也能进厂了，本项目较为详细，实现不了你打我。"
 
 tags: [Scrapy2.6]
 categories: [tutorial]
