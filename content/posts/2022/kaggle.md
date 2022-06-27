@@ -48,8 +48,13 @@ pip install kaggle
 + 第一步，本地初始化 ，将data_dir换成你自己的路径名字
 
 ```bash
+# 上传不含子文件夹的数据文件夹
 kaggle datasets init -p 'data_dir'
+# 上传含有子文件夹的数据文件夹不压缩
+kaggle datasets init -p 'data_dir' -r tar
 ```
+
+
 
 + 第二步，数据集改名
 
