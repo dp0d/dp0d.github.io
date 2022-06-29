@@ -4,9 +4,16 @@
         <link>https://dp0d.github.io/</link>
         <description>dp0d&#39;s blog,where to share life as well as technology of nlp.</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>draftpaperofgod@gmail.com (dp0d)</managingEditor>
-            <webMaster>draftpaperofgod@gmail.com (dp0d)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sat, 04 Jun 2022 10:03:26 &#43;0800</lastBuildDate>
+            <webMaster>draftpaperofgod@gmail.com (dp0d)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Wed, 29 Jun 2022 15:04:39 &#43;0800</lastBuildDate>
             <atom:link href="https://dp0d.github.io/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>K折交叉验证</title>
+    <link>https://dp0d.github.io/kfold_cross_validation/</link>
+    <pubDate>Wed, 29 Jun 2022 15:04:39 &#43;0800</pubDate><author>
+        <name>dp0d</name>
+    </author><guid>https://dp0d.github.io/kfold_cross_validation/</guid>
+    <description><![CDATA[什么是K折交叉验证？如果你有五个土豆，你想要教会一个小盆友，这些是土豆，好了，现在你拿出四个土豆让他逐一认识，最后拿出第五个土豆来测试他是否]]></description>
+</item><item>
     <title>Kaggle使用介绍</title>
     <link>https://dp0d.github.io/kaggle/</link>
     <pubDate>Sat, 04 Jun 2022 10:03:26 &#43;0800</pubDate><author>
@@ -69,12 +76,5 @@
         <name>dp0d</name>
     </author><guid>https://dp0d.github.io/python_using/</guid>
     <description><![CDATA[*args 和 **kwargs传参方法*args元组传参 1 2 3 4 def add(*args): print(args, type(args)) add(2, 3) 1 (2, 3) &lt;class &#39;tuple&#39;&gt; 1 2 3 4 5 6 7 8 9 10 def add(*numbers): total = 0 for num in numbers: total += num return total print(add(2, 3)) print(add(2, 3, 5)) print(add(2, 3, 5,]]></description>
-</item><item>
-    <title>正则表达式</title>
-    <link>https://dp0d.github.io/regular_expression/</link>
-    <pubDate>Fri, 13 May 2022 19:33:58 &#43;0800</pubDate><author>
-        <name>dp0d</name>
-    </author><guid>https://dp0d.github.io/regular_expression/</guid>
-    <description><![CDATA[re用法示例1 2 3 4 # 过多换行替换为&#39;￥￥￥中English$$$&#39; sub_text = re.sub(r&#39;\n{2,}&#39;,&]]></description>
 </item></channel>
 </rss>

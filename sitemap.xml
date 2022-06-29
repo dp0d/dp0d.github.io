@@ -2,20 +2,22 @@
     xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     ><url>
+            <loc>https://dp0d.github.io/categories/</loc><lastmod>2022-06-29T15:04:39&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://dp0d.github.io/</loc><lastmod>2022-06-29T15:04:39&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://dp0d.github.io/kfold_cross_validation/</loc><lastmod>2022-06-29T15:04:39&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://dp0d.github.io/posts/</loc><lastmod>2022-06-29T15:04:39&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://dp0d.github.io/tags/py/</loc><lastmod>2022-06-29T15:04:39&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://dp0d.github.io/series/python_data_analysis/</loc><lastmod>2022-06-29T15:04:39&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://dp0d.github.io/series/</loc><lastmod>2022-06-29T15:04:39&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://dp0d.github.io/series/</loc><lastmod>2022-06-29T15:04:39&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://dp0d.github.io/tags/</loc><lastmod>2022-06-29T15:04:39&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://dp0d.github.io/categories/machine_learning/</loc><lastmod>2022-06-29T15:04:39&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://dp0d.github.io/series/data_science_contest/</loc><lastmod>2022-06-04T10:03:26&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url><url>
-            <loc>https://dp0d.github.io/</loc><lastmod>2022-06-04T10:03:26&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url><url>
             <loc>https://dp0d.github.io/kaggle/</loc><lastmod>2022-06-04T10:03:26&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url><url>
-            <loc>https://dp0d.github.io/posts/</loc><lastmod>2022-06-04T10:03:26&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url><url>
-            <loc>https://dp0d.github.io/series/</loc><lastmod>2022-06-04T10:03:26&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url><url>
-            <loc>https://dp0d.github.io/series/</loc><lastmod>2022-06-04T10:03:26&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url><url>
-            <loc>https://dp0d.github.io/categories/</loc><lastmod>2022-05-23T21:18:18&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://dp0d.github.io/cuda/</loc><lastmod>2022-05-23T21:18:18&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
-            <loc>https://dp0d.github.io/tags/</loc><lastmod>2022-05-23T21:18:18&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://dp0d.github.io/categories/technology_log/</loc><lastmod>2022-05-23T21:18:18&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://dp0d.github.io/tags/env/</loc><lastmod>2022-05-23T21:18:18&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://dp0d.github.io/pandas/</loc><lastmod>2022-05-23T15:39:35&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
-            <loc>https://dp0d.github.io/tags/py/</loc><lastmod>2022-05-23T15:39:35&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
-            <loc>https://dp0d.github.io/series/python_data_analysis/</loc><lastmod>2022-05-23T15:39:35&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://dp0d.github.io/tags/tools/</loc><lastmod>2022-05-23T15:39:35&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://dp0d.github.io/tags/task/</loc><lastmod>2022-05-23T14:18:25&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://dp0d.github.io/categories/nlp/</loc><lastmod>2022-05-23T14:18:25&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
@@ -27,7 +29,6 @@
             <loc>https://dp0d.github.io/py_project_env/</loc><lastmod>2022-05-20T14:43:54&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://dp0d.github.io/categories/event/</loc><lastmod>2022-05-19T09:33:48&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://dp0d.github.io/production_catastrophe/</loc><lastmod>2022-05-19T09:33:48&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
-            <loc>https://dp0d.github.io/categories/machine_learning/</loc><lastmod>2022-05-18T15:20:58&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://dp0d.github.io/deep_learning_optimize/</loc><lastmod>2022-05-18T15:20:58&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://dp0d.github.io/python_using/</loc><lastmod>2022-05-18T09:26:19&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://dp0d.github.io/regular_expression/</loc><lastmod>2022-05-13T19:33:58&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
