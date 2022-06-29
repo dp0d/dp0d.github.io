@@ -254,6 +254,26 @@ array = df['text'].values.astype(str)
 
 ```
 
+#### loc方法
+
+如果不存在fold列，新建'fold'列，并在位置[0, 5]上赋值为1。
+
+```python
+import pandas as pd
+df = pd.DataFrame({"featrues": ["long", "high", "long", "short", "big", "small"], "labels": ["1", "1", "1", "0", "1", "0"]})
+df.loc[[0, 5], 'fold'] = 1
+df
+```
+
+> ```
+> 	featrues	labels	fold
+> 0	long	1	1.0
+> 1	high	1	NaN
+> 2	long	1	NaN
+> 3	short	0	NaN
+> 4	big	1	NaN
+> ```
+
 
 
 ### Dataframe打印属性

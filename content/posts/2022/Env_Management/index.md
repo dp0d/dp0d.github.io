@@ -21,6 +21,20 @@ toc:
 
 # 环境管理途径介绍
 
+环境需要用到的包可以写入requirements.txt文件里，如果是从另一个工程环境切换过来，可以在那个环境中运行
+
+```python
+pip freeze > requirements.txt
+```
+
+然后在需要配置的环境中运行如下命令进行安装大部分需要的包
+
+```bash
+cat requirements.txt | xargs -n 1 pip install
+```
+
+此方法会忽略报错进行pip包的安装，会出现包的缺损，后续可以自行补上。
+
 ## Conda
 
 + 查看我们当前conda里有的环境 ，三种方式都可👇🏻
