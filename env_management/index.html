@@ -37,7 +37,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/dp0d.github.io\/env_management\/"
-        },"image": ["https:\/\/dp0d.github.io\/images\/logo.png"],"genre": "posts","wordcount":  1971 ,
+        },"image": ["https:\/\/dp0d.github.io\/images\/logo.png"],"genre": "posts","wordcount":  2102 ,
         "url": "https:\/\/dp0d.github.io\/env_management\/","datePublished": "2022-03-22T09:11:07+08:00","dateModified": "2022-03-22T09:11:07+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "dp0d","logo": "https:\/\/dp0d.github.io\/images\/logo.png"},"author": {
@@ -155,8 +155,8 @@
             <div class="post-meta-line">
                 <span class="post-author"><i class="author fas fa-user-circle fa-fw"></i><a href="https://github.com/dp0d" title="Author" target="_blank" rel="noopener noreffer author" class="author">dp0d</a>
                 </span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-03-22">2022-03-22</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2022-03-22">2022-03-22</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1971 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 4 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-03-22">2022-03-22</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2022-03-22">2022-03-22</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 2102 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 5 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -193,7 +193,26 @@
 </ul>
 <p>由于系统配置的不确定性，建议友友们在linux下食用。</p>
 <h1 id="环境管理途径介绍" class="headerLink">
-    <a href="#%e7%8e%af%e5%a2%83%e7%ae%a1%e7%90%86%e9%80%94%e5%be%84%e4%bb%8b%e7%bb%8d" class="header-mark"></a>环境管理途径介绍</h1><h2 id="conda" class="headerLink">
+    <a href="#%e7%8e%af%e5%a2%83%e7%ae%a1%e7%90%86%e9%80%94%e5%be%84%e4%bb%8b%e7%bb%8d" class="header-mark"></a>环境管理途径介绍</h1><p>环境需要用到的包可以写入requirements.txt文件里，如果是从另一个工程环境切换过来，可以在那个环境中运行</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">pip</span> <span class="n">freeze</span> <span class="o">&gt;</span> <span class="n">requirements</span><span class="o">.</span><span class="n">txt</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后在需要配置的环境中运行如下命令进行安装大部分需要的包</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">cat requirements.txt <span class="p">|</span> xargs -n <span class="m">1</span> pip install
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>此方法会忽略报错进行pip包的安装，会出现包的缺损，后续可以自行补上。</p>
+<h2 id="conda" class="headerLink">
     <a href="#conda" class="header-mark"></a>Conda</h2><ul>
 <li>查看我们当前conda里有的环境 ，三种方式都可👇🏻</li>
 </ul>

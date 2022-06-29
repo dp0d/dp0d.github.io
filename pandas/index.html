@@ -38,7 +38,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/dp0d.github.io\/pandas\/"
-        },"image": ["https:\/\/dp0d.github.io\/images\/logo.png"],"genre": "posts","keywords": "tools, py","wordcount":  874 ,
+        },"image": ["https:\/\/dp0d.github.io\/images\/logo.png"],"genre": "posts","keywords": "tools, py","wordcount":  986 ,
         "url": "https:\/\/dp0d.github.io\/pandas\/","datePublished": "2022-05-23T15:39:35+08:00","dateModified": "2022-05-23T15:39:35+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "dp0d","logo": "https:\/\/dp0d.github.io\/images\/logo.png"},"author": {
@@ -155,6 +155,7 @@
               </ul>
             </li>
             <li><a href="#数据转换">数据转换</a></li>
+            <li><a href="#loc方法">loc方法</a></li>
           </ul>
         </li>
         <li><a href="#dataframe打印属性">Dataframe打印属性</a>
@@ -170,7 +171,7 @@
             <div class="post-meta-line">
                 <span class="post-author"><i class="author fas fa-user-circle fa-fw"></i><a href="https://github.com/dp0d" title="Author" target="_blank" rel="noopener noreffer author" class="author">dp0d</a>
                 </span>&nbsp;<span class="post-category">收录于 </span>&nbsp;<span class="post-series">系列 <a href="/series/python_data_analysis/"><i class="far fa-list-alt fa-fw"></i>Python数据分析</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-05-23">2022-05-23</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2022-05-23">2022-05-23</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 874 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-05-23">2022-05-23</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2022-05-23">2022-05-23</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 986 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 2 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
@@ -201,6 +202,7 @@
               </ul>
             </li>
             <li><a href="#数据转换">数据转换</a></li>
+            <li><a href="#loc方法">loc方法</a></li>
           </ul>
         </li>
         <li><a href="#dataframe打印属性">Dataframe打印属性</a>
@@ -534,7 +536,43 @@
 </span></span><span class="line"><span class="cl">array = df[&#39;text&#39;].values.astype(str)
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h3 id="dataframe打印属性" class="headerLink">
+</div><h4 id="loc方法" class="headerLink">
+    <a href="#loc%e6%96%b9%e6%b3%95" class="header-mark"></a>loc方法</h4><p>如果不存在fold列，新建&rsquo;fold&rsquo;列，并在位置[0, 5]上赋值为1。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+</span></span><span class="line"><span class="cl"><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">&#34;featrues&#34;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&#34;long&#34;</span><span class="p">,</span> <span class="s2">&#34;high&#34;</span><span class="p">,</span> <span class="s2">&#34;long&#34;</span><span class="p">,</span> <span class="s2">&#34;short&#34;</span><span class="p">,</span> <span class="s2">&#34;big&#34;</span><span class="p">,</span> <span class="s2">&#34;small&#34;</span><span class="p">],</span> <span class="s2">&#34;labels&#34;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&#34;1&#34;</span><span class="p">,</span> <span class="s2">&#34;1&#34;</span><span class="p">,</span> <span class="s2">&#34;1&#34;</span><span class="p">,</span> <span class="s2">&#34;0&#34;</span><span class="p">,</span> <span class="s2">&#34;1&#34;</span><span class="p">,</span> <span class="s2">&#34;0&#34;</span><span class="p">]})</span>
+</span></span><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span> <span class="s1">&#39;fold&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl"><span class="n">df</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">	featrues	labels	fold
+</span></span><span class="line"><span class="cl">0	long	1	1.0
+</span></span><span class="line"><span class="cl">1	high	1	NaN
+</span></span><span class="line"><span class="cl">2	long	1	NaN
+</span></span><span class="line"><span class="cl">3	short	0	NaN
+</span></span><span class="line"><span class="cl">4	big	1	NaN
+</span></span></code></pre></td></tr></table>
+</div>
+</div></blockquote>
+<h3 id="dataframe打印属性" class="headerLink">
     <a href="#dataframe%e6%89%93%e5%8d%b0%e5%b1%9e%e6%80%a7" class="header-mark"></a>Dataframe打印属性</h3><h4 id="显示所有行和列" class="headerLink">
     <a href="#%e6%98%be%e7%a4%ba%e6%89%80%e6%9c%89%e8%a1%8c%e5%92%8c%e5%88%97" class="header-mark"></a>显示所有行和列</h4><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
