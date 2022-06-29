@@ -27,7 +27,7 @@ train
 
 out:
 
-> ```
+> ```markdown
 > 	featrues	labels
 > 4	big	1
 > 0	long	1
@@ -66,7 +66,7 @@ print(df.head())
 
 out:
 
-> ```
+> ```out
 >   featrues labels
 > 0     long      1
 > 1     high      1
@@ -83,7 +83,7 @@ for train, test in kf.split(df):
 
 out:
 
-> ```
+> ```out
 > [2 3 4 5] [0 1]
 > [0 1 3 4] [2 5]
 > [0 1 2 3 5] [4]
