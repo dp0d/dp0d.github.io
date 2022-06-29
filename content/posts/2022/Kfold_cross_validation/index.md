@@ -1,5 +1,5 @@
 ---
-draft: true
+draft: false
 title: "K折交叉验证"
 subtitle: ""
 date: 2022-06-29T15:04:39+08:00
