@@ -30,7 +30,7 @@ license: ""
 # Library
 # ====================================================
 import pandas as pd
-from sklearn.model_selection import train_test_split, KFold, GroupKFold, 
+from sklearn.model_selection import train_test_split, KFold, GroupKFold, StratifiedKFold, StratifiedGroupKFold 
 ```
 
 ### 简单的数据划分(不涉及多折)
