@@ -17,6 +17,6 @@
     <pubDate>Mon, 23 May 2022 15:39:35 &#43;0800</pubDate><author>
         <name>dp0d</name>
     </author><guid>https://dp0d.github.io/pandas/</guid>
-    <description><![CDATA[Pandas1 import pandas as pd 数据读取 csv格式 有表头模式 1 df = pd.read_csv(&#39;file&#39;) 无表头模式 1 df = pd.read_csv(&#39;file&#39;, header=None) Dataframe形状处理打印开头几行数据1 df.head() 1 2 3 4 import pandas as pd input_path = &#39;data/contest_data/&#39; #input need be]]></description>
+    <description><![CDATA[Pandas1 import pandas as pd 数据读取 csv格式 有表头模式 1 df = pd.read_csv(&#39;file&#39;) 无表头模式 1 df = pd.read_csv(&#39;file&#39;, header=None) 读取之后为各列取表头（列名） 1 2 df = pd.read_csv(&#39;data/dataset/raw_data/data.csv&#39;, header=None) df.columns = [&#39;label_text&#39;, &#39;chapter&#39;, &#39;section&#39;, &#39;subsection&#39;, &#39;text&#39;] Dataframe形]]></description>
 </item></channel>
 </rss>

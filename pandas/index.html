@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noodp" />
     <title class="pjax-title">Pandas的使用方法 - dp0d&#39;s blog</title><meta name="Description" content="dp0d&#39;s blog,where to share life as well as technology of nlp."><meta property="og:title" content="Pandas的使用方法" />
-<meta property="og:description" content="Pandas1 import pandas as pd 数据读取 csv格式 有表头模式 1 df = pd.read_csv(&#39;file&#39;) 无表头模式 1 df = pd.read_csv(&#39;file&#39;, header=None) Dataframe形状处理打印开头几行数据1 df.head() 1 2 3 4 import pandas as pd input_path = &#39;data/contest_data/&#39; #input need be" />
+<meta property="og:description" content="Pandas1 import pandas as pd 数据读取 csv格式 有表头模式 1 df = pd.read_csv(&#39;file&#39;) 无表头模式 1 df = pd.read_csv(&#39;file&#39;, header=None) 读取之后为各列取表头（列名） 1 2 df = pd.read_csv(&#39;data/dataset/raw_data/data.csv&#39;, header=None) df.columns = [&#39;label_text&#39;, &#39;chapter&#39;, &#39;section&#39;, &#39;subsection&#39;, &#39;text&#39;] Dataframe形" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://dp0d.github.io/pandas/" /><meta property="og:image" content="https://dp0d.github.io/images/logo.png"/><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2022-05-23T15:39:35+08:00" />
@@ -17,7 +17,7 @@
 <meta name="twitter:image" content="https://dp0d.github.io/images/logo.png"/>
 
 <meta name="twitter:title" content="Pandas的使用方法"/>
-<meta name="twitter:description" content="Pandas1 import pandas as pd 数据读取 csv格式 有表头模式 1 df = pd.read_csv(&#39;file&#39;) 无表头模式 1 df = pd.read_csv(&#39;file&#39;, header=None) Dataframe形状处理打印开头几行数据1 df.head() 1 2 3 4 import pandas as pd input_path = &#39;data/contest_data/&#39; #input need be"/>
+<meta name="twitter:description" content="Pandas1 import pandas as pd 数据读取 csv格式 有表头模式 1 df = pd.read_csv(&#39;file&#39;) 无表头模式 1 df = pd.read_csv(&#39;file&#39;, header=None) 读取之后为各列取表头（列名） 1 2 df = pd.read_csv(&#39;data/dataset/raw_data/data.csv&#39;, header=None) df.columns = [&#39;label_text&#39;, &#39;chapter&#39;, &#39;section&#39;, &#39;subsection&#39;, &#39;text&#39;] Dataframe形"/>
 <meta name="application-name" content="dp0d&#39;s blog">
 <meta name="apple-mobile-web-app-title" content="dp0d&#39;s blog">
 
@@ -38,7 +38,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/dp0d.github.io\/pandas\/"
-        },"image": ["https:\/\/dp0d.github.io\/images\/logo.png"],"genre": "posts","keywords": "tools, py","wordcount":  986 ,
+        },"image": ["https:\/\/dp0d.github.io\/images\/logo.png"],"genre": "posts","keywords": "tools, py","wordcount":  1013 ,
         "url": "https:\/\/dp0d.github.io\/pandas\/","datePublished": "2022-05-23T15:39:35+08:00","dateModified": "2022-05-23T15:39:35+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "dp0d","logo": "https:\/\/dp0d.github.io\/images\/logo.png"},"author": {
@@ -171,8 +171,8 @@
             <div class="post-meta-line">
                 <span class="post-author"><i class="author fas fa-user-circle fa-fw"></i><a href="https://github.com/dp0d" title="Author" target="_blank" rel="noopener noreffer author" class="author">dp0d</a>
                 </span>&nbsp;<span class="post-category">收录于 </span>&nbsp;<span class="post-series">系列 <a href="/series/python_data_analysis/"><i class="far fa-list-alt fa-fw"></i>Python数据分析</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-05-23">2022-05-23</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2022-05-23">2022-05-23</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 986 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 2 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-05-23">2022-05-23</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2022-05-23">2022-05-23</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1013 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 3 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -243,6 +243,17 @@
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;file&#39;</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>读取之后为各列取表头（列名）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/dataset/raw_data/data.csv&#39;</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;label_text&#39;</span><span class="p">,</span> <span class="s1">&#39;chapter&#39;</span><span class="p">,</span> <span class="s1">&#39;section&#39;</span><span class="p">,</span> <span class="s1">&#39;subsection&#39;</span><span class="p">,</span> <span class="s1">&#39;text&#39;</span><span class="p">]</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="dataframe形状处理" class="headerLink">
