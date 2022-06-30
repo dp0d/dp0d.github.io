@@ -39,6 +39,15 @@ df = pd.read_csv('file')
 df = pd.read_csv('file', header=None)
 ```
 
+读取之后为各列取表头（列名）
+
+```python
+df = pd.read_csv('data/dataset/raw_data/data.csv', header=None)
+df.columns = ['label_text', 'chapter', 'section', 'subsection', 'text']
+```
+
+
+
 ### Dataframe形状处理
 
 #### 打印开头几行数据
