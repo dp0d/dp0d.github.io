@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noodp" />
-    <title class="pjax-title">Index - dp0d&#39;s blog</title><meta name="Description" content="dp0d&#39;s blog,where to share life as well as technology of nlp."><meta property="og:title" content="Index" />
+    <title class="pjax-title">Tensor的简单使用 - dp0d&#39;s blog</title><meta name="Description" content="dp0d&#39;s blog,where to share life as well as technology of nlp."><meta property="og:title" content="Tensor的简单使用" />
 <meta property="og:description" content="Tensor是什么？Tensor又叫张量，与标量，向量等的区别如下： 标量其实就是一个独立存在的数，比如在线性代数中一个实数 5 就可以被看作一个" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://dp0d.github.io/tensor/" /><meta property="og:image" content="https://dp0d.github.io/images/logo.png"/><meta property="article:section" content="posts" />
@@ -15,7 +15,7 @@
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://dp0d.github.io/images/logo.png"/>
 
-<meta name="twitter:title" content="Index"/>
+<meta name="twitter:title" content="Tensor的简单使用"/>
 <meta name="twitter:description" content="Tensor是什么？Tensor又叫张量，与标量，向量等的区别如下： 标量其实就是一个独立存在的数，比如在线性代数中一个实数 5 就可以被看作一个"/>
 <meta name="application-name" content="dp0d&#39;s blog">
 <meta name="apple-mobile-web-app-title" content="dp0d&#39;s blog">
@@ -32,12 +32,12 @@
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
-        "headline": "Index",
+        "headline": "Tensor的简单使用",
         "inLanguage": "zh-CN",
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/dp0d.github.io\/tensor\/"
-        },"image": ["https:\/\/dp0d.github.io\/images\/logo.png"],"genre": "posts","keywords": "py","wordcount":  370 ,
+        },"image": ["https:\/\/dp0d.github.io\/images\/logo.png"],"genre": "posts","keywords": "py","wordcount":  1487 ,
         "url": "https:\/\/dp0d.github.io\/tensor\/","datePublished": "2022-07-08T11:33:08+08:00","dateModified": "2022-07-08T11:33:08+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "dp0d","logo": "https:\/\/dp0d.github.io\/images\/logo.png"},"author": {
@@ -130,19 +130,45 @@
 <main class="main">
             <div class="container"><div class="toc" id="toc-auto">
         <h2 class="toc-title">目录</h2>
-        <div class="toc-content" id="toc-content-auto"><nav id="TableOfContents"></nav></div>
-    </div><script>document.getElementsByTagName("main")[0].setAttribute("pageStyle", "normal")</script><script>document.getElementsByTagName("main")[0].setAttribute("autoTOC", "true")</script><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Index</h1><div class="post-meta">
+        <div class="toc-content" id="toc-content-auto"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#torch">Torch</a>
+      <ul>
+        <li><a href="#torchargmax">torch.argmax</a></li>
+        <li><a href="#torchtopk">torch.topk</a></li>
+        <li><a href="#torchcat">torch.cat</a></li>
+        <li><a href="#torchstack">torch.stack</a></li>
+        <li><a href="#torchsqueeze">torch.squeeze</a></li>
+        <li><a href="#torchtensorview">torch.tensor.view</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+    </div><script>document.getElementsByTagName("main")[0].setAttribute("pageStyle", "normal")</script><script>document.getElementsByTagName("main")[0].setAttribute("autoTOC", "true")</script><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Tensor的简单使用</h1><div class="post-meta">
             <div class="post-meta-line">
                 <span class="post-author"><i class="author fas fa-user-circle fa-fw"></i><a href="https://github.com/dp0d" title="Author" target="_blank" rel="noopener noreffer author" class="author">dp0d</a>
                 </span>&nbsp;<span class="post-category">收录于 </span>&nbsp;<span class="post-category">类别 <a href="/categories/machine_learning/"><i class="far fa-folder fa-fw"></i>机器学习</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-07-08">2022-07-08</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2022-07-08">2022-07-08</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 370 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 1 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-07-08">2022-07-08</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2022-07-08">2022-07-08</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1487 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 3 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
                     <span><i class="details-icon fas fa-angle-right"></i></span>
                 </div>
-                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents"></nav></div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#torch">Torch</a>
+      <ul>
+        <li><a href="#torchargmax">torch.argmax</a></li>
+        <li><a href="#torchtopk">torch.topk</a></li>
+        <li><a href="#torchcat">torch.cat</a></li>
+        <li><a href="#torchstack">torch.stack</a></li>
+        <li><a href="#torchsqueeze">torch.squeeze</a></li>
+        <li><a href="#torchtensorview">torch.tensor.view</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
             </div><div class="content" id="content"><h1 id="tensor是什么" class="headerLink">
     <a href="#tensor%e6%98%af%e4%bb%80%e4%b9%88" class="header-mark"></a>Tensor是什么？</h1><p>Tensor又叫张量，与标量，向量等的区别如下：</p>
 <ol>
@@ -153,7 +179,339 @@
 <li>矩阵是二维数组，其中的每一个元素被两个索引而非一个所确定。我们通常会赋予矩阵粗体的大写变量名称。如果我们现在有N个用户的数据，每条数据含有M个特征，那其实它对应的就是一个N*M的矩阵</li>
 <li>几何代数中定义的张量是基于向量和矩阵的推广，通俗一点理解的话，我们可以将标量视为零阶张量，矢量视为一阶张量，那么矩阵就是二阶张量。 例如，可以将任意一张彩色图片表示成一个三阶张量，三个维度分别是图片的高度、宽度和色彩数据。</li>
 </ol>
+<h2 id="torch" class="headerLink">
+    <a href="#torch" class="header-mark"></a>Torch</h2><h3 id="torchargmax" class="headerLink">
+    <a href="#torchargmax" class="header-mark"></a>torch.argmax</h3><p>返回最大值索引</p>
+<blockquote>
+<p>返回所有值的最大值位置索引</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="n">a</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="n">a</span>
+</span></span><span class="line"><span class="cl"><span class="n">tensor</span><span class="p">([[</span> <span class="mf">1.3398</span><span class="p">,</span>  <span class="mf">0.2663</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.2686</span><span class="p">,</span>  <span class="mf">0.2450</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="o">-</span><span class="mf">0.7401</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.8805</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.3402</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.1936</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">        <span class="p">[</span> <span class="mf">0.4907</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.3948</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0691</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.3132</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="o">-</span><span class="mf">1.6092</span><span class="p">,</span>  <span class="mf">0.5419</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.2993</span><span class="p">,</span>  <span class="mf">0.3195</span><span class="p">]])</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">tensor</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
 </div>
+</div><blockquote>
+<p>返回指定维度最大值的位置索引</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="n">a</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="n">a</span>
+</span></span><span class="line"><span class="cl"><span class="n">tensor</span><span class="p">([[</span> <span class="mf">1.3398</span><span class="p">,</span>  <span class="mf">0.2663</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.2686</span><span class="p">,</span>  <span class="mf">0.2450</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="o">-</span><span class="mf">0.7401</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.8805</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.3402</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.1936</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">        <span class="p">[</span> <span class="mf">0.4907</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.3948</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0691</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.3132</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="o">-</span><span class="mf">1.6092</span><span class="p">,</span>  <span class="mf">0.5419</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.2993</span><span class="p">,</span>  <span class="mf">0.3195</span><span class="p">]])</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">tensor</span><span class="p">([</span> <span class="mi">0</span><span class="p">,</span>  <span class="mi">2</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">1</span><span class="p">])</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="torchtopk" class="headerLink">
+    <a href="#torchtopk" class="header-mark"></a>torch.topk</h3><p>返回特定维的top-k最大值的索引</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">6.</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="n">x</span>
+</span></span><span class="line"><span class="cl"><span class="n">tensor</span><span class="p">([</span> <span class="mf">1.</span><span class="p">,</span>  <span class="mf">2.</span><span class="p">,</span>  <span class="mf">3.</span><span class="p">,</span>  <span class="mf">4.</span><span class="p">,</span>  <span class="mf">5.</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">topk</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">torch</span><span class="o">.</span><span class="n">return_types</span><span class="o">.</span><span class="n">topk</span><span class="p">(</span><span class="n">values</span><span class="o">=</span><span class="n">tensor</span><span class="p">([</span><span class="mf">5.</span><span class="p">,</span> <span class="mf">4.</span><span class="p">,</span> <span class="mf">3.</span><span class="p">]),</span> <span class="n">indices</span><span class="o">=</span><span class="n">tensor</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">]))</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>top-k索引取得方式举例</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">torch</span><span class="o">.</span><span class="n">topk</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">indices</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;cpu&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="torchcat" class="headerLink">
+    <a href="#torchcat" class="header-mark"></a>torch.cat</h3><p>拼接tensor</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="n">x</span>
+</span></span><span class="line"><span class="cl"><span class="n">tensor</span><span class="p">([[</span> <span class="mf">0.6580</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0969</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.4614</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="o">-</span><span class="mf">0.1034</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5790</span><span class="p">,</span>  <span class="mf">0.1497</span><span class="p">]])</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">tensor</span><span class="p">([[</span> <span class="mf">0.6580</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0969</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.4614</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="o">-</span><span class="mf">0.1034</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5790</span><span class="p">,</span>  <span class="mf">0.1497</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">        <span class="p">[</span> <span class="mf">0.6580</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0969</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.4614</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="o">-</span><span class="mf">0.1034</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5790</span><span class="p">,</span>  <span class="mf">0.1497</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">        <span class="p">[</span> <span class="mf">0.6580</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0969</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.4614</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="o">-</span><span class="mf">0.1034</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5790</span><span class="p">,</span>  <span class="mf">0.1497</span><span class="p">]])</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">tensor</span><span class="p">([[</span> <span class="mf">0.6580</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0969</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.4614</span><span class="p">,</span>  <span class="mf">0.6580</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0969</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.4614</span><span class="p">,</span>  <span class="mf">0.6580</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">         <span class="o">-</span><span class="mf">1.0969</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.4614</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="o">-</span><span class="mf">0.1034</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5790</span><span class="p">,</span>  <span class="mf">0.1497</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.1034</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5790</span><span class="p">,</span>  <span class="mf">0.1497</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.1034</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">         <span class="o">-</span><span class="mf">0.5790</span><span class="p">,</span>  <span class="mf">0.1497</span><span class="p">]])</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="torchstack" class="headerLink">
+    <a href="#torchstack" class="header-mark"></a>torch.stack</h3><p>将一个tensor序列组合Concatenates为一个新的tensor，所有的tensor需要是相同的size（shape）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="n">tensor_lis</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl"><span class="o">...</span>     <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">3</span><span class="p">,)</span>
+</span></span><span class="line"><span class="cl"><span class="o">...</span>     <span class="n">tensor_lis</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="o">...</span> 
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="n">tensor_lis</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="n">tensor</span><span class="p">([</span> <span class="mf">0.4239</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.4117</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.4423</span><span class="p">]),</span> <span class="n">tensor</span><span class="p">([</span> <span class="mf">0.0388</span><span class="p">,</span>  <span class="mf">0.2642</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.0006</span><span class="p">]),</span> <span class="n">tensor</span><span class="p">([</span><span class="o">-</span><span class="mf">0.4351</span><span class="p">,</span>  <span class="mf">0.4171</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.1180</span><span class="p">]),</span> <span class="n">tensor</span><span class="p">([</span> <span class="mf">0.2685</span><span class="p">,</span>  <span class="mf">0.6888</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.6707</span><span class="p">])]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="n">a</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">tensor_lis</span><span class="p">,</span><span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="n">a</span>
+</span></span><span class="line"><span class="cl"><span class="n">tensor</span><span class="p">([[</span> <span class="mf">4.2391e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">4.1169e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.4423e+00</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">        <span class="p">[</span> <span class="mf">3.8823e-02</span><span class="p">,</span>  <span class="mf">2.6416e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">6.1708e-04</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="o">-</span><span class="mf">4.3513e-01</span><span class="p">,</span>  <span class="mf">4.1708e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.1180e+00</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">        <span class="p">[</span> <span class="mf">2.6853e-01</span><span class="p">,</span>  <span class="mf">6.8878e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.6707e+00</span><span class="p">]])</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="torchsqueeze" class="headerLink">
+    <a href="#torchsqueeze" class="header-mark"></a>torch.squeeze</h3><p>squeeze是英文   挤     的意思</p>
+<p>返回一个张量，其中所有<code>input</code>大小为1的维度都已删除。</p>
+<p>例如，如果输入是形状： $(A \times 1 \times B \times C \times 1 \times D)$那么输出张量将具有以下形状：（$A \times B \times C\times D$）.</p>
+<p><code>dim</code>给定时，仅在给定维度上进行挤压操作。如果输入是形状：$(A \times 1 \times B)$，squeeze(input, 0) 语句将保持张量不变，但squeeze(input, 1)语句会将张量压缩到形状$(A \times B)$.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="n">x</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">torch</span><span class="o">.</span><span class="n">Size</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="n">y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="n">y</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">torch</span><span class="o">.</span><span class="n">Size</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="n">y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="n">y</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">torch</span><span class="o">.</span><span class="n">Size</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="n">y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="n">y</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">torch</span><span class="o">.</span><span class="n">Size</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="torchtensorview" class="headerLink">
+    <a href="#torchtensorview" class="header-mark"></a>torch.tensor.view</h3><p>改变tensor的形状，注意，调用的时候是作用在tensor上的，比如tensor_x.view()，而不是torch.view()，有所区别。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="n">x</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">torch</span><span class="o">.</span><span class="n">Size</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="n">y</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="n">y</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">torch</span><span class="o">.</span><span class="n">Size</span><span class="p">([</span><span class="mi">16</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="n">z</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>  <span class="c1"># the size -1 is inferred from other dimensions</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="n">z</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">torch</span><span class="o">.</span><span class="n">Size</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">8</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="n">a</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="n">a</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">torch</span><span class="o">.</span><span class="n">Size</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="n">b</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>  <span class="c1"># Swaps 2nd and 3rd dimension</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="n">b</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">torch</span><span class="o">.</span><span class="n">Size</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="n">c</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>  <span class="c1"># Does not change tensor layout in memory</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="n">c</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">torch</span><span class="o">.</span><span class="n">Size</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">equal</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="kc">False</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>改变数据类型，通常用于控制浮点数</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="n">x</span>
+</span></span><span class="line"><span class="cl"><span class="n">tensor</span><span class="p">([[</span> <span class="mf">0.9482</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.0310</span><span class="p">,</span>  <span class="mf">1.4999</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5316</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="o">-</span><span class="mf">0.1520</span><span class="p">,</span>  <span class="mf">0.7472</span><span class="p">,</span>  <span class="mf">0.5617</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.8649</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="o">-</span><span class="mf">2.4724</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.0334</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.2976</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.8499</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="o">-</span><span class="mf">0.2109</span><span class="p">,</span>  <span class="mf">1.9913</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.9607</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.6123</span><span class="p">]])</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="n">x</span><span class="o">.</span><span class="n">dtype</span>
+</span></span><span class="line"><span class="cl"><span class="n">torch</span><span class="o">.</span><span class="n">float32</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="n">y</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="n">y</span>
+</span></span><span class="line"><span class="cl"><span class="n">tensor</span><span class="p">([[</span> <span class="mi">1064483442</span><span class="p">,</span> <span class="o">-</span><span class="mi">1124191867</span><span class="p">,</span>  <span class="mi">1069546515</span><span class="p">,</span> <span class="o">-</span><span class="mi">1089989247</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="o">-</span><span class="mi">1105482831</span><span class="p">,</span>  <span class="mi">1061112040</span><span class="p">,</span>  <span class="mi">1057999968</span><span class="p">,</span> <span class="o">-</span><span class="mi">1084397505</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="o">-</span><span class="mi">1071760287</span><span class="p">,</span> <span class="o">-</span><span class="mi">1123489973</span><span class="p">,</span> <span class="o">-</span><span class="mi">1097310419</span><span class="p">,</span> <span class="o">-</span><span class="mi">1084649136</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="o">-</span><span class="mi">1101533110</span><span class="p">,</span>  <span class="mi">1073668768</span><span class="p">,</span> <span class="o">-</span><span class="mi">1082790149</span><span class="p">,</span> <span class="o">-</span><span class="mi">1088634448</span><span class="p">]],</span>
+</span></span><span class="line"><span class="cl">    <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1000000000</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="n">x</span>
+</span></span><span class="line"><span class="cl"><span class="n">tensor</span><span class="p">([[</span> <span class="mf">0.0047</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.0310</span><span class="p">,</span>  <span class="mf">1.4999</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5316</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="o">-</span><span class="mf">0.1520</span><span class="p">,</span>  <span class="mf">0.7472</span><span class="p">,</span>  <span class="mf">0.5617</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.8649</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="o">-</span><span class="mf">2.4724</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.0334</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.2976</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.8499</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="o">-</span><span class="mf">0.2109</span><span class="p">,</span>  <span class="mf">1.9913</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.9607</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.6123</span><span class="p">]])</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="n">x</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">cfloat</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">tensor</span><span class="p">([[</span> <span class="mf">0.0047</span><span class="o">-</span><span class="mf">0.0310</span><span class="n">j</span><span class="p">,</span>  <span class="mf">1.4999</span><span class="o">-</span><span class="mf">0.5316</span><span class="n">j</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="o">-</span><span class="mf">0.1520</span><span class="o">+</span><span class="mf">0.7472</span><span class="n">j</span><span class="p">,</span>  <span class="mf">0.5617</span><span class="o">-</span><span class="mf">0.8649</span><span class="n">j</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="o">-</span><span class="mf">2.4724</span><span class="o">-</span><span class="mf">0.0334</span><span class="n">j</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.2976</span><span class="o">-</span><span class="mf">0.8499</span><span class="n">j</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="o">-</span><span class="mf">0.2109</span><span class="o">+</span><span class="mf">1.9913</span><span class="n">j</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.9607</span><span class="o">-</span><span class="mf">0.6123</span><span class="n">j</span><span class="p">]])</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="n">x</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">cfloat</span><span class="p">)</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">torch</span><span class="o">.</span><span class="n">Size</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="n">x</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">tensor</span><span class="p">([[</span>  <span class="mi">0</span><span class="p">,</span> <span class="mi">202</span><span class="p">,</span> <span class="mi">154</span><span class="p">,</span>  <span class="mi">59</span><span class="p">,</span> <span class="mi">182</span><span class="p">,</span> <span class="mi">243</span><span class="p">,</span> <span class="mi">253</span><span class="p">,</span> <span class="mi">188</span><span class="p">,</span> <span class="mi">185</span><span class="p">,</span> <span class="mi">252</span><span class="p">,</span> <span class="mi">191</span><span class="p">,</span>  <span class="mi">63</span><span class="p">,</span> <span class="mi">240</span><span class="p">,</span>  <span class="mi">22</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">           <span class="mi">8</span><span class="p">,</span> <span class="mi">191</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="mi">227</span><span class="p">,</span> <span class="mi">165</span><span class="p">,</span>  <span class="mi">27</span><span class="p">,</span> <span class="mi">190</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span>  <span class="mi">72</span><span class="p">,</span>  <span class="mi">63</span><span class="p">,</span>  <span class="mi">63</span><span class="p">,</span> <span class="mi">146</span><span class="p">,</span> <span class="mi">203</span><span class="p">,</span>  <span class="mi">15</span><span class="p">,</span>  <span class="mi">63</span><span class="p">,</span>  <span class="mi">22</span><span class="p">,</span> <span class="mi">106</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">          <span class="mi">93</span><span class="p">,</span> <span class="mi">191</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="mi">205</span><span class="p">,</span>  <span class="mi">59</span><span class="p">,</span>  <span class="mi">30</span><span class="p">,</span> <span class="mi">192</span><span class="p">,</span> <span class="mi">112</span><span class="p">,</span> <span class="mi">206</span><span class="p">,</span>   <span class="mi">8</span><span class="p">,</span> <span class="mi">189</span><span class="p">,</span>   <span class="mi">7</span><span class="p">,</span>  <span class="mi">95</span><span class="p">,</span> <span class="mi">152</span><span class="p">,</span> <span class="mi">190</span><span class="p">,</span>  <span class="mi">12</span><span class="p">,</span> <span class="mi">147</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">          <span class="mi">89</span><span class="p">,</span> <span class="mi">191</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">        <span class="p">[</span> <span class="mi">43</span><span class="p">,</span> <span class="mi">246</span><span class="p">,</span>  <span class="mi">87</span><span class="p">,</span> <span class="mi">190</span><span class="p">,</span> <span class="mi">235</span><span class="p">,</span> <span class="mi">226</span><span class="p">,</span> <span class="mi">254</span><span class="p">,</span>  <span class="mi">63</span><span class="p">,</span> <span class="mi">111</span><span class="p">,</span> <span class="mi">240</span><span class="p">,</span> <span class="mi">117</span><span class="p">,</span> <span class="mi">191</span><span class="p">,</span> <span class="mi">177</span><span class="p">,</span> <span class="mi">191</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">          <span class="mi">28</span><span class="p">,</span> <span class="mi">191</span><span class="p">]],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="n">x</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">torch</span><span class="o">.</span><span class="n">Size</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">16</span><span class="p">])</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></div>
 
         <div class="sponsor">
         <div class="sponsor-avatar"><img
@@ -175,10 +533,10 @@
         </div>
         <div class="post-info-line">
             <div class="post-info-md"><span><a class="link-to-mardown" href=/tensor/index.md target="_blank" rel="noopener noreferrer">阅读原始文档</a>
-                    </span><span>|&nbsp;<a class="link-to-report" href=https://github.com/dp0d/dp0d.github.io/issues/new?title=[bug]%20Index&body=|Field|Value|%0A|-|-|%0A|Title|Index|%0A|Url|https://dp0d.github.io/tensor/|%0A|Filename|https://github.com/dp0d/dp0d.github.io/posts/2022/tensor/index.md| target="_blank" rel="noopener noreferrer">报告问题</a>
+                    </span><span>|&nbsp;<a class="link-to-report" href=https://github.com/dp0d/dp0d.github.io/issues/new?title=[bug]%20Tensor%E7%9A%84%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8&body=|Field|Value|%0A|-|-|%0A|Title|Tensor%E7%9A%84%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8|%0A|Url|https://dp0d.github.io/tensor/|%0A|Filename|https://github.com/dp0d/dp0d.github.io/posts/2022/tensor/index.md| target="_blank" rel="noopener noreferrer">报告问题</a>
                     </span></div>
             <div class="post-info-share">
-                <span><a href="#" onclick="return false;" title="分享到 Twitter" data-sharer="twitter" data-url="https://dp0d.github.io/tensor/" data-title="Index" data-hashtags="py"><i class="fab fa-twitter fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Facebook" data-sharer="facebook" data-url="https://dp0d.github.io/tensor/" data-hashtag="py"><i class="fab fa-facebook-square fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 微博" data-sharer="weibo" data-url="https://dp0d.github.io/tensor/" data-title="Index"><i class="fab fa-weibo fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Telegram" data-sharer="telegram" data-url="https://dp0d.github.io/tensor/" data-title="Index" data-web><i class="fab fa-telegram-plane fa-fw"></i></a></span>
+                <span><a href="#" onclick="return false;" title="分享到 Twitter" data-sharer="twitter" data-url="https://dp0d.github.io/tensor/" data-title="Tensor的简单使用" data-hashtags="py"><i class="fab fa-twitter fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Facebook" data-sharer="facebook" data-url="https://dp0d.github.io/tensor/" data-hashtag="py"><i class="fab fa-facebook-square fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 微博" data-sharer="weibo" data-url="https://dp0d.github.io/tensor/" data-title="Tensor的简单使用"><i class="fab fa-weibo fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Telegram" data-sharer="telegram" data-url="https://dp0d.github.io/tensor/" data-title="Tensor的简单使用" data-web><i class="fab fa-telegram-plane fa-fw"></i></a></span>
             </div>
         </div>
     </div>
