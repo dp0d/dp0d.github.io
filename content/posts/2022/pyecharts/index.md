@@ -165,3 +165,6 @@ grid = (
 grid
 ```
 
+更多图例
+
+https://pyecharts.org/#/
