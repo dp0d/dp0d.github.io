@@ -4,7 +4,14 @@
         <link>https://dp0d.github.io/tags/py/</link>
         <description>Python - 标签 - dp0d&#39;s blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>draftpaperofgod@gmail.com (dp0d)</managingEditor>
-            <webMaster>draftpaperofgod@gmail.com (dp0d)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sun, 03 Jul 2022 11:11:29 &#43;0800</lastBuildDate><atom:link href="https://dp0d.github.io/tags/py/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>draftpaperofgod@gmail.com (dp0d)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Fri, 08 Jul 2022 09:29:45 &#43;0800</lastBuildDate><atom:link href="https://dp0d.github.io/tags/py/" rel="self" type="application/rss+xml" /><item>
+    <title>Pyecharts的简单使用</title>
+    <link>https://dp0d.github.io/pyecharts/</link>
+    <pubDate>Fri, 08 Jul 2022 09:29:45 &#43;0800</pubDate><author>
+        <name>dp0d</name>
+    </author><guid>https://dp0d.github.io/pyecharts/</guid>
+    <description><![CDATA[简介pyecharts 的呈现十分美观，尽量搭配jupyternotebook使用，jupyterlab上的显示尚有瑕疵。在使用中，可以将ju]]></description>
+</item><item>
     <title>炫酷的processbar</title>
     <link>https://dp0d.github.io/bravo_processbar/</link>
     <pubDate>Sun, 03 Jul 2022 11:11:29 &#43;0800</pubDate><author>

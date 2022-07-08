@@ -4,9 +4,16 @@
         <link>https://dp0d.github.io/</link>
         <description>dp0d&#39;s blog,where to share life as well as technology of nlp.</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>draftpaperofgod@gmail.com (dp0d)</managingEditor>
-            <webMaster>draftpaperofgod@gmail.com (dp0d)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sun, 03 Jul 2022 11:11:29 &#43;0800</lastBuildDate>
+            <webMaster>draftpaperofgod@gmail.com (dp0d)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Fri, 08 Jul 2022 09:29:45 &#43;0800</lastBuildDate>
             <atom:link href="https://dp0d.github.io/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>Pyecharts的简单使用</title>
+    <link>https://dp0d.github.io/pyecharts/</link>
+    <pubDate>Fri, 08 Jul 2022 09:29:45 &#43;0800</pubDate><author>
+        <name>dp0d</name>
+    </author><guid>https://dp0d.github.io/pyecharts/</guid>
+    <description><![CDATA[简介pyecharts 的呈现十分美观，尽量搭配jupyternotebook使用，jupyterlab上的显示尚有瑕疵。在使用中，可以将ju]]></description>
+</item><item>
     <title>炫酷的processbar</title>
     <link>https://dp0d.github.io/bravo_processbar/</link>
     <pubDate>Sun, 03 Jul 2022 11:11:29 &#43;0800</pubDate><author>
@@ -69,12 +76,5 @@
         <name>dp0d</name>
     </author><guid>https://dp0d.github.io/production_catastrophe/</guid>
     <description><![CDATA[今天是2022年5月19日，忙碌了一上午的小弟激动地开始train了，结果，本来五分钟一轮的乖儿子， 变成了两个多小时，What？！！儿子感冒]]></description>
-</item><item>
-    <title>深度学习优化策略</title>
-    <link>https://dp0d.github.io/deep_learning_optimize/</link>
-    <pubDate>Wed, 18 May 2022 15:20:58 &#43;0800</pubDate><author>
-        <name>dp0d</name>
-    </author><guid>https://dp0d.github.io/deep_learning_optimize/</guid>
-    <description><![CDATA[训练优化策略梯度裁剪梯度裁剪策略是解决模型训练过程中梯度爆炸策略的一个有效方法，为什么会导致梯度爆炸呢？我们知道，如果模型如下 $$ f(x)=wx+b $$ 省略b的]]></description>
 </item></channel>
 </rss>

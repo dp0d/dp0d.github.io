@@ -4,7 +4,14 @@
         <link>https://dp0d.github.io/series/python_data_analysis/</link>
         <description>python_data_analysis - 系列 - dp0d&#39;s blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>draftpaperofgod@gmail.com (dp0d)</managingEditor>
-            <webMaster>draftpaperofgod@gmail.com (dp0d)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Wed, 29 Jun 2022 15:04:39 &#43;0800</lastBuildDate><atom:link href="https://dp0d.github.io/series/python_data_analysis/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>draftpaperofgod@gmail.com (dp0d)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Fri, 08 Jul 2022 09:29:45 &#43;0800</lastBuildDate><atom:link href="https://dp0d.github.io/series/python_data_analysis/" rel="self" type="application/rss+xml" /><item>
+    <title>Pyecharts的简单使用</title>
+    <link>https://dp0d.github.io/pyecharts/</link>
+    <pubDate>Fri, 08 Jul 2022 09:29:45 &#43;0800</pubDate><author>
+        <name>dp0d</name>
+    </author><guid>https://dp0d.github.io/pyecharts/</guid>
+    <description><![CDATA[简介pyecharts 的呈现十分美观，尽量搭配jupyternotebook使用，jupyterlab上的显示尚有瑕疵。在使用中，可以将ju]]></description>
+</item><item>
     <title>K折交叉验证</title>
     <link>https://dp0d.github.io/kfold_cross_validation/</link>
     <pubDate>Wed, 29 Jun 2022 15:04:39 &#43;0800</pubDate><author>
