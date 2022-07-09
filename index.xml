@@ -4,9 +4,16 @@
         <link>https://dp0d.github.io/</link>
         <description>dp0d&#39;s blog,where to share life as well as technology of nlp.</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>draftpaperofgod@gmail.com (dp0d)</managingEditor>
-            <webMaster>draftpaperofgod@gmail.com (dp0d)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Fri, 08 Jul 2022 11:33:08 &#43;0800</lastBuildDate>
+            <webMaster>draftpaperofgod@gmail.com (dp0d)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sat, 09 Jul 2022 11:13:47 &#43;0800</lastBuildDate>
             <atom:link href="https://dp0d.github.io/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>预训练模型的finetune技巧</title>
+    <link>https://dp0d.github.io/finetune_trick/</link>
+    <pubDate>Sat, 09 Jul 2022 11:13:47 &#43;0800</pubDate><author>
+        <name>dp0d</name>
+    </author><guid>https://dp0d.github.io/finetune_trick/</guid>
+    <description><![CDATA[权重冻结在使用预训练语言模型进行下游任务的微调时，有时数据量难以使得其收敛，此时我们可以选择固定住某些层的参数，使其仍然保持在预训练语料上的]]></description>
+</item><item>
     <title>Tensor的简单使用</title>
     <link>https://dp0d.github.io/tensor/</link>
     <pubDate>Fri, 08 Jul 2022 11:33:08 &#43;0800</pubDate><author>
@@ -69,12 +76,5 @@
         <name>dp0d</name>
     </author><guid>https://dp0d.github.io/jupyter/</guid>
     <description><![CDATA[Jupyter 已经被人们广泛使用来作为生产力工具，由于其能够步运行和可视化等，带来了良好的教学和交互体验。 Jupyter Lab设置代理方法一（便捷指数1）不难知道，]]></description>
-</item><item>
-    <title>Python项目包引用与环境设置</title>
-    <link>https://dp0d.github.io/py_project_env/</link>
-    <pubDate>Fri, 20 May 2022 14:43:54 &#43;0800</pubDate><author>
-        <name>dp0d</name>
-    </author><guid>https://dp0d.github.io/py_project_env/</guid>
-    <description><![CDATA[说明通常，我们在项目中，需要把代码文件作为一个包来用，比如代码文件是code文件夹，如果使用Pycharm等IDE，只需要在里面加入一个空的]]></description>
 </item></channel>
 </rss>

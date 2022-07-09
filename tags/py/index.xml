@@ -4,7 +4,14 @@
         <link>https://dp0d.github.io/tags/py/</link>
         <description>Python - 标签 - dp0d&#39;s blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>draftpaperofgod@gmail.com (dp0d)</managingEditor>
-            <webMaster>draftpaperofgod@gmail.com (dp0d)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Fri, 08 Jul 2022 11:33:08 &#43;0800</lastBuildDate><atom:link href="https://dp0d.github.io/tags/py/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>draftpaperofgod@gmail.com (dp0d)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sat, 09 Jul 2022 11:13:47 &#43;0800</lastBuildDate><atom:link href="https://dp0d.github.io/tags/py/" rel="self" type="application/rss+xml" /><item>
+    <title>预训练模型的finetune技巧</title>
+    <link>https://dp0d.github.io/finetune_trick/</link>
+    <pubDate>Sat, 09 Jul 2022 11:13:47 &#43;0800</pubDate><author>
+        <name>dp0d</name>
+    </author><guid>https://dp0d.github.io/finetune_trick/</guid>
+    <description><![CDATA[权重冻结在使用预训练语言模型进行下游任务的微调时，有时数据量难以使得其收敛，此时我们可以选择固定住某些层的参数，使其仍然保持在预训练语料上的]]></description>
+</item><item>
     <title>Tensor的简单使用</title>
     <link>https://dp0d.github.io/tensor/</link>
     <pubDate>Fri, 08 Jul 2022 11:33:08 &#43;0800</pubDate><author>
@@ -67,12 +74,5 @@
         <name>dp0d</name>
     </author><guid>https://dp0d.github.io/basic_algorithm/</guid>
     <description><![CDATA[排序列表内置排序方法 sort() 1 2 3 lis = [4,2,3,1] lis.sort() print(lis) [1, 2, 3, 4] sorted() 1 2 3 4 5 6 7 lis = [4,2,3,1] sorted(lis) print(lis) lis = sorted(lis) print(lis) lis.reverse() print(lis) [4, 2, 3, 1] [1, 2, 3, 4] [4, 3, 2, 1] 带原索引一起排序这种方法的好处是]]></description>
-</item><item>
-    <title>Python中常见的文件读写</title>
-    <link>https://dp0d.github.io/file_read_py/</link>
-    <pubDate>Sat, 26 Mar 2022 10:02:10 &#43;0800</pubDate><author>
-        <name>dp0d</name>
-    </author><guid>https://dp0d.github.io/file_read_py/</guid>
-    <description><![CDATA[说明 本文根据常见的读写进行方法阐述，本文实验环境基于python3.8，并需要提前告知各类读写方式的文件操作效果，如下列出： r : 读取文件，文]]></description>
 </item></channel>
 </rss>
