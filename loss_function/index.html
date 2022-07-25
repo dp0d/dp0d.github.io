@@ -37,7 +37,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/dp0d.github.io\/loss_function\/"
-        },"image": ["https:\/\/dp0d.github.io\/images\/logo.png"],"genre": "posts","keywords": "math","wordcount":  939 ,
+        },"image": ["https:\/\/dp0d.github.io\/images\/logo.png"],"genre": "posts","keywords": "math","wordcount":  1193 ,
         "url": "https:\/\/dp0d.github.io\/loss_function\/","datePublished": "2022-04-29T10:34:04+08:00","dateModified": "2022-04-29T10:34:04+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "dp0d","logo": "https:\/\/dp0d.github.io\/images\/logo.png"},"author": {
@@ -138,7 +138,13 @@
         <li><a href="#交叉熵cross-entropy">交叉熵——Cross Entropy</a>
           <ul>
             <li><a href="#二分类交叉熵">二分类交叉熵</a></li>
-            <li><a href="#多分类交叉熵">多分类交叉熵</a></li>
+          </ul>
+        </li>
+        <li><a href="#多分类交叉熵">多分类交叉熵</a></li>
+        <li><a href="#对比损失">对比损失</a>
+          <ul>
+            <li><a href="#三元损失">三元损失</a></li>
+            <li><a href="#参考链接">参考链接</a></li>
           </ul>
         </li>
       </ul>
@@ -149,8 +155,8 @@
             <div class="post-meta-line">
                 <span class="post-author"><i class="author fas fa-user-circle fa-fw"></i><a href="https://github.com/dp0d" title="Author" target="_blank" rel="noopener noreffer author" class="author">dp0d</a>
                 </span>&nbsp;<span class="post-category">收录于 </span>&nbsp;<span class="post-category">类别 <a href="/categories/machine_learning/"><i class="far fa-folder fa-fw"></i>机器学习</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-04-29">2022-04-29</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2022-04-29">2022-04-29</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 939 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 2 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-04-29">2022-04-29</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2022-04-29">2022-04-29</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1193 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 3 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -164,7 +170,13 @@
         <li><a href="#交叉熵cross-entropy">交叉熵——Cross Entropy</a>
           <ul>
             <li><a href="#二分类交叉熵">二分类交叉熵</a></li>
-            <li><a href="#多分类交叉熵">多分类交叉熵</a></li>
+          </ul>
+        </li>
+        <li><a href="#多分类交叉熵">多分类交叉熵</a></li>
+        <li><a href="#对比损失">对比损失</a>
+          <ul>
+            <li><a href="#三元损失">三元损失</a></li>
+            <li><a href="#参考链接">参考链接</a></li>
           </ul>
         </li>
       </ul>
@@ -226,11 +238,100 @@ H(p,q) &=-\sum_x p(x)\cdot \log({q(x)}) \\
 $$
 
 <p>最后乘上$\frac{1}{N}$进行平均操作。</p>
-<h4 id="多分类交叉熵" class="headerLink">
-    <a href="#%e5%a4%9a%e5%88%86%e7%b1%bb%e4%ba%a4%e5%8f%89%e7%86%b5" class="header-mark"></a>多分类交叉熵</h4><p>与二分类交叉熵类似，多分类交叉熵同样是计算标签分布的熵值，基于此，我们需要把多分类考虑在内，也就是多一步求和，即每个类别上的交叉熵求和并在样本空间上进行求和，基于二分类交叉熵的参数定义，定义分类的标签种类为$n$，则多分类交叉熵损失可以表示如下
+<h3 id="多分类交叉熵" class="headerLink">
+    <a href="#%e5%a4%9a%e5%88%86%e7%b1%bb%e4%ba%a4%e5%8f%89%e7%86%b5" class="header-mark"></a>多分类交叉熵</h3><p>与二分类交叉熵类似，多分类交叉熵同样是计算标签分布的熵值，基于此，我们需要把多分类考虑在内，也就是多一步求和，即每个类别上的交叉熵求和并在样本空间上进行求和，基于二分类交叉熵的参数定义，定义分类的标签种类为$n$，则多分类交叉熵损失可以表示如下
 $$
 J = -\frac{1}{N}\sum_{i=1}^N\sum_{j=1}^ny_j^{(i)}\cdot \log\hat{y}_j^{(i)}
 $$</p>
+<h3 id="对比损失" class="headerLink">
+    <a href="#%e5%af%b9%e6%af%94%e6%8d%9f%e5%a4%b1" class="header-mark"></a>对比损失</h3><h4 id="三元损失" class="headerLink">
+    <a href="#%e4%b8%89%e5%85%83%e6%8d%9f%e5%a4%b1" class="header-mark"></a>三元损失</h4><p>给定anchor $p$，以欧距为例，衡量相似度，其正样本为$q$，负样本为$r$</p>
+
+$$
+J = max(||\symbfit p-\symbfit q||^2-|||\symbfit p-\symbfit r||^2+\epsilon,0)
+$$
+
+<blockquote>
+<p>代码实现</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">loss class
+</span></span></span><span class="line"><span class="cl"><span class="s2">&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">triplet_loss</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span> 
+</span></span><span class="line"><span class="cl">	<span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> 
+</span></span><span class="line"><span class="cl">  	<span class="nb">super</span><span class="p">(</span><span class="n">triplet_loss</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span> 
+</span></span><span class="line"><span class="cl">    <span class="bp">self</span><span class="o">.</span><span class="n">margin</span> <span class="o">=</span> <span class="mf">0.2</span>
+</span></span><span class="line"><span class="cl">	<span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">anchor</span><span class="p">,</span> <span class="n">positive</span><span class="p">,</span> <span class="n">negative</span><span class="p">):</span> 
+</span></span><span class="line"><span class="cl">  	<span class="n">pos_dist</span> <span class="o">=</span> <span class="p">(</span><span class="n">anchor</span> <span class="o">-</span> <span class="n">positive</span><span class="p">)</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl">    <span class="n">neg_dist</span> <span class="o">=</span> <span class="p">(</span><span class="n">anchor</span> <span class="o">-</span> <span class="n">negative</span><span class="p">)</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl">    <span class="n">loss</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="n">pos_dist</span> <span class="o">-</span> <span class="n">neg_dist</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">margin</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">loss</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="c1">#we can also use #torch.nn.functional.pairwise_distance(anchor,positive, keep_dims=True), which #computes the euclidean distance.</span>
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">training part
+</span></span></span><span class="line"><span class="cl"><span class="s2">&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">loss_fun</span> <span class="o">=</span> <span class="n">triplet_loss</span><span class="p">()</span> 
+</span></span><span class="line"><span class="cl"><span class="n">optimizer</span> <span class="o">=</span> <span class="n">Adam</span><span class="p">(</span><span class="n">custom_model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span> <span class="o">=</span> <span class="mf">0.001</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">30</span><span class="p">):</span> 
+</span></span><span class="line"><span class="cl">    <span class="n">total_loss</span> <span class="o">=</span> <span class="mi">0</span> 
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">anchor</span><span class="p">,</span> <span class="n">positive</span><span class="p">,</span> <span class="n">negative</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">custom_loader</span><span class="p">):</span> 
+</span></span><span class="line"><span class="cl">        <span class="n">anchor</span> <span class="o">=</span> <span class="n">anchor</span><span class="p">[</span><span class="s1">&#39;image&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl">        <span class="n">positive</span> <span class="o">=</span> <span class="n">positive</span><span class="p">[</span><span class="s1">&#39;image&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl">        <span class="n">negative</span> <span class="o">=</span> <span class="n">negative</span><span class="p">[</span><span class="s1">&#39;image&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl">        <span class="n">anchor_feature</span> <span class="o">=</span> <span class="n">custom_model</span><span class="p">(</span><span class="n">anchor</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl">        <span class="n">positive_feature</span> <span class="o">=</span> <span class="n">custom_model</span><span class="p">(</span><span class="n">positive</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl">        <span class="n">negative_feature</span> <span class="o">=</span> <span class="n">custom_model</span><span class="p">(</span><span class="n">negative</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl">        <span class="n">optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span> 
+</span></span><span class="line"><span class="cl">        <span class="n">loss</span> <span class="o">=</span> <span class="n">loss_fun</span><span class="p">(</span><span class="n">anchor_feature</span><span class="p">,</span> <span class="n">positive_feature</span><span class="p">,</span> <span class="n">negative_feature</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl">        <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span> 
+</span></span><span class="line"><span class="cl">        <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">  
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="参考链接" class="headerLink">
+    <a href="#%e5%8f%82%e8%80%83%e9%93%be%e6%8e%a5" class="header-mark"></a>参考链接</h4><p><a href="https://zhuanlan.zhihu.com/p/414327252?ivk_sa=1024320u" target="_blank" rel="noopener noreffer">https://zhuanlan.zhihu.com/p/414327252?ivk_sa=1024320u</a></p>
 </div>
 
         <div class="sponsor">
