@@ -99,9 +99,66 @@ $$
 
 
 
-#### 多分类交叉熵
+### 多分类交叉熵
 
 与二分类交叉熵类似，多分类交叉熵同样是计算标签分布的熵值，基于此，我们需要把多分类考虑在内，也就是多一步求和，即每个类别上的交叉熵求和并在样本空间上进行求和，基于二分类交叉熵的参数定义，定义分类的标签种类为$n$，则多分类交叉熵损失可以表示如下
 $$
 J = -\frac{1}{N}\sum_{i=1}^N\sum_{j=1}^ny_j^{(i)}\cdot \log\hat{y}_j^{(i)}
 $$
+
+### 对比损失
+
+#### 三元损失
+
+给定anchor $p$，以欧距为例，衡量相似度，其正样本为$q$，负样本为$r$
+
+{{<math>}}
+$$
+J = max(||\symbfit p-\symbfit q||^2-|||\symbfit p-\symbfit r||^2+\epsilon,0)
+$$
+{{</math>}}
+
+> 代码实现
+
+```python
+"""
+loss class
+"""
+class triplet_loss(nn.Module): 
+	def __init__(self): 
+  	super(triplet_loss, self).__init__() 
+    self.margin = 0.2
+	def forward(self, anchor, positive, negative): 
+  	pos_dist = (anchor - positive).pow(2).sum(1) 
+    neg_dist = (anchor - negative).pow(2).sum(1) 
+    loss = F.relu(pos_dist - neg_dist + self.margin) 
+    return loss.mean()#we can also use #torch.nn.functional.pairwise_distance(anchor,positive, keep_dims=True), which #computes the euclidean distance.
+  
+
+"""
+training part
+"""
+loss_fun = triplet_loss() 
+optimizer = Adam(custom_model.parameters(), lr = 0.001) 
+for epoch in range(30): 
+    total_loss = 0 
+    for i, (anchor, positive, negative) in enumerate(custom_loader): 
+        anchor = anchor['image'].to(device) 
+        positive = positive['image'].to(device) 
+        negative = negative['image'].to(device) 
+ 
+        anchor_feature = custom_model(anchor) 
+        positive_feature = custom_model(positive) 
+        negative_feature = custom_model(negative) 
+ 
+        optimizer.zero_grad() 
+        loss = loss_fun(anchor_feature, positive_feature, negative_feature) 
+        loss.backward() 
+        optimizer.step()
+  
+
+```
+
+#### 参考链接
+
+https://zhuanlan.zhihu.com/p/414327252?ivk_sa=1024320u
