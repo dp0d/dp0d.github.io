@@ -432,7 +432,7 @@
 </span></span><span class="line"><span class="cl">[Service]
 </span></span><span class="line"><span class="cl">Type=simple
 </span></span><span class="line"><span class="cl">User=oliver #换成你自己用户名
-</span></span><span class="line"><span class="cl">/home/oliver/clash/clash -d /home/oliver/.config/clash/   #换成你自己clash目录，注意，前半部分一定要连接到文件！不能只到目录
+</span></span><span class="line"><span class="cl">ExecStart=/home/oliver/clash/clash -d /home/oliver/.config/clash/   #换成你自己clash目录，注意，前半部分一定要连接到文件！不能只到目录
 </span></span><span class="line"><span class="cl">Restart=on-failure
 </span></span><span class="line"><span class="cl">RestartPreventExitStatus=23
 </span></span><span class="line"><span class="cl">
