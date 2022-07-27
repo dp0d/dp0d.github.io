@@ -35,6 +35,22 @@ cat requirements.txt | xargs -n 1 pip install
 
 此方法会忽略报错进行pip包的安装，会出现包的缺损，后续可以自行补上。
 
+镜像源
+
+```bash
+pip -i https://pypi.tuna.tsinghua.edu.cn/simple
+
+豆瓣：-i http://pypi.douban.com/simple/  --trusted-host pypi.douban.com
+
+阿里云：-i http://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com
+
+# 设置全局
+# 清华源
+pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
+```
+
+
+
 ## Conda
 
 + 查看我们当前conda里有的环境 ，三种方式都可👇🏻
