@@ -176,6 +176,32 @@ curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer 
 echo 'export PATH="$HOME/.pyenv/bin:$PATH"' >> ~/.bashrc
 ```
 
+离线部署
+
+先使用能够科学上网的机器下载release  https://github.com/pyenv/pyenv
+
+然后放到需要部署的机器上上
+
+```bash
+tar -zxvf pyenv-2.3.2.tar.gz
+
+mv pyenv-2.3.2 ~/.pyenv
+mkdir ~/.pyenv/cache
+
+cat >> ~/.bashrc<<'EOF'
+### pyenv ###
+export PYENV_ROOT="$HOME/.pyenv" 
+export PATH="$PYENV_ROOT/bin:$PATH"
+export PATH="$PYENV_ROOT/shims:$PATH"
+eval "$(pyenv init -)"
+EOF
+
+source ~/.bashrc
+
+pyenv --version
+pyenv 2.2.0
+```
+
 
 
 > MacOS
@@ -213,8 +239,14 @@ pyenv install -l
 
 > 安装所需要的,如选择python3.6.15环境
 
-```
+```bash
 pyenv install 3.6.15
+```
+
+> 借助镜像源安装
+
+```bash
+v=3.6.15; curl -L https://npm.taobao.org/mirrors/python/$v/Python-$v.tar.xz -o ~/.pyenv/cache/Python-$v.tar.xz; pyenv install $v
 ```
 
 >激活所需要的（此处可以直接激活前文中二级底座的虚拟环境）
