@@ -180,7 +180,7 @@ After=network.target
 [Service]
 Type=simple
 User=oliver #换成你自己用户名
-/home/oliver/clash/clash -d /home/oliver/.config/clash/   #换成你自己clash目录，注意，前半部分一定要连接到文件！不能只到目录
+ExecStart=/home/oliver/clash/clash -d /home/oliver/.config/clash/   #换成你自己clash目录，注意，前半部分一定要连接到文件！不能只到目录
 Restart=on-failure
 RestartPreventExitStatus=23
 
