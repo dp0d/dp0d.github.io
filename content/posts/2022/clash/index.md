@@ -195,15 +195,15 @@ sudo systemctl daemon-reload
 ```
 
 ```bash
-sudo systemctl enable jupyterlab
+sudo systemctl enable clash
 ```
 
 ```bash
-sudo systemctl start jupyterlab
+sudo systemctl start clash
 ```
 
 ```bash
-sudo systemctl status jupyterlab
+sudo systemctl status clash
 ```
 
 
