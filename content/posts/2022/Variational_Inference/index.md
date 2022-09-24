@@ -329,7 +329,11 @@ D-->Z
 
 ```
 
-$\epsilon$可以看做采样的噪声，{{< math >}}$\epsilon \backsim N(0,\symbfit I)${{< /math >}}。假设$z|x \backsim N(\mu_{\phi}(x),\Sigma_{\phi}(x))$则
+{{< math >}}
+
+$\epsilon$可以看做采样的噪声，$\epsilon \backsim N(0,\symbfit I)$。假设$z|x \backsim N(\mu_{\phi}(x),\Sigma_{\phi}(x))$则
+
+{{< /math >}}
 $$
 z=\mu_{\phi}(x)+\Sigma_{\phi}^{\frac{1}{2}}(x)\cdot \epsilon
 $$
