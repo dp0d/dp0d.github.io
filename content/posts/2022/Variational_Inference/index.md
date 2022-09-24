@@ -331,7 +331,7 @@ D-->Z
 
 {{< math >}}
 
-$\epsilon$可以看做采样的噪声，$\epsilon \backsim N(0,\symbfit I)$。假设$z|x \backsim N(\mu_{\phi}(x),\Sigma_{\phi}(x))$则
+$\epsilon$可以看做采样的噪声，$\epsilon \backsim N(0,\bf I)$。假设$z|x \backsim N(\mu_{\phi}(x),\Sigma_{\phi}(x))$则
 
 {{< /math >}}
 $$
