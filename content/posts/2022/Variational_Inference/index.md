@@ -171,6 +171,8 @@ $$
 \hat \phi =\mathop{\arg\max}_{\phi}  \ \mathcal L(\phi)
 $$
 使用梯度随机梯度上升策略，需要求得$\mathcal L(\phi)$对$\phi$的梯度如下。
+
+{{< math >}}
 $$
 \begin{equation}
 \begin{aligned}
@@ -187,6 +189,8 @@ $$
 \end{aligned}
 \end{equation}
 $$
+{{< /math >}}
+
 如果使用蒙特卡罗的方式，梯度$\nabla_{\phi} \mathcal L(\phi)$，即期望$E_{q_{\phi}}[\nabla_{\phi}\log q_{\phi}\cdot[\log p_{\theta}(x^i,z)-\log q_{\phi}(z)]$可以通过从$q_{\phi}(z)中采样L个z$得到，即
 $$
 z^{(l)} \backsim q_{\phi}(z),\quad l=1,2,\cdots,L \\
@@ -203,6 +207,8 @@ $$
 假设$z=g_{\phi}(\epsilon,x^i)$ ，$\epsilon \backsim p(\epsilon)$，$z\backsim q_{\phi}(z|x^i)$，则由于$\int q_{\phi}(z|x^i)dz = \int p(\epsilon)d\epsilon = 1$，可以得出$|q_{\phi}(z|x^i)dz|=|p(\epsilon)\cdot d\epsilon|$。
 
 故梯度可以进行如下表达
+
+{{< math >}}
 $$
 \begin{equation}
 \begin{aligned}
@@ -228,6 +234,8 @@ $$
 \end{aligned}
 \end{equation}
 $$
+{{< /math >}}
+
 此时，便可以采用蒙特卡罗采样来近似梯度$\nabla_{\phi} \mathcal L(\phi)$，期望即是均值。
 
 假设进行$L$次采样，$\epsilon^{(l)}\sim p(\epsilon),\ \ l=1,2,\cdots,L$。
@@ -246,6 +254,10 @@ $$
 
 ## 变分自编码器VAE
 
+#### 问题场景
+
+假设数据集$X=\{x^{(i)}\}^N_{i=1}$服从$N$ i.i.d.。该集合中的数据由某些随机过程生成而来，过程中含有无法观测的连续随机变量$\symbfit z$。这个随机过程包含两个步骤，首先，从先验分布$p_{\theta ^*}(\symbfit z)$中生成一个$\symbfit z^{(i)}$。步骤二是从条件分布$p_{\theta ^*}(\symbfit x |\symbfit z)$中采样$\symbfit x^{(i)}$。假设$p_{\theta ^*}(\symbfit z)$和$p_{\theta ^*}(\symbfit x |\symbfit z)$来自$p_{\theta}(\symbfit z)$和$p_{\theta}(\symbfit x |\symbfit z)$的参数家族，并且他们的表达在提及$\theta$和$z$时都是可微的。这个过程的许多部分都是对我们不可见的：不论是真实的参数$\theta ^*$还是隐变量$z^{(i)}$都是未知的。
+
 隐变量模型 Latent Variable Model
 
 ```mermaid
@@ -256,7 +268,7 @@ x--"推断(Encoder)"-->z
 
 GMM 混合高斯模型，有限个高斯模型混合$z$~Categorical Dist
 
-VAE 无限个（infinite）高斯模型混合: $z \sim N(\symbfit 0,\symbfit I) $，$x|z \sim N(\mu_{\theta}(z),\sum_{\theta}(z))$，得到如下建模，
+VAE 无限个（infinite）高斯模型混合: $z \sim N(0,\symbfit I) $，$x|z \sim N(\mu_{\theta}(z),\sum_{\theta}(z))$，得到如下建模，
 $$
 p_{\theta}(x) = \int_zp_{\theta}(x,z)dz \ = \ \int_z p(z)\cdot p_{\theta}(x|z)dz
 $$
@@ -269,6 +281,8 @@ $$
 \log p(x) = ELBO + KL(q_{\phi}(z|x)||p_{\theta}(z|x))
 $$
 优化目标如下
+
+{{< math >}}
 $$
 \begin{equation}
 \begin{aligned}
@@ -291,6 +305,8 @@ $$
 \end{aligned}
 \end{equation}
 $$
+{{< /math >}}
+
  使用SGVI进行训练，重参数化技巧可以如下实现
 
 ```mermaid
@@ -307,7 +323,7 @@ D-->Z
 
 ```
 
-$\epsilon$可以看做采样的噪声，$\epsilon \backsim N(\symbfit 0,\symbfit I)$。假设$z|x \backsim N(\mu_{\phi}(x),\Sigma_{\phi}(x))$则
+$\epsilon$可以看做采样的噪声，$\epsilon \backsim N(0,\symbfit I)$。假设$z|x \backsim N(\mu_{\phi}(x),\Sigma_{\phi}(x))$则
 $$
 z=\mu_{\phi}(x)+\Sigma_{\phi}^{\frac{1}{2}}(x)\cdot \epsilon
 $$
@@ -318,3 +334,5 @@ $$
 https://www.bilibili.com/video/BV1DW41167vr?p=1&vd_source=309d79182a0075ce59fbfe1a028281fd
 
 https://www.bilibili.com/video/BV1G34y1t7Dy/?p=2&spm_id_from=pageDriver&vd_source=309d79182a0075ce59fbfe1a028281fd
+
+https://zhuanlan.zhihu.com/p/345597656
