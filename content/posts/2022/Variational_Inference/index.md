@@ -239,16 +239,22 @@ $$
 此时，便可以采用蒙特卡罗采样来近似梯度$\nabla_{\phi} \mathcal L(\phi)$，期望即是均值。
 
 假设进行$L$次采样，$\epsilon^{(l)}\sim p(\epsilon),\ \ l=1,2,\cdots,L$。
+
+{{< math >}}
 $$
 \nabla_{\phi} \mathcal L(\phi) \approx \widetilde {\nabla_{\phi} \mathcal L(\phi)}=
 
 \frac{1}{L} \sum_{l=1}^L\nabla_z(\log p_{\theta}(x^i,z)-\log q_{\phi}(z))\cdot \nabla_{\phi}g_{\phi}(\epsilon^{(l)},x^i)
 $$
+{{< /math >}}
+
 SGVI训练过程如下
+
+{{< math >}}
 $$
 \phi^{(t+1)} \leftarrow \phi^{(t)} + \lambda^{(t)} \cdot \widetilde {\nabla_{\phi} \mathcal L(\phi)}f
 $$
-
+{{< /math >}}
 
 
 
@@ -323,7 +329,7 @@ D-->Z
 
 ```
 
-$\epsilon$可以看做采样的噪声，$\epsilon \backsim N(0,\symbfit I)$。假设$z|x \backsim N(\mu_{\phi}(x),\Sigma_{\phi}(x))$则
+$\epsilon$可以看做采样的噪声，{{< math >}}$\epsilon \backsim N(0,\symbfit I)${{< /math >}}。假设$z|x \backsim N(\mu_{\phi}(x),\Sigma_{\phi}(x))$则
 $$
 z=\mu_{\phi}(x)+\Sigma_{\phi}^{\frac{1}{2}}(x)\cdot \epsilon
 $$
