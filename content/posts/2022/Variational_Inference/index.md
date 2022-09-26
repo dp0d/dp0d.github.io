@@ -167,7 +167,7 @@ $$
 ELBO = E_{q_{\phi}(z)}[\log \frac{p_{\theta}(x^i,z)}{q_{\phi}(z)}]
 $$
 
-{{< /math >}}
+
 
 那么我们想要最大化$ELBO$时，$q(z)$分布的参数$\phi$形式化表达为
 $$
@@ -175,7 +175,7 @@ $$
 $$
 使用梯度随机梯度上升策略，需要求得$\mathcal L(\phi)$对$\phi$的梯度如下。
 
-{{< math >}}
+
 $$
 \begin{equation}
 \begin{aligned}
