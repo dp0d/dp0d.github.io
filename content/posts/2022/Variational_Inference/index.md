@@ -143,6 +143,7 @@ $$
 
 ## 随机梯度变分推断 (Stochastic Gradient VI, SGVI)
 
+{{< math >}}
 $$
 \log p_\theta(X) = \log \prod_{i=1}^N p_{\theta}(x^i)=\sum_{i=1}^N\log p_{\theta}(x^i)
 $$
@@ -150,6 +151,8 @@ $$
 $$
 \log p_{\theta}(x^i) = \underbrace{ELBO}_{\mathcal L(q)} + \underbrace{KL(q||p)}_{\geqslant 0}) \geqslant \mathcal L(q)
 $$
+
+
 
 需要求解的目标函数是
 $$
@@ -164,7 +167,7 @@ $$
 ELBO = E_{q_{\phi}(z)}[\log \frac{p_{\theta}(x^i,z)}{q_{\phi}(z)}]
 $$
 
-
+{{< /math >}}
 
 那么我们想要最大化$ELBO$时，$q(z)$分布的参数$\phi$形式化表达为
 $$
@@ -262,7 +265,7 @@ $$
 
 #### 问题场景
 
-假设数据集$X=\{x^{(i)}\}^N_{i=1}$服从$N$ i.i.d.。该集合中的数据由某些随机过程生成而来，过程中含有无法观测的连续随机变量$\symbfit z$。这个随机过程包含两个步骤，首先，从先验分布$p_{\theta ^*}(\symbfit z)$中生成一个$\symbfit z^{(i)}$。步骤二是从条件分布$p_{\theta ^*}(\symbfit x |\symbfit z)$中采样$\symbfit x^{(i)}$。假设$p_{\theta ^*}(\symbfit z)$和$p_{\theta ^*}(\symbfit x |\symbfit z)$来自$p_{\theta}(\symbfit z)$和$p_{\theta}(\symbfit x |\symbfit z)$的参数家族，并且他们的表达在提及$\theta$和$z$时都是可微的。这个过程的许多部分都是对我们不可见的：不论是真实的参数$\theta ^*$还是隐变量$z^{(i)}$都是未知的。
+假设数据集$X=\{x^{(i)}\}^N_{i=1}$服从$N$ i.i.d.。该集合中的数据由某些随机过程生成而来，过程中含有无法观测的连续随机变量$\bf z$。这个随机过程包含两个步骤，首先，从先验分布$p_{\theta ^*}(\bf z)$中生成一个$\bf z^{(i)}$。步骤二是从条件分布$p_{\theta ^*}(\bf x |\bf z)$中采样$\bf x^{(i)}$。假设$p_{\theta ^*}(\bf z)$和$p_{\theta ^*}(\bf x |\bf z)$来自$p_{\theta}(\bf z)$和$p_{\theta}(\bf x |\bf z)$的参数家族，并且他们的表达在提及$\theta$和$z$时都是可微的。这个过程的许多部分都是对我们不可见的：不论是真实的参数$\theta ^*$还是隐变量$z^{(i)}$都是未知的。
 
 隐变量模型 Latent Variable Model
 
@@ -274,7 +277,7 @@ x--"推断(Encoder)"-->z
 
 GMM 混合高斯模型，有限个高斯模型混合$z$~Categorical Dist
 
-VAE 无限个（infinite）高斯模型混合: $z \sim N(0,\symbfit I) $，$x|z \sim N(\mu_{\theta}(z),\sum_{\theta}(z))$，得到如下建模，
+VAE 无限个（infinite）高斯模型混合: $z \sim N(0,\bf I) $，$x|z \sim N(\mu_{\theta}(z),\sum_{\theta}(z))$，得到如下建模，
 $$
 p_{\theta}(x) = \int_zp_{\theta}(x,z)dz \ = \ \int_z p(z)\cdot p_{\theta}(x|z)dz
 $$
