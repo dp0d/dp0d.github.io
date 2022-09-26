@@ -19,6 +19,8 @@ license: ""
 
 ## 1.变分函数
 
+{{< math >}}
+
 ### 微分（非严格）
 
 $$
@@ -143,7 +145,7 @@ $$
 
 ## 随机梯度变分推断 (Stochastic Gradient VI, SGVI)
 
-{{< math >}}
+
 $$
 \log p_\theta(X) = \log \prod_{i=1}^N p_{\theta}(x^i)=\sum_{i=1}^N\log p_{\theta}(x^i)
 $$
@@ -192,7 +194,7 @@ $$
 \end{aligned}
 \end{equation}
 $$
-{{< /math >}}
+
 
 如果使用蒙特卡罗的方式，梯度$\nabla_{\phi} \mathcal L(\phi)$，即期望$E_{q_{\phi}}[\nabla_{\phi}\log q_{\phi}\cdot[\log p_{\theta}(x^i,z)-\log q_{\phi}(z)]$可以通过从$q_{\phi}(z)中采样L个z$得到，即
 $$
@@ -211,7 +213,7 @@ $$
 
 故梯度可以进行如下表达
 
-{{< math >}}
+
 $$
 \begin{equation}
 \begin{aligned}
@@ -237,27 +239,27 @@ $$
 \end{aligned}
 \end{equation}
 $$
-{{< /math >}}
+
 
 此时，便可以采用蒙特卡罗采样来近似梯度$\nabla_{\phi} \mathcal L(\phi)$，期望即是均值。
 
 假设进行$L$次采样，$\epsilon^{(l)}\sim p(\epsilon),\ \ l=1,2,\cdots,L$。
 
-{{< math >}}
+
 $$
 \nabla_{\phi} \mathcal L(\phi) \approx \widetilde {\nabla_{\phi} \mathcal L(\phi)}=
 
 \frac{1}{L} \sum_{l=1}^L\nabla_z(\log p_{\theta}(x^i,z)-\log q_{\phi}(z))\cdot \nabla_{\phi}g_{\phi}(\epsilon^{(l)},x^i)
 $$
-{{< /math >}}
+
 
 SGVI训练过程如下
 
-{{< math >}}
+
 $$
 \phi^{(t+1)} \leftarrow \phi^{(t)} + \lambda^{(t)} \cdot \widetilde {\nabla_{\phi} \mathcal L(\phi)}f
 $$
-{{< /math >}}
+
 
 
 
@@ -291,7 +293,7 @@ $$
 $$
 优化目标如下
 
-{{< math >}}
+
 $$
 \begin{equation}
 \begin{aligned}
@@ -314,7 +316,7 @@ $$
 \end{aligned}
 \end{equation}
 $$
-{{< /math >}}
+
 
  使用SGVI进行训练，重参数化技巧可以如下实现
 
@@ -332,15 +334,16 @@ D-->Z
 
 ```
 
-{{< math >}}
+
 
 $\epsilon$可以看做采样的噪声，$\epsilon \backsim N(0,\bf I)$。假设$z|x \backsim N(\mu_{\phi}(x),\Sigma_{\phi}(x))$则
 
-{{< /math >}}
+
 $$
 z=\mu_{\phi}(x)+\Sigma_{\phi}^{\frac{1}{2}}(x)\cdot \epsilon
 $$
 
+{{< /math >}}
 
 ## 参考资料
 
