@@ -19,8 +19,6 @@ license: ""
 
 ## 1.变分函数
 
-{{< math >}}
-
 ### 微分（非严格）
 
 $$
@@ -93,6 +91,8 @@ $$
 
 ## 变分推断(Variational Inference)
 
+{{< math >}}
+
 使用ELBO来替代，含有隐变量的概率模型中，观测数据的对数概率$\log_{\theta} p(x)$
 
 **参数设定**
@@ -143,9 +143,11 @@ $$
 q(z) = \prod_{i=1}^{M}q(z_i)
 $$
 
+{{< /math >}}
+
 ## 随机梯度变分推断 (Stochastic Gradient VI, SGVI)
 
-
+{{< math >}}
 $$
 \log p_\theta(X) = \log \prod_{i=1}^N p_{\theta}(x^i)=\sum_{i=1}^N\log p_{\theta}(x^i)
 $$
@@ -205,7 +207,11 @@ $$
 
 故现在需要降低梯度表达的方差，即Variance Reduction问题。使用重参数化技巧（Reparameterization Trick）。
 
+{{< /math >}}
+
 ### Reparameterization Trick
+
+{{< math >}}
 
 目的是将随机变量$z$和$\phi$的关系解耦，将$z$的随机成分转移到$\epsilon$。
 
@@ -259,7 +265,7 @@ SGVI训练过程如下
 $$
 \phi^{(t+1)} \leftarrow \phi^{(t)} + \lambda^{(t)} \cdot \widetilde {\nabla_{\phi} \mathcal L(\phi)}f
 $$
-
+{{< /math >}}
 
 
 
@@ -267,7 +273,11 @@ $$
 
 #### 问题场景
 
+{{< math >}}
+
 假设数据集$X=\{x^{(i)}\}^N_{i=1}$服从$N$ i.i.d.。该集合中的数据由某些随机过程生成而来，过程中含有无法观测的连续随机变量$\bf z$。这个随机过程包含两个步骤，首先，从先验分布$p_{\theta ^*}(\bf z)$中生成一个$\bf z^{(i)}$。步骤二是从条件分布$p_{\theta ^*}(\bf x |\bf z)$中采样$\bf x^{(i)}$。假设$p_{\theta ^*}(\bf z)$和$p_{\theta ^*}(\bf x |\bf z)$来自$p_{\theta}(\bf z)$和$p_{\theta}(\bf x |\bf z)$的参数家族，并且他们的表达在提及$\theta$和$z$时都是可微的。这个过程的许多部分都是对我们不可见的：不论是真实的参数$\theta ^*$还是隐变量$z^{(i)}$都是未知的。
+
+{{< /math >}}
 
 隐变量模型 Latent Variable Model
 
@@ -276,6 +286,8 @@ graph TB
 z--"生成(Decoder)"-->x
 x--"推断(Encoder)"-->z
 ```
+
+{{< math >}}
 
 GMM 混合高斯模型，有限个高斯模型混合$z$~Categorical Dist
 
@@ -316,7 +328,7 @@ $$
 \end{aligned}
 \end{equation}
 $$
-
+{{< /math >}}
 
  使用SGVI进行训练，重参数化技巧可以如下实现
 
@@ -334,7 +346,7 @@ D-->Z
 
 ```
 
-
+{{< math >}}
 
 $\epsilon$可以看做采样的噪声，$\epsilon \backsim N(0,\bf I)$。假设$z|x \backsim N(\mu_{\phi}(x),\Sigma_{\phi}(x))$则
 
