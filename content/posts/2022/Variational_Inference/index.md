@@ -95,7 +95,7 @@ $$
 
 使用ELBO来替代，含有隐变量的概率模型中，观测数据的对数概率$\log_{\theta} p(x)$
 
-**参数设定**
+参数设定如下
 
 $X$ :   Observed data
 
@@ -105,15 +105,15 @@ $(X,Z)$ :  complete data + parameter
 
 由于$x$是观测数据，$q(z|x)$简写为$q(z)$
 
-**根据贝叶斯定理**
+根据贝叶斯定理
 $$
 p(z|x) = \frac{p(x|z)p(z)}{p(x)} = \frac{p(x,z)}{p(x)}
 $$
-**移项取log**
+移项取log
 $$
 \log p(x)=\log \frac{p(x,z)}{p(z|x)}=\log \frac{\frac{p(x,z)}{q(z)}}{\frac {p(z|x)}{q(z)}}=\log \frac{p(x,z)}{q(z)} - \log \frac {p(z|x)}{q(z)}
 $$
-**左右两边对**$q(z)$**求进行积分**
+左右两边对$q(z)$求进行积分
 $$
 左边=\int_z q(z)\log p(x)dz = \log p(x)
 $$
