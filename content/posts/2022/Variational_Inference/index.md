@@ -283,8 +283,9 @@ $$
 
 ```mermaid
 graph TB
-z--"生成(Decoder)"-->x
-x--"推断(Encoder)"-->z
+
+z--"推断(Encoder)  p(z|x,#phi;)"-->x
+x--"生成(Decoder)  p(x|z,#theta;)"-->z
 ```
 
 {{< math >}}
