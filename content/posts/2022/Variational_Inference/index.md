@@ -283,9 +283,9 @@ $$
 
 ```mermaid
 graph TB
+z--"生成(Decoder)  p(x|z,#theta;)"-->x
+x--"推断(Encoder)  p(z|x,#phi;)"-->z
 
-z--"推断(Encoder)  p(z|x,#phi;)"-->x
-x--"生成(Decoder)  p(x|z,#theta;)"-->z
 ```
 
 {{< math >}}
@@ -336,7 +336,7 @@ $$
 ```mermaid
 graph LR
 
-A(x)-->NN[NN]-->U("#mu;")
+A(x)-->NN[NN*]-->U("#mu;")
 U-->Z(z)
 NN-->S("#sum;")
 S-->D(("·"))
