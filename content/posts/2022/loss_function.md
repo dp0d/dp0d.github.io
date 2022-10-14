@@ -112,11 +112,11 @@ $$
 
 给定anchor $p$，以欧距为例，衡量相似度，其正样本为$q$，负样本为$r$
 
-{{<math>}}
+{{< math >}}
 $$
 J = max(||\symbfit p-\symbfit q||^2-|||\symbfit p-\symbfit r||^2+\epsilon,0)
 $$
-{{</math>}}
+{{< /math >}}
 
 > 代码实现
 

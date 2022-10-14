@@ -265,6 +265,34 @@ sudo chmod +x /etc/cron.daily/clash.sh
 
 
 
+## 配置clash for windows 的linux版本，和我一样怕麻烦的跳到这里（2022年10月4日更新）
+
+这标题有点绕，说白了就是你会得到clash的windows下的相同界面。
+
+<img src="MD_img/image-20221004103704968.png" alt="image-20221004103704968" style="zoom:67%;" />
+
+首先，你需要在clash for windows的项目地址下载安装包，地址是https://github.com/Fndroid/clash_for_windows_pkg/releases
+
+<img src="MD_img/image-20221004103939543.png" alt="image-20221004103939543" style="zoom:67%;" />
+
+根据cpu架构2选1
+
+然后，解压后进入该文件夹，运行如下命令
+
+```bash
+./cfw
+```
+
+就能打开界面了
+
+最后导入yaml文件即可
+
+<img src="MD_img/image-20221004104144504.png" alt="image-20221004104144504" style="zoom:67%;" />
+
+较为简易
+
+
+
 至此结束~
 
 ```bash
