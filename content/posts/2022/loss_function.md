@@ -103,8 +103,12 @@ $$
 
 与二分类交叉熵类似，多分类交叉熵同样是计算标签分布的熵值，基于此，我们需要把多分类考虑在内，也就是多一步求和，即每个类别上的交叉熵求和并在样本空间上进行求和，基于二分类交叉熵的参数定义，定义分类的标签种类为$n$，则多分类交叉熵损失可以表示如下
 $$
+\begin{equation}
 \mathcal L = -\frac{1}{N}\sum_{i=1}^N\sum_{j=1}^ny_j^{(i)}\cdot \log\hat{y}_j^{(i)}
+\end{equation}
 $$
+
+其中,$n$为分类个数，即标签向量维度。$N$为样本个数。
 
 ### 对比损失
 
@@ -117,13 +121,13 @@ $$
 $$
 \begin{equation}
 \begin{aligned}
-\mathcal L = max(||\symbfit p-\symbfit q||^2-|||\symbfit p-\symbfit r||^2+\epsilon,0)
+\mathcal L = max(||\boldsymbol p-\boldsymbol q||^2-||\boldsymbol p-\boldsymbol r||^2+\epsilon,0)
 \end{aligned}
 \end{equation}
 $$
 {{< /math >}}
 
-接下来介绍代码实现
+
 
 > 代码实现
 
