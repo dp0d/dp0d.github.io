@@ -118,6 +118,8 @@ J = max(||\symbfit p-\symbfit q||^2-|||\symbfit p-\symbfit r||^2+\epsilon,0)
 $$
 {{< /math >}}
 
+接下来介绍代码实现
+
 > 代码实现
 
 ```python
