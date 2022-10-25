@@ -170,6 +170,10 @@ for epoch in range(30):
 
 ```
 
+
+
 #### 参考链接
 
 https://zhuanlan.zhihu.com/p/414327252?ivk_sa=1024320u
+
+更多对比损失  https://lilianweng.github.io/posts/2021-05-31-contrastive/
