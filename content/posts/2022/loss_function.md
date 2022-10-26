@@ -19,6 +19,69 @@ license: ""
 
 ## 经典损失函数
 
+### 距离度量
+
+#### F 范数（Frobenius 范数）
+
+矩阵所有元素的平方和再开方，他是是向量二范式的拓展类比。
+$$
+||A||_F = \sqrt{\sum a_{ij}^2}
+$$
+如何作为距离度量呢？
+
+可以利用如下方式，如果标签矩阵为$B$（通常为一个batch里的多个样本标签向量组成，如标签向量为4维，batch_size 为128）则$B$的形状为（128，4）），距离度量公式为
+$$
+\mathcal L_F = ||A-B||
+$$
+
+#### 核范数（nuclear norm）
+
+作为距离度量方式不详
+$$
+\begin{aligned}
+||A||_*=\operatorname{tr}\left(\sqrt{A^{T} A}\right) &=\operatorname{tr}\left(\sqrt{\left(U \Sigma V^{T}\right)^{T} U \Sigma V^{T}}\right) \\
+&=\operatorname{tr}\left(\sqrt{V \Sigma^{T} U^{T} U \Sigma V^{T}}\right) \\
+&=\operatorname{tr}\left(\sqrt{V \Sigma^{2} V^{T}}\right)\left(\Sigma^{T}=\Sigma\right) \\
+&=\operatorname{tr}\left(\sqrt{V^{T} V \Sigma^{2}}\right) \\
+&=\operatorname{tr}(\Sigma)
+\end{aligned}
+$$
+
+> 参考代码
+
+```python
+import torch
+label = np.array([[1, 2, 3, 4], [1, 2, 3, 4]])
+pred = np.array([[2, 3, 4, 5], [2, 3, 4, 5]])
+
+print("F范数矩阵")
+print(torch.norm(torch.from_numpy(pred - label).type(torch.cuda.FloatTensor), p="fro", dim=-1))
+print("2范数矩阵")
+print(torch.norm(torch.from_numpy(pred - label).type(torch.cuda.FloatTensor), p=2, dim=-1))
+print("核范数矩阵")  # 核范数作为Loss使用方法不详
+print(torch.norm(torch.from_numpy(pred - label).type(torch.cuda.FloatTensor), p="nuc"))
+
+print("平均损失计算：每个样本的损失相加，再除以总样本数")
+print(torch.norm(torch.from_numpy(pred - label).type(torch.cuda.FloatTensor), p="fro", dim=-1).sum() / label.shape[0])
+print(torch.norm(torch.from_numpy(pred - label).type(torch.cuda.FloatTensor), p=2, dim=-1).sum() / label.shape[0])
+
+输出：
+F范数矩阵
+tensor([2., 2.], device='cuda:0')
+2范数矩阵
+tensor([2., 2.], device='cuda:0')
+核范数矩阵
+tensor(2.8284, device='cuda:0')
+平均损失计算：每个样本的损失相加，再除以总样本数
+tensor(2., device='cuda:0')
+tensor(2., device='cuda:0')
+
+Process finished with exit code 0
+
+```
+
+
+
 ### 相对熵（也称KL散度）
 
 [**维基百科**](https://zh.wikipedia.org/wiki/%E7%9B%B8%E5%AF%B9%E7%86%B5)：KL散度（Kullback-Leibler divergence，简称KLD），在讯息系统中称为相对熵（relative entropy），在连续时间序列中称为随机性（randomness），在统计模型推断中称为讯息增益（information gain）。也称讯息散度（information divergence）。它是两个几率分布$P$和$Q$差别的非对称性的度量。 KL散度是用来度量使用基于$Q$的分布来编码服从$P$的分布的样本所需的额外的平均比特数，注意$P$,$Q$先后顺序。
