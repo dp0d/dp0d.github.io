@@ -224,3 +224,20 @@ tensor([[  0, 202, 154,  59, 182, 243, 253, 188, 185, 252, 191,  63, 240,  22,
 torch.Size([4, 16])
 ```
 
+### Tensor归一化操作
+
+> 按行（样本）归一化(前提是输出大于零)
+
+```python
+>>> import torch
+>>> import torch.nn.functional as F
+>>> import numpy as np
+
+>>> arr = np.array([[1, 1, 0, 0, 0, 0, 0], [0, 1, 0, 0, 0, 0, 1]])
+>>> print(F.normalize(torch.tensor(arr).float(), p=1, dim=1))
+
+
+```
+
+
+

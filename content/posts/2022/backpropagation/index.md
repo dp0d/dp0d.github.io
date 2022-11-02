@@ -130,12 +130,63 @@ $$
 如果对这个过程不是特别了解，那我们以矩阵的形式写一次$Z$的计算范例。👇
 
 对部分参数进行如下定义👇
-
-<img src="image-20220320164327846.png" alt="image-20220320164327846" style="zoom: 40%;" />
-
+$$
+\begin{array}{cc}
+w^{[1]}=\left[\begin{array}{ll}
+w_{11}^{[1]} & w_{12}^{[1]} \\
+w_{21}^{[1]} & w_{22}^{[1]} \\
+w_{31}^{[1]} & w_{32}^{[1]}
+\end{array}\right] & w^{[2]}=\left[\begin{array}{lll}
+w_{11}^{[2]} & w_{12}^{[2]} & w_{13}^{[2]} \\
+w_{21}^{[2]} & w_{22}^{[2]} & w_{23}^{[2]}
+\end{array}\right] \\
+b^{[1]}=\left[\begin{array}{c}
+b_{1}^{[1]} \\
+b_{2}^{[1]} \\
+b_{3}^{[1]}
+\end{array}\right] & b^{[2]}=\left[\begin{array}{c}
+b_{1}^{[2]} \\
+b_{2}^{[2]}
+\end{array}\right]
+\end{array}
+$$
 于是，图中两个隐藏层$Z$的计算如下👇
 
-![image-20220320164806059](image-20220320164806059.png)
+$$
+\begin{array}{c}
+z^{[1]}=\left[\begin{array}{ll}
+w_{11}^{[1]} & w_{12}^{[1]} \\
+w_{21}^{[1]} & w_{22}^{[1]} \\
+w_{31}^{[1]} & w_{32}^{[1]}
+\end{array}\right] \cdot\left[\begin{array}{c}
+a_{1}^{[0]} \\
+a_{2}^{[0]}
+\end{array}\right]+\left[\begin{array}{c}
+b_{1}^{[1]} \\
+b_{2}^{[1]} \\
+b_{3}^{[1]}
+\end{array}\right]=\left[\begin{array}{c}
+w_{11}^{[1]} a_{1}^{[0]}+w_{12}^{[1]} a_{2}^{[0]}+b_{1}^{[1]} \\
+w_{21}^{[1]} a_{1}^{[0]}+w_{22}^{[1]} a_{2}^{[0]}+b_{2}^{[1]} \\
+w_{31}^{[1]} a_{1}^{[0]}+w_{32}^{[1]} a_{2}^{[0]}+b_{3}^{[1]}
+\end{array}\right] \\
+z^{[2]}=\left[\begin{array}{lll}
+w_{11}^{[2]} & w_{12}^{[2]} & w_{13}^{[2]} \\
+w_{21}^{[2]} & w_{22}^{[2]} & w_{23}^{[2]}
+\end{array}\right] \cdot\left[\begin{array}{c}
+a_{1}^{[1]} \\
+a_{2}^{[1]} \\
+a_{3}^{[1]}
+\end{array}\right]+\left[\begin{array}{l}
+b_{1}^{[2]} \\
+b_{2}^{[2]}
+\end{array}\right]=\left[\begin{array}{l}
+w_{11}^{[2]} a_{1}^{[1]}+w_{12}^{[2]} a_{2}^{[1]}+w_{13}^{[2]} a_{3}^{[1]}+b_{1}^{[2]} \\
+w_{21}^{[2]} a_{1}^{[1]}+w_{22}^{[2]} a_{2}^{[1]}+w_{23}^{[2]} a_{3}^{[1]}+b_{2}^{[2]}
+\end{array}\right] \\
+\end{array}
+$$
+
 
 可以表述成👇
 $$
@@ -155,7 +206,27 @@ $$
 
 那么问题又来了，对于那么多的网络参数，我们怎么去调整呢？
 
-![image-20220320172900521](image-20220320172900521.png)
+$$
+\begin{array}{cc}
+w^{[1]}=\left[\begin{array}{ll}
+w_{11}^{[1]} & w_{12}^{[1]} \\
+w_{21}^{[1]} & w_{22}^{[1]} \\
+w_{31}^{[1]} & w_{32}^{[1]}
+\end{array}\right] \quad w^{[2]}=\left[\begin{array}{lll}
+w_{11}^{[2]} & w_{12}^{[2]} & w_{13}^{[2]} \\
+w_{21}^{[2]} & w_{22}^{[2]} & w_{23}^{[2]}
+\end{array}\right] \\
+b^{[1]}=\left[\begin{array}{c}
+b_{1}^{[1]} \\
+b_{2}^{[1]} \\
+b_{3}^{[1]}
+\end{array}\right] & b^{[2]}=\left[\begin{array}{c}
+b_{1}^{[2]} \\
+b_{2}^{[2]}
+\end{array}\right]
+\end{array}
+$$
+
 
 答案就是，偏导数👇
 
@@ -214,19 +285,81 @@ $$
 
 那么对于输出层👇
 
-![image-20220320194242390](image-20220320194242390.png)
+$$
+\delta_{j}^{[L]}=\frac{\partial L}{\partial a_{j}^{[L]}} \sigma^{\prime}\left(z_{j}^{[L]}\right) \quad \delta^{[L]}=\left[\begin{array}{c}
+\frac{\partial L}{\partial a_{1}^{L L}} \\
+\frac{\partial L}{\partial a_{2}^{[L]}} \\
+\vdots \\
+\frac{\partial L}{\partial a_{j}^{L L}}
+\end{array}\right] \odot\left[\begin{array}{c}
+\sigma^{\prime}\left(z_{1}^{[L]}\right) \\
+\sigma^{\prime}\left(z_{2}^{[L]}\right) \\
+\vdots \\
+\sigma^{\prime}\left(z_{j}^{[L]}\right)
+\end{array}\right] \quad \delta^{[L]}=\nabla_{a} L \odot \sigma^{\prime}\left(z^{[L]}\right)
+$$
+
 
 对于隐藏层👇
-
-![image-20220320194324232](image-20220320194324232.png)
-
+$$
+\delta_{j}^{[l]}=\sum_{k} w_{k j}^{[l+1]} \delta_{k}^{[l+1]} \sigma^{\prime}\left(z_{j}^{[l]}\right)
+\\
+\delta^{[l]}=\left[\left[\begin{array}{cccc}
+w_{11}^{[l]} & w_{12}^{[l]} & \ldots & w_{1 k}^{[l]} \\
+w_{21}^{[l]} & w_{22}^{[l]} & \ldots & w_{2 k}^{[l]} \\
+\vdots & \vdots & \ddots & \vdots \\
+w_{j 1}^{[l]} & w_{j 2}^{[l]} & \ldots & w_{j k}^{[l]}
+\end{array}\right]\left[\begin{array}{c}
+\delta_{1}^{[l+1]} \\
+\delta_{2}^{[l+1]} \\
+\vdots \\
+\delta_{k}^{[l+1]}
+\end{array}\right]\right] \odot\left[\begin{array}{c}
+\sigma^{\prime}\left(z_{1}^{[l]}\right) \\
+\sigma^{\prime}\left(z_{2}^{[l]}\right) \\
+\vdots \\
+\sigma^{\prime}\left(z_{j}^{[l]}\right)
+\end{array}\right]
+\\
+(\mathrm{j}, \mathrm{k}) *(\mathrm{k}, 1) \odot(\mathrm{j}, 1)=(\mathrm{j}, 1)
+\\
+\delta^{[l]}=\left[w^{[l+1]^{T}} \delta^{[l+1]}\right] \odot \sigma^{\prime}\left(z^{[l]}\right)
+$$
 更新步👇
+$$
+\begin{array}{c}
+\frac{\partial L}{\partial b_{j}^{[l]}}=\delta_{j}^{[l]} \\
+\frac{\partial L}{\partial w_{j k}^{[l]}}=a_{k}^{[l-1]} \delta_{j}^{[l]} \\
+\frac{\partial L}{\partial b^{[l]}}=\left[\begin{array}{c}
+\delta_{1}^{[l]} \\
+\delta_{2}^{[l]} \\
+\vdots \\
+\delta_{j}^{[l]}
+\end{array}\right]=\delta^{[l]}
+\\
+\frac{\partial L}{\partial w^{[l]}}=\left[\begin{array}{c}
+\delta_{1}^{[l]} \\
+\delta_{2}^{[l]} \\
+\vdots \\
+\delta_{j}^{[l]}
+\end{array}\right]\left[\begin{array}{lll}
+a_{1}^{[l]} & a_{2}^{[l]} \ldots & a_{k}^{[l]}
+\end{array}\right]\\
+(j, 1) *(1, k)=(j, k)\\
+\frac{\partial L}{\partial b^{[l]}}=\delta^{[l]}\\
+\frac{\partial L}{\partial w^{[l]}}=\delta^{[l]} a^{[l-1] T}
 
-<img src="image-20220320194349547.png" alt="image-20220320194349547" style="zoom: 50%;" />
+\end{array}
+$$
 
-<img src="image-20220320194413977.png" alt="image-20220320194413977" style="zoom:50%;" />
-
-
+$$
+\begin{aligned}
+b_{j}^{[l]} & \leftarrow b_{j}^{[l]}-\alpha \frac{\partial L}{\partial b_{j}^{l]}} \\
+w_{j k}^{[l]} & \leftarrow w_{j k}^{[l]}-\alpha \frac{\partial L}{\partial w_{j k}^{[l]}} \\
+b^{[l]} & \leftarrow b^{[l]}-\alpha \frac{\partial L}{\partial b^{[l]}} \\
+w^{[l]} & \leftarrow w^{[l]}-\alpha \frac{\partial L}{\partial w^{[l]}}
+\end{aligned}
+$$
 
 图解反向传播过程，首先是输出层👇
 
