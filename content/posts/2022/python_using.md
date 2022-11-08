@@ -196,3 +196,28 @@ out:
 [3, 1, 2] [0, 1, 2]
 ```
 
+## 漂亮的表格
+
+单纯输出列表效果不好看，可以做成表格形式。
+
+```python
+>>> # 列表显示为表格
+>>> from prettytable import PrettyTable
+>>> fruit = [['apple', 'red', '100g'], ['banana', 'yellow', '80g']]
+>>> print("直接打印列表\n", fruit)
+>>> x = PrettyTable()  # 创建表格实例
+>>> x.field_names = ['fruit', 'color', 'weight']  # 定义表头
+>>> x.add_rows(fruit)
+>>> print("打印成表格\n", x)
+out:
+直接打印列表
+[['apple', 'red', '100g'], ['banana', 'yellow', '80g']]
+打印成表格
+ +--------+--------+--------+
+| fruit  | color  | weight |
++--------+--------+--------+
+| apple  |  red   |  100g  |
+| banana | yellow |  80g   |
++--------+--------+--------+
+```
+
