@@ -1,6 +1,6 @@
 ---
 draft: false
-title: "Index"
+title: "Linux下的包管理工具介绍"
 subtitle: ""
 date: 2022-11-06T10:10:12+08:00
 lastmod: 2022-11-06T10:10:12+08:00
@@ -17,7 +17,7 @@ math:
 license: ""
 ---
 
-## Linux下的包管理工具介绍
+## 
 
 ### dpkg
 
