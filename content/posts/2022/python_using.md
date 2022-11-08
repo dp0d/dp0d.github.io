@@ -221,3 +221,69 @@ out:
 +--------+--------+--------+
 ```
 
+## zip的妙用
+
+```python
+>>> a = [[1, 2],
+     [3, 4],
+     [5, 6]]
+>>> print(*a)
+>>> print(zip(*a))
+>>> print(list(zip(*a)))
+out:
+[1, 2] [3, 4] [5, 6]
+<zip object at 0x7fb6cd7e7f00>
+[(1, 3, 5), (2, 4, 6)]
+```
+
+
+
+## 内置filter快速筛选出列表中的一类值
+
+```python
+>>> a = [3, 2, None, "", 0]
+>>> # 剔除假值（python中,None、0、"" 都为假”）
+>>> print(list(filter(bool, a)))
+
+>>> # 剔除 3
+>>> print(list(filter(lambda i: i != 3, a)))
+
+# 筛选出奇数
+b = [1, 2, 3, 4, 5]
+print(list(filter(lambda i: i % 2, b)))
+
+out:
+[3, 2]
+[2, None, '', 0]
+[1, 3, 5]
+```
+
+
+
+## 查看变量占用的内存空间
+
+```python
+>>> import sys
+>>> a = [3, 2, None, "", 0]
+>>> b = 9
+>>> c = "python"
+>>> print("变量a占用的内存空间为{}字节，\n变量b占用的内存空间为{}字节，\n变量c占用内存空间为{}字        节。".format(
+>>>     sys.getsizeof(a),
+>>>     sys.getsizeof(b),
+>>>     sys.getsizeof(c),
+>>> ))
+
+out:
+变量a占用的内存空间为112字节，
+变量b占用的内存空间为28字节，
+变量c占用内存空间为55字节。
+```
+
+## 严格控制打印小数点后两位
+
+```python
+>>> print(f"{5/2:.2f}")
+out:
+2.50
+```
+
