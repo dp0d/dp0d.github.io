@@ -48,7 +48,7 @@ df.columns = ['label_text', 'chapter', 'section', 'subsection', 'text']
 
 
 
-### Dataframe形状处理
+### 形状处理
 
 #### 打印开头几行数据
 
@@ -185,7 +185,7 @@ df
 
 
 
-### Dataframe数据处理
+### 数据处理
 
 #### 隐函数方法
 
@@ -285,7 +285,7 @@ df
 
 
 
-### Dataframe打印属性
+### 打印属性
 
 #### 显示所有行和列
 
@@ -298,5 +298,68 @@ pd.set_option('display.max_rows', None)
 
 #设置value的显示长度为100，默认为50
 pd.set_option('max_colwidth',100)
+```
+
+### 采样方法
+
+#### 随机采样
+
+```python
+# 随机采样100个
+>>> df_sampled = df.sample(n=100)
+
+# 随机采样50%的样本
+>>> df_sampled = df.sample(frac=0.5)
+
+```
+
+#### 条件采样
+
+```python
+# 选苹果的行
+>>> df_sampled = df[df['fruit'] == 'apple']
+```
+
+#### 分组采样
+
+```python
+>>> df = pd.DataFrame(
+...     {"a": ["red"] * 2 + ["blue"] * 2 + ["black"] * 2, "b": range(6)}
+... )
+>>> df
+       a  b
+0    red  0
+1    red  1
+2   blue  2
+3   blue  3
+4  black  4
+5  black  5
+
+# 每组里头采样一个数据
+>>> df.groupby("a").sample(n=1, random_state=1)
+       a  b
+4  black  4
+2   blue  2
+1    red  1
+
+# 按列"a"的值分组采样，只保留列"b"的值
+>>> df.groupby("a")["b"].sample(frac=0.5, random_state=2)
+5    5
+2    2
+0    0
+Name: b, dtype: int64
+
+# 为每个样本赋予采样权重
+>>> df.groupby("a").sample(
+...     n=1,
+...     weights=[1, 1, 1, 0, 0, 1],
+...     random_state=1,
+... )
+       a  b
+5  black  5
+2   blue  2
+0    red  0
+    
+    
 ```
 
