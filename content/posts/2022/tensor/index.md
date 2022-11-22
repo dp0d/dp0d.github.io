@@ -239,5 +239,78 @@ torch.Size([4, 16])
 
 ```
 
+### Tensor的多条件选取
 
+```python
+>>> a = [1., 2., 3, 4]
+>>> b = [-1., -2., -3., -4.]
+>>> a_tensor = torch.as_tensor(a, dtype=torch.float)
+>>> b_tensor = torch.as_tensor(b, dtype=torch.float)
+
+>>> # 单条件选取
+>>> print(a_tensor[a_tensor > 1.])
+tensor([2., 3., 4.])
+
+>>> # 多条件选取
+>>> condition1 = torch.where((a_tensor > 1.) & (a_tensor < 4.))
+>>> condition2 = torch.where((a_tensor == 1.) | (a_tensor == 4.))
+>>> print(a_tensor[condition1])
+tensor([2., 3.])
+
+>>> print(a_tensor[condition2])
+tensor([1., 4.])
+
+>>> # 条件选另一个tensor里的值(a,b等维)
+>>> print(b_tensor[condition1])
+tensor([-2., -3.])
+```
+
+### 不同形状的Tensor之间计算
+
+```python
+>>> a = [[1., 2., 3, 4],
+        [1., 2., 3, 4]]
+>>> b = [[[-1., -2., -3., -4.],
+          [-1., -2., -3., -4.],
+          [-1., -2., -3., -4.]],
+         [[-1., -2., -3., -4.],
+          [-1., -2., -3., -4.],
+          [-1., -2., -3., -4.]]]
+>>> a_tensor = torch.as_tensor(a, dtype=torch.float)      # shape torch.size([2,4])
+>>> b_tensor = torch.as_tensor(b, dtype=torch.float)      # shape torch.size([2,3,4])
+>>> a_tensor = a_tensor.unsqueeze(1)                      # 扩展一个id=1的维度
+>>> print(a_tensor)
+tensor([[[1., 2., 3., 4.]],
+        [[1., 2., 3., 4.]]])
+
+>>> print(a_tensor-b_tensor)
+tensor([[[2., 4., 6., 8.],
+         [2., 4., 6., 8.],
+         [2., 4., 6., 8.]],
+        [[2., 4., 6., 8.],
+         [2., 4., 6., 8.],
+         [2., 4., 6., 8.]]])
+         
+>>> print((a_tensor-b_tensor)**2)
+tensor([[[ 4., 16., 36., 64.],
+         [ 4., 16., 36., 64.],
+         [ 4., 16., 36., 64.]],
+        [[ 4., 16., 36., 64.],
+         [ 4., 16., 36., 64.],
+         [ 4., 16., 36., 64.]]])
+
+# 二范式，dim2维度的所有值平方，求和，然后开根号
+>>> print(torch.norm(a_tensor-b_tensor, p=2, dim=2))
+tensor([[10.9545, 
+         10.9545, 
+         10.9545],
+        [10.9545, 
+         10.9545, 
+         10.9545]])
+
+# 二范式，dim2维度的所有值平方，求和，然后开根号，和上面结果一致
+>>> print(torch.linalg.norm(a_tensor-b_tensor, dim=2))
+tensor([[10.9545, 10.9545, 10.9545],
+        [10.9545, 10.9545, 10.9545]])
+```
 
