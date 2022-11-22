@@ -256,6 +256,10 @@ tensor([2., 3., 4.])
 >>> condition2 = torch.where((a_tensor == 1.) | (a_tensor == 4.))
 >>> print(a_tensor[condition1])
 tensor([2., 3.])
+>>> # 反条件选取
+>>> condition = torch.where((a_tensor > 1.) & (a_tensor < 4.), True, False) # 首先转为bool类型
+>>> print(a_tensor[~condition])    # 然后取反
+tensor([1., 4.])
 
 >>> print(a_tensor[condition2])
 tensor([1., 4.])
