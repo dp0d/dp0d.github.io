@@ -182,7 +182,7 @@ sweep_config_2 = {
 	  # 这行id注掉
     # sweep_id = wandb.sweep(sweep=sweep_config, project='project_name')
     # 去wandb创建sweep的主页获取id填到下面，如获取的是 sr0cogu1
-    wandb.agent('sr0cogu1', function=main, count=200)   # 指定搜索次数为200和入口函数为main
+    wandb.agent(sweep_id='dp0d/project_name/sr0cogu1', function=main, count=200)   # 指定搜索次数为200和入口函数为main
 else:
   main()
 ```
