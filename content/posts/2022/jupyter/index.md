@@ -63,7 +63,7 @@ c.ServerApp.allow_remote_access = True  # 允许远程登录
 c.ServerApp.ip = '*'									  # 不指定ip
 c.LabApp.open_browser = False           
 c.ServerApp.allow_root = True
-c.ServerApp.notebook_dir = '/home/' # 启动目录
+c.NotebookApp.notebook_dir = '/home/' # 启动目录，这个要用命令行指定才有效
 """
 >>> from notebook.auth import passwd
 >>> passwd()
@@ -73,6 +73,40 @@ Verify password:
 """
 c.NotebookApp.password = u'argon2:$argon2id......(换成你的秘钥)' #就是把生成的密码json文件里面的一串密码放这里
 
+```
+
+> 给它配一个服务
+
+```bash
+sudo vi /etc/systemd/system/jupyterlab.service
+```
+
+> 写入以下内容
+
+```yaml
+[Unit]
+Description=contest jupyterlab service
+After=network.target
+
+[Service]
+Type=simple
+User=oliver
+ExecStart=/home/oliver/.pyenv/versions/patent_phrase/bin/jupyter-lab --allow-root --no-browser --ip '*' --port '8889' --config='/home/oliver/.jupyter/jupyter_notebook_config_special.py'  /home/oliver 
+
+Restart=on-failure
+RestartPreventExitStatus=23
+
+[Install]
+WantedBy=multi-user.target
+```
+
+> 让这个服务开机启动
+
+```bash
+sudo systemctl daemon-reload
+sudo systemctl enable jupyterlab
+sudo systemctl start jupyterlab
+sudo systemctl status jupyterlab
 ```
 
 
