@@ -21,6 +21,62 @@ Jupyter 已经被人们广泛使用来作为生产力工具，由于其能够步
 
 ## Jupyter Lab
 
+### 安装和配置
+
+#### 安装
+
+```python
+pip install jupyterlab
+```
+
+#### 配置
+
+> 命令行指定
+
+```bash
+jupyter lab 
+--allow-root 																								# 允许root权限
+--no-browser 																								# 启动不打开窗口
+--ip '*'                                                    # 不指定IP
+--port '8889'                                               # 指定开放端口
+/home/oliver/CONTEST/kaggle_patent_phrase_matching2022      # 指定启动目录
+
+--config='~/.jupyter/jupyter_notebook_config_special.py'    # 指定配置文件(以上配置都可以写入此)
+```
+
+> 设置登录密码
+
+```bash
+jupyter lab password
+```
+
+生成配置文件，运行后一般在~/.jupyter目录下会生成
+
+```python
+jupyter lab --generate-config
+```
+
+jupyterlab配置文件设置
+
+```python
+c.ServerApp.allow_remote_access = True  # 允许远程登录
+c.ServerApp.ip = '*'									  # 不指定ip
+c.LabApp.open_browser = False           
+c.ServerApp.allow_root = True
+c.ServerApp.notebook_dir = '/home/' # 启动目录
+"""
+>>> from notebook.auth import passwd
+>>> passwd()
+Enter password: 
+Verify password: 
+'argon2:$argon2id$v=19$m=10240,t=10,p=8$jlFeqL9E3EPEFV2CyPETWQ$lzw9f8pTcjmXCW1uh0K0mzeQqZsGbHeaQSv4/6BJ0ys'
+"""
+c.NotebookApp.password = u'argon2:$argon2id......(换成你的秘钥)' #就是把生成的密码json文件里面的一串密码放这里
+
+```
+
+
+
 ### 设置代理
 
 #### 方法一（便捷指数1）
