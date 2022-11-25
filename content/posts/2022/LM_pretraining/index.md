@@ -26,7 +26,8 @@ license: ""
 # 自己定义的网络，
 encoder = BertModel.from_pretrained(bert_model_path)
 model = EffiGlobalPointer(encoder, ENT_CLS_NUM, args.pointer_num).to(device)
-prev_state_dict = torch.load('./outputs/best.model')
+torch.save(best_model.state_dict(), "data/model_data/best.pth")
+prev_state_dict = torch.load('data/model_data/best.pth')
 model.load_state_dict(prev_state_dict)
 
 # BertModel内置方法
