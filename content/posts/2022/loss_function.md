@@ -84,11 +84,28 @@ Process finished with exit code 0
 
 ```
 
-#### 汉明距离（）
+#### 汉明距离
 
 > 如果是多对多，且shape不一致，使用numpy计算是最快的，考虑原因可能是torch未封装int类型的不同shape数据的计算方式，如果shape相同可以使用pairwise的方法
 
+形状相同（用于标签预测）
+
 ```python
+>>> b = torch.tensor([[0, 0, 1],
+                  [0, 1, 0]
+                  ])
+>>> c = torch.tensor([[1, 0, 1],
+                  [0, 1, 0]
+                  ])
+>>> metric = BinaryHammingDistance(multidim_average='samplewise')
+>>> print(metric(b, c))
+tensor([0.3333, 0.0000])
+```
+
+形状不同（用于检索）
+
+```python
+
 >>> from sklearn.neighbors import DistanceMetric
 >>> import time
 >>> a = np.array([[0, 0, 2],])
