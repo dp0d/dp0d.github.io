@@ -287,3 +287,40 @@ out:
 2.50
 ```
 
+## 效率的注重法则
+
+### 法则一：尽量少写显式循环
+
+```python
+import time
+s = time.time()
+np.sum(distance)
+print(f"np求和耗时 {time.time() - s}")
+sum = 0
+total = distance.shape[0]
+s = time.time()
+for i in range(total):
+    sum += distance[i]
+print(f"循环求和耗时 {time.time() - s}")
+
+np求和耗时 0.00003552436828613281e-05
+循环求和耗时 0.0009284019470214844
+```
+
+
+
+#### 法则二：排序算法最好上GPU
+
+```python
+distance = np.random.random((7532, 11314))
+import time
+s = time.time()
+sort_idx = np.argsort(distance, axis=-1)  # 独立将每一行元素从小到达排列（即相似性从大到小）的下标 (7532, 11314)
+print(f"np排序耗时{time.time() - s}")
+s = time.time()
+sort_idx = np.array(torch.argsort(torch.tensor(distance).cuda(), dim=-1).detach().cpu().numpy())
+print(f"tensor排序耗时{time.time() - s}")
+np排序耗时3.7687795162200928
+tensor排序耗时3.2619576454162598
+```
+

@@ -62,6 +62,7 @@ print("F范数矩阵")
 print(torch.norm(torch.from_numpy(pred - label).type(torch.cuda.FloatTensor), p="fro", dim=-1))
 print("2范数矩阵")
 print(torch.norm(torch.from_numpy(pred - label).type(torch.cuda.FloatTensor), p=2, dim=-1))
+
 print("核范数矩阵")  # 核范数作为Loss使用方法不详
 print(torch.norm(torch.from_numpy(pred - label).type(torch.cuda.FloatTensor), p="nuc"))
 
@@ -83,6 +84,32 @@ tensor(2., device='cuda:0')
 Process finished with exit code 0
 
 ```
+
+```python
+>>> # 不同shape的欧距计算 作者：https://blog.csdn.net/sinat_24899403/article/details/119249822
+>>> import torch
+>>> from torch import nn
+
+>>> a=torch.tensor([[1,1,1],
+                [2,2,2]])
+>>> b=torch.tensor([[2,2,2],
+								[1,1,1],
+                [2,2,2],
+                [1,1,1],
+                [2,2,2]])
+>>> def pdist(a: torch.Tensor, b: torch.Tensor, p: int = 2) -> torch.Tensor:
+    return (a-b).abs().pow(p).sum(-1).pow(1/p)
+
+>>> a_=a.unsqueeze(1)
+>>> b_=b.unsqueeze(0)
+>>> print(pdist(a_,b_))
+
+tensor([[1.7321, 0.0000, 1.7321, 0.0000, 1.7321],
+        [0.0000, 1.7321, 0.0000, 1.7321, 0.0000]])
+
+```
+
+
 
 #### 汉明距离
 
