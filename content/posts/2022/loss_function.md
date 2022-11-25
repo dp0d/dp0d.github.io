@@ -84,6 +84,40 @@ Process finished with exit code 0
 
 ```
 
+#### 汉明距离（）
+
+> 如果是多对多，且shape不一致，使用numpy计算是最快的，考虑原因可能是torch未封装int类型的不同shape数据的计算方式，如果shape相同可以使用pairwise的方法
+
+```python
+>>> from sklearn.neighbors import DistanceMetric
+>>> import time
+>>> a = np.array([[0, 0, 2],])
+>>> b = np.array([[0, 0, 1],
+              [0, 1, 0]
+              ])
+>>> s1 = time.time()
+>>> print(DistanceMetric.get_metric("hamming").pairwise(a,b))
+>>> print(f"耗时{time.time()-s1}")
+[[0.33333333 0.66666667]]
+耗时0.0003008842468261719
+
+>>> a_tensor = torch.as_tensor(a, dtype=torch.float)
+>>> b_tensor = torch.as_tensor(b, dtype=torch.float)
+>>> s2 = time.time()
+>>> print(torch.cdist(a_tensor, b_tensor, p=0))
+>>> print(f"耗时{time.time()-s2}")
+tensor([[1., 2.]])
+耗时0.0003383159637451172
+
+>>> a_tensor = torch.as_tensor(a, dtype=torch.float).cuda()
+>>> b_tensor = torch.as_tensor(b, dtype=torch.float).cuda()
+>>> s3 = time.time()
+>>> print(torch.cdist(a_tensor, b_tensor, p=0))
+>>> print(f"耗时{time.time()-s3}")
+tensor([[1., 2.]], device='cuda:0')
+耗时0.0015494823455810547
+```
+
 
 
 ### 相对熵（也称KL散度）
