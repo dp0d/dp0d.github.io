@@ -23,12 +23,16 @@ license: ""
 # 模型权重保存重载示例
 
 ```bash
-# 自己定义的网络，
+# 自己定义的网络
+## 方法一：只保存权重
 encoder = BertModel.from_pretrained(bert_model_path)
 model = EffiGlobalPointer(encoder, ENT_CLS_NUM, args.pointer_num).to(device)
 torch.save(best_model.state_dict(), "data/model_data/best.pth")
 prev_state_dict = torch.load('data/model_data/best.pth')
 model.load_state_dict(prev_state_dict)
+## 方法二：保存所有的
+torch.save(best_model, "data/model_data/best.pt")
+model = torch.load('data/model_data/best_state_dict.pt')
 
 # BertModel内置方法
 # 注意特定的模型种类需要使用不同的from_pretrained方法，否则某些权重可能不加载,具体查看模型类
