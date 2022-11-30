@@ -19,7 +19,7 @@ license: ""
 
 ## 混淆矩阵
 
-![](MD_img/confusion matrix.png)
+<img src="MD_img/confusion matrix.png" alt="confusion_matrix"  />
 
 ## 精确率 Precision（通常指micro）
 
