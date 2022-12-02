@@ -363,7 +363,7 @@ Name: b, dtype: int64
 
 ### 获取索引
 
-> 按照条件取特定行的索引
+> 按照条件取特定行的索引 pandas 1.5.2
 
 ```python
 fruit = ["apple", "peach", "peach", "watermelon"]
@@ -378,6 +378,8 @@ Int64Index([1, 2], dtype='int64')
 ```
 
 ### 索引取值
+
+> 根据pandas索引类型或list类型的索引取值，可以多个 pandas 1.5.2
 
 ```python
 fruit = ["apple", "peach", "peach", "watermelon"]
