@@ -57,7 +57,6 @@ df.head()
 ```
 
 ```python
-import pandas as pd
 input_path = 'data/contest_data/' #input need be adjusted
 df = pd.read_csv(input_path+'train.csv')
 df_title = pd.read_csv(input_path+'titles.csv')
@@ -359,7 +358,40 @@ Name: b, dtype: int64
 5  black  5
 2   blue  2
 0    red  0
-    
-    
+
+```
+
+### 获取索引
+
+> 按照条件取特定行的索引
+
+```python
+fruit = ["apple", "peach", "peach", "watermelon"]
+>>> df = pd.DataFrame({
+...    "fruit": fruit
+...    })
+>>> idx = df.index[df["fruit"]=="peach"]
+>>> print(id)
+Int64Index([1, 2], dtype='int64')
+>>> print(idx.tolist())
+[1, 2]
+```
+
+### 索引取值
+
+```python
+fruit = ["apple", "peach", "peach", "watermelon"]
+>>> df = pd.DataFrame({
+...    "fruit": fruit
+...    })
+>>> idx = df.index[df["fruit"]=="peach"]
+>>> print(df.loc[idx])
+   fruit
+1  peach
+2  peach
+>>> print(df.loc[idx.tolist()])
+   fruit
+1  peach
+2  peach
 ```
 
