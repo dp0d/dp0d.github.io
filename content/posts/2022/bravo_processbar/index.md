@@ -42,22 +42,23 @@ license: ""
 #### Processbar实现
 
 ```python
+import time
+import sys
+import emoji
 class ProgressBar(object):
     '''
     super progress bar
     Example:
-        >>> pbar = ProgressBar(n_total=30,desc='Training')
-        >>> step = 2
+        >>> pbar = ProgressBar(n_total=len(train_dataloader), desc=f'EPOCH {_e}/{num_epochs}')
         >>> pbar(step=step,info={'loss':20})
     '''
 
-    def __init__(self, n_total, width=30, desc='Training',num_epochs = None):
+    def __init__(self, n_total, width=6, desc='Training'):
 
         self.width = width
         self.n_total = n_total
         self.desc = desc
         self.start_time = time.time()
-        self.num_epochs = num_epochs
 
     def reset(self):
         """Method to reset internal variables."""
@@ -84,12 +85,12 @@ class ProgressBar(object):
                 time_info = f' {time_per_unit * 1e6:.1f}us/step'
         return time_info
 
-    def _bar(self, now, current):
+    def _bar(self, current):
 
-        # ⚡ ❓ 
+        # ⚡ ❓
         # you can define your own symbol here ^ ^
         # finished symbol
-        f_symbol = emoji.emojize(':rocket:')
+        f_symbol = emoji.emojize('🚀')
         # running symbol
         r_symbol = emoji.emojize('⚡')
 
@@ -107,16 +108,10 @@ class ProgressBar(object):
         bar += ']'
         return bar
 
-    def epoch_start(self,current_epoch):
-        sys.stdout.write("\n")
-        if (current_epoch is not None) and (self.num_epochs is not None):
-            sys.stdout.write(f"Epoch: {current_epoch}/{self.num_epochs}")
-            sys.stdout.write("\n")
-
     def __call__(self, step, info={}):
         now = time.time()
         current = step + 1
-        bar = self._bar(now, current)
+        bar = self._bar(current)
         show_bar = f"\r{bar}" + self._time_info(now, current)
         if len(info) != 0:
             show_bar = f'{show_bar} ' + " [" + "-".join(
@@ -125,6 +120,7 @@ class ProgressBar(object):
             show_bar += '\n'
         sys.stdout.write(show_bar)
         sys.stdout.flush()
+
 ```
 
 
