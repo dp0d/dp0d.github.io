@@ -175,6 +175,8 @@ with open('filename.json', 'r') as f2:
 此种格式文件起初为matlab软件保存得到的，在python中也逐渐有了相关函数进行处理，其特点是可以压缩保存大矩阵文件，减小磁盘空间占用。
 
 > 以下数据存取需要配套使用
+>
+> 大矩阵处理方式一
 
 ```python
 import scipy.io as scio
@@ -190,12 +192,41 @@ def save(out_file_path: str,data: dict, do_compression: bool, large_array: bool)
     if not large_array:
     	scio.savemat(out_file_path, data, do_compression=do_compression)
     else:
-      hdf5storage.savemat(out_file_path, data, do_compression=do_compression)
+			hdf5storage.savemat(out_file_path, data, do_compression=do_compression)
 # 加载该数据
 def save(file_path: str, large_array: bool):
   	if not large_array:
     	scio.loadmat(file_path)
     else:
-      hdf5storage.loadmat(file_pathn)
+    	hdf5storage.loadmat(file_pathn)
+```
+
+>  以下数据存取需要配套使用
+>
+> 大矩阵处理方式二
+
+```python
+import scipy.io as scio
+from scipy.sparse import csc_matrix
+# 存储你的数据字典，
+def save(out_file_path: str,data: dict, do_compression: bool, large_array: bool):
+    """
+    :param out_file_path: 需要保存到的数据路径
+    :param data: 你的数据字典
+    :param do_compression: 是否压缩存储
+    :return: 无
+    """
+    if not large_array:
+    	scio.savemat(out_file_path, data, do_compression=do_compression)
+    else:
+      data['large_matrix_key'] = csc_matrix(data['large_matrix_key'])
+			scio.savemat(out_file_path, data, do_compression=do_compression)
+# 加载该数据
+def save(file_path: str, large_array: bool):
+  	if not large_array:
+    	scio.loadmat(file_path)
+    else:
+    	scio.loadmat(file_path)
+      data['large_matrix_key'] = data['large_matrix_key'].toarray()
 ```
 
