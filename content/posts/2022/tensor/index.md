@@ -247,16 +247,16 @@ torch.Size([4, 16])
 >>> a_tensor = torch.as_tensor(a, dtype=torch.float)
 >>> b_tensor = torch.as_tensor(b, dtype=torch.float)
 
->>> # 单条件选取
+# 单条件选取
 >>> print(a_tensor[a_tensor > 1.])
 tensor([2., 3., 4.])
 
->>> # 多条件选取
+# 多条件选取
 >>> condition1 = torch.where((a_tensor > 1.) & (a_tensor < 4.))
 >>> condition2 = torch.where((a_tensor == 1.) | (a_tensor == 4.))
 >>> print(a_tensor[condition1])
 tensor([2., 3.])
->>> # 反条件选取
+# 反条件选取
 >>> condition = torch.where((a_tensor > 1.) & (a_tensor < 4.), True, False) # 首先转为bool类型
 >>> print(a_tensor[~condition])    # 然后取反
 tensor([1., 4.])
@@ -264,9 +264,22 @@ tensor([1., 4.])
 >>> print(a_tensor[condition2])
 tensor([1., 4.])
 
->>> # 条件选另一个tensor里的值(a,b等维)
+# 条件选另一个tensor里的值(a,b等维)
 >>> print(b_tensor[condition1])
 tensor([-2., -3.])
+
+# mask 机制，列表选值
+>>> x = torch.tensor([[1,2,0],[2,3,0]])
+>>> y = torch.tensor([[2,3,0],[2,3,0]])
+>>> select = torch.tensor([1,2])
+
+>>> mask = torch.isin(x, select)
+>>> mask
+tensor([[ True,  True, False],
+        [ True, False, False]])
+>>> y[mask]
+tensor([2, 3, 2])
+
 ```
 
 ### 不同形状的Tensor之间计算
