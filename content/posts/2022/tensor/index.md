@@ -226,17 +226,19 @@ torch.Size([4, 16])
 
 ### Tensor归一化操作
 
-> 按行（样本）归一化(前提是输出大于零)
+> 按维度1归一化
 
 ```python
 >>> import torch
 >>> import torch.nn.functional as F
->>> import numpy as np
-
->>> arr = np.array([[1, 1, 0, 0, 0, 0, 0], [0, 1, 0, 0, 0, 0, 1]])
->>> print(F.normalize(torch.tensor(arr).float(), p=1, dim=1))
-
-
+>>> x = torch.rand(2,4)
+>>> x
+tensor([[0.1780, 0.0885, 0.0239, 0.1663],
+        [0.5253, 0.1764, 0.6815, 0.1032]])
+>>> norm_x = F.softmax(x, dim=1)
+>>> norm_x
+tensor([[0.2660, 0.2432, 0.2280, 0.2629],
+        [0.2833, 0.1998, 0.3312, 0.1857]])
 ```
 
 ### Tensor的多条件选取
