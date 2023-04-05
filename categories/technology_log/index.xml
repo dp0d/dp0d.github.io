@@ -1,0 +1,29 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>开发日志 - 分类 - dp0d&#39;s blog</title>
+        <link>https://dp0d.github.io/categories/technology_log/</link>
+        <description>开发日志 - 分类 - dp0d&#39;s blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>draftpaperofgod@gmail.com (dp0d)</managingEditor>
+            <webMaster>draftpaperofgod@gmail.com (dp0d)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sat, 23 Jul 2022 10:22:12 &#43;0800</lastBuildDate><atom:link href="https://dp0d.github.io/categories/technology_log/" rel="self" type="application/rss+xml" /><item>
+    <title>记一次前后端分离的开发部署实践</title>
+    <link>https://dp0d.github.io/full_stack_development/</link>
+    <pubDate>Sat, 23 Jul 2022 10:22:12 &#43;0800</pubDate><author>
+        <name>dp0d</name>
+    </author><guid>https://dp0d.github.io/full_stack_development/</guid>
+    <description><![CDATA[前言本项目为个人实践项目，按实验室老师要求将项目部署上云服务器，主要实现基本的网站结构和api交互，使用nginx进行反向代理，提供web服]]></description>
+</item><item>
+    <title>CUDA相关问题和设置</title>
+    <link>https://dp0d.github.io/cuda/</link>
+    <pubDate>Mon, 23 May 2022 21:18:18 &#43;0800</pubDate><author>
+        <name>dp0d</name>
+    </author><guid>https://dp0d.github.io/cuda/</guid>
+    <description><![CDATA[报错lookup 报错 原因 解决方案 RuntimeError: CUDA error: no kernel image is available for execution on the device torch版本与CUDA不匹配 找对应版本的torch进行安装]]></description>
+</item><item>
+    <title>Python项目包引用与环境设置</title>
+    <link>https://dp0d.github.io/py_project_env/</link>
+    <pubDate>Fri, 20 May 2022 14:43:54 &#43;0800</pubDate><author>
+        <name>dp0d</name>
+    </author><guid>https://dp0d.github.io/py_project_env/</guid>
+    <description><![CDATA[说明通常，我们在项目中，需要把代码文件作为一个包来用，比如代码文件是code文件夹，如果使用Pycharm等IDE，只需要在里面加入一个空的]]></description>
+</item></channel>
+</rss>

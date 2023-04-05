@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noodp" />
+    <title class="pjax-title">记一次Clash for Linux 的配置 - dp0d&#39;s blog</title><meta name="Description" content="dp0d&#39;s blog,where to share life as well as technology of nlp."><meta property="og:title" content="记一次Clash for Linux 的配置" />
+<meta property="og:description" content="室友帮忙弄的clash又不行了，今天打算自己修修（重装）这个梯子软件，记录一下。 现在的病情就是谷歌上不去，如下图所示。 clash的网页配置端" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://dp0d.github.io/clash/" /><meta property="og:image" content="https://dp0d.github.io/images/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-04-24T13:52:59+08:00" />
+<meta property="article:modified_time" content="2022-04-24T13:52:59+08:00" /><meta property="og:site_name" content="dp0d&#39;s blog" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://dp0d.github.io/images/logo.png"/>
+
+<meta name="twitter:title" content="记一次Clash for Linux 的配置"/>
+<meta name="twitter:description" content="室友帮忙弄的clash又不行了，今天打算自己修修（重装）这个梯子软件，记录一下。 现在的病情就是谷歌上不去，如下图所示。 clash的网页配置端"/>
+<meta name="application-name" content="dp0d&#39;s blog">
+<meta name="apple-mobile-web-app-title" content="dp0d&#39;s blog">
+
+<meta name="theme-color" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://dp0d.github.io/clash/" /><link rel="prev" href="https://dp0d.github.io/lm_pretraining/" /><link rel="next" href="https://dp0d.github.io/basic_algorithm/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/fontawesome-free/all.min.css">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/animate/animate.min.css">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript>
+    
+    
+    
+    <script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "记一次Clash for Linux 的配置",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/dp0d.github.io\/clash\/"
+        },"image": ["https:\/\/dp0d.github.io\/images\/logo.png"],"genre": "posts","keywords": "linux, tools","wordcount":  1429 ,
+        "url": "https:\/\/dp0d.github.io\/clash\/","datePublished": "2022-04-24T13:52:59+08:00","dateModified": "2022-04-24T13:52:59+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "dp0d","logo": "https:\/\/dp0d.github.io\/images\/logo.png"},"author": {
+                "@type": "Person",
+                "name": "dp0d"
+            },"description": ""
+    }
+    </script></head>
+
+<body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">
+        function setTheme(theme) {document.body.setAttribute('theme', theme);}
+        function saveTheme(theme) {window.localStorage && localStorage.setItem('theme', theme);}
+        function getMeta(metaName) {const metas = document.getElementsByTagName('meta'); for (let i = 0; i < metas.length; i++) if (metas[i].getAttribute('name') === metaName) return metas[i]; return '';}
+        if (window.localStorage && localStorage.getItem('theme')) {let theme = localStorage.getItem('theme');theme === 'light' || theme === 'dark' || theme === 'black' ? setTheme(theme) : (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light')); } else { if ('auto' === 'light' || 'auto' === 'dark' || 'auto' === 'black') setTheme('auto'), saveTheme('auto'); else saveTheme('auto'), window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light');}
+        let metaColors = {'light': '#f8f8f8','dark': '#252627','black': '#000000'}
+        getMeta('theme-color').content = metaColors[document.body.getAttribute('theme')];
+    </script>
+    <div id="back-to-top"></div>
+    <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="dp0d&#39;s blog"><span class="header-title-pre"><i class='far fa-edit fa-fw'></i></span>Natural Language Processing</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/charge/"> 充电 </a><a class="menu-item" href="/friends/"> 朋友萌 </a><a class="menu-item" href="/collection/"> 收藏 </a><a class="menu-item" href="/copyright/"> 版权 </a><a class="menu-item" href="/about/"> 关于我 </a><a class="menu-item" href="https://github.com/dp0d" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="#" onclick="return false;" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="#" onclick="return false;" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="#" onclick="return false;" class="menu-item theme-select" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                    <select class="color-theme-select" id="theme-select-desktop" title="切换主题">
+                        <option value="light">浅色</option>
+                        <option value="dark">深色</option>
+                        <option value="black">黑色</option>
+                        <option value="auto">跟随系统</option>
+                    </select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="dp0d&#39;s blog"><span class="header-title-pre"><i class='far fa-edit fa-fw'></i></span>Natural Language Processing</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="#" onclick="return false;" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="#" onclick="return false;" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="#" onclick="return false;" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/charge/" title="">充电</a><a class="menu-item" href="/friends/" title="">朋友萌</a><a class="menu-item" href="/collection/" title="">收藏</a><a class="menu-item" href="/copyright/" title="">版权</a><a class="menu-item" href="/about/" title="">关于我</a><a class="menu-item" href="https://github.com/dp0d" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i></a><a href="#" onclick="return false;" class="menu-item theme-select" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+                <select class="color-theme-select" id="theme-select-mobile" title="切换主题">
+                    <option value="light">浅色</option>
+                    <option value="dark">深色</option>
+                    <option value="black">黑色</option>
+                    <option value="auto">跟随系统</option>
+                </select>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+            <div class="container"><div class="toc" id="toc-auto">
+        <h2 class="toc-title">目录</h2>
+        <div class="toc-content" id="toc-content-auto"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#准备工具">准备工具</a></li>
+    <li><a href="#开始安装">开始安装</a></li>
+    <li><a href="#后续更新url从这里开始">后续更新URL从这里开始</a>
+      <ul>
+        <li><a href="#改完config之后后续更新url的操作至此完成">改完config之后，后续更新URL的操作至此完成</a></li>
+      </ul>
+    </li>
+    <li><a href="#基本功能完成后续设置开机启动">基本功能完成，后续设置开机启动。</a>
+      <ul>
+        <li><a href="#配置定时更新订阅">配置定时更新订阅</a>
+          <ul>
+            <li><a href="#每天更新">每天更新</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#配置clash-for-windows-的linux版本和我一样怕麻烦的跳到这里2022年10月4日更新">配置clash for windows 的linux版本，和我一样怕麻烦的跳到这里（2022年10月4日更新）</a></li>
+  </ul>
+</nav></div>
+    </div><script>document.getElementsByTagName("main")[0].setAttribute("pageStyle", "normal")</script><script>document.getElementsByTagName("main")[0].setAttribute("autoTOC", "true")</script><article class="page single"><h1 class="single-title animate__animated animate__flipInX">记一次Clash for Linux 的配置</h1><div class="post-meta">
+            <div class="post-meta-line">
+                <span class="post-author"><i class="author fas fa-user-circle fa-fw"></i><a href="https://github.com/dp0d" title="Author" target="_blank" rel="noopener noreffer author" class="author">dp0d</a>
+                </span>&nbsp;<span class="post-category">收录于 </span>&nbsp;<span class="post-category">类别 <a href="/categories/tutorial/"><i class="far fa-folder fa-fw"></i>教程</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-04-24">2022-04-24</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2022-04-24">2022-04-24</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1429 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 3 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#准备工具">准备工具</a></li>
+    <li><a href="#开始安装">开始安装</a></li>
+    <li><a href="#后续更新url从这里开始">后续更新URL从这里开始</a>
+      <ul>
+        <li><a href="#改完config之后后续更新url的操作至此完成">改完config之后，后续更新URL的操作至此完成</a></li>
+      </ul>
+    </li>
+    <li><a href="#基本功能完成后续设置开机启动">基本功能完成，后续设置开机启动。</a>
+      <ul>
+        <li><a href="#配置定时更新订阅">配置定时更新订阅</a>
+          <ul>
+            <li><a href="#每天更新">每天更新</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#配置clash-for-windows-的linux版本和我一样怕麻烦的跳到这里2022年10月4日更新">配置clash for windows 的linux版本，和我一样怕麻烦的跳到这里（2022年10月4日更新）</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>室友帮忙弄的clash又不行了，今天打算自己修修（重装）这个梯子软件，记录一下。</p>
+<p>现在的病情就是谷歌上不去，如下图所示。</p>
+<p><img
+        class="lazyload"
+        data-src="MD_img/image-20220423185159155.png"
+        data-srcset="/clash/MD_img/image-20220423185159155.png, MD_img/image-20220423185159155.png 1.5x, /clash/MD_img/image-20220423185159155.png 2x"
+        data-sizes="auto"
+        alt="/clash/MD_img/image-20220423185159155.png"
+        title="image-20220423185159155"></p>
+<p>clash的网页配置端口也上不去。</p>
+<img src="MD_img/image-20220423185318890.png" alt="image-20220423185318890" style="zoom: 50%;" />
+<h2 id="准备工具" class="headerLink">
+    <a href="#%e5%87%86%e5%a4%87%e5%b7%a5%e5%85%b7" class="header-mark"></a>准备工具</h2><p>首先我们要使用一台能够访问外网的机器来下载必要的文件，经典悖论，没错，上外网下clash用来上外网，不过github还是有几率能上去的。</p>
+<p>到clash开源工具(go 写的)的repo地址下载最新的release，比如我本次下载的是版本。<a href="https://github.com/Dreamacro/clash" target="_blank" rel="noopener noreffer">传送门</a></p>
+<p>所使用的Linux系统是</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">lsb_release -a
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img
+        class="lazyload"
+        data-src="MD_img/image-20220423214758371.png"
+        data-srcset="/clash/MD_img/image-20220423214758371.png, MD_img/image-20220423214758371.png 1.5x, /clash/MD_img/image-20220423214758371.png 2x"
+        data-sizes="auto"
+        alt="/clash/MD_img/image-20220423214758371.png"
+        title="image-20220423214758371"></p>
+<h2 id="开始安装" class="headerLink">
+    <a href="#%e5%bc%80%e5%a7%8b%e5%ae%89%e8%a3%85" class="header-mark"></a>开始安装</h2><p>首先解压下载的release文件在你想要的目录。比如我的在家目录的clash文件夹下。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">gunzip clash-linux-amd64-v1.10.0.gz
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后进行第一次运行clash</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">chmod +x clash-linux-amd64-v1.10.0<span class="o">(</span>换成自己的clash版本<span class="o">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">./clash-linux-amd64-v1.10.0<span class="o">(</span>换成自己的clash版本<span class="o">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img
+        class="lazyload"
+        data-src="MD_img/image-20220423221233323.png"
+        data-srcset="/clash/MD_img/image-20220423221233323.png, MD_img/image-20220423221233323.png 1.5x, /clash/MD_img/image-20220423221233323.png 2x"
+        data-sizes="auto"
+        alt="/clash/MD_img/image-20220423221233323.png"
+        title="image-20220423221233323"></p>
+<p>端口被占用了……</p>
+<p>查看是哪个进程占用了端口并kill</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo lsof -i tcp:7890
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">kill</span> 11556<span class="o">(</span>换成你自己找到的PID<span class="o">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img
+        class="lazyload"
+        data-src="MD_img/image-20220423221454098.png"
+        data-srcset="/clash/MD_img/image-20220423221454098.png, MD_img/image-20220423221454098.png 1.5x, /clash/MD_img/image-20220423221454098.png 2x"
+        data-sizes="auto"
+        alt="/clash/MD_img/image-20220423221454098.png"
+        title="image-20220423221454098"></p>
+<p>再试一次，ok启动了……</p>
+<p><img
+        class="lazyload"
+        data-src="MD_img/image-20220423221607747.png"
+        data-srcset="/clash/MD_img/image-20220423221607747.png, MD_img/image-20220423221607747.png 1.5x, /clash/MD_img/image-20220423221607747.png 2x"
+        data-sizes="auto"
+        alt="/clash/MD_img/image-20220423221607747.png"
+        title="image-20220423221607747"></p>
+<p>这个时候，我们可以在用户家目录的.config/文件夹下找到自动生成的clash文件夹</p>
+<p><img
+        class="lazyload"
+        data-src="MD_img/image-20220423221907173.png"
+        data-srcset="/clash/MD_img/image-20220423221907173.png, MD_img/image-20220423221907173.png 1.5x, /clash/MD_img/image-20220423221907173.png 2x"
+        data-sizes="auto"
+        alt="/clash/MD_img/image-20220423221907173.png"
+        title="image-20220423221907173"></p>
+<h2 id="后续更新url从这里开始" class="headerLink">
+    <a href="#%e5%90%8e%e7%bb%ad%e6%9b%b4%e6%96%b0url%e4%bb%8e%e8%bf%99%e9%87%8c%e5%bc%80%e5%a7%8b" class="header-mark"></a>后续更新URL从这里开始</h2><p>然后我们使用运营商给的订阅链接输入浏览器网址，把内容全部复制到config.yaml文件里</p>
+<p><img
+        class="lazyload"
+        data-src="MD_img/image-20220423222502739.png"
+        data-srcset="/clash/MD_img/image-20220423222502739.png, MD_img/image-20220423222502739.png 1.5x, /clash/MD_img/image-20220423222502739.png 2x"
+        data-sizes="auto"
+        alt="/clash/MD_img/image-20220423222502739.png"
+        title="image-20220423222502739"></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">vi ~/.config/clash/config.yaml（不推荐直接复制粘贴网页内容，建议往后看）
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这种方式非常慢，由于页面文本较长，长时间在粘贴……</p>
+<p><img
+        class="lazyload"
+        data-src="MD_img/image-20220423222950126.png"
+        data-srcset="/clash/MD_img/image-20220423222950126.png, MD_img/image-20220423222950126.png 1.5x, /clash/MD_img/image-20220423222950126.png 2x"
+        data-sizes="auto"
+        alt="/clash/MD_img/image-20220423222950126.png"
+        title="image-20220423222950126"></p>
+<p>果断关掉重来，我们将刚刚链接打开的网页右键另存为一个文件</p>
+<p><img
+        class="lazyload"
+        data-src="MD_img/image-20220423223206029.png"
+        data-srcset="/clash/MD_img/image-20220423223206029.png, MD_img/image-20220423223206029.png 1.5x, /clash/MD_img/image-20220423223206029.png 2x"
+        data-sizes="auto"
+        alt="/clash/MD_img/image-20220423223206029.png"
+        title="image-20220423223206029"></p>
+<p>然后重定向写入config.yaml文件，一秒钟搞定</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">cat ~/sub.txt &gt; ~/.config/clash/config.yaml
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img
+        class="lazyload"
+        data-src="MD_img/image-20220423223355043.png"
+        data-srcset="/clash/MD_img/image-20220423223355043.png, MD_img/image-20220423223355043.png 1.5x, /clash/MD_img/image-20220423223355043.png 2x"
+        data-sizes="auto"
+        alt="/clash/MD_img/image-20220423223355043.png"
+        title="image-20220423223355043"></p>
+<h3 id="改完config之后后续更新url的操作至此完成" class="headerLink">
+    <a href="#%e6%94%b9%e5%ae%8cconfig%e4%b9%8b%e5%90%8e%e5%90%8e%e7%bb%ad%e6%9b%b4%e6%96%b0url%e7%9a%84%e6%93%8d%e4%bd%9c%e8%87%b3%e6%ad%a4%e5%ae%8c%e6%88%90" class="header-mark"></a>改完config之后，后续更新URL的操作至此完成</h3><p>写好了config文件之后，我们启动试试。<strong>顺便先在对应目录下给clash的可执行文件改个名</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">mv clash-linux-amd64-v1.10.0 clash
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">./clash
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img
+        class="lazyload"
+        data-src="MD_img/image-20220424105818447.png"
+        data-srcset="/clash/MD_img/image-20220424105818447.png, MD_img/image-20220424105818447.png 1.5x, /clash/MD_img/image-20220424105818447.png 2x"
+        data-sizes="auto"
+        alt="/clash/MD_img/image-20220424105818447.png"
+        title="image-20220424105818447"></p>
+<p>使用谷歌浏览器的端口代理插件设置网页代理端口为自己主机的7890如下</p>
+<p><img
+        class="lazyload"
+        data-src="MD_img/image-20220423223851685.png"
+        data-srcset="/clash/MD_img/image-20220423223851685.png, MD_img/image-20220423223851685.png 1.5x, /clash/MD_img/image-20220423223851685.png 2x"
+        data-sizes="auto"
+        alt="/clash/MD_img/image-20220423223851685.png"
+        title="image-20220423223851685"></p>
+<p>访问Google</p>
+<p><img
+        class="lazyload"
+        data-src="MD_img/image-20220423224221943.png"
+        data-srcset="/clash/MD_img/image-20220423224221943.png, MD_img/image-20220423224221943.png 1.5x, /clash/MD_img/image-20220423224221943.png 2x"
+        data-sizes="auto"
+        alt="/clash/MD_img/image-20220423224221943.png"
+        title="image-20220423224221943"></p>
+<p>OK正常</p>
+<p>如果你想使用本机端口服务做代理然后在命令行进行访问，可以使用</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">export http_proxy=http://127.0.0.1:7890
+</span></span><span class="line"><span class="cl">export https_proxy=http://127.0.0.1:7890
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># 随便使用命令行git上下载一个包试试
+</span></span><span class="line"><span class="cl">wget https://github.com/pyenv/pyenv/archive/refs/tags/v2.2.5.zip
+</span></span></code></pre></td></tr></table>
+</div>
+</div><img src="MD_img/image-20220424103507133.png" alt="image-20220424103507133" style="zoom:80%;" />
+<p>好使</p>
+<h2 id="基本功能完成后续设置开机启动" class="headerLink">
+    <a href="#%e5%9f%ba%e6%9c%ac%e5%8a%9f%e8%83%bd%e5%ae%8c%e6%88%90%e5%90%8e%e7%bb%ad%e8%ae%be%e7%bd%ae%e5%bc%80%e6%9c%ba%e5%90%af%e5%8a%a8" class="header-mark"></a>基本功能完成，后续设置开机启动。</h2><p>将功能设置为一个service</p>
+<p>增加system配置</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">sudo vi /etc/systemd/system/clash.service
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>写入以下内容</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">[Unit]
+</span></span><span class="line"><span class="cl">Description=Clash service
+</span></span><span class="line"><span class="cl">After=network.target
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">[Service]
+</span></span><span class="line"><span class="cl">Type=simple
+</span></span><span class="line"><span class="cl">User=oliver #换成你自己用户名
+</span></span><span class="line"><span class="cl">WorkingDirectory=**** # 你希望这个服务在哪个文件夹下运行
+</span></span><span class="line"><span class="cl">ExecStart=/home/oliver/clash/clash -d /home/oliver/.config/clash/   #换成你自己clash目录，注意，前半部分一定要连接到文件！不能只到目录
+</span></span><span class="line"><span class="cl">Restart=on-failure
+</span></span><span class="line"><span class="cl">RestartPreventExitStatus=23
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">[Install]
+</span></span><span class="line"><span class="cl">WantedBy=multi-user.target
+</span></span></code></pre></td></tr></table>
+</div>
+</div><img src="MD_img/image-20220424110713728.png" alt="image-20220424110713728" style="zoom:80%;" />
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo systemctl daemon-reload
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo systemctl <span class="nb">enable</span> clash
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo systemctl start clash
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo systemctl status clash
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img
+        class="lazyload"
+        data-src="MD_img/image-20220424110642415.png"
+        data-srcset="/clash/MD_img/image-20220424110642415.png, MD_img/image-20220424110642415.png 1.5x, /clash/MD_img/image-20220424110642415.png 2x"
+        data-sizes="auto"
+        alt="/clash/MD_img/image-20220424110642415.png"
+        title="image-20220424110642415"></p>
+<p>OK，成功了，图中端口9090是UI的端口，意味着访问http://127.0.0.1:9090就能出现如下界面</p>
+<img src="MD_img/image-20220424110950514.png" alt="image-20220424110950514" style="zoom:50%;" />
+<h3 id="配置定时更新订阅" class="headerLink">
+    <a href="#%e9%85%8d%e7%bd%ae%e5%ae%9a%e6%97%b6%e6%9b%b4%e6%96%b0%e8%ae%a2%e9%98%85" class="header-mark"></a>配置定时更新订阅</h3><p>创建config.yaml更新脚本</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">vi /home/oliver/.config/clash/get_clash_config.py
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">requests</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 订阅链接</span>
+</span></span><span class="line"><span class="cl"><span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://xxxx.com&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="n">head</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;User-Agent&#39;</span><span class="p">:</span> <span class="s2">&#34;Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.75.14 (KHTML, like Gecko) Version/7.0.3 Safari/7046A194A&#34;</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="n">config_yaml_content</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">head</span><span class="p">)</span><span class="o">.</span><span class="n">text</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 写入文件</span>
+</span></span><span class="line"><span class="cl"><span class="n">config_yaml_path</span> <span class="o">=</span> <span class="s1">&#39;/home/oliver/.config/clash/config.yaml&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">config_yaml_path</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">config_yaml_content</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="每天更新" class="headerLink">
+    <a href="#%e6%af%8f%e5%a4%a9%e6%9b%b4%e6%96%b0" class="header-mark"></a>每天更新</h4><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo vi /etc/cron.daily/clash.sh
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>向其中写入如下脚本</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="ch">#!/bin/bash</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">systemctl</span> <span class="n">stop</span> <span class="n">clash</span>
+</span></span><span class="line"><span class="cl"><span class="n">python3</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">oliver</span><span class="o">/.</span><span class="n">config</span><span class="o">/</span><span class="n">clash</span><span class="o">/</span><span class="n">get_clash_config</span><span class="o">.</span><span class="n">py</span>
+</span></span><span class="line"><span class="cl"><span class="n">systemctl</span> <span class="n">start</span> <span class="n">clash</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo chmod +x /etc/cron.daily/clash.sh
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="配置clash-for-windows-的linux版本和我一样怕麻烦的跳到这里2022年10月4日更新" class="headerLink">
+    <a href="#%e9%85%8d%e7%bd%aeclash-for-windows-%e7%9a%84linux%e7%89%88%e6%9c%ac%e5%92%8c%e6%88%91%e4%b8%80%e6%a0%b7%e6%80%95%e9%ba%bb%e7%83%a6%e7%9a%84%e8%b7%b3%e5%88%b0%e8%bf%99%e9%87%8c2022%e5%b9%b410%e6%9c%884%e6%97%a5%e6%9b%b4%e6%96%b0" class="header-mark"></a>配置clash for windows 的linux版本，和我一样怕麻烦的跳到这里（2022年10月4日更新）</h2><p>这标题有点绕，说白了就是你会得到clash的windows下的相同界面。</p>
+<img src="MD_img/image-20221004103704968.png" alt="image-20221004103704968" style="zoom:67%;" />
+<p>首先，你需要在clash for windows的项目地址下载安装包，地址是https://github.com/Fndroid/clash_for_windows_pkg/releases</p>
+<img src="MD_img/image-20221004103939543.png" alt="image-20221004103939543" style="zoom:67%;" />
+<p>根据cpu架构2选1</p>
+<p>然后，解压后进入该文件夹，运行如下命令</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">./cfw
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>就能打开界面了</p>
+<p>最后导入yaml文件即可</p>
+<img src="MD_img/image-20221004104144504.png" alt="image-20221004104144504" style="zoom:67%;" />
+<p>较为简易</p>
+<p>至此结束~</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;至此结束~&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></div>
+
+        <div class="sponsor">
+        <div class="sponsor-avatar"><img
+        class="lazyload"
+        data-src="/images/logo.png"
+        data-srcset="/images/logo.png, /images/logo.png 1.5x, /images/logo.png 2x"
+        data-sizes="auto"
+        alt="/images/logo.png"
+        title="/images/logo.png"></div><p class="sponsor-bio"><em>如果你觉得这篇文章对你有所帮助，欢迎赞赏~</em></p><a href="/images/buymeacoffee.jpg" title="Sponsor" target="_blank" class="sponsor-button" rel="noopener noreferrer">
+                <i class="far fa-heart fa-fw icon" style="color: #ec6cb9;"></i>
+                <span>赞赏</span>
+            </a></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2022-04-24</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span><a class="link-to-mardown" href=/clash/index.md target="_blank" rel="noopener noreferrer">阅读原始文档</a>
+                    </span><span>|&nbsp;<a class="link-to-report" href=https://github.com/dp0d/dp0d.github.io/issues/new?title=[bug]%20%E8%AE%B0%E4%B8%80%E6%AC%A1Clash+for+Linux+%E7%9A%84%E9%85%8D%E7%BD%AE&body=|Field|Value|%0A|-|-|%0A|Title|%E8%AE%B0%E4%B8%80%E6%AC%A1Clash+for+Linux+%E7%9A%84%E9%85%8D%E7%BD%AE|%0A|Url|https://dp0d.github.io/clash/|%0A|Filename|https://github.com/dp0d/dp0d.github.io/posts/2022/clash/index.md| target="_blank" rel="noopener noreferrer">报告问题</a>
+                    </span></div>
+            <div class="post-info-share">
+                <span><a href="#" onclick="return false;" title="分享到 Twitter" data-sharer="twitter" data-url="https://dp0d.github.io/clash/" data-title="记一次Clash for Linux 的配置" data-hashtags="linux,tools"><i class="fab fa-twitter fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Facebook" data-sharer="facebook" data-url="https://dp0d.github.io/clash/" data-hashtag="linux"><i class="fab fa-facebook-square fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 微博" data-sharer="weibo" data-url="https://dp0d.github.io/clash/" data-title="记一次Clash for Linux 的配置"><i class="fab fa-weibo fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Telegram" data-sharer="telegram" data-url="https://dp0d.github.io/clash/" data-title="记一次Clash for Linux 的配置" data-web><i class="fab fa-telegram-plane fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/linux/">Linux</a>,&nbsp;<a href="/tags/tools/">工具</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/lm_pretraining/" class="prev" rel="prev" title="语言模型预训练方法"><i class="fas fa-angle-left fa-fw"></i>语言模型预训练方法</a>
+            <a href="/basic_algorithm/" class="next" rel="next" title="好用的Python基础算法应用技巧">好用的Python基础算法应用技巧<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+<div id="comments"><div id="giscus"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://giscus.app/">giscus</a>.
+            </noscript></div></article></div>
+        </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2022 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/dp0d" target="_blank" rel="noopener noreferrer">dp0d</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                    <span class="icp"><a href="https://beian.miit.gov.cn/" target="_blank">赣ICP备2022002313号-1</a></span></div>
+            <div class="footer-line"></div>
+            <div class="footer-line">
+            </div>
+        </div><script>
+                    if('serviceWorker' in navigator) {
+                        navigator.serviceWorker
+                            .register('/sw.min.js', { scope: '/' })
+                            .then(function(registration) {
+                            });
+                
+                        navigator.serviceWorker
+                            .ready
+                            .then(function(registration) {
+                            });
+                    }
+                </script></footer></div>
+
+    <div id="fixed-buttons"><a href="#back-to-top" id="back-to-top-button" class="fixed-button" title="回到顶部">
+            <i class="fas fa-arrow-up fa-fw"></i>
+        </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+            <i class="fas fa-comment fa-fw"></i>
+        </a>
+    </div><div class="assets"><script type="text/javascript" src="/lib/object-fit-images/ofi.min.js"></script><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/fuse/fuse.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/tablesort/tablesort.min.js"></script><script type="text/javascript" src="/lib/topbar/topbar.min.js"></script><script type="text/javascript" src="/lib/pjax/pjax.min.js"></script><script type="text/javascript" src="/js/theme.min.js" defer></script></div>
+
+<div class="pjax-assets"><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":100},"comment":{"giscus":{"darkTheme":"dark","dataCategory":"General","dataCategoryId":"DIC_kwDOHB3uW84COZbL","dataEmitMetadata":"0","dataInputPosition":"top","dataLang":"zh-CN","dataMapping":"title","dataReactionsEnabled":"1","dataRepo":"dp0d/dp0d.github.io","dataRepoId":"R_kgDOHB3uWw","lightTheme":"light"}},"search":{"distance":100,"findAllMatches":false,"fuseIndexURL":"/index.json","highlightTag":"em","ignoreFieldNorm":false,"ignoreLocation":true,"isCaseSensitive":false,"location":0,"maxResultLength":10,"minMatchCharLength":2,"noResultsFound":"没有找到结果","snippetLength":50,"threshold":0.1,"type":"fuse","useExtendedSearch":false},"sharerjs":true,"table":{"sort":true},"twemoji":true};</script><script type="text/javascript" src="/js/giscus.min.js" defer></script><script type="text/javascript" src="/lib/twemoji/twemoji.min.js" defer></script><script type="text/javascript" src="/js/twemoji.min.js" defer></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script></div>
+</body>
+
+</html>

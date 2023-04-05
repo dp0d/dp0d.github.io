@@ -1,0 +1,15 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>自然语言处理 - 分类 - dp0d&#39;s blog</title>
+        <link>https://dp0d.github.io/categories/nlp/</link>
+        <description>自然语言处理 - 分类 - dp0d&#39;s blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>draftpaperofgod@gmail.com (dp0d)</managingEditor>
+            <webMaster>draftpaperofgod@gmail.com (dp0d)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Mon, 23 May 2022 14:18:25 &#43;0800</lastBuildDate><atom:link href="https://dp0d.github.io/categories/nlp/" rel="self" type="application/rss+xml" /><item>
+    <title>自然语言处理相关任务与数据集</title>
+    <link>https://dp0d.github.io/nlp_task/</link>
+    <pubDate>Mon, 23 May 2022 14:18:25 &#43;0800</pubDate><author>
+        <name>dp0d</name>
+    </author><guid>https://dp0d.github.io/nlp_task/</guid>
+    <description><![CDATA[Task Description link SNLI Stanford language inference task. 斯坦福大学语言推理任务。给定一个前提和一个假设，目标是预测假设与前提的关系是包含的、中性的，还是矛盾的。 MNLI Language inference dataset on multigenre text]]></description>
+</item></channel>
+</rss>

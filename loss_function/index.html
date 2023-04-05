@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noodp" />
+    <title class="pjax-title">损失函数 - dp0d&#39;s blog</title><meta name="Description" content="dp0d&#39;s blog,where to share life as well as technology of nlp."><meta property="og:title" content="损失函数" />
+<meta property="og:description" content="经典损失函数距离度量F 范数（Frobenius 范数）矩阵所有元素的平方和再开方，他是是向量二范式的拓展类比。 $$ ||A||_F = \sqrt{\sum a_{ij}^2} $$ 如何作为距离度量呢？" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://dp0d.github.io/loss_function/" /><meta property="og:image" content="https://dp0d.github.io/images/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-04-29T10:34:04+08:00" />
+<meta property="article:modified_time" content="2022-04-29T10:34:04+08:00" /><meta property="og:site_name" content="dp0d&#39;s blog" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://dp0d.github.io/images/logo.png"/>
+
+<meta name="twitter:title" content="损失函数"/>
+<meta name="twitter:description" content="经典损失函数距离度量F 范数（Frobenius 范数）矩阵所有元素的平方和再开方，他是是向量二范式的拓展类比。 $$ ||A||_F = \sqrt{\sum a_{ij}^2} $$ 如何作为距离度量呢？"/>
+<meta name="application-name" content="dp0d&#39;s blog">
+<meta name="apple-mobile-web-app-title" content="dp0d&#39;s blog">
+
+<meta name="theme-color" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://dp0d.github.io/loss_function/" /><link rel="prev" href="https://dp0d.github.io/basic_algorithm/" /><link rel="next" href="https://dp0d.github.io/regular_expression/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/fontawesome-free/all.min.css">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/animate/animate.min.css">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript>
+    
+    
+    
+    <script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "损失函数",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/dp0d.github.io\/loss_function\/"
+        },"image": ["https:\/\/dp0d.github.io\/images\/logo.png"],"genre": "posts","keywords": "math","wordcount":  2345 ,
+        "url": "https:\/\/dp0d.github.io\/loss_function\/","datePublished": "2022-04-29T10:34:04+08:00","dateModified": "2022-04-29T10:34:04+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "dp0d","logo": "https:\/\/dp0d.github.io\/images\/logo.png"},"author": {
+                "@type": "Person",
+                "name": "dp0d"
+            },"description": ""
+    }
+    </script></head>
+
+<body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">
+        function setTheme(theme) {document.body.setAttribute('theme', theme);}
+        function saveTheme(theme) {window.localStorage && localStorage.setItem('theme', theme);}
+        function getMeta(metaName) {const metas = document.getElementsByTagName('meta'); for (let i = 0; i < metas.length; i++) if (metas[i].getAttribute('name') === metaName) return metas[i]; return '';}
+        if (window.localStorage && localStorage.getItem('theme')) {let theme = localStorage.getItem('theme');theme === 'light' || theme === 'dark' || theme === 'black' ? setTheme(theme) : (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light')); } else { if ('auto' === 'light' || 'auto' === 'dark' || 'auto' === 'black') setTheme('auto'), saveTheme('auto'); else saveTheme('auto'), window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light');}
+        let metaColors = {'light': '#f8f8f8','dark': '#252627','black': '#000000'}
+        getMeta('theme-color').content = metaColors[document.body.getAttribute('theme')];
+    </script>
+    <div id="back-to-top"></div>
+    <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="dp0d&#39;s blog"><span class="header-title-pre"><i class='far fa-edit fa-fw'></i></span>Natural Language Processing</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/charge/"> 充电 </a><a class="menu-item" href="/friends/"> 朋友萌 </a><a class="menu-item" href="/collection/"> 收藏 </a><a class="menu-item" href="/copyright/"> 版权 </a><a class="menu-item" href="/about/"> 关于我 </a><a class="menu-item" href="https://github.com/dp0d" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="#" onclick="return false;" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="#" onclick="return false;" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="#" onclick="return false;" class="menu-item theme-select" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                    <select class="color-theme-select" id="theme-select-desktop" title="切换主题">
+                        <option value="light">浅色</option>
+                        <option value="dark">深色</option>
+                        <option value="black">黑色</option>
+                        <option value="auto">跟随系统</option>
+                    </select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="dp0d&#39;s blog"><span class="header-title-pre"><i class='far fa-edit fa-fw'></i></span>Natural Language Processing</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="#" onclick="return false;" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="#" onclick="return false;" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="#" onclick="return false;" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/charge/" title="">充电</a><a class="menu-item" href="/friends/" title="">朋友萌</a><a class="menu-item" href="/collection/" title="">收藏</a><a class="menu-item" href="/copyright/" title="">版权</a><a class="menu-item" href="/about/" title="">关于我</a><a class="menu-item" href="https://github.com/dp0d" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i></a><a href="#" onclick="return false;" class="menu-item theme-select" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+                <select class="color-theme-select" id="theme-select-mobile" title="切换主题">
+                    <option value="light">浅色</option>
+                    <option value="dark">深色</option>
+                    <option value="black">黑色</option>
+                    <option value="auto">跟随系统</option>
+                </select>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+            <div class="container"><div class="toc" id="toc-auto">
+        <h2 class="toc-title">目录</h2>
+        <div class="toc-content" id="toc-content-auto"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#经典损失函数">经典损失函数</a>
+      <ul>
+        <li><a href="#距离度量">距离度量</a>
+          <ul>
+            <li><a href="#f-范数frobenius-范数">F 范数（Frobenius 范数）</a></li>
+            <li><a href="#核范数nuclear-norm">核范数（nuclear norm）</a></li>
+            <li><a href="#汉明距离">汉明距离</a></li>
+          </ul>
+        </li>
+        <li><a href="#相对熵也称kl散度">相对熵（也称KL散度）</a></li>
+        <li><a href="#交叉熵cross-entropy">交叉熵——Cross Entropy</a>
+          <ul>
+            <li><a href="#二分类交叉熵">二分类交叉熵</a></li>
+          </ul>
+        </li>
+        <li><a href="#多分类交叉熵">多分类交叉熵</a></li>
+        <li><a href="#对比损失">对比损失</a>
+          <ul>
+            <li><a href="#三元损失">三元损失</a></li>
+            <li><a href="#参考链接">参考链接</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+    </div><script>document.getElementsByTagName("main")[0].setAttribute("pageStyle", "normal")</script><script>document.getElementsByTagName("main")[0].setAttribute("autoTOC", "true")</script><article class="page single"><h1 class="single-title animate__animated animate__flipInX">损失函数</h1><h2 class="single-subtitle">实际任务中使用到的损失函数记录</h2><div class="post-meta">
+            <div class="post-meta-line">
+                <span class="post-author"><i class="author fas fa-user-circle fa-fw"></i><a href="https://github.com/dp0d" title="Author" target="_blank" rel="noopener noreffer author" class="author">dp0d</a>
+                </span>&nbsp;<span class="post-category">收录于 </span>&nbsp;<span class="post-category">类别 <a href="/categories/machine_learning/"><i class="far fa-folder fa-fw"></i>机器学习</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-04-29">2022-04-29</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2022-04-29">2022-04-29</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 2345 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 5 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#经典损失函数">经典损失函数</a>
+      <ul>
+        <li><a href="#距离度量">距离度量</a>
+          <ul>
+            <li><a href="#f-范数frobenius-范数">F 范数（Frobenius 范数）</a></li>
+            <li><a href="#核范数nuclear-norm">核范数（nuclear norm）</a></li>
+            <li><a href="#汉明距离">汉明距离</a></li>
+          </ul>
+        </li>
+        <li><a href="#相对熵也称kl散度">相对熵（也称KL散度）</a></li>
+        <li><a href="#交叉熵cross-entropy">交叉熵——Cross Entropy</a>
+          <ul>
+            <li><a href="#二分类交叉熵">二分类交叉熵</a></li>
+          </ul>
+        </li>
+        <li><a href="#多分类交叉熵">多分类交叉熵</a></li>
+        <li><a href="#对比损失">对比损失</a>
+          <ul>
+            <li><a href="#三元损失">三元损失</a></li>
+            <li><a href="#参考链接">参考链接</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="经典损失函数" class="headerLink">
+    <a href="#%e7%bb%8f%e5%85%b8%e6%8d%9f%e5%a4%b1%e5%87%bd%e6%95%b0" class="header-mark"></a>经典损失函数</h2><h3 id="距离度量" class="headerLink">
+    <a href="#%e8%b7%9d%e7%a6%bb%e5%ba%a6%e9%87%8f" class="header-mark"></a>距离度量</h3><h4 id="f-范数frobenius-范数" class="headerLink">
+    <a href="#f-%e8%8c%83%e6%95%b0frobenius-%e8%8c%83%e6%95%b0" class="header-mark"></a>F 范数（Frobenius 范数）</h4><p>矩阵所有元素的平方和再开方，他是是向量二范式的拓展类比。</p>
+
+$$
+||A||_F = \sqrt{\sum a_{ij}^2}
+$$
+
+<p>如何作为距离度量呢？</p>
+<p>可以利用如下方式，如果标签矩阵为$B$（通常为一个batch里的多个样本标签向量组成，如标签向量为4维，batch_size 为128）则$B$的形状为（128，4）），距离度量公式为
+$$
+\mathcal L_F = ||A-B||
+$$</p>
+<h4 id="核范数nuclear-norm" class="headerLink">
+    <a href="#%e6%a0%b8%e8%8c%83%e6%95%b0nuclear-norm" class="header-mark"></a>核范数（nuclear norm）</h4><p>作为距离度量方式不详
+$$
+\begin{aligned}
+||A||_*=\operatorname{tr}\left(\sqrt{A^{T} A}\right) &amp;=\operatorname{tr}\left(\sqrt{\left(U \Sigma V^{T}\right)^{T} U \Sigma V^{T}}\right) \
+&amp;=\operatorname{tr}\left(\sqrt{V \Sigma^{T} U^{T} U \Sigma V^{T}}\right) \
+&amp;=\operatorname{tr}\left(\sqrt{V \Sigma^{2} V^{T}}\right)\left(\Sigma^{T}=\Sigma\right) \
+&amp;=\operatorname{tr}\left(\sqrt{V^{T} V \Sigma^{2}}\right) \
+&amp;=\operatorname{tr}(\Sigma)
+\end{aligned}
+$$</p>
+<blockquote>
+<p>参考代码</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">torch</span>
+</span></span><span class="line"><span class="cl"><span class="n">label</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]])</span>
+</span></span><span class="line"><span class="cl"><span class="n">pred</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]])</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s2">&#34;F范数矩阵&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">pred</span> <span class="o">-</span> <span class="n">label</span><span class="p">)</span><span class="o">.</span><span class="n">type</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">FloatTensor</span><span class="p">),</span> <span class="n">p</span><span class="o">=</span><span class="s2">&#34;fro&#34;</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s2">&#34;2范数矩阵&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">pred</span> <span class="o">-</span> <span class="n">label</span><span class="p">)</span><span class="o">.</span><span class="n">type</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">FloatTensor</span><span class="p">),</span> <span class="n">p</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s2">&#34;核范数矩阵&#34;</span><span class="p">)</span>  <span class="c1"># 核范数作为Loss使用方法不详</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">pred</span> <span class="o">-</span> <span class="n">label</span><span class="p">)</span><span class="o">.</span><span class="n">type</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">FloatTensor</span><span class="p">),</span> <span class="n">p</span><span class="o">=</span><span class="s2">&#34;nuc&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s2">&#34;平均损失计算：每个样本的损失相加，再除以总样本数&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">pred</span> <span class="o">-</span> <span class="n">label</span><span class="p">)</span><span class="o">.</span><span class="n">type</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">FloatTensor</span><span class="p">),</span> <span class="n">p</span><span class="o">=</span><span class="s2">&#34;fro&#34;</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> <span class="n">label</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">pred</span> <span class="o">-</span> <span class="n">label</span><span class="p">)</span><span class="o">.</span><span class="n">type</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">FloatTensor</span><span class="p">),</span> <span class="n">p</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> <span class="n">label</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">输出</span><span class="err">：</span>
+</span></span><span class="line"><span class="cl"><span class="n">F范数矩阵</span>
+</span></span><span class="line"><span class="cl"><span class="n">tensor</span><span class="p">([</span><span class="mf">2.</span><span class="p">,</span> <span class="mf">2.</span><span class="p">],</span> <span class="n">device</span><span class="o">=</span><span class="s1">&#39;cuda:0&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="mi">2</span><span class="n">范数矩阵</span>
+</span></span><span class="line"><span class="cl"><span class="n">tensor</span><span class="p">([</span><span class="mf">2.</span><span class="p">,</span> <span class="mf">2.</span><span class="p">],</span> <span class="n">device</span><span class="o">=</span><span class="s1">&#39;cuda:0&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">核范数矩阵</span>
+</span></span><span class="line"><span class="cl"><span class="n">tensor</span><span class="p">(</span><span class="mf">2.8284</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="s1">&#39;cuda:0&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">平均损失计算</span><span class="err">：</span><span class="n">每个样本的损失相加</span><span class="err">，</span><span class="n">再除以总样本数</span>
+</span></span><span class="line"><span class="cl"><span class="n">tensor</span><span class="p">(</span><span class="mf">2.</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="s1">&#39;cuda:0&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">tensor</span><span class="p">(</span><span class="mf">2.</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="s1">&#39;cuda:0&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">Process</span> <span class="n">finished</span> <span class="k">with</span> <span class="n">exit</span> <span class="n">code</span> <span class="mi">0</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="c1"># 不同shape的欧距计算 作者：https://blog.csdn.net/sinat_24899403/article/details/119249822</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="nn">torch</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">nn</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="n">a</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">                <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">]])</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="n">b</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">								<span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">                <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">                <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">                <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">]])</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="k">def</span> <span class="nf">pdist</span><span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">p</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="p">(</span><span class="n">a</span><span class="o">-</span><span class="n">b</span><span class="p">)</span><span class="o">.</span><span class="n">abs</span><span class="p">()</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="n">p</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">p</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="n">a_</span><span class="o">=</span><span class="n">a</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="n">b_</span><span class="o">=</span><span class="n">b</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="nb">print</span><span class="p">(</span><span class="n">pdist</span><span class="p">(</span><span class="n">a_</span><span class="p">,</span><span class="n">b_</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">tensor</span><span class="p">([[</span><span class="mf">1.7321</span><span class="p">,</span> <span class="mf">0.0000</span><span class="p">,</span> <span class="mf">1.7321</span><span class="p">,</span> <span class="mf">0.0000</span><span class="p">,</span> <span class="mf">1.7321</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="mf">0.0000</span><span class="p">,</span> <span class="mf">1.7321</span><span class="p">,</span> <span class="mf">0.0000</span><span class="p">,</span> <span class="mf">1.7321</span><span class="p">,</span> <span class="mf">0.0000</span><span class="p">]])</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="汉明距离" class="headerLink">
+    <a href="#%e6%b1%89%e6%98%8e%e8%b7%9d%e7%a6%bb" class="header-mark"></a>汉明距离</h4><blockquote>
+<p>如果是多对多，且shape不一致，使用numpy计算是最快的，考虑原因可能是torch未封装int类型的不同shape数据的计算方式，如果shape相同可以使用pairwise的方法</p>
+</blockquote>
+<p>形状相同（用于标签预测）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="n">b</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">                  <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">                  <span class="p">])</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="n">c</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">                  <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">                  <span class="p">])</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="n">metric</span> <span class="o">=</span> <span class="n">BinaryHammingDistance</span><span class="p">(</span><span class="n">multidim_average</span><span class="o">=</span><span class="s1">&#39;samplewise&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="nb">print</span><span class="p">(</span><span class="n">metric</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="n">tensor</span><span class="p">([</span><span class="mf">0.3333</span><span class="p">,</span> <span class="mf">0.0000</span><span class="p">])</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>形状不同（用于检索）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">sklearn.neighbors</span> <span class="kn">import</span> <span class="n">DistanceMetric</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="nn">time</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">],])</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">              <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">              <span class="p">])</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="n">s1</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="nb">print</span><span class="p">(</span><span class="n">DistanceMetric</span><span class="o">.</span><span class="n">get_metric</span><span class="p">(</span><span class="s2">&#34;hamming&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">pairwise</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;耗时</span><span class="si">{</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span><span class="o">-</span><span class="n">s1</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">[[</span><span class="mf">0.33333333</span> <span class="mf">0.66666667</span><span class="p">]]</span>
+</span></span><span class="line"><span class="cl"><span class="n">耗时0</span><span class="mf">.0003008842468261719</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="n">a_tensor</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">as_tensor</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="n">b_tensor</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">as_tensor</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="n">s2</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="nb">print</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">cdist</span><span class="p">(</span><span class="n">a_tensor</span><span class="p">,</span> <span class="n">b_tensor</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;耗时</span><span class="si">{</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span><span class="o">-</span><span class="n">s2</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">tensor</span><span class="p">([[</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">2.</span><span class="p">]])</span>
+</span></span><span class="line"><span class="cl"><span class="n">耗时0</span><span class="mf">.0003383159637451172</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="n">a_tensor</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">as_tensor</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float</span><span class="p">)</span><span class="o">.</span><span class="n">cuda</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="n">b_tensor</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">as_tensor</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float</span><span class="p">)</span><span class="o">.</span><span class="n">cuda</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="n">s3</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="nb">print</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">cdist</span><span class="p">(</span><span class="n">a_tensor</span><span class="p">,</span> <span class="n">b_tensor</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;耗时</span><span class="si">{</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span><span class="o">-</span><span class="n">s3</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">tensor</span><span class="p">([[</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">2.</span><span class="p">]],</span> <span class="n">device</span><span class="o">=</span><span class="s1">&#39;cuda:0&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">耗时0</span><span class="mf">.0015494823455810547</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="相对熵也称kl散度" class="headerLink">
+    <a href="#%e7%9b%b8%e5%af%b9%e7%86%b5%e4%b9%9f%e7%a7%b0kl%e6%95%a3%e5%ba%a6" class="header-mark"></a>相对熵（也称KL散度）</h3><p><a href="https://zh.wikipedia.org/wiki/%E7%9B%B8%E5%AF%B9%E7%86%B5" target="_blank" rel="noopener noreffer"><strong>维基百科</strong></a>：KL散度（Kullback-Leibler divergence，简称KLD），在讯息系统中称为相对熵（relative entropy），在连续时间序列中称为随机性（randomness），在统计模型推断中称为讯息增益（information gain）。也称讯息散度（information divergence）。它是两个几率分布$P$和$Q$差别的非对称性的度量。 KL散度是用来度量使用基于$Q$的分布来编码服从$P$的分布的样本所需的额外的平均比特数，注意$P$,$Q$先后顺序。典型情况下，P表示数据的真实分布，Q表示数据的理论分布、估计的模型分布、或P的近似分布。</p>
+
+$$
+\begin{equation}
+\begin{aligned}
+D_{KL}(P||Q) &= -\sum_iP(i)ln\frac{Q(i)}{P(i)} \\
+			&= \sum_iP(i)ln\frac{P(i)}{Q(i)}
+\end{aligned}
+\end{equation}
+$$
+
+<p>相对熵的值为非负数：</p>
+<p>$$
+D_{KL}(P||Q)\geq 0
+$$
+另，概率都为零时取零。</p>
+<h3 id="交叉熵cross-entropy" class="headerLink">
+    <a href="#%e4%ba%a4%e5%8f%89%e7%86%b5cross-entropy" class="header-mark"></a>交叉熵——Cross Entropy</h3><p><strong><a href="https://zh.m.wikipedia.org/wiki/%E4%BA%A4%E5%8F%89%E7%86%B5" target="_blank" rel="noopener noreffer">维基百科</a></strong>：在信息论中，基于相同事件测度的两个概率分布$p$和$q$的交叉熵是指，当基于一个“非自然”（相对于“真实”分布$p$而言）的概率分布$q$进行编码时，在事件集合中唯一标识一个事件所需要的平均比特数（bit）。</p>
+<p>给定两个概率分布$p$和$q$，$p$相对于$q$的交叉熵定义为：</p>
+
+$$
+H(p,q) = E_p[-\log q] = H(p) + D_{KL}(p||q),
+$$
+
+<p>其中，$H(p)$是$p$的熵，$D_{KL}(p||q)$是从$p$与$q$的KL散度（也被称为$p$，相对于$q$的相对熵）。</p>
+<p>对于离散分布$p$和$q$，交叉熵可以定义为：</p>
+
+$$
+H(p,q)=-\sum_xp(x)\log q(x).
+$$
+
+<p>其中求和是指在样本空间进行计算求和。记住这个计算方法，因为后续介绍分类任务的交叉熵损失是基于此的。</p>
+<h4 id="二分类交叉熵" class="headerLink">
+    <a href="#%e4%ba%8c%e5%88%86%e7%b1%bb%e4%ba%a4%e5%8f%89%e7%86%b5" class="header-mark"></a>二分类交叉熵</h4><p>假设在二分类任务时，真实标签$y$和预测标签$\hat{y}$取值空间为${0,1}$。根据交叉熵定义，可以将交叉熵损失函数定义如下。
+$$
+J=-\frac{1}{N}\sum_{i=1}^{N}[y\log\hat{y}+(1-y)\log(1-\hat{y})]
+$$
+假设真实分布为$p(i)$(真实标签$y$的分布)，模型预测的分布为$q(i)$(预测标签$\hat{y}$的分布，推导如下，</p>
+
+$$
+\begin{equation}
+\begin{aligned}
+H(p,q) &=-\sum_x p(x)\cdot \log({q(x)}) \\
+		&=\sum_x p(x)\cdot \log(\frac{1}{q(x)})\\
+		&=\sum_x p_{(y=0|x)} \cdot \log(\frac{1}{q_{(y=0|x)} }) + p_{(y=1|x)} \cdot \log(\frac{1}{q_{(y=1|x)}})\\
+		&=\sum_x y\log(\frac{1}{\hat{y}}) + (1-y)\log(\frac{1}{1-\hat{y}})\\
+		&=-\sum_x [y\log \hat{y} + (1-y)\log(1-\hat{y})]
+
+\end{aligned}
+\end{equation}
+$$
+
+<p>最后乘上$\frac{1}{N}$进行平均操作。</p>
+<h3 id="多分类交叉熵" class="headerLink">
+    <a href="#%e5%a4%9a%e5%88%86%e7%b1%bb%e4%ba%a4%e5%8f%89%e7%86%b5" class="header-mark"></a>多分类交叉熵</h3><p>与二分类交叉熵类似，多分类交叉熵同样是计算标签分布的熵值，基于此，我们需要把多分类考虑在内，也就是多一步求和，即每个类别上的交叉熵求和并在样本空间上进行求和，基于二分类交叉熵的参数定义，定义分类的标签种类为$n$，则多分类交叉熵损失可以表示如下
+$$
+\begin{equation}
+\mathcal L = -\frac{1}{N}\sum_{i=1}^N\sum_{j=1}^ny_j^{(i)}\cdot \log\hat{y}_j^{(i)}
+\end{equation}
+$$</p>
+<p>其中,$n$为分类个数，即标签向量维度。$N$为样本个数。</p>
+<h3 id="对比损失" class="headerLink">
+    <a href="#%e5%af%b9%e6%af%94%e6%8d%9f%e5%a4%b1" class="header-mark"></a>对比损失</h3><h4 id="三元损失" class="headerLink">
+    <a href="#%e4%b8%89%e5%85%83%e6%8d%9f%e5%a4%b1" class="header-mark"></a>三元损失</h4>
+
+给定anchor $p$，以欧距为例，衡量相似度，其正样本为$q$，负样本为$r$。
+
+$$
+\begin{equation}
+\begin{aligned}
+\mathcal L = max(||\boldsymbol p-\boldsymbol q||^2-||\boldsymbol p-\boldsymbol r||^2+\epsilon,0)
+\end{aligned}
+\end{equation}
+$$
+
+<blockquote>
+<p>代码实现</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">loss class
+</span></span></span><span class="line"><span class="cl"><span class="s2">&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">triplet_loss</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span> 
+</span></span><span class="line"><span class="cl">	<span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> 
+</span></span><span class="line"><span class="cl">  	<span class="nb">super</span><span class="p">(</span><span class="n">triplet_loss</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span> 
+</span></span><span class="line"><span class="cl">    <span class="bp">self</span><span class="o">.</span><span class="n">margin</span> <span class="o">=</span> <span class="mf">0.2</span>
+</span></span><span class="line"><span class="cl">	<span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">anchor</span><span class="p">,</span> <span class="n">positive</span><span class="p">,</span> <span class="n">negative</span><span class="p">):</span> 
+</span></span><span class="line"><span class="cl">  	<span class="n">pos_dist</span> <span class="o">=</span> <span class="p">(</span><span class="n">anchor</span> <span class="o">-</span> <span class="n">positive</span><span class="p">)</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl">    <span class="n">neg_dist</span> <span class="o">=</span> <span class="p">(</span><span class="n">anchor</span> <span class="o">-</span> <span class="n">negative</span><span class="p">)</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl">    <span class="n">loss</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="n">pos_dist</span> <span class="o">-</span> <span class="n">neg_dist</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">margin</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">loss</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="c1">#we can also use #torch.nn.functional.pairwise_distance(anchor,positive, keep_dims=True), which #computes the euclidean distance.</span>
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">training part
+</span></span></span><span class="line"><span class="cl"><span class="s2">&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">loss_fun</span> <span class="o">=</span> <span class="n">triplet_loss</span><span class="p">()</span> 
+</span></span><span class="line"><span class="cl"><span class="n">optimizer</span> <span class="o">=</span> <span class="n">Adam</span><span class="p">(</span><span class="n">custom_model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span> <span class="o">=</span> <span class="mf">0.001</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">30</span><span class="p">):</span> 
+</span></span><span class="line"><span class="cl">    <span class="n">total_loss</span> <span class="o">=</span> <span class="mi">0</span> 
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">anchor</span><span class="p">,</span> <span class="n">positive</span><span class="p">,</span> <span class="n">negative</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">custom_loader</span><span class="p">):</span> 
+</span></span><span class="line"><span class="cl">        <span class="n">anchor</span> <span class="o">=</span> <span class="n">anchor</span><span class="p">[</span><span class="s1">&#39;image&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl">        <span class="n">positive</span> <span class="o">=</span> <span class="n">positive</span><span class="p">[</span><span class="s1">&#39;image&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl">        <span class="n">negative</span> <span class="o">=</span> <span class="n">negative</span><span class="p">[</span><span class="s1">&#39;image&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl">        <span class="n">anchor_feature</span> <span class="o">=</span> <span class="n">custom_model</span><span class="p">(</span><span class="n">anchor</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl">        <span class="n">positive_feature</span> <span class="o">=</span> <span class="n">custom_model</span><span class="p">(</span><span class="n">positive</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl">        <span class="n">negative_feature</span> <span class="o">=</span> <span class="n">custom_model</span><span class="p">(</span><span class="n">negative</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl">        <span class="n">optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span> 
+</span></span><span class="line"><span class="cl">        <span class="n">loss</span> <span class="o">=</span> <span class="n">loss_fun</span><span class="p">(</span><span class="n">anchor_feature</span><span class="p">,</span> <span class="n">positive_feature</span><span class="p">,</span> <span class="n">negative_feature</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl">        <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span> 
+</span></span><span class="line"><span class="cl">        <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">  
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="参考链接" class="headerLink">
+    <a href="#%e5%8f%82%e8%80%83%e9%93%be%e6%8e%a5" class="header-mark"></a>参考链接</h4><p><a href="https://zhuanlan.zhihu.com/p/414327252?ivk_sa=1024320u" target="_blank" rel="noopener noreffer">https://zhuanlan.zhihu.com/p/414327252?ivk_sa=1024320u</a></p>
+<p>更多对比损失  <a href="https://lilianweng.github.io/posts/2021-05-31-contrastive/" target="_blank" rel="noopener noreffer">https://lilianweng.github.io/posts/2021-05-31-contrastive/</a></p>
+</div>
+
+        <div class="sponsor">
+        <div class="sponsor-avatar"><img
+        class="lazyload"
+        data-src="/images/logo.png"
+        data-srcset="/images/logo.png, /images/logo.png 1.5x, /images/logo.png 2x"
+        data-sizes="auto"
+        alt="/images/logo.png"
+        title="/images/logo.png"></div><p class="sponsor-bio"><em>如果你觉得这篇文章对你有所帮助，欢迎赞赏~</em></p><a href="/images/buymeacoffee.jpg" title="Sponsor" target="_blank" class="sponsor-button" rel="noopener noreferrer">
+                <i class="far fa-heart fa-fw icon" style="color: #ec6cb9;"></i>
+                <span>赞赏</span>
+            </a></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2022-04-29</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span><a class="link-to-mardown" href=/loss_function/index.md target="_blank" rel="noopener noreferrer">阅读原始文档</a>
+                    </span><span>|&nbsp;<a class="link-to-report" href=https://github.com/dp0d/dp0d.github.io/issues/new?title=[bug]%20%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0&body=|Field|Value|%0A|-|-|%0A|Title|%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0|%0A|Url|https://dp0d.github.io/loss_function/|%0A|Filename|https://github.com/dp0d/dp0d.github.io/posts/2022/loss_function.md| target="_blank" rel="noopener noreferrer">报告问题</a>
+                    </span></div>
+            <div class="post-info-share">
+                <span><a href="#" onclick="return false;" title="分享到 Twitter" data-sharer="twitter" data-url="https://dp0d.github.io/loss_function/" data-title="损失函数" data-hashtags="math"><i class="fab fa-twitter fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Facebook" data-sharer="facebook" data-url="https://dp0d.github.io/loss_function/" data-hashtag="math"><i class="fab fa-facebook-square fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 微博" data-sharer="weibo" data-url="https://dp0d.github.io/loss_function/" data-title="损失函数"><i class="fab fa-weibo fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Telegram" data-sharer="telegram" data-url="https://dp0d.github.io/loss_function/" data-title="损失函数" data-web><i class="fab fa-telegram-plane fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/math/">math</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/basic_algorithm/" class="prev" rel="prev" title="好用的Python基础算法应用技巧"><i class="fas fa-angle-left fa-fw"></i>好用的Python基础算法应用技巧</a>
+            <a href="/regular_expression/" class="next" rel="next" title="正则表达式">正则表达式<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+<div id="comments"><div id="giscus"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://giscus.app/">giscus</a>.
+            </noscript></div></article></div>
+        </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2022 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/dp0d" target="_blank" rel="noopener noreferrer">dp0d</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                    <span class="icp"><a href="https://beian.miit.gov.cn/" target="_blank">赣ICP备2022002313号-1</a></span></div>
+            <div class="footer-line"></div>
+            <div class="footer-line">
+            </div>
+        </div><script>
+                    if('serviceWorker' in navigator) {
+                        navigator.serviceWorker
+                            .register('/sw.min.js', { scope: '/' })
+                            .then(function(registration) {
+                            });
+                
+                        navigator.serviceWorker
+                            .ready
+                            .then(function(registration) {
+                            });
+                    }
+                </script></footer></div>
+
+    <div id="fixed-buttons"><a href="#back-to-top" id="back-to-top-button" class="fixed-button" title="回到顶部">
+            <i class="fas fa-arrow-up fa-fw"></i>
+        </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+            <i class="fas fa-comment fa-fw"></i>
+        </a>
+    </div><div class="assets"><script type="text/javascript" src="/lib/object-fit-images/ofi.min.js"></script><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/fuse/fuse.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/tablesort/tablesort.min.js"></script><script type="text/javascript" src="/lib/topbar/topbar.min.js"></script><script type="text/javascript" src="/lib/pjax/pjax.min.js"></script><script type="text/javascript" src="/js/theme.min.js" defer></script></div>
+
+<div class="pjax-assets"><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":100},"comment":{"giscus":{"darkTheme":"dark","dataCategory":"General","dataCategoryId":"DIC_kwDOHB3uW84COZbL","dataEmitMetadata":"0","dataInputPosition":"top","dataLang":"zh-CN","dataMapping":"title","dataReactionsEnabled":"1","dataRepo":"dp0d/dp0d.github.io","dataRepoId":"R_kgDOHB3uWw","lightTheme":"light"}},"lightGallery":{"actualSize":false,"exThumbImage":"data-thumbnail","hideBarsDelay":2000,"selector":".lightgallery","speed":400,"thumbContHeight":80,"thumbWidth":80,"thumbnail":true},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"distance":100,"findAllMatches":false,"fuseIndexURL":"/index.json","highlightTag":"em","ignoreFieldNorm":false,"ignoreLocation":true,"isCaseSensitive":false,"location":0,"maxResultLength":10,"minMatchCharLength":2,"noResultsFound":"没有找到结果","snippetLength":50,"threshold":0.1,"type":"fuse","useExtendedSearch":false},"sharerjs":true,"table":{"sort":true},"twemoji":true};</script><script type="text/javascript" src="/js/giscus.min.js" defer></script><script type="text/javascript" src="/lib/twemoji/twemoji.min.js" defer></script><script type="text/javascript" src="/js/twemoji.min.js" defer></script><script type="text/javascript" src="/lib/lightgallery/lightgallery.min.js"></script><script type="text/javascript" src="/lib/lightgallery/lg-thumbnail.min.js"></script><script type="text/javascript" src="/lib/lightgallery/lg-zoom.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js" defer></script><script type="text/javascript" src="/lib/katex/auto-render.min.js" defer></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js" defer></script><script type="text/javascript" src="/lib/katex/mhchem.min.js" defer></script><script type="text/javascript" src="/js/katex.min.js" defer></script><link rel="stylesheet" href="/lib/lightgallery/lightgallery.min.css"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/katex/copy-tex.min.css">
+        <noscript><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"></noscript></div>
+</body>
+
+</html>
