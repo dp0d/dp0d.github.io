@@ -1,0 +1,80 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>dp0d&#39;s blog</title>
+        <link>https://dp0d.github.io/</link>
+        <description>dp0d&#39;s blog,where to share life as well as technology of nlp.</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>draftpaperofgod@gmail.com (dp0d)</managingEditor>
+            <webMaster>draftpaperofgod@gmail.com (dp0d)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Wed, 05 Apr 2023 11:33:14 &#43;0800</lastBuildDate>
+            <atom:link href="https://dp0d.github.io/index.xml" rel="self" type="application/rss+xml" />
+        <item>
+    <title>TUN模式 Clash for windows 配置教程</title>
+    <link>https://dp0d.github.io/clashtun/</link>
+    <pubDate>Wed, 05 Apr 2023 11:33:14 &#43;0800</pubDate><author>
+        <name>dp0d</name>
+    </author><guid>https://dp0d.github.io/clashtun/</guid>
+    <description><![CDATA[首先理解TUN模式，这是一个真正意义上的全局的代理模式，它会在你的网络适配器中新建一个Clash专用的，可以理解为软路由中转网卡，开启TUN]]></description>
+</item><item>
+    <title>小解一波准召率</title>
+    <link>https://dp0d.github.io/confusion_matrix/</link>
+    <pubDate>Wed, 30 Nov 2022 10:50:18 &#43;0800</pubDate><author>
+        <name>dp0d</name>
+    </author><guid>https://dp0d.github.io/confusion_matrix/</guid>
+    <description><![CDATA[混淆矩阵精确率 Precision（通常指micro）$$ Precision = \frac{TP}{TP+FP} $$ 查全率 Recall$$ Recall = \frac{TP}{TP+FN} $$ F1 (查准率和查全率的调和平均数)$$ F1 = \frac{2\cdot Precision \cdot Recall}{Precision+Recall} $$]]></description>
+</item><item>
+    <title>wandb——深度学习的优秀伴侣</title>
+    <link>https://dp0d.github.io/wandb/</link>
+    <pubDate>Tue, 22 Nov 2022 19:54:39 &#43;0800</pubDate><author>
+        <name>dp0d</name>
+    </author><guid>https://dp0d.github.io/wandb/</guid>
+    <description><![CDATA[安装1 pip install wandb 记录实验结果1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 import wandb import argparse parser.add_argument(&#34;--train_batch_size&#34;, default=100, type=int) parser.add_argument(&#34;--test_batch_size&#34;, default=100, type=int) parser.add_argument(&#34;--num_epochs&#34;, default=60, type=int) parser.add_argument(&#34;-lr&#34;, &#34;--learning_rate&#34;, default=0.0005, type=float) args = parser.parse_args() # 设置随机种子 seed_everthing(2022) # 初始化wandb wandb.init(project=&#34;project_name&#34;, entity=&#34;dp0d&#34;) #]]></description>
+</item><item>
+    <title>Linux下的包管理工具介绍</title>
+    <link>https://dp0d.github.io/package_manager/</link>
+    <pubDate>Sun, 06 Nov 2022 10:10:12 &#43;0800</pubDate><author>
+        <name>dp0d</name>
+    </author><guid>https://dp0d.github.io/package_manager/</guid>
+    <description><![CDATA[dpkg是一个安装、创建、移除和管理debian包的工具。 安装软件 1 sudo dpkg -i *.deb]]></description>
+</item><item>
+    <title>变分推断</title>
+    <link>https://dp0d.github.io/variational_inference/</link>
+    <pubDate>Thu, 15 Sep 2022 21:29:55 &#43;0800</pubDate><author>
+        <name>dp0d</name>
+    </author><guid>https://dp0d.github.io/variational_inference/</guid>
+    <description><![CDATA[1.变分函数微分（非严格）$$ dy = f(x_1+dx)-f(x_1) $$ $dy$是$y$的微分，也就是函数的微分，是指的$x$变化了一个极小值引起的因变量函数的变化。 泛函泛函]]></description>
+</item><item>
+    <title>预训练模型的对比</title>
+    <link>https://dp0d.github.io/pretrain_model/</link>
+    <pubDate>Mon, 05 Sep 2022 15:10:01 &#43;0800</pubDate><author>
+        <name>dp0d</name>
+    </author><guid>https://dp0d.github.io/pretrain_model/</guid>
+    <description><![CDATA[BERTBERT（Bidirectional Encoder Representations from Transformers）由谷歌在2018年提出[1]。在语言模型中，它的优势是采用了动态]]></description>
+</item><item>
+    <title>有关数据集调研和介绍</title>
+    <link>https://dp0d.github.io/datasets/</link>
+    <pubDate>Tue, 09 Aug 2022 16:43:36 &#43;0800</pubDate><author>
+        <name>dp0d</name>
+    </author><guid>https://dp0d.github.io/datasets/</guid>
+    <description><![CDATA[文本哈希 数据集 20Newsgroups 基于文档的多轮问答 任务 数据集 描述 语言 对话式问答(Conversational Question Answering, CQA) CoQA，CuQA等 基于给定文档的多轮问答]]></description>
+</item><item>
+    <title>记一次前后端分离的开发部署实践</title>
+    <link>https://dp0d.github.io/full_stack_development/</link>
+    <pubDate>Sat, 23 Jul 2022 10:22:12 &#43;0800</pubDate><author>
+        <name>dp0d</name>
+    </author><guid>https://dp0d.github.io/full_stack_development/</guid>
+    <description><![CDATA[前言本项目为个人实践项目，按实验室老师要求将项目部署上云服务器，主要实现基本的网站结构和api交互，使用nginx进行反向代理，提供web服]]></description>
+</item><item>
+    <title>预训练模型的finetune技巧</title>
+    <link>https://dp0d.github.io/finetune_trick/</link>
+    <pubDate>Sat, 09 Jul 2022 11:13:47 &#43;0800</pubDate><author>
+        <name>dp0d</name>
+    </author><guid>https://dp0d.github.io/finetune_trick/</guid>
+    <description><![CDATA[权重冻结在使用预训练语言模型进行下游任务的微调时，有时数据量难以使得其收敛，此时我们可以选择固定住某些层的参数，使其仍然保持在预训练语料上的]]></description>
+</item><item>
+    <title>Tensor的简单使用</title>
+    <link>https://dp0d.github.io/tensor/</link>
+    <pubDate>Fri, 08 Jul 2022 11:33:08 &#43;0800</pubDate><author>
+        <name>dp0d</name>
+    </author><guid>https://dp0d.github.io/tensor/</guid>
+    <description><![CDATA[Tensor是什么？Tensor又叫张量，与标量，向量等的区别如下： 标量其实就是一个独立存在的数，比如在线性代数中一个实数 5 就可以被看作一个]]></description>
+</item></channel>
+</rss>

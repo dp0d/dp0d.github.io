@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noodp" />
+    <title class="pjax-title">反向传播算法 - dp0d&#39;s blog</title><meta name="Description" content="dp0d&#39;s blog,where to share life as well as technology of nlp."><meta property="og:title" content="反向传播算法" />
+<meta property="og:description" content="反向传播算法作为一位机器学习领域的博主，第一篇博客肯定要从反向传播算法开始啦~ 简介​ 来自维基百科 ​ 首先是反向传播算法的历史沿用👇 ​ 弗拉基米尔" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://dp0d.github.io/backpropagation/" /><meta property="og:image" content="https://dp0d.github.io/images/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-03-18T11:29:42+08:00" />
+<meta property="article:modified_time" content="2022-03-18T11:29:42+08:00" /><meta property="og:site_name" content="dp0d&#39;s blog" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://dp0d.github.io/images/logo.png"/>
+
+<meta name="twitter:title" content="反向传播算法"/>
+<meta name="twitter:description" content="反向传播算法作为一位机器学习领域的博主，第一篇博客肯定要从反向传播算法开始啦~ 简介​ 来自维基百科 ​ 首先是反向传播算法的历史沿用👇 ​ 弗拉基米尔"/>
+<meta name="application-name" content="dp0d&#39;s blog">
+<meta name="apple-mobile-web-app-title" content="dp0d&#39;s blog">
+
+<meta name="theme-color" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://dp0d.github.io/backpropagation/" /><link rel="next" href="https://dp0d.github.io/env_management/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/fontawesome-free/all.min.css">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/animate/animate.min.css">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript>
+    
+    
+    
+    <script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "反向传播算法",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/dp0d.github.io\/backpropagation\/"
+        },"image": ["https:\/\/dp0d.github.io\/images\/logo.png"],"genre": "posts","wordcount":  2863 ,
+        "url": "https:\/\/dp0d.github.io\/backpropagation\/","datePublished": "2022-03-18T11:29:42+08:00","dateModified": "2022-03-18T11:29:42+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "dp0d","logo": "https:\/\/dp0d.github.io\/images\/logo.png"},"author": {
+                "@type": "Person",
+                "name": "dp0d"
+            },"description": ""
+    }
+    </script></head>
+
+<body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">
+        function setTheme(theme) {document.body.setAttribute('theme', theme);}
+        function saveTheme(theme) {window.localStorage && localStorage.setItem('theme', theme);}
+        function getMeta(metaName) {const metas = document.getElementsByTagName('meta'); for (let i = 0; i < metas.length; i++) if (metas[i].getAttribute('name') === metaName) return metas[i]; return '';}
+        if (window.localStorage && localStorage.getItem('theme')) {let theme = localStorage.getItem('theme');theme === 'light' || theme === 'dark' || theme === 'black' ? setTheme(theme) : (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light')); } else { if ('auto' === 'light' || 'auto' === 'dark' || 'auto' === 'black') setTheme('auto'), saveTheme('auto'); else saveTheme('auto'), window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light');}
+        let metaColors = {'light': '#f8f8f8','dark': '#252627','black': '#000000'}
+        getMeta('theme-color').content = metaColors[document.body.getAttribute('theme')];
+    </script>
+    <div id="back-to-top"></div>
+    <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="dp0d&#39;s blog"><span class="header-title-pre"><i class='far fa-edit fa-fw'></i></span>Natural Language Processing</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/charge/"> 充电 </a><a class="menu-item" href="/friends/"> 朋友萌 </a><a class="menu-item" href="/collection/"> 收藏 </a><a class="menu-item" href="/copyright/"> 版权 </a><a class="menu-item" href="/about/"> 关于我 </a><a class="menu-item" href="https://github.com/dp0d" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="#" onclick="return false;" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="#" onclick="return false;" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="#" onclick="return false;" class="menu-item theme-select" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                    <select class="color-theme-select" id="theme-select-desktop" title="切换主题">
+                        <option value="light">浅色</option>
+                        <option value="dark">深色</option>
+                        <option value="black">黑色</option>
+                        <option value="auto">跟随系统</option>
+                    </select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="dp0d&#39;s blog"><span class="header-title-pre"><i class='far fa-edit fa-fw'></i></span>Natural Language Processing</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="#" onclick="return false;" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="#" onclick="return false;" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="#" onclick="return false;" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/charge/" title="">充电</a><a class="menu-item" href="/friends/" title="">朋友萌</a><a class="menu-item" href="/collection/" title="">收藏</a><a class="menu-item" href="/copyright/" title="">版权</a><a class="menu-item" href="/about/" title="">关于我</a><a class="menu-item" href="https://github.com/dp0d" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i></a><a href="#" onclick="return false;" class="menu-item theme-select" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+                <select class="color-theme-select" id="theme-select-mobile" title="切换主题">
+                    <option value="light">浅色</option>
+                    <option value="dark">深色</option>
+                    <option value="black">黑色</option>
+                    <option value="auto">跟随系统</option>
+                </select>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+            <div class="container"><div class="toc" id="toc-auto">
+        <h2 class="toc-title">目录</h2>
+        <div class="toc-content" id="toc-content-auto"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#简介">简介</a></li>
+    <li><a href="#前向传播推导">前向传播推导</a>
+      <ul>
+        <li><a href="#a-了解矩阵乘法">a. 了解矩阵乘法</a></li>
+        <li><a href="#b-了解连式法则">b. 了解连式法则</a></li>
+        <li><a href="#c了解神经网络">c.了解神经网络</a></li>
+      </ul>
+    </li>
+    <li><a href="#误差反向传播">误差反向传播</a></li>
+  </ul>
+</nav></div>
+    </div><script>document.getElementsByTagName("main")[0].setAttribute("pageStyle", "normal")</script><script>document.getElementsByTagName("main")[0].setAttribute("autoTOC", "true")</script><article class="page single"><h1 class="single-title animate__animated animate__flipInX">反向传播算法</h1><div class="post-meta">
+            <div class="post-meta-line">
+                <span class="post-author"><i class="author fas fa-user-circle fa-fw"></i><a href="https://github.com/dp0d" title="Author" target="_blank" rel="noopener noreffer author" class="author">dp0d</a>
+                </span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-03-18">2022-03-18</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2022-03-18">2022-03-18</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 2863 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 6 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#简介">简介</a></li>
+    <li><a href="#前向传播推导">前向传播推导</a>
+      <ul>
+        <li><a href="#a-了解矩阵乘法">a. 了解矩阵乘法</a></li>
+        <li><a href="#b-了解连式法则">b. 了解连式法则</a></li>
+        <li><a href="#c了解神经网络">c.了解神经网络</a></li>
+      </ul>
+    </li>
+    <li><a href="#误差反向传播">误差反向传播</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="反向传播算法" class="headerLink">
+    <a href="#%e5%8f%8d%e5%90%91%e4%bc%a0%e6%92%ad%e7%ae%97%e6%b3%95" class="header-mark"></a>反向传播算法</h1><p>作为一位机器学习领域的博主，第一篇博客肯定要从反向传播算法开始啦~</p>
+<h2 id="简介" class="headerLink">
+    <a href="#%e7%ae%80%e4%bb%8b" class="header-mark"></a>简介</h2><p>​	来自<a href="https://zh.wikipedia.org/wiki/%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD%E7%AE%97%E6%B3%95#cite_note-Alpaydin2010-10" target="_blank" rel="noopener noreffer">维基百科</a></p>
+<p>​	首先是反向传播算法的历史沿用👇</p>
+<p>​	<a href="https://zh.wikipedia.org/wiki/%e5%bc%97%e6%8b%89%e5%9f%ba%e7%b1%b3%e5%b0%94%c2%b7%e7%93%a6%e6%99%ae%e5%b0%bc%e5%85%8b" target="_blank" rel="noopener noreffer">弗拉基米尔·瓦普尼克</a>引用（Bryson, A.E.; W.F. Denham; S.E. Dreyfus. Optimal programming problems with inequality constraints. I: Necessary conditions for extremal solutions. AIAA J. 1, 11 (1963) 2544-2550）在他的书《支持向量机》中首次发表反向传播算法。在1969年<a href="https://zh.wikipedia.org/w/index.php?title=Arthur_E._Bryson&amp;action=edit&amp;redlink=1" target="_blank" rel="noopener noreffer">Arthur E. Bryson</a>和<a href="https://zh.wikipedia.org/wiki/%e4%bd%95%e6%af%93%e7%90%a6" target="_blank" rel="noopener noreffer">何毓琦</a>将其描述为多级动态系统优化方法。直到1974年以后在神经网络的背景下应用，并由<a href="https://zh.wikipedia.org/w/index.php?title=Paul_Werbos&amp;action=edit&amp;redlink=1" target="_blank" rel="noopener noreffer">Paul Werbos</a>[<a href="https://zh.wikipedia.org/wiki/%e5%8f%8d%e5%90%91%e4%bc%a0%e6%92%ad%e7%ae%97%e6%b3%95#cite_note-9" target="_blank" rel="noopener noreffer">7]</a>、<a href="https://zh.wikipedia.org/w/index.php?title=David_E._Rumelhart&amp;action=edit&amp;redlink=1" target="_blank" rel="noopener noreffer">David E. Rumelhart</a>、<a href="https://zh.wikipedia.org/wiki/%e6%9d%b0%e5%bc%97%e9%87%8c%c2%b7%e8%be%9b%e9%a1%bf" target="_blank" rel="noopener noreffer">杰弗里·辛顿</a>和<a href="https://zh.wikipedia.org/w/index.php?title=Ronald_J._Williams&amp;action=edit&amp;redlink=1" target="_blank" rel="noopener noreffer">Ronald J. Williams</a>[<a href="https://zh.wikipedia.org/wiki/%e5%8f%8d%e5%90%91%e4%bc%a0%e6%92%ad%e7%ae%97%e6%b3%95#cite_note-Rumelhart1986-1" target="_blank" rel="noopener noreffer">1]</a>[<a href="https://zh.wikipedia.org/wiki/%e5%8f%8d%e5%90%91%e4%bc%a0%e6%92%ad%e7%ae%97%e6%b3%95#cite_note-Alpaydin2010-10" target="_blank" rel="noopener noreffer">8]</a>的著作，它才获得认可，并引发了一场人工神经网络的研究领域的“文艺复兴”。在21世纪初人们对其失去兴趣，但在2010年后又拥有了兴趣，如今可以通过<a href="https://zh.wikipedia.org/wiki/%e5%9c%96%e5%bd%a2%e8%99%95%e7%90%86%e5%99%a8" target="_blank" rel="noopener noreffer">GPU</a>等大型现代运算器件用于训练更大的网络。例如在2013年，顶级语音识别器现在使用反向传播算法训练神经网络。</p>
+<p>​	那么反向传播算法是啥？👇</p>
+<p>​	<strong>反向传播</strong>（英语：Backpropagation，缩写为<strong>BP</strong>）是“误差反向传播”的简称，是一种与<a href="https://zh.wikipedia.org/wiki/%e6%9c%80%e4%bc%98%e5%8c%96" target="_blank" rel="noopener noreffer">最优化方法</a>（如<a href="https://zh.wikipedia.org/wiki/%e6%a2%af%e5%ba%a6%e4%b8%8b%e9%99%8d%e6%b3%95" target="_blank" rel="noopener noreffer">梯度下降法</a>）结合使用的，用来训练<a href="https://zh.wikipedia.org/wiki/%e4%ba%ba%e5%b7%a5%e7%a5%9e%e7%bb%8f%e7%bd%91%e7%bb%9c" target="_blank" rel="noopener noreffer">人工神经网络</a>的常见方法。该方法对网络中所有权重计算<a href="https://zh.wikipedia.org/wiki/%e6%8d%9f%e5%a4%b1%e5%87%bd%e6%95%b0" target="_blank" rel="noopener noreffer">损失函数</a>的梯度。这个梯度会回馈给最佳化方法，用来更新权值以最小化损失函数。</p>
+<h2 id="前向传播推导" class="headerLink">
+    <a href="#%e5%89%8d%e5%90%91%e4%bc%a0%e6%92%ad%e6%8e%a8%e5%af%bc" class="header-mark"></a>前向传播推导</h2><h3 id="a-了解矩阵乘法" class="headerLink">
+    <a href="#a-%e4%ba%86%e8%a7%a3%e7%9f%a9%e9%98%b5%e4%b9%98%e6%b3%95" class="header-mark"></a>a. 了解矩阵乘法</h3><p>假设👇</p>
+
+
+$$
+\textbf{A} =
+
+\begin{bmatrix}
+1 & 2 \\
+3 & 4 \\
+\end{bmatrix}
+\quad
+\textbf{B}=\left[
+    \begin{matrix}
+	-1 & -2 \\
+	-3 & -4 \\
+    \end{matrix}
+\right]
+$$
+
+
+<p><strong>点积</strong>（通常省略  ·   符号）计算如下👇</p>
+
+$$
+\textbf{AB} =
+\left[
+	\begin{matrix}
+	1 \times(-1) + 2\times(-3) & 1\times (-2) +2\times(-4)\\
+	3 \times(-1) + 4\times(-3) & 3\times(-2) +4 \times(-4)
+	\end{matrix}
+\right]=
+\left[
+	\begin{matrix}
+	-7 & -10\\
+	-15& -22
+	\end{matrix}
+\right]
+$$
+
+
+<p><strong>逐元素乘法</strong>如下👇</p>
+
+$$
+\textbf{A}\odot\textbf{B} =
+\left[
+	\begin{matrix}
+	1 \times(-1)& 2\times(-2)\\
+	3 \times(-3)& 4 \times(-4)
+	\end{matrix}
+\right]=
+\left[
+	\begin{matrix}
+	-1 & -4\\
+	-9& -16
+	\end{matrix}
+\right]
+$$
+
+
+<h3 id="b-了解连式法则" class="headerLink">
+    <a href="#b-%e4%ba%86%e8%a7%a3%e8%bf%9e%e5%bc%8f%e6%b3%95%e5%88%99" class="header-mark"></a>b. 了解连式法则</h3><p>如果将复合函数f(g(x))对x求导，需要使用链式法则，
+$$
+\frac{\partial f(g(x))}{\partial x} = \frac{\partial f(g(x))}{\partial g(x)} \frac{\partial g(x)}{\partial x}
+$$</p>
+<p>举个栗子，
+$$
+\frac{\partial e^{-x}}{\partial x} = \frac{\partial e^{-x}}{\partial (-x)} \frac{\partial (-x)}{\partial x}=e^{-x}\cdot(-1) = -e^{-x}
+$$
+这也是神经网络根据结果来更新前面n层参数的基础。</p>
+<h3 id="c了解神经网络" class="headerLink">
+    <a href="#c%e4%ba%86%e8%a7%a3%e7%a5%9e%e7%bb%8f%e7%bd%91%e7%bb%9c" class="header-mark"></a>c.了解神经网络</h3><p>如下图所示，这是一个神经网络👇</p>
+<p><img
+        class="lazyload"
+        data-src="Sample_Neural_Network.png"
+        data-srcset="/backpropagation/Sample_Neural_Network.png, Sample_Neural_Network.png 1.5x, /backpropagation/Sample_Neural_Network.png 2x"
+        data-sizes="auto"
+        alt="/backpropagation/Sample_Neural_Network.png"
+        title="Sample_Neural_Network"></p>
+<p>可以看到，这个神经网络的隐藏层（除了第一层输入层和最后一层输出层之外都是隐藏层）与所有上一层的神经元都连接了，我们一般称这样的层为全连接层。可以看到，图中的神经网络较为复杂，接下来，我们对网络进行拆解至最小单元。</p>
+<p>先看看最基本的<strong>神经元</strong>是如何进行内部计算的。👇</p>
+<p><img
+        class="lazyload"
+        data-src="image-20220320161409471.png"
+        data-srcset="/backpropagation/image-20220320161409471.png, image-20220320161409471.png 1.5x, /backpropagation/image-20220320161409471.png 2x"
+        data-sizes="auto"
+        alt="/backpropagation/image-20220320161409471.png"
+        title="image-20220320161409471"></p>
+<hr>
+<p>可以看到，其实不难，每个神经元接受到来自上一层的每一个输入（即上一层需要连接的输出乘以（上一层至当前层的权重矩阵）得到的$w_{j_i}^{[l]}$）值，并将这些值求和，然后加上本神经元的Bias，经过激活函数$\sigma$得到此神经元的输出 $a_j^{[l]}$。</p>
+<p>然后我们让神经元回归到神经网络中，看一下整个网络的前馈计算脉路👇</p>
+<p><img
+        class="lazyload"
+        data-src="image-20220320162715911.png"
+        data-srcset="/backpropagation/image-20220320162715911.png, image-20220320162715911.png 1.5x, /backpropagation/image-20220320162715911.png 2x"
+        data-sizes="auto"
+        alt="/backpropagation/image-20220320162715911.png"
+        title="image-20220320162715911"></p>
+<p>如上图所示，这就是一个基本的前馈神经网络计算过程。其中，$Z$代表的是本神经元的激活函数所接受的输入值，也就是本神经元接受的来自上一层各神经元的输出（如果不是全连接层，也有可能是上一层部分神经元的输出）乘以权重w，求和后，加上本神经元的Bias得到的值。</p>
+
+
+如果对这个过程不是特别了解，那我们以矩阵的形式写一次$Z$的计算范例。👇
+
+对部分参数进行如下定义👇
+$$
+\begin{array}{cc}
+w^{[1]}=\left[\begin{array}{ll}
+w_{11}^{[1]} & w_{12}^{[1]} \\
+w_{21}^{[1]} & w_{22}^{[1]} \\
+w_{31}^{[1]} & w_{32}^{[1]}
+\end{array}\right] & w^{[2]}=\left[\begin{array}{lll}
+w_{11}^{[2]} & w_{12}^{[2]} & w_{13}^{[2]} \\
+w_{21}^{[2]} & w_{22}^{[2]} & w_{23}^{[2]}
+\end{array}\right] \\
+b^{[1]}=\left[\begin{array}{c}
+b_{1}^{[1]} \\
+b_{2}^{[1]} \\
+b_{3}^{[1]}
+\end{array}\right] & b^{[2]}=\left[\begin{array}{c}
+b_{1}^{[2]} \\
+b_{2}^{[2]}
+\end{array}\right]
+\end{array}
+$$
+于是，图中两个隐藏层$Z$的计算如下👇
+
+$$
+\begin{array}{c}
+z^{[1]}=\left[\begin{array}{ll}
+w_{11}^{[1]} & w_{12}^{[1]} \\
+w_{21}^{[1]} & w_{22}^{[1]} \\
+w_{31}^{[1]} & w_{32}^{[1]}
+\end{array}\right] \cdot\left[\begin{array}{c}
+a_{1}^{[0]} \\
+a_{2}^{[0]}
+\end{array}\right]+\left[\begin{array}{c}
+b_{1}^{[1]} \\
+b_{2}^{[1]} \\
+b_{3}^{[1]}
+\end{array}\right]=\left[\begin{array}{c}
+w_{11}^{[1]} a_{1}^{[0]}+w_{12}^{[1]} a_{2}^{[0]}+b_{1}^{[1]} \\
+w_{21}^{[1]} a_{1}^{[0]}+w_{22}^{[1]} a_{2}^{[0]}+b_{2}^{[1]} \\
+w_{31}^{[1]} a_{1}^{[0]}+w_{32}^{[1]} a_{2}^{[0]}+b_{3}^{[1]}
+\end{array}\right] \\
+z^{[2]}=\left[\begin{array}{lll}
+w_{11}^{[2]} & w_{12}^{[2]} & w_{13}^{[2]} \\
+w_{21}^{[2]} & w_{22}^{[2]} & w_{23}^{[2]}
+\end{array}\right] \cdot\left[\begin{array}{c}
+a_{1}^{[1]} \\
+a_{2}^{[1]} \\
+a_{3}^{[1]}
+\end{array}\right]+\left[\begin{array}{l}
+b_{1}^{[2]} \\
+b_{2}^{[2]}
+\end{array}\right]=\left[\begin{array}{l}
+w_{11}^{[2]} a_{1}^{[1]}+w_{12}^{[2]} a_{2}^{[1]}+w_{13}^{[2]} a_{3}^{[1]}+b_{1}^{[2]} \\
+w_{21}^{[2]} a_{1}^{[1]}+w_{22}^{[2]} a_{2}^{[1]}+w_{23}^{[2]} a_{3}^{[1]}+b_{2}^{[2]}
+\end{array}\right] \\
+\end{array}
+$$
+
+
+可以表述成👇
+$$
+\textbf{Z}^{[l]}=w^{[l]}\cdot \textbf{A}^{[l-1]} +b^{[l]}
+$$
+那么，最后一层的输出呢就是我们需要的预测值，对于这一个预测值，我们希望它与真实值不要有过大的偏差，这个时候，我们便需要一个度量方法来衡量预测值与目标值的偏差程度。通常，我们将这个程度量化为损失函数的函数值Loss，那么这个损失函数如何去定义呢？这就牵扯到你所需要的预测是什么样的，它与实际值的关系是怎样的了，以后有机会出一篇文章梳理一些常用的损失函数。现在我们使用一个最简单的度量方法，也成为$L_1$度量，即绝对差值度量法，定义$(\hat{y},y)$为（网络预测值，真实值），那么函数$L(\hat{y},y)$可以定义如下👇
+$$
+L(\hat{y},y)=|\hat{y}-y|
+$$
+那么，他输出的函数值就是我们所需要的偏差度量。我们都知道，神经网络需要进行学习，学习的是什么呢？其实就是一个分布，希望在给出条件$x$下，能够给出相应的映射$y$，即网络能够通过映射计算去拟合数据中的分布$p(x)$。这个拟合过程，也就是缩小偏差度量，那么如何缩小偏差呢？这时便出现了我们的主角，反向传播算法，这是一个通过输出来反馈信息的算法，也是神经网络学习的根本所在，它的全名其实是误差反向传播，即通过误差回传，让模型的参数共同调整去减小这个误差。
+
+那么误差我们熟悉，就是两个值之间的差值，而当我们将这个差值视为函数差值的时候，他就可以与函数求导挂钩，回顾一下求导法则👇
+$$
+f'(x)=\lim_{\Delta x \rightarrow0} \frac{\Delta y}{\Delta x}
+$$
+可以看到，通俗的说，有了导数，我们就可以知道要将偏差多少$y$调整回来，需要多少的$x$。
+
+那么问题又来了，对于那么多的网络参数，我们怎么去调整呢？
+
+$$
+\begin{array}{cc}
+w^{[1]}=\left[\begin{array}{ll}
+w_{11}^{[1]} & w_{12}^{[1]} \\
+w_{21}^{[1]} & w_{22}^{[1]} \\
+w_{31}^{[1]} & w_{32}^{[1]}
+\end{array}\right] \quad w^{[2]}=\left[\begin{array}{lll}
+w_{11}^{[2]} & w_{12}^{[2]} & w_{13}^{[2]} \\
+w_{21}^{[2]} & w_{22}^{[2]} & w_{23}^{[2]}
+\end{array}\right] \\
+b^{[1]}=\left[\begin{array}{c}
+b_{1}^{[1]} \\
+b_{2}^{[1]} \\
+b_{3}^{[1]}
+\end{array}\right] & b^{[2]}=\left[\begin{array}{c}
+b_{1}^{[2]} \\
+b_{2}^{[2]}
+\end{array}\right]
+\end{array}
+$$
+
+
+<p>答案就是，偏导数👇</p>
+<p>$$
+f_x&rsquo;(x,y)=\frac{\partial f}{\partial x}
+$$
+偏导数是啥，偏导数就是有偏见的导数，只对特定的条件$x$感兴趣，也就是偏导的一方，而其他的视为常数，这样我们就能精准地对不同参数进行更新。</p>
+<p>举个最简单的例子，设👇
+$$
+f(x,y)=xy
+$$
+那么如果对$x$偏导👇
+$$
+f_x(x,y)=y
+$$
+反之，若对$y$偏导👇
+$$
+f_y(x,y)=x
+$$
+那么，在神经网络中，偏导的概念就视为了梯度$\nabla$，为啥叫梯度呢？梯度$\nabla$的本意是一个向量（矢量），表示某一函数在该点处的方向导数沿着该方向取得最大值，那么如果在某一个变量上需要对误差产生最大的影响，则需要沿着梯度$\nabla$的方向，也就是偏导的方向。</p>
+<p><img
+        class="lazyload"
+        data-src="image-20220320191435200.png"
+        data-srcset="/backpropagation/image-20220320191435200.png, image-20220320191435200.png 1.5x, /backpropagation/image-20220320191435200.png 2x"
+        data-sizes="auto"
+        alt="/backpropagation/image-20220320191435200.png"
+        title="image-20220320191435200">
+$$
+w:=w-a \frac{\partial J(w)}{\partial w}
+$$
+图中是目标函数对变量$w$的梯度$\nabla$，可以看到，梯度$\nabla$在图线上表现为切线，很容易知道在这个方向上能够对目标函数的值带来最大的影响，那么变量$w$在当前时刻沿着这个方向变化便能为缩小误差做出最大贡献。</p>
+<p>如果拓展到矩阵则容易得到矩阵梯度$\nabla$矩阵，也就是每个元素的梯度啦。👇</p>
+
+$$
+\nabla_{\textbf{A}}f(\textbf{A})=
+\begin{bmatrix}
+\frac{\partial f(A)}{\partial A_{11}} & \frac{\partial f(A)}{\partial A_{12}} & \cdots & \frac{\partial f(A)}{\partial A_{13}} \\
+\frac{\partial f(A)}{\partial A_{21}} & \frac{\partial f(A)}{\partial A_{12}} & \cdots & \frac{\partial f(A)}{\partial A_{23}} \\
+\vdots & \vdots & \ddots & \vdots \\
+\frac{\partial f(A)}{\partial A_{m1}} & \frac{\partial f(A)}{\partial A_{m2}} & \cdots & \frac{\partial f(A)}{\partial A_{m3}} \\
+\end{bmatrix}
+$$
+
+$$
+(\nabla_{\textbf{A}}f(\textbf{A}))_{ij}=\frac{\textbf A}{\partial A_{ij}}
+$$
+
+
+<h2 id="误差反向传播" class="headerLink">
+    <a href="#%e8%af%af%e5%b7%ae%e5%8f%8d%e5%90%91%e4%bc%a0%e6%92%ad" class="header-mark"></a>误差反向传播</h2><p>为误差对神经元输入的值（激活前）$z$    做如下假设👇</p>
+<img src="image-20220320194036816.png" alt="image-20220320194036816" style="zoom:35%;" />
+<p><img
+        class="lazyload"
+        data-src="image-20220320194658134.png"
+        data-srcset="/backpropagation/image-20220320194658134.png, image-20220320194658134.png 1.5x, /backpropagation/image-20220320194658134.png 2x"
+        data-sizes="auto"
+        alt="/backpropagation/image-20220320194658134.png"
+        title="image-20220320194658134"></p>
+<p>那么对于输出层👇</p>
+
+$$
+\delta_{j}^{[L]}=\frac{\partial L}{\partial a_{j}^{[L]}} \sigma^{\prime}\left(z_{j}^{[L]}\right) \quad \delta^{[L]}=\left[\begin{array}{c}
+\frac{\partial L}{\partial a_{1}^{L L}} \\
+\frac{\partial L}{\partial a_{2}^{[L]}} \\
+\vdots \\
+\frac{\partial L}{\partial a_{j}^{L L}}
+\end{array}\right] \odot\left[\begin{array}{c}
+\sigma^{\prime}\left(z_{1}^{[L]}\right) \\
+\sigma^{\prime}\left(z_{2}^{[L]}\right) \\
+\vdots \\
+\sigma^{\prime}\left(z_{j}^{[L]}\right)
+\end{array}\right] \quad \delta^{[L]}=\nabla_{a} L \odot \sigma^{\prime}\left(z^{[L]}\right)
+$$
+
+
+对于隐藏层👇
+$$
+\delta_{j}^{[l]}=\sum_{k} w_{k j}^{[l+1]} \delta_{k}^{[l+1]} \sigma^{\prime}\left(z_{j}^{[l]}\right)
+\\
+\delta^{[l]}=\left[\left[\begin{array}{cccc}
+w_{11}^{[l]} & w_{12}^{[l]} & \ldots & w_{1 k}^{[l]} \\
+w_{21}^{[l]} & w_{22}^{[l]} & \ldots & w_{2 k}^{[l]} \\
+\vdots & \vdots & \ddots & \vdots \\
+w_{j 1}^{[l]} & w_{j 2}^{[l]} & \ldots & w_{j k}^{[l]}
+\end{array}\right]\left[\begin{array}{c}
+\delta_{1}^{[l+1]} \\
+\delta_{2}^{[l+1]} \\
+\vdots \\
+\delta_{k}^{[l+1]}
+\end{array}\right]\right] \odot\left[\begin{array}{c}
+\sigma^{\prime}\left(z_{1}^{[l]}\right) \\
+\sigma^{\prime}\left(z_{2}^{[l]}\right) \\
+\vdots \\
+\sigma^{\prime}\left(z_{j}^{[l]}\right)
+\end{array}\right]
+\\
+(\mathrm{j}, \mathrm{k}) *(\mathrm{k}, 1) \odot(\mathrm{j}, 1)=(\mathrm{j}, 1)
+\\
+\delta^{[l]}=\left[w^{[l+1]^{T}} \delta^{[l+1]}\right] \odot \sigma^{\prime}\left(z^{[l]}\right)
+$$
+更新步👇
+$$
+\begin{array}{c}
+\frac{\partial L}{\partial b_{j}^{[l]}}=\delta_{j}^{[l]} \\
+\frac{\partial L}{\partial w_{j k}^{[l]}}=a_{k}^{[l-1]} \delta_{j}^{[l]} \\
+\frac{\partial L}{\partial b^{[l]}}=\left[\begin{array}{c}
+\delta_{1}^{[l]} \\
+\delta_{2}^{[l]} \\
+\vdots \\
+\delta_{j}^{[l]}
+\end{array}\right]=\delta^{[l]}
+\\
+\frac{\partial L}{\partial w^{[l]}}=\left[\begin{array}{c}
+\delta_{1}^{[l]} \\
+\delta_{2}^{[l]} \\
+\vdots \\
+\delta_{j}^{[l]}
+\end{array}\right]\left[\begin{array}{lll}
+a_{1}^{[l]} & a_{2}^{[l]} \ldots & a_{k}^{[l]}
+\end{array}\right]\\
+(j, 1) *(1, k)=(j, k)\\
+\frac{\partial L}{\partial b^{[l]}}=\delta^{[l]}\\
+\frac{\partial L}{\partial w^{[l]}}=\delta^{[l]} a^{[l-1] T}
+
+\end{array}
+$$
+
+$$
+\begin{aligned}
+b_{j}^{[l]} & \leftarrow b_{j}^{[l]}-\alpha \frac{\partial L}{\partial b_{j}^{l]}} \\
+w_{j k}^{[l]} & \leftarrow w_{j k}^{[l]}-\alpha \frac{\partial L}{\partial w_{j k}^{[l]}} \\
+b^{[l]} & \leftarrow b^{[l]}-\alpha \frac{\partial L}{\partial b^{[l]}} \\
+w^{[l]} & \leftarrow w^{[l]}-\alpha \frac{\partial L}{\partial w^{[l]}}
+\end{aligned}
+$$
+
+
+<p>图解反向传播过程，首先是输出层👇</p>
+<p><img
+        class="lazyload"
+        data-src="image-20220320194450466.png"
+        data-srcset="/backpropagation/image-20220320194450466.png, image-20220320194450466.png 1.5x, /backpropagation/image-20220320194450466.png 2x"
+        data-sizes="auto"
+        alt="/backpropagation/image-20220320194450466.png"
+        title="image-20220320194450466"></p>
+<p>误差梯度传向第一个隐藏层👇</p>
+<p><img
+        class="lazyload"
+        data-src="image-20220320194504910.png"
+        data-srcset="/backpropagation/image-20220320194504910.png, image-20220320194504910.png 1.5x, /backpropagation/image-20220320194504910.png 2x"
+        data-sizes="auto"
+        alt="/backpropagation/image-20220320194504910.png"
+        title="image-20220320194504910"></p>
+<p>👇</p>
+<p><img
+        class="lazyload"
+        data-src="image-20220320194514080.png"
+        data-srcset="/backpropagation/image-20220320194514080.png, image-20220320194514080.png 1.5x, /backpropagation/image-20220320194514080.png 2x"
+        data-sizes="auto"
+        alt="/backpropagation/image-20220320194514080.png"
+        title="image-20220320194514080"></p>
+<p>👇</p>
+<p><img
+        class="lazyload"
+        data-src="image-20220320194525268.png"
+        data-srcset="/backpropagation/image-20220320194525268.png, image-20220320194525268.png 1.5x, /backpropagation/image-20220320194525268.png 2x"
+        data-sizes="auto"
+        alt="/backpropagation/image-20220320194525268.png"
+        title="image-20220320194525268"></p>
+<p>👇</p>
+<p><img
+        class="lazyload"
+        data-src="image-20220320194540030.png"
+        data-srcset="/backpropagation/image-20220320194540030.png, image-20220320194540030.png 1.5x, /backpropagation/image-20220320194540030.png 2x"
+        data-sizes="auto"
+        alt="/backpropagation/image-20220320194540030.png"
+        title="image-20220320194540030"></p>
+<p>👇</p>
+<p><img
+        class="lazyload"
+        data-src="image-20220320194552307.png"
+        data-srcset="/backpropagation/image-20220320194552307.png, image-20220320194552307.png 1.5x, /backpropagation/image-20220320194552307.png 2x"
+        data-sizes="auto"
+        alt="/backpropagation/image-20220320194552307.png"
+        title="image-20220320194552307"></p>
+<p>👇</p>
+<p><img
+        class="lazyload"
+        data-src="image-20220320194609869.png"
+        data-srcset="/backpropagation/image-20220320194609869.png, image-20220320194609869.png 1.5x, /backpropagation/image-20220320194609869.png 2x"
+        data-sizes="auto"
+        alt="/backpropagation/image-20220320194609869.png"
+        title="image-20220320194609869"></p>
+<p>以此类推，反向传播的过程就结束啦~</p>
+</div>
+
+        <div class="sponsor">
+        <div class="sponsor-avatar"><img
+        class="lazyload"
+        data-src="/images/logo.png"
+        data-srcset="/images/logo.png, /images/logo.png 1.5x, /images/logo.png 2x"
+        data-sizes="auto"
+        alt="/images/logo.png"
+        title="/images/logo.png"></div><p class="sponsor-bio"><em>如果你觉得这篇文章对你有所帮助，欢迎赞赏~</em></p><a href="/images/buymeacoffee.jpg" title="Sponsor" target="_blank" class="sponsor-button" rel="noopener noreferrer">
+                <i class="far fa-heart fa-fw icon" style="color: #ec6cb9;"></i>
+                <span>赞赏</span>
+            </a></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2022-03-18</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span><a class="link-to-mardown" href=/backpropagation/index.md target="_blank" rel="noopener noreferrer">阅读原始文档</a>
+                    </span><span>|&nbsp;<a class="link-to-report" href=https://github.com/dp0d/dp0d.github.io/issues/new?title=[bug]%20%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD%E7%AE%97%E6%B3%95&body=|Field|Value|%0A|-|-|%0A|Title|%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD%E7%AE%97%E6%B3%95|%0A|Url|https://dp0d.github.io/backpropagation/|%0A|Filename|https://github.com/dp0d/dp0d.github.io/posts/2022/backpropagation/index.md| target="_blank" rel="noopener noreferrer">报告问题</a>
+                    </span></div>
+            <div class="post-info-share">
+                <span><a href="#" onclick="return false;" title="分享到 Twitter" data-sharer="twitter" data-url="https://dp0d.github.io/backpropagation/" data-title="反向传播算法"><i class="fab fa-twitter fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Facebook" data-sharer="facebook" data-url="https://dp0d.github.io/backpropagation/"><i class="fab fa-facebook-square fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 微博" data-sharer="weibo" data-url="https://dp0d.github.io/backpropagation/" data-title="反向传播算法"><i class="fab fa-weibo fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Telegram" data-sharer="telegram" data-url="https://dp0d.github.io/backpropagation/" data-title="反向传播算法" data-web><i class="fab fa-telegram-plane fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+            <a href="/env_management/" class="next" rel="next" title="Python 工程环境管理">Python 工程环境管理<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+<div id="comments"><div id="giscus"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://giscus.app/">giscus</a>.
+            </noscript></div></article></div>
+        </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2022 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/dp0d" target="_blank" rel="noopener noreferrer">dp0d</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                    <span class="icp"><a href="https://beian.miit.gov.cn/" target="_blank">赣ICP备2022002313号-1</a></span></div>
+            <div class="footer-line"></div>
+            <div class="footer-line">
+            </div>
+        </div><script>
+                    if('serviceWorker' in navigator) {
+                        navigator.serviceWorker
+                            .register('/sw.min.js', { scope: '/' })
+                            .then(function(registration) {
+                            });
+                
+                        navigator.serviceWorker
+                            .ready
+                            .then(function(registration) {
+                            });
+                    }
+                </script></footer></div>
+
+    <div id="fixed-buttons"><a href="#back-to-top" id="back-to-top-button" class="fixed-button" title="回到顶部">
+            <i class="fas fa-arrow-up fa-fw"></i>
+        </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+            <i class="fas fa-comment fa-fw"></i>
+        </a>
+    </div><div class="assets"><script type="text/javascript" src="/lib/object-fit-images/ofi.min.js"></script><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/fuse/fuse.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/tablesort/tablesort.min.js"></script><script type="text/javascript" src="/lib/topbar/topbar.min.js"></script><script type="text/javascript" src="/lib/pjax/pjax.min.js"></script><script type="text/javascript" src="/js/theme.min.js" defer></script></div>
+
+<div class="pjax-assets"><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":100},"comment":{"giscus":{"darkTheme":"dark","dataCategory":"General","dataCategoryId":"DIC_kwDOHB3uW84COZbL","dataEmitMetadata":"0","dataInputPosition":"top","dataLang":"zh-CN","dataMapping":"title","dataReactionsEnabled":"1","dataRepo":"dp0d/dp0d.github.io","dataRepoId":"R_kgDOHB3uWw","lightTheme":"light"}},"lightGallery":{"actualSize":false,"exThumbImage":"data-thumbnail","hideBarsDelay":2000,"selector":".lightgallery","speed":400,"thumbContHeight":80,"thumbWidth":80,"thumbnail":true},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"distance":100,"findAllMatches":false,"fuseIndexURL":"/index.json","highlightTag":"em","ignoreFieldNorm":false,"ignoreLocation":true,"isCaseSensitive":false,"location":0,"maxResultLength":10,"minMatchCharLength":2,"noResultsFound":"没有找到结果","snippetLength":50,"threshold":0.1,"type":"fuse","useExtendedSearch":false},"sharerjs":true,"table":{"sort":true},"twemoji":true};</script><script type="text/javascript" src="/js/giscus.min.js" defer></script><script type="text/javascript" src="/lib/twemoji/twemoji.min.js" defer></script><script type="text/javascript" src="/js/twemoji.min.js" defer></script><script type="text/javascript" src="/lib/lightgallery/lightgallery.min.js"></script><script type="text/javascript" src="/lib/lightgallery/lg-thumbnail.min.js"></script><script type="text/javascript" src="/lib/lightgallery/lg-zoom.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js" defer></script><script type="text/javascript" src="/lib/katex/auto-render.min.js" defer></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js" defer></script><script type="text/javascript" src="/lib/katex/mhchem.min.js" defer></script><script type="text/javascript" src="/js/katex.min.js" defer></script><link rel="stylesheet" href="/lib/lightgallery/lightgallery.min.css"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/katex/copy-tex.min.css">
+        <noscript><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"></noscript></div>
+</body>
+
+</html>

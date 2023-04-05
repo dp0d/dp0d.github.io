@@ -1,0 +1,15 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>jupyter - 系列 - dp0d&#39;s blog</title>
+        <link>https://dp0d.github.io/series/jupyter/</link>
+        <description>jupyter - 系列 - dp0d&#39;s blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>draftpaperofgod@gmail.com (dp0d)</managingEditor>
+            <webMaster>draftpaperofgod@gmail.com (dp0d)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sun, 22 May 2022 21:52:26 &#43;0800</lastBuildDate><atom:link href="https://dp0d.github.io/series/jupyter/" rel="self" type="application/rss+xml" /><item>
+    <title>Jupyter使用教程</title>
+    <link>https://dp0d.github.io/jupyter/</link>
+    <pubDate>Sun, 22 May 2022 21:52:26 &#43;0800</pubDate><author>
+        <name>dp0d</name>
+    </author><guid>https://dp0d.github.io/jupyter/</guid>
+    <description><![CDATA[Jupyter 已经被人们广泛使用来作为生产力工具，由于其能够步运行和可视化等，带来了良好的教学和交互体验。 Jupyter Lab安装和配置安装1 pip install jupyterlab 配置 命令行指定 1]]></description>
+</item></channel>
+</rss>
