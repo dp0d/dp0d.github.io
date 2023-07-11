@@ -1,15 +1,1 @@
-<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
-    <channel>
-        <title>math - 标签 - dp0d&#39;s blog</title>
-        <link>https://dp0d.github.io/tags/math/</link>
-        <description>math - 标签 - dp0d&#39;s blog</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>draftpaperofgod@gmail.com (dp0d)</managingEditor>
-            <webMaster>draftpaperofgod@gmail.com (dp0d)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Fri, 29 Apr 2022 10:34:04 &#43;0800</lastBuildDate><atom:link href="https://dp0d.github.io/tags/math/" rel="self" type="application/rss+xml" /><item>
-    <title>损失函数</title>
-    <link>https://dp0d.github.io/loss_function/</link>
-    <pubDate>Fri, 29 Apr 2022 10:34:04 &#43;0800</pubDate><author>
-        <name>dp0d</name>
-    </author><guid>https://dp0d.github.io/loss_function/</guid>
-    <description><![CDATA[经典损失函数距离度量F 范数（Frobenius 范数）矩阵所有元素的平方和再开方，他是是向量二范式的拓展类比。 $$ ||A||_F = \sqrt{\sum a_{ij}^2} $$ 如何作为距离度量呢？]]></description>
-</item></channel>
-</rss>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>math - 标签 - dp0d's blog</title><link>https://dp0d.github.io/tags/math/</link><description>math - 标签 - dp0d's blog</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>draftpaperofgod@gmail.com (dp0d)</managingEditor><webMaster>draftpaperofgod@gmail.com (dp0d)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Fri, 29 Apr 2022 10:34:04 +0800</lastBuildDate><atom:link href="https://dp0d.github.io/tags/math/" rel="self" type="application/rss+xml"/><item><title>损失函数</title><link>https://dp0d.github.io/loss_function/</link><pubDate>Fri, 29 Apr 2022 10:34:04 +0800</pubDate><author><name>dp0d</name></author><guid>https://dp0d.github.io/loss_function/</guid><description>经典损失函数 距离度量 F 范数（Frobenius 范数）矩阵所有元素的平方和再开方，他是是向量二范式的拓展类比。 $$ ||A||_F = \sqrt{\sum a_{ij}^2} $$ 如何作为距离度量呢？</description></item></channel></rss>

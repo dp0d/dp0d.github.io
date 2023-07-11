@@ -1,762 +1,233 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="robots" content="noodp" />
-    <title class="pjax-title">记一次前后端分离的开发部署实践 - dp0d&#39;s blog</title><meta name="Description" content="dp0d&#39;s blog,where to share life as well as technology of nlp."><meta property="og:title" content="记一次前后端分离的开发部署实践" />
-<meta property="og:description" content="前言本项目为个人实践项目，按实验室老师要求将项目部署上云服务器，主要实现基本的网站结构和api交互，使用nginx进行反向代理，提供web服" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://dp0d.github.io/full_stack_development/" /><meta property="og:image" content="https://dp0d.github.io/images/logo.png"/><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2022-07-23T10:22:12+08:00" />
-<meta property="article:modified_time" content="2022-07-23T10:22:12+08:00" /><meta property="og:site_name" content="dp0d&#39;s blog" />
-
-<meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:image" content="https://dp0d.github.io/images/logo.png"/>
-
-<meta name="twitter:title" content="记一次前后端分离的开发部署实践"/>
-<meta name="twitter:description" content="前言本项目为个人实践项目，按实验室老师要求将项目部署上云服务器，主要实现基本的网站结构和api交互，使用nginx进行反向代理，提供web服"/>
-<meta name="application-name" content="dp0d&#39;s blog">
-<meta name="apple-mobile-web-app-title" content="dp0d&#39;s blog">
-
-<meta name="theme-color" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://dp0d.github.io/full_stack_development/" /><link rel="prev" href="https://dp0d.github.io/finetune_trick/" /><link rel="next" href="https://dp0d.github.io/datasets/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/fontawesome-free/all.min.css">
-        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/animate/animate.min.css">
-        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript>
-    
-    
-    
-    <script type="application/ld+json">
-    {
-        "@context": "http://schema.org",
-        "@type": "BlogPosting",
-        "headline": "记一次前后端分离的开发部署实践",
-        "inLanguage": "zh-CN",
-        "mainEntityOfPage": {
-            "@type": "WebPage",
-            "@id": "https:\/\/dp0d.github.io\/full_stack_development\/"
-        },"image": ["https:\/\/dp0d.github.io\/images\/logo.png"],"genre": "posts","keywords": "linux","wordcount":  1721 ,
-        "url": "https:\/\/dp0d.github.io\/full_stack_development\/","datePublished": "2022-07-23T10:22:12+08:00","dateModified": "2022-07-23T10:22:12+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
-            "@type": "Organization",
-            "name": "dp0d","logo": "https:\/\/dp0d.github.io\/images\/logo.png"},"author": {
-                "@type": "Person",
-                "name": "dp0d"
-            },"description": ""
-    }
-    </script></head>
-
-<body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">
-        function setTheme(theme) {document.body.setAttribute('theme', theme);}
-        function saveTheme(theme) {window.localStorage && localStorage.setItem('theme', theme);}
-        function getMeta(metaName) {const metas = document.getElementsByTagName('meta'); for (let i = 0; i < metas.length; i++) if (metas[i].getAttribute('name') === metaName) return metas[i]; return '';}
-        if (window.localStorage && localStorage.getItem('theme')) {let theme = localStorage.getItem('theme');theme === 'light' || theme === 'dark' || theme === 'black' ? setTheme(theme) : (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light')); } else { if ('auto' === 'light' || 'auto' === 'dark' || 'auto' === 'black') setTheme('auto'), saveTheme('auto'); else saveTheme('auto'), window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light');}
-        let metaColors = {'light': '#f8f8f8','dark': '#252627','black': '#000000'}
-        getMeta('theme-color').content = metaColors[document.body.getAttribute('theme')];
-    </script>
-    <div id="back-to-top"></div>
-    <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
-    <div class="header-wrapper">
-        <div class="header-title">
-            <a href="/" title="dp0d&#39;s blog"><span class="header-title-pre"><i class='far fa-edit fa-fw'></i></span>Natural Language Processing</a>
-        </div>
-        <div class="menu">
-            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/charge/"> 充电 </a><a class="menu-item" href="/friends/"> 朋友萌 </a><a class="menu-item" href="/collection/"> 收藏 </a><a class="menu-item" href="/copyright/"> 版权 </a><a class="menu-item" href="/about/"> 关于我 </a><a class="menu-item" href="https://github.com/dp0d" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
-                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
-                        <a href="#" onclick="return false;" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
-                            <i class="fas fa-search fa-fw"></i>
-                        </a>
-                        <a href="#" onclick="return false;" class="search-button search-clear" id="search-clear-desktop" title="清空">
-                            <i class="fas fa-times-circle fa-fw"></i>
-                        </a>
-                        <span class="search-button search-loading" id="search-loading-desktop">
-                            <i class="fas fa-spinner fa-fw fa-spin"></i>
-                        </span>
-                    </span><a href="#" onclick="return false;" class="menu-item theme-select" title="切换主题">
-                    <i class="fas fa-adjust fa-fw"></i>
-                    <select class="color-theme-select" id="theme-select-desktop" title="切换主题">
-                        <option value="light">浅色</option>
-                        <option value="dark">深色</option>
-                        <option value="black">黑色</option>
-                        <option value="auto">跟随系统</option>
-                    </select>
-                </a></div>
-        </div>
-    </div>
-</header><header class="mobile" id="header-mobile">
-    <div class="header-container">
-        <div class="header-wrapper">
-            <div class="header-title">
-                <a href="/" title="dp0d&#39;s blog"><span class="header-title-pre"><i class='far fa-edit fa-fw'></i></span>Natural Language Processing</a>
-            </div>
-            <div class="menu-toggle" id="menu-toggle-mobile">
-                <span></span><span></span><span></span>
-            </div>
-        </div>
-        <div class="menu" id="menu-mobile"><div class="search-wrapper">
-                    <div class="search mobile" id="search-mobile">
-                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
-                        <a href="#" onclick="return false;" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
-                            <i class="fas fa-search fa-fw"></i>
-                        </a>
-                        <a href="#" onclick="return false;" class="search-button search-clear" id="search-clear-mobile" title="清空">
-                            <i class="fas fa-times-circle fa-fw"></i>
-                        </a>
-                        <span class="search-button search-loading" id="search-loading-mobile">
-                            <i class="fas fa-spinner fa-fw fa-spin"></i>
-                        </span>
-                    </div>
-                    <a href="#" onclick="return false;" class="search-cancel" id="search-cancel-mobile">
-                        取消
-                    </a>
-                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/charge/" title="">充电</a><a class="menu-item" href="/friends/" title="">朋友萌</a><a class="menu-item" href="/collection/" title="">收藏</a><a class="menu-item" href="/copyright/" title="">版权</a><a class="menu-item" href="/about/" title="">关于我</a><a class="menu-item" href="https://github.com/dp0d" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i></a><a href="#" onclick="return false;" class="menu-item theme-select" title="切换主题">
-                <i class="fas fa-adjust fa-fw"></i>
-                <select class="color-theme-select" id="theme-select-mobile" title="切换主题">
-                    <option value="light">浅色</option>
-                    <option value="dark">深色</option>
-                    <option value="black">黑色</option>
-                    <option value="auto">跟随系统</option>
-                </select>
-            </a></div>
-    </div>
-</header>
-<div class="search-dropdown desktop">
-    <div id="search-dropdown-desktop"></div>
-</div>
-<div class="search-dropdown mobile">
-    <div id="search-dropdown-mobile"></div>
-</div>
-<main class="main">
-            <div class="container"><div class="toc" id="toc-auto">
-        <h2 class="toc-title">目录</h2>
-        <div class="toc-content" id="toc-content-auto"><nav id="TableOfContents">
-  <ul>
-    <li><a href="#前言">前言</a></li>
-    <li><a href="#nginx配置">Nginx配置</a></li>
-    <li><a href="#创建vite项目">创建Vite项目</a></li>
-    <li><a href="#mysql配置">Mysql配置</a>
-      <ul>
-        <li><a href="#有mysql密码未知">有mysql，密码未知</a>
-          <ul>
-            <li><a href="#此处有坑mysql-80版本以下">此处有坑，mysql 8.0版本以下</a></li>
-            <li><a href="#80及以上">8.0及以上</a></li>
-          </ul>
-        </li>
-      </ul>
-    </li>
-    <li><a href="#后端配置">后端配置</a></li>
-  </ul>
-</nav></div>
-    </div><script>document.getElementsByTagName("main")[0].setAttribute("pageStyle", "normal")</script><script>document.getElementsByTagName("main")[0].setAttribute("autoTOC", "true")</script><article class="page single"><h1 class="single-title animate__animated animate__flipInX">记一次前后端分离的开发部署实践</h1><div class="post-meta">
-            <div class="post-meta-line">
-                <span class="post-author"><i class="author fas fa-user-circle fa-fw"></i><a href="https://github.com/dp0d" title="Author" target="_blank" rel="noopener noreffer author" class="author">dp0d</a>
-                </span>&nbsp;<span class="post-category">收录于 </span>&nbsp;<span class="post-category">类别 <a href="/categories/tutorial/"><i class="far fa-folder fa-fw"></i>教程</a>&nbsp;<a href="/categories/technology_log/"><i class="far fa-folder fa-fw"></i>开发日志</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-07-23">2022-07-23</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2022-07-23">2022-07-23</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1721 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 4 分钟&nbsp;</div>
-        </div><div class="details toc" id="toc-static"  kept="">
-                <div class="details-summary toc-title">
-                    <span>目录</span>
-                    <span><i class="details-icon fas fa-angle-right"></i></span>
-                </div>
-                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
-  <ul>
-    <li><a href="#前言">前言</a></li>
-    <li><a href="#nginx配置">Nginx配置</a></li>
-    <li><a href="#创建vite项目">创建Vite项目</a></li>
-    <li><a href="#mysql配置">Mysql配置</a>
-      <ul>
-        <li><a href="#有mysql密码未知">有mysql，密码未知</a>
-          <ul>
-            <li><a href="#此处有坑mysql-80版本以下">此处有坑，mysql 8.0版本以下</a></li>
-            <li><a href="#80及以上">8.0及以上</a></li>
-          </ul>
-        </li>
-      </ul>
-    </li>
-    <li><a href="#后端配置">后端配置</a></li>
-  </ul>
-</nav></div>
-            </div><div class="content" id="content"><h2 id="前言" class="headerLink">
-    <a href="#%e5%89%8d%e8%a8%80" class="header-mark"></a>前言</h2><p>本项目为个人实践项目，按实验室老师要求将项目部署上云服务器，主要实现基本的网站结构和api交互，使用nginx进行反向代理，提供web服务，后端使用spring架构。</p>
-<p>开发环境如下，</p>
-<p>云服务器 Ubuntu</p>
-<p>本地 vscode，MacOS，idea</p>
-<h2 id="nginx配置" class="headerLink">
-    <a href="#nginx%e9%85%8d%e7%bd%ae" class="header-mark"></a>Nginx配置</h2><p>版本 Nginx Open Source</p>
-<p>官方文档 <a href="https://docs.nginx.com/nginx/admin-guide/installing-nginx/installing-nginx-open-source/" target="_blank" rel="noopener noreffer">https://docs.nginx.com/nginx/admin-guide/installing-nginx/installing-nginx-open-source/</a></p>
-<blockquote>
-<p>一键安装</p>
-</blockquote>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo apt install -y nginx
-</span></span></code></pre></td></tr></table>
-</div>
-</div><blockquote>
-<p>手动安装方法（https://blog.csdn.net/lsygood/article/details/）（不推荐）</p>
-</blockquote>
-<p>大致说下做法</p>
-<p>先安装依赖</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">apt install -y gcc pcre pcre-devel zlib zlib-devel openssl openssl-devel
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>到这下一个nginx压缩包 <a href="http://nginx.org/" target="_blank" rel="noopener noreffer">http://nginx.org/</a></p>
-<p>解压之后进入该文件夹</p>
-<p>然后</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
-</span><span class="lnt">8
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 执行命令</span>
-</span></span><span class="line"><span class="cl">./configure
-</span></span><span class="line"><span class="cl"><span class="c1"># 执行make命令</span>
-</span></span><span class="line"><span class="cl">make
-</span></span><span class="line"><span class="cl"><span class="c1"># 执行make install命令</span>
-</span></span><span class="line"><span class="cl">make install
-</span></span><span class="line"><span class="cl"><span class="c1">#进入nginx启动目录启动</span>
-</span></span><span class="line"><span class="cl">./nginx
-</span></span></code></pre></td></tr></table>
-</div>
-</div><blockquote>
-<p>查看版本</p>
-</blockquote>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo nginx -v
-</span></span></code></pre></td></tr></table>
-</div>
-</div><div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">out:
-</span></span><span class="line"><span class="cl">nginx version: nginx/1.20.1
-</span></span></code></pre></td></tr></table>
-</div>
-</div><blockquote>
-<p>修改/etc/nginx 下的nginx.conf文件，手动安装的在conf文件夹下面</p>
-</blockquote>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">    server {
-</span></span><span class="line"><span class="cl">        listen       9000; # 改为你想要的端口号
-</span></span><span class="line"><span class="cl">        listen       [::]:9000; # 改为你想要的端口号
-</span></span><span class="line"><span class="cl">        server_name  _;
-</span></span><span class="line"><span class="cl">        root         /usr/share/nginx/html;
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        # Load configuration files for the default server block.
-</span></span><span class="line"><span class="cl">        include /etc/nginx/default.d/*.conf;
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        error_page 404 /404.html;
-</span></span><span class="line"><span class="cl">        location = /404.html {
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        error_page 500 502 503 504 /50x.html;
-</span></span><span class="line"><span class="cl">        location = /50x.html {
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl">    }
-</span></span></code></pre></td></tr></table>
-</div>
-</div><blockquote>
-<p>重启nginx</p>
-</blockquote>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo nginx -s reload
-</span></span></code></pre></td></tr></table>
-</div>
-</div><blockquote>
-<p>打开浏览器访问http://浏览器ip:9000（你设置的端口号）</p>
-</blockquote>
-<p><img
-        class="lazyload"
-        data-src="MD_img/image-20220723142255227.png"
-        data-srcset="/full_stack_development/MD_img/image-20220723142255227.png, MD_img/image-20220723142255227.png 1.5x, /full_stack_development/MD_img/image-20220723142255227.png 2x"
-        data-sizes="auto"
-        alt="/full_stack_development/MD_img/image-20220723142255227.png"
-        title="image-20220723142255227"></p>
-<p>不是无法访问就行，这个页面对应配置文件里root变量对应文件夹下的哪个index.html里的内容。</p>
-<blockquote>
-<p>其他命令（调试使用）</p>
-</blockquote>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 干掉所有的nginx进程</span>
-</span></span><span class="line"><span class="cl">killall -9 nginx
-</span></span><span class="line"><span class="cl"><span class="c1"># 查看所有监听端口的进程</span>
-</span></span><span class="line"><span class="cl">netstat -nltp
-</span></span><span class="line"><span class="cl"><span class="c1"># 查看所有进程</span>
-</span></span><span class="line"><span class="cl">ps -aux
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h2 id="创建vite项目" class="headerLink">
-    <a href="#%e5%88%9b%e5%bb%bavite%e9%a1%b9%e7%9b%ae" class="header-mark"></a>创建Vite项目</h2><p>注：如果本地已有vite项目，请在vite项目环境下直接创建dist即可。</p>
-<p>具体操作如下</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># 第一步</span>
-</span></span><span class="line"><span class="cl"><span class="c1">## 删除node_modules文件夹和package-lock.json文件</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># 第二步</span>
-</span></span><span class="line"><span class="cl"><span class="c1">## 安装依赖(需要安装nodejs)</span>
-</span></span><span class="line"><span class="cl">npm install --unsafe-perm --registry<span class="o">=</span>https://registry.npm.taobao.org
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># 第三步</span>
-</span></span><span class="line"><span class="cl"><span class="c1">## 启动项目(需要知道可执行的东西有哪些，在package.json里有声明serve)</span>
-</span></span><span class="line"><span class="cl">npm run serve
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>使用vue编写前端页面</p>
-<blockquote>
-<p>创建vite项目</p>
-</blockquote>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">npm init vite
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>一路回车并按如下选择</p>
-<img src="MD_img/image-20220723144748215.png" alt="image-20220723144748215" style="zoom:50%;" />
-<p>创建成功</p>
-<blockquote>
-<p>进入vite项目中安装依赖</p>
-</blockquote>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">cd</span> my_vite_project/
-</span></span><span class="line"><span class="cl">npm install
-</span></span></code></pre></td></tr></table>
-</div>
-</div><img src="MD_img/image-20220723145025621.png" alt="image-20220723145025621" style="zoom:50%;" />
-<p>安装完成……</p>
-<blockquote>
-<p>启动vite项目</p>
-</blockquote>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">npm run dev
-</span></span></code></pre></td></tr></table>
-</div>
-</div><img src="MD_img/image-20220723145330214.png" alt="image-20220723145330214" style="zoom:50%;" />
-<p>点击链接</p>
-<img src="MD_img/image-20220723145654171.png" alt="image-20220723145654171" style="zoom:50%;" />
-<p>出现如上页面，证明访问成功</p>
-<blockquote>
-<p>创建dist</p>
-</blockquote>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">npm run build
-</span></span></code></pre></td></tr></table>
-</div>
-</div><img src="MD_img/image-20220723150447269.png" alt="image-20220723150447269" style="zoom:50%;" />
-<p>创建成功之后在my_vite_project 目录下会产生一个dist目录,</p>
-<img src="MD_img/image-20220723150628009.png" alt="image-20220723150628009" style="zoom:50%;" />
-<p>后续我们将nginx的root路径指向这个目录即可。</p>
-<blockquote>
-<p>修改/etc/nginx 下的nginx.conf文件，手动安装的在conf文件夹下面</p>
-</blockquote>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">……
-</span></span><span class="line"><span class="cl"># 更改nginx的user为有权限访问vite项目的用户
-</span></span><span class="line"><span class="cl">user lighthouse; # 改为你的用户名
-</span></span><span class="line"><span class="cl">……
-</span></span><span class="line"><span class="cl"># server部分
-</span></span><span class="line"><span class="cl">server {
-</span></span><span class="line"><span class="cl">        listen       9000;
-</span></span><span class="line"><span class="cl">        listen       [::]:9000;
-</span></span><span class="line"><span class="cl">        server_name  _;
-</span></span><span class="line"><span class="cl">        root         /home/lighthouse/vue_project/my_vite_project/dist; # 修改这个路径为你项目地址的dist目录
-</span></span><span class="line"><span class="cl">        try_files $uri $uri/ /index.html # 加上这句便可以在网址后面接目录
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        # Load configuration files for the default server block.
-</span></span><span class="line"><span class="cl">        include /etc/nginx/default.d/*.conf;
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        error_page 404 /404.html;
-</span></span><span class="line"><span class="cl">        location = /404.html {
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        error_page 500 502 503 504 /50x.html;
-</span></span><span class="line"><span class="cl">        location = /50x.html {
-</span></span><span class="line"><span class="cl">        }
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">……
-</span></span></code></pre></td></tr></table>
-</div>
-</div><blockquote>
-<p>重启nginx</p>
-</blockquote>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo nginx -s reload
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h2 id="mysql配置" class="headerLink">
-    <a href="#mysql%e9%85%8d%e7%bd%ae" class="header-mark"></a>Mysql配置</h2><p>如果没有mysql，到官网下载https://www.mysql.com/，然后按说明安装即可</p>
-<h3 id="有mysql密码未知" class="headerLink">
-    <a href="#%e6%9c%89mysql%e5%af%86%e7%a0%81%e6%9c%aa%e7%9f%a5" class="header-mark"></a>有mysql，密码未知</h3><p>如果有mysql（云服务器一般自带mysql），不知道密码的话，按照以下步骤</p>
-<blockquote>
-<p>到mysql的安装目录下，找到my.cnf文件，一般是/etc/mysql，可以用whereis mysql命令查找，添加如下配置</p>
-</blockquote>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">[mysqld]
-</span></span><span class="line"><span class="cl">skip-grant-tables
-</span></span></code></pre></td></tr></table>
-</div>
-</div><blockquote>
-<p>重启mysql服务</p>
-</blockquote>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo service mysql restart
-</span></span></code></pre></td></tr></table>
-</div>
-</div><blockquote>
-<p>进入mysql，输入以下指令回车即可，以root登录</p>
-</blockquote>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">mysql -uroot -p
-</span></span></code></pre></td></tr></table>
-</div>
-</div><blockquote>
-<p>修改root密码为   kkk_123</p>
-</blockquote>
-<h4 id="此处有坑mysql-80版本以下" class="headerLink">
-    <a href="#%e6%ad%a4%e5%a4%84%e6%9c%89%e5%9d%91mysql-80%e7%89%88%e6%9c%ac%e4%bb%a5%e4%b8%8b" class="header-mark"></a>此处有坑，mysql 8.0版本以下</h4><div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> </span><span class="n">USE</span><span class="w"> </span><span class="n">mysql</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> </span><span class="k">UPDATE</span><span class="w"> </span><span class="k">user</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="n">authentication_string</span><span class="o">=</span><span class="n">password</span><span class="p">(</span><span class="s1">&#39;Kkk_123&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="k">User</span><span class="o">=</span><span class="s1">&#39;root&#39;</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> </span><span class="n">flush</span><span class="w"> </span><span class="k">privileges</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> </span><span class="n">quit</span><span class="w">
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><blockquote>
-<p>重启mysql服务</p>
-</blockquote>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo service mysql restart
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h4 id="80及以上" class="headerLink">
-    <a href="#80%e5%8f%8a%e4%bb%a5%e4%b8%8a" class="header-mark"></a>8.0及以上</h4><p><strong>此处有坑，host搞清楚，是&rsquo;localhost&rsquo;还是&rsquo;%&rsquo;，查user表</strong></p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> </span><span class="k">select</span><span class="w"> </span><span class="k">User</span><span class="p">,</span><span class="k">Host</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="k">user</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">+</span><span class="c1">------------------+-----------+
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="o">|</span><span class="w"> </span><span class="k">User</span><span class="w">             </span><span class="o">|</span><span class="w"> </span><span class="k">Host</span><span class="w">      </span><span class="o">|</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">+</span><span class="c1">------------------+-----------+
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="o">|</span><span class="w"> </span><span class="n">root</span><span class="w">             </span><span class="o">|</span><span class="w"> </span><span class="o">%</span><span class="w">         </span><span class="o">|</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">|</span><span class="w"> </span><span class="n">debian</span><span class="o">-</span><span class="n">sys</span><span class="o">-</span><span class="n">maint</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">localhost</span><span class="w"> </span><span class="o">|</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">|</span><span class="w"> </span><span class="n">mysql</span><span class="p">.</span><span class="n">infoschema</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">localhost</span><span class="w"> </span><span class="o">|</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">|</span><span class="w"> </span><span class="n">mysql</span><span class="p">.</span><span class="k">session</span><span class="w">    </span><span class="o">|</span><span class="w"> </span><span class="n">localhost</span><span class="w"> </span><span class="o">|</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">|</span><span class="w"> </span><span class="n">mysql</span><span class="p">.</span><span class="n">sys</span><span class="w">        </span><span class="o">|</span><span class="w"> </span><span class="n">localhost</span><span class="w"> </span><span class="o">|</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">+</span><span class="c1">------------------+-----------+
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="mi">5</span><span class="w"> </span><span class="k">rows</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="k">set</span><span class="w"> </span><span class="p">(</span><span class="mi">0</span><span class="p">.</span><span class="mi">00</span><span class="w"> </span><span class="n">sec</span><span class="p">)</span><span class="w">
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><blockquote>
-<p>首先置空密码</p>
-</blockquote>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> </span><span class="n">USE</span><span class="w"> </span><span class="n">mysql</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> </span><span class="k">UPDATE</span><span class="w"> </span><span class="k">user</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="n">authentication_string</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">USE</span><span class="o">=</span><span class="s1">&#39;root&#39;</span><span class="p">;</span><span class="w">
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><blockquote>
-<p>然后到mysql的安装目录下，找到my.cnf文件，一般是/etc/mysql，可以用whereis mysql命令查找，将刚刚指定的跳过验证注释掉</p>
-</blockquote>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">#[mysqld]
-</span></span><span class="line"><span class="cl">#skip-grant-tables
-</span></span></code></pre></td></tr></table>
-</div>
-</div><blockquote>
-<p>重启mysql服务</p>
-</blockquote>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo service mysql restart
-</span></span></code></pre></td></tr></table>
-</div>
-</div><blockquote>
-<p>由于密码时空，所以也可以直接进入mysql</p>
-</blockquote>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo mysql -uroot
-</span></span></code></pre></td></tr></table>
-</div>
-</div><blockquote>
-<p>重置密码为Kkk_123</p>
-</blockquote>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> </span><span class="k">alter</span><span class="w"> </span><span class="k">user</span><span class="w"> </span><span class="s1">&#39;root&#39;</span><span class="o">@</span><span class="s1">&#39;%&#39;</span><span class="w"> </span><span class="n">identified</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="s1">&#39;Kkk_123&#39;</span><span class="p">;</span><span class="w">
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><blockquote>
-<p>重启mysql服务</p>
-</blockquote>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo service mysql restart
-</span></span></code></pre></td></tr></table>
-</div>
-</div><blockquote>
-<p>用刚刚的密码登录mysql</p>
-</blockquote>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo mysql -uroot -pKkk_123
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>成功。</p>
-<h2 id="后端配置" class="headerLink">
-    <a href="#%e5%90%8e%e7%ab%af%e9%85%8d%e7%bd%ae" class="header-mark"></a>后端配置</h2><p>使用idea将写好的项目打一个jar包</p>
-<img src="MD_img/image-20220726142927539.png" alt="image-20220726142927539" style="zoom:50%;" />
-<p>在项目文件的target文件夹中找到生成的jar包，并运行。</p>
-<p>配置完成。</p>
-</div>
-
-        <div class="sponsor">
-        <div class="sponsor-avatar"><img
-        class="lazyload"
-        data-src="/images/logo.png"
-        data-srcset="/images/logo.png, /images/logo.png 1.5x, /images/logo.png 2x"
-        data-sizes="auto"
-        alt="/images/logo.png"
-        title="/images/logo.png"></div><p class="sponsor-bio"><em>如果你觉得这篇文章对你有所帮助，欢迎赞赏~</em></p><a href="/images/buymeacoffee.jpg" title="Sponsor" target="_blank" class="sponsor-button" rel="noopener noreferrer">
-                <i class="far fa-heart fa-fw icon" style="color: #ec6cb9;"></i>
-                <span>赞赏</span>
-            </a></div><div class="post-footer" id="post-footer">
-    <div class="post-info">
-        <div class="post-info-line">
-            <div class="post-info-mod">
-                <span>更新于 2022-07-23</span>
-            </div>
-            <div class="post-info-license"></div>
-        </div>
-        <div class="post-info-line">
-            <div class="post-info-md"><span><a class="link-to-mardown" href=/full_stack_development/index.md target="_blank" rel="noopener noreferrer">阅读原始文档</a>
-                    </span><span>|&nbsp;<a class="link-to-report" href=https://github.com/dp0d/dp0d.github.io/issues/new?title=[bug]%20%E8%AE%B0%E4%B8%80%E6%AC%A1%E5%89%8D%E5%90%8E%E7%AB%AF%E5%88%86%E7%A6%BB%E7%9A%84%E5%BC%80%E5%8F%91%E9%83%A8%E7%BD%B2%E5%AE%9E%E8%B7%B5&body=|Field|Value|%0A|-|-|%0A|Title|%E8%AE%B0%E4%B8%80%E6%AC%A1%E5%89%8D%E5%90%8E%E7%AB%AF%E5%88%86%E7%A6%BB%E7%9A%84%E5%BC%80%E5%8F%91%E9%83%A8%E7%BD%B2%E5%AE%9E%E8%B7%B5|%0A|Url|https://dp0d.github.io/full_stack_development/|%0A|Filename|https://github.com/dp0d/dp0d.github.io/posts/2022/full_stack_development/index.md| target="_blank" rel="noopener noreferrer">报告问题</a>
-                    </span></div>
-            <div class="post-info-share">
-                <span><a href="#" onclick="return false;" title="分享到 Twitter" data-sharer="twitter" data-url="https://dp0d.github.io/full_stack_development/" data-title="记一次前后端分离的开发部署实践" data-hashtags="linux"><i class="fab fa-twitter fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Facebook" data-sharer="facebook" data-url="https://dp0d.github.io/full_stack_development/" data-hashtag="linux"><i class="fab fa-facebook-square fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 微博" data-sharer="weibo" data-url="https://dp0d.github.io/full_stack_development/" data-title="记一次前后端分离的开发部署实践"><i class="fab fa-weibo fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Telegram" data-sharer="telegram" data-url="https://dp0d.github.io/full_stack_development/" data-title="记一次前后端分离的开发部署实践" data-web><i class="fab fa-telegram-plane fa-fw"></i></a></span>
-            </div>
-        </div>
-    </div>
-
-    <div class="post-info-more">
-        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/linux/">Linux</a></section>
-        <section>
-            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
-        </section>
-    </div>
-
-    <div class="post-nav"><a href="/finetune_trick/" class="prev" rel="prev" title="预训练模型的finetune技巧"><i class="fas fa-angle-left fa-fw"></i>预训练模型的finetune技巧</a>
-            <a href="/datasets/" class="next" rel="next" title="有关数据集调研和介绍">有关数据集调研和介绍<i class="fas fa-angle-right fa-fw"></i></a></div>
-</div>
-<div id="comments"><div id="giscus"></div><noscript>
-                Please enable JavaScript to view the comments powered by <a href="https://giscus.app/">giscus</a>.
-            </noscript></div></article></div>
-        </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2022 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/dp0d" target="_blank" rel="noopener noreferrer">dp0d</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
-                    <span class="icp"><a href="https://beian.miit.gov.cn/" target="_blank">赣ICP备2022002313号-1</a></span></div>
-            <div class="footer-line"></div>
-            <div class="footer-line">
-            </div>
-        </div><script>
-                    if('serviceWorker' in navigator) {
-                        navigator.serviceWorker
-                            .register('/sw.min.js', { scope: '/' })
-                            .then(function(registration) {
-                            });
-                
-                        navigator.serviceWorker
-                            .ready
-                            .then(function(registration) {
-                            });
-                    }
-                </script></footer></div>
-
-    <div id="fixed-buttons"><a href="#back-to-top" id="back-to-top-button" class="fixed-button" title="回到顶部">
-            <i class="fas fa-arrow-up fa-fw"></i>
-        </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
-            <i class="fas fa-comment fa-fw"></i>
-        </a>
-    </div><div class="assets"><script type="text/javascript" src="/lib/object-fit-images/ofi.min.js"></script><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/fuse/fuse.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/tablesort/tablesort.min.js"></script><script type="text/javascript" src="/lib/topbar/topbar.min.js"></script><script type="text/javascript" src="/lib/pjax/pjax.min.js"></script><script type="text/javascript" src="/js/theme.min.js" defer></script></div>
-
-<div class="pjax-assets"><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":100},"comment":{"giscus":{"darkTheme":"dark","dataCategory":"General","dataCategoryId":"DIC_kwDOHB3uW84COZbL","dataEmitMetadata":"0","dataInputPosition":"top","dataLang":"zh-CN","dataMapping":"title","dataReactionsEnabled":"1","dataRepo":"dp0d/dp0d.github.io","dataRepoId":"R_kgDOHB3uWw","lightTheme":"light"}},"lightGallery":{"actualSize":false,"exThumbImage":"data-thumbnail","hideBarsDelay":2000,"selector":".lightgallery","speed":400,"thumbContHeight":80,"thumbWidth":80,"thumbnail":true},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"distance":100,"findAllMatches":false,"fuseIndexURL":"/index.json","highlightTag":"em","ignoreFieldNorm":false,"ignoreLocation":true,"isCaseSensitive":false,"location":0,"maxResultLength":10,"minMatchCharLength":2,"noResultsFound":"没有找到结果","snippetLength":50,"threshold":0.1,"type":"fuse","useExtendedSearch":false},"sharerjs":true,"table":{"sort":true},"twemoji":true};</script><script type="text/javascript" src="/js/giscus.min.js" defer></script><script type="text/javascript" src="/lib/twemoji/twemoji.min.js" defer></script><script type="text/javascript" src="/js/twemoji.min.js" defer></script><script type="text/javascript" src="/lib/lightgallery/lightgallery.min.js"></script><script type="text/javascript" src="/lib/lightgallery/lg-thumbnail.min.js"></script><script type="text/javascript" src="/lib/lightgallery/lg-zoom.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js" defer></script><script type="text/javascript" src="/lib/katex/auto-render.min.js" defer></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js" defer></script><script type="text/javascript" src="/lib/katex/mhchem.min.js" defer></script><script type="text/javascript" src="/js/katex.min.js" defer></script><link rel="stylesheet" href="/lib/lightgallery/lightgallery.min.css"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/katex/copy-tex.min.css">
-        <noscript><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"></noscript></div>
-</body>
-
-</html>
+<!doctype html><html lang=zh-CN><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=robots content="noodp"><title class=pjax-title>记一次前后端分离的开发部署实践 - dp0d's blog</title><meta name=Description content="dp0d's blog,where to share life as well as technology of nlp."><meta property="og:title" content="记一次前后端分离的开发部署实践"><meta property="og:description" content="前言本项目为个人实践项目，按实验室老师要求将项目部署上云服务器，主要实现基本的网站结构和api交互，使用nginx进行反向代理，提供web服"><meta property="og:type" content="article"><meta property="og:url" content="https://dp0d.github.io/full_stack_development/"><meta property="og:image" content="https://dp0d.github.io/images/logo.png"><meta property="article:section" content="posts"><meta property="article:published_time" content="2022-07-23T10:22:12+08:00"><meta property="article:modified_time" content="2022-07-23T10:22:12+08:00"><meta property="og:site_name" content="dp0d's blog"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://dp0d.github.io/images/logo.png"><meta name=twitter:title content="记一次前后端分离的开发部署实践"><meta name=twitter:description content="前言本项目为个人实践项目，按实验室老师要求将项目部署上云服务器，主要实现基本的网站结构和api交互，使用nginx进行反向代理，提供web服"><meta name=application-name content="dp0d's blog"><meta name=apple-mobile-web-app-title content="dp0d's blog"><meta name=theme-color content="#f8f8f8"><meta name=msapplication-TileColor content="#da532c"><link rel="shortcut icon" type=image/x-icon href=/favicon.ico><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://dp0d.github.io/full_stack_development/><link rel=prev href=https://dp0d.github.io/finetune_trick/><link rel=next href=https://dp0d.github.io/datasets/><link rel=stylesheet href=/lib/normalize/normalize.min.css><link rel=stylesheet href=/css/style.min.css><link rel=preload as=style onload='this.onload=null,this.rel="stylesheet"' href=/lib/fontawesome-free/all.min.css><noscript><link rel=stylesheet href=/lib/fontawesome-free/all.min.css></noscript><link rel=preload as=style onload='this.onload=null,this.rel="stylesheet"' href=/lib/animate/animate.min.css><noscript><link rel=stylesheet href=/lib/animate/animate.min.css></noscript><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"记一次前后端分离的开发部署实践","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/dp0d.github.io\/full_stack_development\/"},"image":["https:\/\/dp0d.github.io\/images\/logo.png"],"genre":"posts","keywords":"linux","wordcount":1790,"url":"https:\/\/dp0d.github.io\/full_stack_development\/","datePublished":"2022-07-23T10:22:12+08:00","dateModified":"2022-07-23T10:22:12+08:00","license":"This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher":{"@type":"Organization","name":"dp0d","logo":"https:\/\/dp0d.github.io\/images\/logo.png"},"author":{"@type":"Person","name":"dp0d"},"description":""}</script></head><body header-desktop=fixed header-mobile=auto><script type=text/javascript>function setTheme(e){document.body.setAttribute("theme",e)}function saveTheme(e){window.localStorage&&localStorage.setItem("theme",e)}function getMeta(e){const t=document.getElementsByTagName("meta");for(let n=0;n<t.length;n++)if(t[n].getAttribute("name")===e)return t[n];return""}if(window.localStorage&&localStorage.getItem("theme")){let e=localStorage.getItem("theme");e==="light"||e==="dark"||e==="black"?setTheme(e):setTheme(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")}else"auto"==="light"||"auto"==="dark"||"auto"==="black"?(setTheme("auto"),saveTheme("auto")):(saveTheme("auto"),setTheme(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"));let metaColors={light:"#f8f8f8",dark:"#252627",black:"#000000"};getMeta("theme-color").content=metaColors[document.body.getAttribute("theme")]</script><div id=back-to-top></div><div id=mask></div><div class=wrapper><header class=desktop id=header-desktop><div class=header-wrapper><div class=header-title><a href=/ title="dp0d's blog"><span class=header-title-pre><i class='far fa-edit fa-fw'></i></span>Natural Language Processing</a></div><div class=menu><div class=menu-inner><a class=menu-item href=/posts/>文章 </a><a class=menu-item href=/tags/>标签 </a><a class=menu-item href=/categories/>分类 </a><a class=menu-item href=/charge/>充电 </a><a class=menu-item href=/friends/>朋友萌 </a><a class=menu-item href=/collection/>收藏 </a><a class=menu-item href=/copyright/>版权 </a><a class=menu-item href=/about/>关于我 </a><a class=menu-item href=https://github.com/dp0d title=GitHub rel="noopener noreffer" target=_blank><i class='fab fa-github fa-fw'></i> </a><span class="menu-item delimiter"></span><span class="menu-item search" id=search-desktop>
+<input type=text placeholder=搜索文章标题或内容... id=search-input-desktop>
+<a href=# onclick=return!1 class="search-button search-toggle" id=search-toggle-desktop title=搜索><i class="fas fa-search fa-fw"></i></a>
+<a href=# onclick=return!1 class="search-button search-clear" id=search-clear-desktop title=清空><i class="fas fa-times-circle fa-fw"></i></a>
+<span class="search-button search-loading" id=search-loading-desktop><i class="fas fa-spinner fa-fw fa-spin"></i></span>
+</span><a href=# onclick=return!1 class="menu-item theme-select" title=切换主题><i class="fas fa-adjust fa-fw"></i>
+<select class=color-theme-select id=theme-select-desktop title=切换主题><option value=light>浅色</option><option value=dark>深色</option><option value=black>黑色</option><option value=auto>跟随系统</option></select></a></div></div></div></header><header class=mobile id=header-mobile><div class=header-container><div class=header-wrapper><div class=header-title><a href=/ title="dp0d's blog"><span class=header-title-pre><i class='far fa-edit fa-fw'></i></span>Natural Language Processing</a></div><div class=menu-toggle id=menu-toggle-mobile><span></span><span></span><span></span></div></div><div class=menu id=menu-mobile><div class=search-wrapper><div class="search mobile" id=search-mobile><input type=text placeholder=搜索文章标题或内容... id=search-input-mobile>
+<a href=# onclick=return!1 class="search-button search-toggle" id=search-toggle-mobile title=搜索><i class="fas fa-search fa-fw"></i></a>
+<a href=# onclick=return!1 class="search-button search-clear" id=search-clear-mobile title=清空><i class="fas fa-times-circle fa-fw"></i></a>
+<span class="search-button search-loading" id=search-loading-mobile><i class="fas fa-spinner fa-fw fa-spin"></i></span></div><a href=# onclick=return!1 class=search-cancel id=search-cancel-mobile>取消</a></div><a class=menu-item href=/posts/ title>文章</a><a class=menu-item href=/tags/ title>标签</a><a class=menu-item href=/categories/ title>分类</a><a class=menu-item href=/charge/ title>充电</a><a class=menu-item href=/friends/ title>朋友萌</a><a class=menu-item href=/collection/ title>收藏</a><a class=menu-item href=/copyright/ title>版权</a><a class=menu-item href=/about/ title>关于我</a><a class=menu-item href=https://github.com/dp0d title=GitHub rel="noopener noreffer" target=_blank><i class='fab fa-github fa-fw'></i></a><a href=# onclick=return!1 class="menu-item theme-select" title=切换主题>
+<i class="fas fa-adjust fa-fw"></i>
+<select class=color-theme-select id=theme-select-mobile title=切换主题><option value=light>浅色</option><option value=dark>深色</option><option value=black>黑色</option><option value=auto>跟随系统</option></select></a></div></div></header><div class="search-dropdown desktop"><div id=search-dropdown-desktop></div></div><div class="search-dropdown mobile"><div id=search-dropdown-mobile></div></div><main class=main><div class=container><div class=toc id=toc-auto><h2 class=toc-title>目录</h2><div class=toc-content id=toc-content-auto><nav id=TableOfContents><ul><li><a href=#前言>前言</a></li><li><a href=#nginx配置>Nginx配置</a></li><li><a href=#创建vite项目>创建Vite项目</a></li><li><a href=#mysql配置>Mysql配置</a><ul><li><a href=#有mysql密码未知>有mysql，密码未知</a><ul><li><a href=#此处有坑mysql-80版本以下>此处有坑，mysql 8.0版本以下</a></li><li><a href=#80及以上>8.0及以上</a></li></ul></li></ul></li><li><a href=#后端配置>后端配置</a></li></ul></nav></div></div><script>document.getElementsByTagName("main")[0].setAttribute("pageStyle","normal")</script><script>document.getElementsByTagName("main")[0].setAttribute("autoTOC","true")</script><article class="page single"><h1 class="single-title animate__animated animate__flipInX">记一次前后端分离的开发部署实践</h1><div class=post-meta><div class=post-meta-line><span class=post-author><i class="author fas fa-user-circle fa-fw"></i><a href=https://github.com/dp0d title=Author target=_blank rel="noopener noreffer author" class=author>dp0d</a>
+</span>&nbsp;<span class=post-category>收录于 </span>&nbsp;<span class=post-category>类别 <a href=/categories/tutorial/><i class="far fa-folder fa-fw"></i>教程</a>&nbsp;<a href=/categories/technology_log/><i class="far fa-folder fa-fw"></i>开发日志</a></span></div><div class=post-meta-line><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2022-07-23>2022-07-23</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime=2022-07-23>2022-07-23</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1790 字&nbsp;
+<i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 4 分钟&nbsp;</div></div><div class="details toc" id=toc-static kept><div class="details-summary toc-title"><span>目录</span>
+<span><i class="details-icon fas fa-angle-right"></i></span></div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents><ul><li><a href=#前言>前言</a></li><li><a href=#nginx配置>Nginx配置</a></li><li><a href=#创建vite项目>创建Vite项目</a></li><li><a href=#mysql配置>Mysql配置</a><ul><li><a href=#有mysql密码未知>有mysql，密码未知</a><ul><li><a href=#此处有坑mysql-80版本以下>此处有坑，mysql 8.0版本以下</a></li><li><a href=#80及以上>8.0及以上</a></li></ul></li></ul></li><li><a href=#后端配置>后端配置</a></li></ul></nav></div></div><div class=content id=content><h2 id=前言 class=headerLink><a href=#%e5%89%8d%e8%a8%80 class=header-mark></a>前言</h2><p>本项目为个人实践项目，按实验室老师要求将项目部署上云服务器，主要实现基本的网站结构和api交互，使用nginx进行反向代理，提供web服务，后端使用spring架构。</p><p>开发环境如下，</p><p>云服务器 Ubuntu</p><p>本地 vscode，MacOS，idea</p><h2 id=nginx配置 class=headerLink><a href=#nginx%e9%85%8d%e7%bd%ae class=header-mark></a>Nginx配置</h2><p>版本 Nginx Open Source</p><p>官方文档 <a href=https://docs.nginx.com/nginx/admin-guide/installing-nginx/installing-nginx-open-source/ target=_blank rel="noopener noreffer">https://docs.nginx.com/nginx/admin-guide/installing-nginx/installing-nginx-open-source/</a></p><blockquote><p>一键安装</p></blockquote><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>sudo apt install -y nginx
+</span></span></code></pre></td></tr></table></div></div><blockquote><p>手动安装方法（https://blog.csdn.net/lsygood/article/details/）（不推荐）</p></blockquote><p>大致说下做法</p><p>先安装依赖</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>apt install -y gcc pcre pcre-devel zlib zlib-devel openssl openssl-devel
+</span></span></code></pre></td></tr></table></div></div><p>到这下一个nginx压缩包 <a href=http://nginx.org/ target=_blank rel="noopener noreffer">http://nginx.org/</a></p><p>解压之后进入该文件夹</p><p>然后</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=c1># 执行命令</span>
+</span></span><span class=line><span class=cl>./configure
+</span></span><span class=line><span class=cl><span class=c1># 执行make命令</span>
+</span></span><span class=line><span class=cl>make
+</span></span><span class=line><span class=cl><span class=c1># 执行make install命令</span>
+</span></span><span class=line><span class=cl>make install
+</span></span><span class=line><span class=cl><span class=c1>#进入nginx启动目录启动</span>
+</span></span><span class=line><span class=cl>./nginx
+</span></span></code></pre></td></tr></table></div></div><blockquote><p>查看版本</p></blockquote><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>sudo nginx -v
+</span></span></code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>out:
+</span></span><span class=line><span class=cl>nginx version: nginx/1.20.1
+</span></span></code></pre></td></tr></table></div></div><blockquote><p>修改/etc/nginx 下的nginx.conf文件，手动安装的在conf文件夹下面</p></blockquote><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>    server {
+</span></span><span class=line><span class=cl>        listen       9000; # 改为你想要的端口号
+</span></span><span class=line><span class=cl>        listen       [::]:9000; # 改为你想要的端口号
+</span></span><span class=line><span class=cl>        server_name  _;
+</span></span><span class=line><span class=cl>        root         /usr/share/nginx/html;
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        # Load configuration files for the default server block.
+</span></span><span class=line><span class=cl>        include /etc/nginx/default.d/*.conf;
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        error_page 404 /404.html;
+</span></span><span class=line><span class=cl>        location = /404.html {
+</span></span><span class=line><span class=cl>        }
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        error_page 500 502 503 504 /50x.html;
+</span></span><span class=line><span class=cl>        location = /50x.html {
+</span></span><span class=line><span class=cl>        }
+</span></span><span class=line><span class=cl>    }
+</span></span></code></pre></td></tr></table></div></div><blockquote><p>重启nginx</p></blockquote><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>sudo nginx -s reload
+</span></span></code></pre></td></tr></table></div></div><blockquote><p>打开浏览器访问http://浏览器ip:9000（你设置的端口号）</p></blockquote><p><img class=lazyload data-src=MD_img/image-20220723142255227.png data-srcset="/full_stack_development/MD_img/image-20220723142255227.png, MD_img/image-20220723142255227.png 1.5x, /full_stack_development/MD_img/image-20220723142255227.png 2x" data-sizes=auto alt=/full_stack_development/MD_img/image-20220723142255227.png title=image-20220723142255227></p><p>不是无法访问就行，这个页面对应配置文件里root变量对应文件夹下的哪个index.html里的内容。</p><blockquote><p>其他命令（调试使用）</p></blockquote><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=c1># 干掉所有的nginx进程</span>
+</span></span><span class=line><span class=cl>killall -9 nginx
+</span></span><span class=line><span class=cl><span class=c1># 查看所有监听端口的进程</span>
+</span></span><span class=line><span class=cl>netstat -nltp
+</span></span><span class=line><span class=cl><span class=c1># 查看所有进程</span>
+</span></span><span class=line><span class=cl>ps -aux
+</span></span></code></pre></td></tr></table></div></div><h2 id=创建vite项目 class=headerLink><a href=#%e5%88%9b%e5%bb%bavite%e9%a1%b9%e7%9b%ae class=header-mark></a>创建Vite项目</h2><p>注：如果本地已有vite项目，请在vite项目环境下直接创建dist即可。</p><p>具体操作如下</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 第一步</span>
+</span></span><span class=line><span class=cl><span class=c1>## 删除node_modules文件夹和package-lock.json文件</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 第二步</span>
+</span></span><span class=line><span class=cl><span class=c1>## 安装依赖(需要安装nodejs)</span>
+</span></span><span class=line><span class=cl>npm install --unsafe-perm --registry<span class=o>=</span>https://registry.npm.taobao.org
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 第三步</span>
+</span></span><span class=line><span class=cl><span class=c1>## 启动项目(需要知道可执行的东西有哪些，在package.json里有声明serve)</span>
+</span></span><span class=line><span class=cl>npm run serve
+</span></span></code></pre></td></tr></table></div></div><p>使用vue编写前端页面</p><blockquote><p>创建vite项目</p></blockquote><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>npm init vite
+</span></span></code></pre></td></tr></table></div></div><p>一路回车并按如下选择</p><img src=MD_img/image-20220723144748215.png alt=image-20220723144748215 style=zoom:50%><p>创建成功</p><blockquote><p>进入vite项目中安装依赖</p></blockquote><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=nb>cd</span> my_vite_project/
+</span></span><span class=line><span class=cl>npm install
+</span></span></code></pre></td></tr></table></div></div><img src=MD_img/image-20220723145025621.png alt=image-20220723145025621 style=zoom:50%><p>安装完成……</p><blockquote><p>启动vite项目</p></blockquote><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>npm run dev
+</span></span></code></pre></td></tr></table></div></div><img src=MD_img/image-20220723145330214.png alt=image-20220723145330214 style=zoom:50%><p>点击链接</p><img src=MD_img/image-20220723145654171.png alt=image-20220723145654171 style=zoom:50%><p>出现如上页面，证明访问成功</p><blockquote><p>创建dist</p></blockquote><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>npm run build
+</span></span></code></pre></td></tr></table></div></div><img src=MD_img/image-20220723150447269.png alt=image-20220723150447269 style=zoom:50%><p>创建成功之后在my_vite_project 目录下会产生一个dist目录,</p><img src=MD_img/image-20220723150628009.png alt=image-20220723150628009 style=zoom:50%><p>后续我们将nginx的root路径指向这个目录即可。</p><blockquote><p>修改/etc/nginx 下的nginx.conf文件，手动安装的在conf文件夹下面</p></blockquote><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-conf data-lang=conf><span class=line><span class=cl><span class=err>……</span>
+</span></span><span class=line><span class=cl><span class=c># 更改nginx的user为有权限访问vite项目的用户
+</span></span></span><span class=line><span class=cl><span class=c></span><span class=nv>user</span> <span class=nv>lighthouse</span><span class=p>;</span> <span class=c># 改为你的用户名
+</span></span></span><span class=line><span class=cl><span class=c></span><span class=err>……</span>
+</span></span><span class=line><span class=cl><span class=c># server部分
+</span></span></span><span class=line><span class=cl><span class=c></span><span class=nv>server</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=nv>listen</span>       <span class=nv>9000</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=nv>listen</span>       <span class=err>[::]:</span><span class=nv>9000</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=nv>server_name</span>  <span class=nv>_</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=nv>root</span>         <span class=err>/</span><span class=nv>home</span><span class=err>/</span><span class=nv>lighthouse</span><span class=err>/</span><span class=nv>vue_project</span><span class=err>/</span><span class=nv>my_vite_project</span><span class=err>/</span><span class=nv>dist</span><span class=p>;</span> <span class=c># 修改这个路径为你项目地址的dist目录
+</span></span></span><span class=line><span class=cl><span class=c></span>        <span class=nv>try_files</span> <span class=err>$</span><span class=nv>uri</span> <span class=err>$</span><span class=nv>uri</span><span class=err>/</span> <span class=err>/</span><span class=nv>index.html</span> <span class=c># 加上这句便可以在网址后面接目录
+</span></span></span><span class=line><span class=cl><span class=c></span>
+</span></span><span class=line><span class=cl>        <span class=c># Load configuration files for the default server block.
+</span></span></span><span class=line><span class=cl><span class=c></span>        <span class=kt>include</span> <span class=err>/</span><span class=nv>etc</span><span class=err>/</span><span class=nv>nginx</span><span class=err>/</span><span class=nv>default.d</span><span class=err>/*</span><span class=nv>.conf</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=nv>error_page</span> <span class=nv>404</span> <span class=err>/</span><span class=nv>404.html</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=nv>location</span> <span class=o>=</span> <span class=err>/</span><span class=nv>404.html</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=nv>error_page</span> <span class=nv>500</span> <span class=nv>502</span> <span class=nv>503</span> <span class=nv>504</span> <span class=err>/</span><span class=nv>50x.html</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=nv>location</span> <span class=o>=</span> <span class=err>/</span><span class=nv>50x.html</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=err>……</span>
+</span></span></code></pre></td></tr></table></div></div><blockquote><p>重启nginx</p></blockquote><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>sudo nginx -s reload
+</span></span></code></pre></td></tr></table></div></div><h2 id=mysql配置 class=headerLink><a href=#mysql%e9%85%8d%e7%bd%ae class=header-mark></a>Mysql配置</h2><p>如果没有mysql，到官网下载https://www.mysql.com/，然后按说明安装即可</p><h3 id=有mysql密码未知 class=headerLink><a href=#%e6%9c%89mysql%e5%af%86%e7%a0%81%e6%9c%aa%e7%9f%a5 class=header-mark></a>有mysql，密码未知</h3><p>如果有mysql（云服务器一般自带mysql），不知道密码的话，按照以下步骤</p><blockquote><p>到mysql的安装目录下，找到my.cnf文件，一般是/etc/mysql，可以用whereis mysql命令查找，添加如下配置</p></blockquote><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-conf data-lang=conf><span class=line><span class=cl><span class=err>[</span><span class=nv>mysqld</span><span class=err>]</span>
+</span></span><span class=line><span class=cl><span class=nv>skip-grant-tables</span>
+</span></span></code></pre></td></tr></table></div></div><blockquote><p>重启mysql服务</p></blockquote><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>sudo service mysql restart
+</span></span></code></pre></td></tr></table></div></div><blockquote><p>进入mysql，输入以下指令回车即可，以root登录</p></blockquote><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>mysql -uroot -p
+</span></span></code></pre></td></tr></table></div></div><blockquote><p>修改root密码为 kkk_123</p></blockquote><h4 id=此处有坑mysql-80版本以下 class=headerLink><a href=#%e6%ad%a4%e5%a4%84%e6%9c%89%e5%9d%91mysql-80%e7%89%88%e6%9c%ac%e4%bb%a5%e4%b8%8b class=header-mark></a>此处有坑，mysql 8.0版本以下</h4><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-sql data-lang=sql><span class=line><span class=cl><span class=n>mysql</span><span class=o>&gt;</span><span class=w> </span><span class=n>USE</span><span class=w> </span><span class=n>mysql</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>mysql</span><span class=o>&gt;</span><span class=w> </span><span class=k>UPDATE</span><span class=w> </span><span class=k>user</span><span class=w> </span><span class=k>SET</span><span class=w> </span><span class=n>authentication_string</span><span class=o>=</span><span class=n>password</span><span class=p>(</span><span class=s1>&#39;Kkk_123&#39;</span><span class=p>)</span><span class=w> </span><span class=k>WHERE</span><span class=w> </span><span class=k>User</span><span class=o>=</span><span class=s1>&#39;root&#39;</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>mysql</span><span class=o>&gt;</span><span class=w> </span><span class=n>flush</span><span class=w> </span><span class=k>privileges</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>mysql</span><span class=o>&gt;</span><span class=w> </span><span class=n>quit</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><blockquote><p>重启mysql服务</p></blockquote><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>sudo service mysql restart
+</span></span></code></pre></td></tr></table></div></div><h4 id=80及以上 class=headerLink><a href=#80%e5%8f%8a%e4%bb%a5%e4%b8%8a class=header-mark></a>8.0及以上</h4><p><strong>此处有坑，host搞清楚，是&rsquo;localhost&rsquo;还是&rsquo;%&rsquo;，查user表</strong></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-sql data-lang=sql><span class=line><span class=cl><span class=n>mysql</span><span class=o>&gt;</span><span class=w> </span><span class=k>select</span><span class=w> </span><span class=k>User</span><span class=p>,</span><span class=k>Host</span><span class=w> </span><span class=k>from</span><span class=w> </span><span class=k>user</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=o>+</span><span class=c1>------------------+-----------+
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=o>|</span><span class=w> </span><span class=k>User</span><span class=w>             </span><span class=o>|</span><span class=w> </span><span class=k>Host</span><span class=w>      </span><span class=o>|</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=o>+</span><span class=c1>------------------+-----------+
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=o>|</span><span class=w> </span><span class=n>root</span><span class=w>             </span><span class=o>|</span><span class=w> </span><span class=o>%</span><span class=w>         </span><span class=o>|</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=o>|</span><span class=w> </span><span class=n>debian</span><span class=o>-</span><span class=n>sys</span><span class=o>-</span><span class=n>maint</span><span class=w> </span><span class=o>|</span><span class=w> </span><span class=n>localhost</span><span class=w> </span><span class=o>|</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=o>|</span><span class=w> </span><span class=n>mysql</span><span class=p>.</span><span class=n>infoschema</span><span class=w> </span><span class=o>|</span><span class=w> </span><span class=n>localhost</span><span class=w> </span><span class=o>|</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=o>|</span><span class=w> </span><span class=n>mysql</span><span class=p>.</span><span class=k>session</span><span class=w>    </span><span class=o>|</span><span class=w> </span><span class=n>localhost</span><span class=w> </span><span class=o>|</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=o>|</span><span class=w> </span><span class=n>mysql</span><span class=p>.</span><span class=n>sys</span><span class=w>        </span><span class=o>|</span><span class=w> </span><span class=n>localhost</span><span class=w> </span><span class=o>|</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=o>+</span><span class=c1>------------------+-----------+
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=mi>5</span><span class=w> </span><span class=k>rows</span><span class=w> </span><span class=k>in</span><span class=w> </span><span class=k>set</span><span class=w> </span><span class=p>(</span><span class=mi>0</span><span class=p>.</span><span class=mi>00</span><span class=w> </span><span class=n>sec</span><span class=p>)</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><blockquote><p>首先置空密码</p></blockquote><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-sql data-lang=sql><span class=line><span class=cl><span class=n>mysql</span><span class=o>&gt;</span><span class=w> </span><span class=n>USE</span><span class=w> </span><span class=n>mysql</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>mysql</span><span class=o>&gt;</span><span class=w> </span><span class=k>UPDATE</span><span class=w> </span><span class=k>user</span><span class=w> </span><span class=k>SET</span><span class=w> </span><span class=n>authentication_string</span><span class=o>=</span><span class=s1>&#39;&#39;</span><span class=w> </span><span class=k>where</span><span class=w> </span><span class=n>USE</span><span class=o>=</span><span class=s1>&#39;root&#39;</span><span class=p>;</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><blockquote><p>然后到mysql的安装目录下，找到my.cnf文件，一般是/etc/mysql，可以用whereis mysql命令查找，将刚刚指定的跳过验证注释掉</p></blockquote><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-conf data-lang=conf><span class=line><span class=cl><span class=c>#[mysqld]
+</span></span></span><span class=line><span class=cl><span class=c>#skip-grant-tables
+</span></span></span></code></pre></td></tr></table></div></div><blockquote><p>重启mysql服务</p></blockquote><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>sudo service mysql restart
+</span></span></code></pre></td></tr></table></div></div><blockquote><p>由于密码时空，所以也可以直接进入mysql</p></blockquote><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>sudo mysql -uroot
+</span></span></code></pre></td></tr></table></div></div><blockquote><p>重置密码为Kkk_123</p></blockquote><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-sql data-lang=sql><span class=line><span class=cl><span class=n>mysql</span><span class=o>&gt;</span><span class=w> </span><span class=k>alter</span><span class=w> </span><span class=k>user</span><span class=w> </span><span class=s1>&#39;root&#39;</span><span class=o>@</span><span class=s1>&#39;%&#39;</span><span class=w> </span><span class=n>identified</span><span class=w> </span><span class=k>by</span><span class=w> </span><span class=s1>&#39;Kkk_123&#39;</span><span class=p>;</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><blockquote><p>重启mysql服务</p></blockquote><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>sudo service mysql restart
+</span></span></code></pre></td></tr></table></div></div><blockquote><p>用刚刚的密码登录mysql</p></blockquote><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>sudo mysql -uroot -pKkk_123
+</span></span></code></pre></td></tr></table></div></div><p>成功。</p><h2 id=后端配置 class=headerLink><a href=#%e5%90%8e%e7%ab%af%e9%85%8d%e7%bd%ae class=header-mark></a>后端配置</h2><p>使用idea将写好的项目打一个jar包</p><img src=MD_img/image-20220726142927539.png alt=image-20220726142927539 style=zoom:50%><p>在项目文件的target文件夹中找到生成的jar包，并运行。</p><p>配置完成。</p></div><div class=sponsor><div class=sponsor-avatar><img class=lazyload data-src=/images/logo.png data-srcset="/images/logo.png, /images/logo.png 1.5x, /images/logo.png 2x" data-sizes=auto alt=/images/logo.png title=/images/logo.png></div><p class=sponsor-bio><em>如果你觉得这篇文章对你有所帮助，欢迎赞赏~</em></p><a href=/images/buymeacoffee.jpg title=Sponsor target=_blank class=sponsor-button rel="noopener noreferrer"><i class="far fa-heart fa-fw icon" style=color:#ec6cb9></i>
+<span>赞赏</span></a></div><div class=post-footer id=post-footer><div class=post-info><div class=post-info-line><div class=post-info-mod><span>更新于 2022-07-23</span></div><div class=post-info-license></div></div><div class=post-info-line><div class=post-info-md><span><a class=link-to-mardown href=/full_stack_development/index.md target=_blank rel="noopener noreferrer">阅读原始文档</a>
+</span><span>|&nbsp;<a class=link-to-report href="https://github.com/dp0d/dp0d.github.io/issues/new?title=[bug]%20%E8%AE%B0%E4%B8%80%E6%AC%A1%E5%89%8D%E5%90%8E%E7%AB%AF%E5%88%86%E7%A6%BB%E7%9A%84%E5%BC%80%E5%8F%91%E9%83%A8%E7%BD%B2%E5%AE%9E%E8%B7%B5&body=|Field|Value|%0A|-|-|%0A|Title|%E8%AE%B0%E4%B8%80%E6%AC%A1%E5%89%8D%E5%90%8E%E7%AB%AF%E5%88%86%E7%A6%BB%E7%9A%84%E5%BC%80%E5%8F%91%E9%83%A8%E7%BD%B2%E5%AE%9E%E8%B7%B5|%0A|Url|https://dp0d.github.io/full_stack_development/|%0A|Filename|https://github.com/dp0d/dp0d.github.io/posts/2022/full_stack_development/index.md|" target=_blank rel="noopener noreferrer">报告问题</a></span></div><div class=post-info-share><span><a href=# onclick=return!1 title="分享到 Twitter" data-sharer=twitter data-url=https://dp0d.github.io/full_stack_development/ data-title=记一次前后端分离的开发部署实践 data-hashtags=linux><i class="fab fa-twitter fa-fw"></i></a><a href=# onclick=return!1 title="分享到 Facebook" data-sharer=facebook data-url=https://dp0d.github.io/full_stack_development/ data-hashtag=linux><i class="fab fa-facebook-square fa-fw"></i></a><a href=# onclick=return!1 title="分享到 微博" data-sharer=weibo data-url=https://dp0d.github.io/full_stack_development/ data-title=记一次前后端分离的开发部署实践><i class="fab fa-weibo fa-fw"></i></a><a href=# onclick=return!1 title="分享到 Telegram" data-sharer=telegram data-url=https://dp0d.github.io/full_stack_development/ data-title=记一次前后端分离的开发部署实践 data-web><i class="fab fa-telegram-plane fa-fw"></i></a></span></div></div></div><div class=post-info-more><section class=post-tags><i class="fas fa-tags fa-fw"></i>&nbsp;<a href=/tags/linux/>Linux</a></section><section><span><a href=javascript:void(0); onclick=window.history.back()>返回</a></span>&nbsp;|&nbsp;<span><a href=/>主页</a></span></section></div><div class=post-nav><a href=/finetune_trick/ class=prev rel=prev title=预训练模型的finetune技巧><i class="fas fa-angle-left fa-fw"></i>预训练模型的finetune技巧</a>
+<a href=/datasets/ class=next rel=next title=有关数据集调研和介绍>有关数据集调研和介绍<i class="fas fa-angle-right fa-fw"></i></a></div></div><div id=comments><div id=giscus></div><noscript>Please enable JavaScript to view the comments powered by <a href=https://giscus.app/>giscus</a>.</noscript></div></article></div></main><footer class=footer><div class=footer-container><div class=footer-line><i class="far fa-copyright fa-fw"></i><span itemprop=copyrightYear>2022 - 2023</span><span class=author itemprop=copyrightHolder>&nbsp;<a href=https://github.com/dp0d target=_blank rel="noopener noreferrer">dp0d</a></span>&nbsp;|&nbsp;<span class=license><a rel="license external nofollow noopener noreffer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span><span class=icp-splitter>&nbsp;|&nbsp;</span><br class=icp-br><span class=icp><a href=https://beian.miit.gov.cn/ target=_blank>赣ICP备2022002313号-1</a></span></div><div class=footer-line></div><div class=footer-line></div></div><script>"serviceWorker"in navigator&&(navigator.serviceWorker.register("/sw.min.js",{scope:"/"}).then(function(){}),navigator.serviceWorker.ready.then(function(){}))</script></footer></div><div id=fixed-buttons><a href=#back-to-top id=back-to-top-button class=fixed-button title=回到顶部><i class="fas fa-arrow-up fa-fw"></i>
+</a><a href=# id=view-comments class=fixed-button title=查看评论><i class="fas fa-comment fa-fw"></i></a></div><div class=assets><script type=text/javascript src=/lib/object-fit-images/ofi.min.js></script><script type=text/javascript src=/lib/autocomplete/autocomplete.min.js></script><script type=text/javascript src=/lib/fuse/fuse.min.js></script><script type=text/javascript src=/lib/lazysizes/lazysizes.min.js></script><script type=text/javascript src=/lib/tablesort/tablesort.min.js></script><script type=text/javascript src=/lib/topbar/topbar.min.js></script><script type=text/javascript src=/lib/pjax/pjax.min.js></script><script type=text/javascript src=/js/theme.min.js defer></script></div><div class=pjax-assets><script type=text/javascript>window.config={code:{copyTitle:"复制到剪贴板",maxShownLines:100},comment:{giscus:{darkTheme:"dark",dataCategory:"General",dataCategoryId:"DIC_kwDOHB3uW84COZbL",dataEmitMetadata:"0",dataInputPosition:"top",dataLang:"zh-CN",dataMapping:"title",dataReactionsEnabled:"1",dataRepo:"dp0d/dp0d.github.io",dataRepoId:"R_kgDOHB3uWw",lightTheme:"light"}},lightGallery:{actualSize:!1,exThumbImage:"data-thumbnail",hideBarsDelay:2e3,selector:".lightgallery",speed:400,thumbContHeight:80,thumbWidth:80,thumbnail:!0},math:{delimiters:[{display:!0,left:"$$",right:"$$"},{display:!0,left:"\\[",right:"\\]"},{display:!1,left:"$",right:"$"},{display:!1,left:"\\(",right:"\\)"}],strict:!1},search:{distance:100,findAllMatches:!1,fuseIndexURL:"/index.json",highlightTag:"em",ignoreFieldNorm:!1,ignoreLocation:!0,isCaseSensitive:!1,location:0,maxResultLength:10,minMatchCharLength:2,noResultsFound:"没有找到结果",snippetLength:50,threshold:.1,type:"fuse",useExtendedSearch:!1},sharerjs:!0,table:{sort:!0},twemoji:!0}</script><script type=text/javascript src=/js/giscus.min.js defer></script><script type=text/javascript src=/lib/twemoji/twemoji.min.js defer></script><script type=text/javascript src=/js/twemoji.min.js defer></script><script type=text/javascript src=/lib/lightgallery/lightgallery.min.js></script><script type=text/javascript src=/lib/lightgallery/lg-thumbnail.min.js></script><script type=text/javascript src=/lib/lightgallery/lg-zoom.min.js></script><script type=text/javascript src=/lib/clipboard/clipboard.min.js></script><script type=text/javascript src=/lib/sharer/sharer.min.js></script><script type=text/javascript src=/lib/katex/katex.min.js defer></script><script type=text/javascript src=/lib/katex/auto-render.min.js defer></script><script type=text/javascript src=/lib/katex/copy-tex.min.js defer></script><script type=text/javascript src=/lib/katex/mhchem.min.js defer></script><script type=text/javascript src=/js/katex.min.js defer></script><link rel=stylesheet href=/lib/lightgallery/lightgallery.min.css><link rel=stylesheet href=/lib/katex/katex.min.css><link rel=preload as=style onload='this.onload=null,this.rel="stylesheet"' href=/lib/katex/copy-tex.min.css><noscript><link rel=stylesheet href=/lib/katex/copy-tex.min.css></noscript></div></body></html>

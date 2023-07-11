@@ -1,663 +1,229 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="robots" content="noodp" />
-    <title class="pjax-title">K折交叉验证 - dp0d&#39;s blog</title><meta name="Description" content="dp0d&#39;s blog,where to share life as well as technology of nlp."><meta property="og:title" content="K折交叉验证" />
-<meta property="og:description" content="什么是K折交叉验证？如果你有五个土豆，你想要教会一个小盆友，这些是土豆，好了，现在你拿出四个土豆让他逐一认识，最后拿出第五个土豆来测试他是否" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://dp0d.github.io/kfold_cross_validation/" /><meta property="og:image" content="https://dp0d.github.io/images/logo.png"/><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2022-06-29T15:04:39+08:00" />
-<meta property="article:modified_time" content="2022-06-29T15:04:39+08:00" /><meta property="og:site_name" content="dp0d&#39;s blog" />
-<meta property="og:see_also" content="https://dp0d.github.io/pyecharts/" /><meta property="og:see_also" content="https://dp0d.github.io/pandas/" />
-
-<meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:image" content="https://dp0d.github.io/images/logo.png"/>
-
-<meta name="twitter:title" content="K折交叉验证"/>
-<meta name="twitter:description" content="什么是K折交叉验证？如果你有五个土豆，你想要教会一个小盆友，这些是土豆，好了，现在你拿出四个土豆让他逐一认识，最后拿出第五个土豆来测试他是否"/>
-<meta name="application-name" content="dp0d&#39;s blog">
-<meta name="apple-mobile-web-app-title" content="dp0d&#39;s blog">
-
-<meta name="theme-color" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://dp0d.github.io/kfold_cross_validation/" /><link rel="prev" href="https://dp0d.github.io/kaggle/" /><link rel="next" href="https://dp0d.github.io/bravo_processbar/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/fontawesome-free/all.min.css">
-        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/animate/animate.min.css">
-        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript>
-    
-    
-    
-    <script type="application/ld+json">
-    {
-        "@context": "http://schema.org",
-        "@type": "BlogPosting",
-        "headline": "K折交叉验证",
-        "inLanguage": "zh-CN",
-        "mainEntityOfPage": {
-            "@type": "WebPage",
-            "@id": "https:\/\/dp0d.github.io\/kfold_cross_validation\/"
-        },"image": ["https:\/\/dp0d.github.io\/images\/logo.png"],"genre": "posts","keywords": "py","wordcount":  1651 ,
-        "url": "https:\/\/dp0d.github.io\/kfold_cross_validation\/","datePublished": "2022-06-29T15:04:39+08:00","dateModified": "2022-06-29T15:04:39+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
-            "@type": "Organization",
-            "name": "dp0d","logo": "https:\/\/dp0d.github.io\/images\/logo.png"},"author": {
-                "@type": "Person",
-                "name": "dp0d"
-            },"description": ""
-    }
-    </script></head>
-
-<body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">
-        function setTheme(theme) {document.body.setAttribute('theme', theme);}
-        function saveTheme(theme) {window.localStorage && localStorage.setItem('theme', theme);}
-        function getMeta(metaName) {const metas = document.getElementsByTagName('meta'); for (let i = 0; i < metas.length; i++) if (metas[i].getAttribute('name') === metaName) return metas[i]; return '';}
-        if (window.localStorage && localStorage.getItem('theme')) {let theme = localStorage.getItem('theme');theme === 'light' || theme === 'dark' || theme === 'black' ? setTheme(theme) : (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light')); } else { if ('auto' === 'light' || 'auto' === 'dark' || 'auto' === 'black') setTheme('auto'), saveTheme('auto'); else saveTheme('auto'), window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light');}
-        let metaColors = {'light': '#f8f8f8','dark': '#252627','black': '#000000'}
-        getMeta('theme-color').content = metaColors[document.body.getAttribute('theme')];
-    </script>
-    <div id="back-to-top"></div>
-    <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
-    <div class="header-wrapper">
-        <div class="header-title">
-            <a href="/" title="dp0d&#39;s blog"><span class="header-title-pre"><i class='far fa-edit fa-fw'></i></span>Natural Language Processing</a>
-        </div>
-        <div class="menu">
-            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/charge/"> 充电 </a><a class="menu-item" href="/friends/"> 朋友萌 </a><a class="menu-item" href="/collection/"> 收藏 </a><a class="menu-item" href="/copyright/"> 版权 </a><a class="menu-item" href="/about/"> 关于我 </a><a class="menu-item" href="https://github.com/dp0d" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
-                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
-                        <a href="#" onclick="return false;" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
-                            <i class="fas fa-search fa-fw"></i>
-                        </a>
-                        <a href="#" onclick="return false;" class="search-button search-clear" id="search-clear-desktop" title="清空">
-                            <i class="fas fa-times-circle fa-fw"></i>
-                        </a>
-                        <span class="search-button search-loading" id="search-loading-desktop">
-                            <i class="fas fa-spinner fa-fw fa-spin"></i>
-                        </span>
-                    </span><a href="#" onclick="return false;" class="menu-item theme-select" title="切换主题">
-                    <i class="fas fa-adjust fa-fw"></i>
-                    <select class="color-theme-select" id="theme-select-desktop" title="切换主题">
-                        <option value="light">浅色</option>
-                        <option value="dark">深色</option>
-                        <option value="black">黑色</option>
-                        <option value="auto">跟随系统</option>
-                    </select>
-                </a></div>
-        </div>
-    </div>
-</header><header class="mobile" id="header-mobile">
-    <div class="header-container">
-        <div class="header-wrapper">
-            <div class="header-title">
-                <a href="/" title="dp0d&#39;s blog"><span class="header-title-pre"><i class='far fa-edit fa-fw'></i></span>Natural Language Processing</a>
-            </div>
-            <div class="menu-toggle" id="menu-toggle-mobile">
-                <span></span><span></span><span></span>
-            </div>
-        </div>
-        <div class="menu" id="menu-mobile"><div class="search-wrapper">
-                    <div class="search mobile" id="search-mobile">
-                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
-                        <a href="#" onclick="return false;" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
-                            <i class="fas fa-search fa-fw"></i>
-                        </a>
-                        <a href="#" onclick="return false;" class="search-button search-clear" id="search-clear-mobile" title="清空">
-                            <i class="fas fa-times-circle fa-fw"></i>
-                        </a>
-                        <span class="search-button search-loading" id="search-loading-mobile">
-                            <i class="fas fa-spinner fa-fw fa-spin"></i>
-                        </span>
-                    </div>
-                    <a href="#" onclick="return false;" class="search-cancel" id="search-cancel-mobile">
-                        取消
-                    </a>
-                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/charge/" title="">充电</a><a class="menu-item" href="/friends/" title="">朋友萌</a><a class="menu-item" href="/collection/" title="">收藏</a><a class="menu-item" href="/copyright/" title="">版权</a><a class="menu-item" href="/about/" title="">关于我</a><a class="menu-item" href="https://github.com/dp0d" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i></a><a href="#" onclick="return false;" class="menu-item theme-select" title="切换主题">
-                <i class="fas fa-adjust fa-fw"></i>
-                <select class="color-theme-select" id="theme-select-mobile" title="切换主题">
-                    <option value="light">浅色</option>
-                    <option value="dark">深色</option>
-                    <option value="black">黑色</option>
-                    <option value="auto">跟随系统</option>
-                </select>
-            </a></div>
-    </div>
-</header>
-<div class="search-dropdown desktop">
-    <div id="search-dropdown-desktop"></div>
-</div>
-<div class="search-dropdown mobile">
-    <div id="search-dropdown-mobile"></div>
-</div>
-<main class="main">
-            <div class="container"><div class="toc" id="toc-auto">
-        <h2 class="toc-title">目录</h2>
-        <div class="toc-content" id="toc-content-auto"><nav id="TableOfContents">
-  <ul>
-    <li><a href="#什么是k折交叉验证">什么是K折交叉验证？</a></li>
-    <li><a href="#model_selection-实现交叉验证数据集划分">model_selection 实现交叉验证数据集划分</a>
-      <ul>
-        <li><a href="#简单的数据划分不涉及多折">简单的数据划分(不涉及多折)</a></li>
-        <li><a href="#kfold">KFold</a>
-          <ul>
-            <li><a href="#list-data">list data</a></li>
-            <li><a href="#pd-data">pd data</a></li>
-          </ul>
-        </li>
-        <li><a href="#stratifiedkfold">StratifiedKFold</a></li>
-        <li><a href="#groupkfold">GroupKFold</a>
-          <ul>
-            <li><a href="#pd-data-1">pd data</a></li>
-          </ul>
-        </li>
-        <li><a href="#stratifiedgroupkfold">StratifiedGroupKFold</a>
-          <ul>
-            <li><a href="#list-data-1">list data</a></li>
-            <li><a href="#pd-data-2">pd data</a></li>
-          </ul>
-        </li>
-      </ul>
-    </li>
-  </ul>
-</nav></div>
-    </div><script>document.getElementsByTagName("main")[0].setAttribute("pageStyle", "normal")</script><script>document.getElementsByTagName("main")[0].setAttribute("autoTOC", "true")</script><article class="page single"><h1 class="single-title animate__animated animate__flipInX">K折交叉验证</h1><div class="post-meta">
-            <div class="post-meta-line">
-                <span class="post-author"><i class="author fas fa-user-circle fa-fw"></i><a href="https://github.com/dp0d" title="Author" target="_blank" rel="noopener noreffer author" class="author">dp0d</a>
-                </span>&nbsp;<span class="post-category">收录于 </span>&nbsp;<span class="post-category">类别 <a href="/categories/machine_learning/"><i class="far fa-folder fa-fw"></i>机器学习</a></span>&nbsp;<span class="post-category">和</span>&nbsp;<span class="post-series">系列 <a href="/series/python_data_analysis/"><i class="far fa-list-alt fa-fw"></i>Python数据分析</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-06-29">2022-06-29</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2022-06-29">2022-06-29</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1651 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 4 分钟&nbsp;</div>
-        </div><div class="details toc" id="toc-static"  kept="">
-                <div class="details-summary toc-title">
-                    <span>目录</span>
-                    <span><i class="details-icon fas fa-angle-right"></i></span>
-                </div>
-                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
-  <ul>
-    <li><a href="#什么是k折交叉验证">什么是K折交叉验证？</a></li>
-    <li><a href="#model_selection-实现交叉验证数据集划分">model_selection 实现交叉验证数据集划分</a>
-      <ul>
-        <li><a href="#简单的数据划分不涉及多折">简单的数据划分(不涉及多折)</a></li>
-        <li><a href="#kfold">KFold</a>
-          <ul>
-            <li><a href="#list-data">list data</a></li>
-            <li><a href="#pd-data">pd data</a></li>
-          </ul>
-        </li>
-        <li><a href="#stratifiedkfold">StratifiedKFold</a></li>
-        <li><a href="#groupkfold">GroupKFold</a>
-          <ul>
-            <li><a href="#pd-data-1">pd data</a></li>
-          </ul>
-        </li>
-        <li><a href="#stratifiedgroupkfold">StratifiedGroupKFold</a>
-          <ul>
-            <li><a href="#list-data-1">list data</a></li>
-            <li><a href="#pd-data-2">pd data</a></li>
-          </ul>
-        </li>
-      </ul>
-    </li>
-  </ul>
-</nav></div>
-            </div><div class="content" id="content"><h2 id="什么是k折交叉验证" class="headerLink">
-    <a href="#%e4%bb%80%e4%b9%88%e6%98%afk%e6%8a%98%e4%ba%a4%e5%8f%89%e9%aa%8c%e8%af%81" class="header-mark"></a>什么是K折交叉验证？</h2><p>如果你有五个土豆，你想要教会一个小盆友，这些是土豆，好了，现在你拿出四个土豆让他逐一认识，最后拿出第五个土豆来测试他是否真正地认识了土豆，那么土豆奇形怪状，第五个土豆可以是五个中的任意一个，那么这就让我们拥有了五套方案来教会小朋友如何认识土豆，即用其中的四个做认识学习，剩下的一个作为测试学习成果。这就是一个五折交叉验证的结果，我们可以将每一种学习方案的学习效果（可以是孩子确信第五个土豆是土豆的置信度）加起来取平均来代表这个小盆友学习认识土豆能力的总体评分，从而减小对数据的bias。</p>
-<img src="MD_img/grid_search_cross_validation.png" alt="img" style="zoom:50%;" />
-<h2 id="model_selection-实现交叉验证数据集划分" class="headerLink">
-    <a href="#model_selection-%e5%ae%9e%e7%8e%b0%e4%ba%a4%e5%8f%89%e9%aa%8c%e8%af%81%e6%95%b0%e6%8d%ae%e9%9b%86%e5%88%92%e5%88%86" class="header-mark"></a>model_selection 实现交叉验证数据集划分</h2><div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># ====================================================</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># Library</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># ====================================================</span>
-</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span><span class="p">,</span> <span class="n">KFold</span><span class="p">,</span> <span class="n">GroupKFold</span><span class="p">,</span> <span class="n">StratifiedKFold</span><span class="p">,</span> <span class="n">StratifiedGroupKFold</span> 
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h3 id="简单的数据划分不涉及多折" class="headerLink">
-    <a href="#%e7%ae%80%e5%8d%95%e7%9a%84%e6%95%b0%e6%8d%ae%e5%88%92%e5%88%86%e4%b8%8d%e6%b6%89%e5%8f%8a%e5%a4%9a%e6%8a%98" class="header-mark"></a>简单的数据划分(不涉及多折)</h3><div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">&#34;featrues&#34;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&#34;long&#34;</span><span class="p">,</span> <span class="s2">&#34;high&#34;</span><span class="p">,</span> <span class="s2">&#34;long&#34;</span><span class="p">,</span> <span class="s2">&#34;short&#34;</span><span class="p">,</span> <span class="s2">&#34;big&#34;</span><span class="p">,</span> <span class="s2">&#34;small&#34;</span><span class="p">],</span> <span class="s2">&#34;labels&#34;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&#34;1&#34;</span><span class="p">,</span> <span class="s2">&#34;1&#34;</span><span class="p">,</span> <span class="s2">&#34;1&#34;</span><span class="p">,</span> <span class="s2">&#34;0&#34;</span><span class="p">,</span> <span class="s2">&#34;1&#34;</span><span class="p">,</span> <span class="s2">&#34;0&#34;</span><span class="p">]})</span>
-</span></span><span class="line"><span class="cl"><span class="n">train</span><span class="p">,</span> <span class="n">test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">train_size</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="n">train</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>out:</p>
-<blockquote>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-markdown" data-lang="markdown"><span class="line"><span class="cl">	featrues	labels
-</span></span><span class="line"><span class="cl">4	big	1
-</span></span><span class="line"><span class="cl">0	long	1
-</span></span><span class="line"><span class="cl">5	small	0
-</span></span><span class="line"><span class="cl">2	long	1
-</span></span><span class="line"><span class="cl">1	high	1
-</span></span></code></pre></td></tr></table>
-</div>
-</div></blockquote>
-<h3 id="kfold" class="headerLink">
-    <a href="#kfold" class="header-mark"></a>KFold</h3><h4 id="list-data" class="headerLink">
-    <a href="#list-data" class="header-mark"></a>list data</h4><div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">X</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&#34;a&#34;</span><span class="p">,</span> <span class="s2">&#34;b&#34;</span><span class="p">,</span> <span class="s2">&#34;c&#34;</span><span class="p">,</span> <span class="s2">&#34;d&#34;</span><span class="p">]</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># n_splits=2 代表分成两折</span>
-</span></span><span class="line"><span class="cl"><span class="n">kf</span> <span class="o">=</span> <span class="n">KFold</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">train</span><span class="p">,</span> <span class="n">test</span> <span class="ow">in</span> <span class="n">kf</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">X</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;</span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2">&#34;</span> <span class="o">%</span> <span class="p">(</span><span class="n">train</span><span class="p">,</span> <span class="n">test</span><span class="p">))</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>out:</p>
-<blockquote>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">[0 2] [1 3]
-</span></span><span class="line"><span class="cl">[1 3] [0 2]
-</span></span></code></pre></td></tr></table>
-</div>
-</div></blockquote>
-<h4 id="pd-data" class="headerLink">
-    <a href="#pd-data" class="header-mark"></a>pd data</h4><div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">&#34;featrues&#34;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&#34;long&#34;</span><span class="p">,</span> <span class="s2">&#34;high&#34;</span><span class="p">,</span> <span class="s2">&#34;long&#34;</span><span class="p">,</span> <span class="s2">&#34;short&#34;</span><span class="p">,</span> <span class="s2">&#34;big&#34;</span><span class="p">,</span> <span class="s2">&#34;small&#34;</span><span class="p">],</span> <span class="s2">&#34;labels&#34;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&#34;1&#34;</span><span class="p">,</span> <span class="s2">&#34;1&#34;</span><span class="p">,</span> <span class="s2">&#34;1&#34;</span><span class="p">,</span> <span class="s2">&#34;0&#34;</span><span class="p">,</span> <span class="s2">&#34;1&#34;</span><span class="p">,</span> <span class="s2">&#34;0&#34;</span><span class="p">]})</span>
-</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>out:</p>
-<blockquote>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  featrues labels
-</span></span><span class="line"><span class="cl">0     long      1
-</span></span><span class="line"><span class="cl">1     high      1
-</span></span><span class="line"><span class="cl">2     long      1
-</span></span><span class="line"><span class="cl">3    short      0
-</span></span><span class="line"><span class="cl">4      big      1
-</span></span></code></pre></td></tr></table>
-</div>
-</div></blockquote>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">kf</span> <span class="o">=</span> <span class="n">KFold</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">train</span><span class="p">,</span> <span class="n">test</span> <span class="ow">in</span> <span class="n">kf</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">df</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;</span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2">&#34;</span> <span class="o">%</span> <span class="p">(</span><span class="n">train</span><span class="p">,</span> <span class="n">test</span><span class="p">))</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>out:</p>
-<blockquote>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">[2 3 4 5] [0 1]
-</span></span><span class="line"><span class="cl">[0 1 3 4] [2 5]
-</span></span><span class="line"><span class="cl">[0 1 2 3 5] [4]
-</span></span><span class="line"><span class="cl">[0 1 2 4 5] [3]
-</span></span></code></pre></td></tr></table>
-</div>
-</div></blockquote>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># 新建一列</span>
-</span></span><span class="line"><span class="cl"><span class="n">df</span><span class="p">[</span><span class="s1">&#39;fold&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># 给split的每一折用enumerate遍历编号，比如这里是0,1,2,3</span>
-</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="p">(</span><span class="n">train</span><span class="p">,</span> <span class="n">test</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">kf</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">df</span><span class="p">)):</span>
-</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">train</span><span class="p">,</span> <span class="n">test</span><span class="p">)</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>out:</p>
-<blockquote>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">0 [2 3 4 5] [0 1]
-</span></span><span class="line"><span class="cl">1 [0 1 3 4] [2 5]
-</span></span><span class="line"><span class="cl">2 [0 1 2 3 5] [4]
-</span></span><span class="line"><span class="cl">3 [0 1 2 4 5] [3]
-</span></span></code></pre></td></tr></table>
-</div>
-</div></blockquote>
-<p>为每一折的数据行打标记如下(完整示例)</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">&#34;featrues&#34;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&#34;long&#34;</span><span class="p">,</span> <span class="s2">&#34;high&#34;</span><span class="p">,</span> <span class="s2">&#34;long&#34;</span><span class="p">,</span> <span class="s2">&#34;short&#34;</span><span class="p">,</span> <span class="s2">&#34;big&#34;</span><span class="p">,</span> <span class="s2">&#34;small&#34;</span><span class="p">],</span> <span class="s2">&#34;labels&#34;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&#34;1&#34;</span><span class="p">,</span> <span class="s2">&#34;1&#34;</span><span class="p">,</span> <span class="s2">&#34;1&#34;</span><span class="p">,</span> <span class="s2">&#34;0&#34;</span><span class="p">,</span> <span class="s2">&#34;1&#34;</span><span class="p">,</span> <span class="s2">&#34;0&#34;</span><span class="p">]})</span>
-</span></span><span class="line"><span class="cl"><span class="n">df</span><span class="p">[</span><span class="s1">&#39;fold&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
-</span></span><span class="line"><span class="cl"><span class="n">kf</span> <span class="o">=</span> <span class="n">KFold</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="p">(</span><span class="n">train</span><span class="p">,</span> <span class="n">test</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">kf</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">df</span><span class="p">)):</span>
-</span></span><span class="line"><span class="cl">    <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">test</span><span class="p">,</span><span class="s1">&#39;fold&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">idx</span>
-</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>out:</p>
-<blockquote>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  featrues labels  fold
-</span></span><span class="line"><span class="cl">0     long      1     0
-</span></span><span class="line"><span class="cl">1     high      1     0
-</span></span><span class="line"><span class="cl">2     long      1     1
-</span></span><span class="line"><span class="cl">3    short      0     3
-</span></span><span class="line"><span class="cl">4      big      1     2
-</span></span></code></pre></td></tr></table>
-</div>
-</div></blockquote>
-<h3 id="stratifiedkfold" class="headerLink">
-    <a href="#stratifiedkfold" class="header-mark"></a>StratifiedKFold</h3><p>按标签比例来划分每一折的验证集和训练集，观察下列数据的标签，容易得到，在未划分数据集之前，标签比例为&quot;1&quot;: &ldquo;0&rdquo; &mdash;&gt; 2:1</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">&#34;featrues&#34;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&#34;long&#34;</span><span class="p">,</span> <span class="s2">&#34;high&#34;</span><span class="p">,</span> <span class="s2">&#34;long&#34;</span><span class="p">,</span> <span class="s2">&#34;short&#34;</span><span class="p">,</span> <span class="s2">&#34;big&#34;</span><span class="p">,</span> <span class="s2">&#34;small&#34;</span><span class="p">],</span> <span class="s2">&#34;labels&#34;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&#34;1&#34;</span><span class="p">,</span> <span class="s2">&#34;1&#34;</span><span class="p">,</span> <span class="s2">&#34;1&#34;</span><span class="p">,</span> <span class="s2">&#34;0&#34;</span><span class="p">,</span> <span class="s2">&#34;1&#34;</span><span class="p">,</span> <span class="s2">&#34;0&#34;</span><span class="p">]})</span> 
-</span></span><span class="line"><span class="cl"><span class="n">df</span><span class="p">[</span><span class="s1">&#39;fold&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">skf</span> <span class="o">=</span> <span class="n">StratifiedKFold</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="p">(</span><span class="n">train</span><span class="p">,</span> <span class="n">test</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">skf</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s2">&#34;labels&#34;</span><span class="p">])):</span>
-</span></span><span class="line"><span class="cl">    <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">test</span><span class="p">,</span><span class="s1">&#39;fold&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">idx</span>
-</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>out:</p>
-<blockquote>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  featrues labels  fold
-</span></span><span class="line"><span class="cl">0     long      1     0
-</span></span><span class="line"><span class="cl">1     high      1     0
-</span></span><span class="line"><span class="cl">2     long      1     1
-</span></span><span class="line"><span class="cl">3    short      0     0
-</span></span><span class="line"><span class="cl">4      big      1     1
-</span></span><span class="line"><span class="cl">5    small      0     1
-</span></span></code></pre></td></tr></table>
-</div>
-</div></blockquote>
-<p>可以看到，分折之后，第0折中，标签&quot;1&quot;:&ldquo;0&rdquo; 也呈现为2:1的比例，第1折也是如此。</p>
-<h3 id="groupkfold" class="headerLink">
-    <a href="#groupkfold" class="header-mark"></a>GroupKFold</h3><h4 id="pd-data-1" class="headerLink">
-    <a href="#pd-data-1" class="header-mark"></a>pd data</h4><p>按照group列的值来分折，也就是说，group列内的值的种类需要大于等于n_splits的值。</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">&#34;featrues&#34;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&#34;long&#34;</span><span class="p">,</span> <span class="s2">&#34;high&#34;</span><span class="p">,</span> <span class="s2">&#34;long&#34;</span><span class="p">,</span> <span class="s2">&#34;short&#34;</span><span class="p">,</span> <span class="s2">&#34;big&#34;</span><span class="p">,</span> <span class="s2">&#34;small&#34;</span><span class="p">],</span> <span class="s2">&#34;labels&#34;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&#34;1&#34;</span><span class="p">,</span> <span class="s2">&#34;2&#34;</span><span class="p">,</span> <span class="s2">&#34;1&#34;</span><span class="p">,</span> <span class="s2">&#34;0&#34;</span><span class="p">,</span> <span class="s2">&#34;1&#34;</span><span class="p">,</span> <span class="s2">&#34;0&#34;</span><span class="p">]})</span> <span class="c1"># label有三类值，可以用这个作为group列，也可以自己定义新建group列</span>
-</span></span><span class="line"><span class="cl"><span class="n">df</span><span class="p">[</span><span class="s1">&#39;fold&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">gkf</span> <span class="o">=</span> <span class="n">GroupKFold</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span> <span class="c1"># n_splits要满足 2 &lt;= n_splits &lt;= group列中的唯一值数量</span>
-</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="p">(</span><span class="n">train</span><span class="p">,</span> <span class="n">test</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">gkf</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s2">&#34;labels&#34;</span><span class="p">],</span> <span class="n">groups</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s2">&#34;labels&#34;</span><span class="p">])):</span>
-</span></span><span class="line"><span class="cl">    <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">test</span><span class="p">,</span><span class="s1">&#39;fold&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">idx</span>
-</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>out:</p>
-<blockquote>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  featrues labels  fold
-</span></span><span class="line"><span class="cl">0     long      1     0
-</span></span><span class="line"><span class="cl">1     high      2     1
-</span></span><span class="line"><span class="cl">2     long      1     0
-</span></span><span class="line"><span class="cl">3    short      0     1
-</span></span><span class="line"><span class="cl">4      big      1     0
-</span></span></code></pre></td></tr></table>
-</div>
-</div></blockquote>
-<h3 id="stratifiedgroupkfold" class="headerLink">
-    <a href="#stratifiedgroupkfold" class="header-mark"></a>StratifiedGroupKFold</h3><h4 id="list-data-1" class="headerLink">
-    <a href="#list-data-1" class="header-mark"></a>list data</h4><p>此方法结合了StratifiedKFold和GroupKFold，在按group进行分折的同时尽量保证每一折分出的数据接近划分前的标签分布(自然，剩下的也是由其他折组成，也自然符合标签的数据分布)。</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">StratifiedGroupKFold</span>
-</span></span><span class="line"><span class="cl"><span class="n">X</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">18</span><span class="p">))</span>
-</span></span><span class="line"><span class="cl"><span class="n">y</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="mi">6</span> <span class="o">+</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">12</span>
-</span></span><span class="line"><span class="cl"><span class="n">groups</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">]</span>
-</span></span><span class="line"><span class="cl"><span class="n">sgkf</span> <span class="o">=</span> <span class="n">StratifiedGroupKFold</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">train</span><span class="p">,</span> <span class="n">test</span> <span class="ow">in</span> <span class="n">sgkf</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">groups</span><span class="o">=</span><span class="n">groups</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">	<span class="nb">print</span><span class="p">(</span><span class="s2">&#34;</span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2">&#34;</span> <span class="o">%</span> <span class="p">(</span><span class="n">train</span><span class="p">,</span> <span class="n">test</span><span class="p">))</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>out:</p>
-<blockquote>
-<img src="MD_img/image-20220629213145386.png" alt="image-20220629213145386" style="zoom: 50%;" />
-</blockquote>
-<p>实践说明。</p>
-<p>在目前的实现中，大多数情况下不可能实现完全洗牌。当shuffle=True时，会发生以下情况。</p>
-<p>所有的group都被打乱了。</p>
-<p>使用稳定的排序法，按照类的标准偏差对组进行排序。</p>
-<p>排序后的组被迭代，并分配给每一折。</p>
-<p>这意味着只有具有相同的类分布标准差的组才会被打乱，这在每个组只有一个类时可能很有用。</p>
-<p>该算法贪婪地将每个组分配到n_splits测试集中的一个，选择测试集，使各测试集的类分布差异最小。组的分配从类别频率方差最大的组到最小的组进行，也就是说，在一个或几个类别上达到峰值的大组被首先分配。</p>
-<p>这种分法在某种意义上是次优的，它可能产生不平衡的分法，即使完美的分层是可能的。如果你在每个组中的类的分布相对接近，使用GroupKFold会更好。</p>
-<h4 id="pd-data-2" class="headerLink">
-    <a href="#pd-data-2" class="header-mark"></a>pd data</h4><div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">&#34;featrues&#34;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&#34;long&#34;</span><span class="p">,</span> <span class="s2">&#34;high&#34;</span><span class="p">,</span> <span class="s2">&#34;long&#34;</span><span class="p">,</span> <span class="s2">&#34;short&#34;</span><span class="p">,</span> <span class="s2">&#34;big&#34;</span><span class="p">,</span> <span class="s2">&#34;small&#34;</span><span class="p">],</span> <span class="s2">&#34;labels&#34;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&#34;1&#34;</span><span class="p">,</span> <span class="s2">&#34;1&#34;</span><span class="p">,</span> <span class="s2">&#34;1&#34;</span><span class="p">,</span> <span class="s2">&#34;0&#34;</span><span class="p">,</span> <span class="s2">&#34;1&#34;</span><span class="p">,</span> <span class="s2">&#34;0&#34;</span><span class="p">]})</span> 
-</span></span><span class="line"><span class="cl"><span class="n">df</span><span class="p">[</span><span class="s1">&#39;fold&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">sgkf</span> <span class="o">=</span> <span class="n">StratifiedGroupKFold</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="p">(</span><span class="n">train</span><span class="p">,</span> <span class="n">test</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">sgkf</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s2">&#34;labels&#34;</span><span class="p">],</span> <span class="n">groups</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s2">&#34;labels&#34;</span><span class="p">])):</span>
-</span></span><span class="line"><span class="cl">    <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">test</span><span class="p">,</span><span class="s1">&#39;fold&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">idx</span>
-</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><blockquote>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  featrues labels  fold
-</span></span><span class="line"><span class="cl">0     long      1     0
-</span></span><span class="line"><span class="cl">1     high      1     0
-</span></span><span class="line"><span class="cl">2     long      1     0
-</span></span><span class="line"><span class="cl">3    short      0     1
-</span></span><span class="line"><span class="cl">4      big      1     0
-</span></span><span class="line"><span class="cl">5    small      0     1
-</span></span></code></pre></td></tr></table>
-</div>
-</div></blockquote>
-<p>更多详见<a href="https://scikit-learn.org/stable/modules/cross_validation.html#k-fold" target="_blank" rel="noopener noreffer">官方文档</a></p>
-</div>
-
-        <div class="sponsor">
-        <div class="sponsor-avatar"><img
-        class="lazyload"
-        data-src="/images/logo.png"
-        data-srcset="/images/logo.png, /images/logo.png 1.5x, /images/logo.png 2x"
-        data-sizes="auto"
-        alt="/images/logo.png"
-        title="/images/logo.png"></div><p class="sponsor-bio"><em>如果你觉得这篇文章对你有所帮助，欢迎赞赏~</em></p><a href="/images/buymeacoffee.jpg" title="Sponsor" target="_blank" class="sponsor-button" rel="noopener noreferrer">
-                <i class="far fa-heart fa-fw icon" style="color: #ec6cb9;"></i>
-                <span>赞赏</span>
-            </a></div><div class="post-footer" id="post-footer">
-    <div class="post-info">
-        <div class="post-info-line">
-            <div class="post-info-mod">
-                <span>更新于 2022-06-29</span>
-            </div>
-            <div class="post-info-license"></div>
-        </div>
-        <div class="post-info-line">
-            <div class="post-info-md"><span><a class="link-to-mardown" href=/kfold_cross_validation/index.md target="_blank" rel="noopener noreferrer">阅读原始文档</a>
-                    </span><span>|&nbsp;<a class="link-to-report" href=https://github.com/dp0d/dp0d.github.io/issues/new?title=[bug]%20K%E6%8A%98%E4%BA%A4%E5%8F%89%E9%AA%8C%E8%AF%81&body=|Field|Value|%0A|-|-|%0A|Title|K%E6%8A%98%E4%BA%A4%E5%8F%89%E9%AA%8C%E8%AF%81|%0A|Url|https://dp0d.github.io/kfold_cross_validation/|%0A|Filename|https://github.com/dp0d/dp0d.github.io/posts/2022/Kfold_cross_validation/index.md| target="_blank" rel="noopener noreferrer">报告问题</a>
-                    </span></div>
-            <div class="post-info-share">
-                <span><a href="#" onclick="return false;" title="分享到 Twitter" data-sharer="twitter" data-url="https://dp0d.github.io/kfold_cross_validation/" data-title="K折交叉验证" data-hashtags="py"><i class="fab fa-twitter fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Facebook" data-sharer="facebook" data-url="https://dp0d.github.io/kfold_cross_validation/" data-hashtag="py"><i class="fab fa-facebook-square fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 微博" data-sharer="weibo" data-url="https://dp0d.github.io/kfold_cross_validation/" data-title="K折交叉验证"><i class="fab fa-weibo fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Telegram" data-sharer="telegram" data-url="https://dp0d.github.io/kfold_cross_validation/" data-title="K折交叉验证" data-web><i class="fab fa-telegram-plane fa-fw"></i></a></span>
-            </div>
-        </div>
-    </div>
-
-    <div class="post-info-more">
-        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/py/">Python</a></section>
-        <section>
-            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
-        </section>
-    </div>
-
-    <div class="post-nav"><a href="/kaggle/" class="prev" rel="prev" title="Kaggle使用介绍"><i class="fas fa-angle-left fa-fw"></i>Kaggle使用介绍</a>
-            <a href="/bravo_processbar/" class="next" rel="next" title="炫酷的processbar">炫酷的processbar<i class="fas fa-angle-right fa-fw"></i></a></div>
-</div>
-<div id="comments"><div id="giscus"></div><noscript>
-                Please enable JavaScript to view the comments powered by <a href="https://giscus.app/">giscus</a>.
-            </noscript></div></article></div>
-        </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2022 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/dp0d" target="_blank" rel="noopener noreferrer">dp0d</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
-                    <span class="icp"><a href="https://beian.miit.gov.cn/" target="_blank">赣ICP备2022002313号-1</a></span></div>
-            <div class="footer-line"></div>
-            <div class="footer-line">
-            </div>
-        </div><script>
-                    if('serviceWorker' in navigator) {
-                        navigator.serviceWorker
-                            .register('/sw.min.js', { scope: '/' })
-                            .then(function(registration) {
-                            });
-                
-                        navigator.serviceWorker
-                            .ready
-                            .then(function(registration) {
-                            });
-                    }
-                </script></footer></div>
-
-    <div id="fixed-buttons"><a href="#back-to-top" id="back-to-top-button" class="fixed-button" title="回到顶部">
-            <i class="fas fa-arrow-up fa-fw"></i>
-        </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
-            <i class="fas fa-comment fa-fw"></i>
-        </a>
-    </div><div class="assets"><script type="text/javascript" src="/lib/object-fit-images/ofi.min.js"></script><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/fuse/fuse.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/tablesort/tablesort.min.js"></script><script type="text/javascript" src="/lib/topbar/topbar.min.js"></script><script type="text/javascript" src="/lib/pjax/pjax.min.js"></script><script type="text/javascript" src="/js/theme.min.js" defer></script></div>
-
-<div class="pjax-assets"><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":100},"comment":{"giscus":{"darkTheme":"dark","dataCategory":"General","dataCategoryId":"DIC_kwDOHB3uW84COZbL","dataEmitMetadata":"0","dataInputPosition":"top","dataLang":"zh-CN","dataMapping":"title","dataReactionsEnabled":"1","dataRepo":"dp0d/dp0d.github.io","dataRepoId":"R_kgDOHB3uWw","lightTheme":"light"}},"lightGallery":{"actualSize":false,"exThumbImage":"data-thumbnail","hideBarsDelay":2000,"selector":".lightgallery","speed":400,"thumbContHeight":80,"thumbWidth":80,"thumbnail":true},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"distance":100,"findAllMatches":false,"fuseIndexURL":"/index.json","highlightTag":"em","ignoreFieldNorm":false,"ignoreLocation":true,"isCaseSensitive":false,"location":0,"maxResultLength":10,"minMatchCharLength":2,"noResultsFound":"没有找到结果","snippetLength":50,"threshold":0.1,"type":"fuse","useExtendedSearch":false},"sharerjs":true,"table":{"sort":true},"twemoji":true};</script><script type="text/javascript" src="/js/giscus.min.js" defer></script><script type="text/javascript" src="/lib/twemoji/twemoji.min.js" defer></script><script type="text/javascript" src="/js/twemoji.min.js" defer></script><script type="text/javascript" src="/lib/lightgallery/lightgallery.min.js"></script><script type="text/javascript" src="/lib/lightgallery/lg-thumbnail.min.js"></script><script type="text/javascript" src="/lib/lightgallery/lg-zoom.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js" defer></script><script type="text/javascript" src="/lib/katex/auto-render.min.js" defer></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js" defer></script><script type="text/javascript" src="/lib/katex/mhchem.min.js" defer></script><script type="text/javascript" src="/js/katex.min.js" defer></script><link rel="stylesheet" href="/lib/lightgallery/lightgallery.min.css"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/katex/copy-tex.min.css">
-        <noscript><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"></noscript></div>
-</body>
-
-</html>
+<!doctype html><html lang=zh-CN><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=robots content="noodp"><title class=pjax-title>K折交叉验证 - dp0d's blog</title><meta name=Description content="dp0d's blog,where to share life as well as technology of nlp."><meta property="og:title" content="K折交叉验证"><meta property="og:description" content="什么是K折交叉验证？如果你有五个土豆，你想要教会一个小盆友，这些是土豆，好了，现在你拿出四个土豆让他逐一认识，最后拿出第五个土豆来测试他是否"><meta property="og:type" content="article"><meta property="og:url" content="https://dp0d.github.io/kfold_cross_validation/"><meta property="og:image" content="https://dp0d.github.io/images/logo.png"><meta property="article:section" content="posts"><meta property="article:published_time" content="2022-06-29T15:04:39+08:00"><meta property="article:modified_time" content="2022-06-29T15:04:39+08:00"><meta property="og:site_name" content="dp0d's blog"><meta property="og:see_also" content="https://dp0d.github.io/pyecharts/"><meta property="og:see_also" content="https://dp0d.github.io/pandas/"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://dp0d.github.io/images/logo.png"><meta name=twitter:title content="K折交叉验证"><meta name=twitter:description content="什么是K折交叉验证？如果你有五个土豆，你想要教会一个小盆友，这些是土豆，好了，现在你拿出四个土豆让他逐一认识，最后拿出第五个土豆来测试他是否"><meta name=application-name content="dp0d's blog"><meta name=apple-mobile-web-app-title content="dp0d's blog"><meta name=theme-color content="#f8f8f8"><meta name=msapplication-TileColor content="#da532c"><link rel="shortcut icon" type=image/x-icon href=/favicon.ico><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://dp0d.github.io/kfold_cross_validation/><link rel=prev href=https://dp0d.github.io/kaggle/><link rel=next href=https://dp0d.github.io/bravo_processbar/><link rel=stylesheet href=/lib/normalize/normalize.min.css><link rel=stylesheet href=/css/style.min.css><link rel=preload as=style onload='this.onload=null,this.rel="stylesheet"' href=/lib/fontawesome-free/all.min.css><noscript><link rel=stylesheet href=/lib/fontawesome-free/all.min.css></noscript><link rel=preload as=style onload='this.onload=null,this.rel="stylesheet"' href=/lib/animate/animate.min.css><noscript><link rel=stylesheet href=/lib/animate/animate.min.css></noscript><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"K折交叉验证","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/dp0d.github.io\/kfold_cross_validation\/"},"image":["https:\/\/dp0d.github.io\/images\/logo.png"],"genre":"posts","keywords":"py","wordcount":1660,"url":"https:\/\/dp0d.github.io\/kfold_cross_validation\/","datePublished":"2022-06-29T15:04:39+08:00","dateModified":"2022-06-29T15:04:39+08:00","license":"This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher":{"@type":"Organization","name":"dp0d","logo":"https:\/\/dp0d.github.io\/images\/logo.png"},"author":{"@type":"Person","name":"dp0d"},"description":""}</script></head><body header-desktop=fixed header-mobile=auto><script type=text/javascript>function setTheme(e){document.body.setAttribute("theme",e)}function saveTheme(e){window.localStorage&&localStorage.setItem("theme",e)}function getMeta(e){const t=document.getElementsByTagName("meta");for(let n=0;n<t.length;n++)if(t[n].getAttribute("name")===e)return t[n];return""}if(window.localStorage&&localStorage.getItem("theme")){let e=localStorage.getItem("theme");e==="light"||e==="dark"||e==="black"?setTheme(e):setTheme(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")}else"auto"==="light"||"auto"==="dark"||"auto"==="black"?(setTheme("auto"),saveTheme("auto")):(saveTheme("auto"),setTheme(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"));let metaColors={light:"#f8f8f8",dark:"#252627",black:"#000000"};getMeta("theme-color").content=metaColors[document.body.getAttribute("theme")]</script><div id=back-to-top></div><div id=mask></div><div class=wrapper><header class=desktop id=header-desktop><div class=header-wrapper><div class=header-title><a href=/ title="dp0d's blog"><span class=header-title-pre><i class='far fa-edit fa-fw'></i></span>Natural Language Processing</a></div><div class=menu><div class=menu-inner><a class=menu-item href=/posts/>文章 </a><a class=menu-item href=/tags/>标签 </a><a class=menu-item href=/categories/>分类 </a><a class=menu-item href=/charge/>充电 </a><a class=menu-item href=/friends/>朋友萌 </a><a class=menu-item href=/collection/>收藏 </a><a class=menu-item href=/copyright/>版权 </a><a class=menu-item href=/about/>关于我 </a><a class=menu-item href=https://github.com/dp0d title=GitHub rel="noopener noreffer" target=_blank><i class='fab fa-github fa-fw'></i> </a><span class="menu-item delimiter"></span><span class="menu-item search" id=search-desktop>
+<input type=text placeholder=搜索文章标题或内容... id=search-input-desktop>
+<a href=# onclick=return!1 class="search-button search-toggle" id=search-toggle-desktop title=搜索><i class="fas fa-search fa-fw"></i></a>
+<a href=# onclick=return!1 class="search-button search-clear" id=search-clear-desktop title=清空><i class="fas fa-times-circle fa-fw"></i></a>
+<span class="search-button search-loading" id=search-loading-desktop><i class="fas fa-spinner fa-fw fa-spin"></i></span>
+</span><a href=# onclick=return!1 class="menu-item theme-select" title=切换主题><i class="fas fa-adjust fa-fw"></i>
+<select class=color-theme-select id=theme-select-desktop title=切换主题><option value=light>浅色</option><option value=dark>深色</option><option value=black>黑色</option><option value=auto>跟随系统</option></select></a></div></div></div></header><header class=mobile id=header-mobile><div class=header-container><div class=header-wrapper><div class=header-title><a href=/ title="dp0d's blog"><span class=header-title-pre><i class='far fa-edit fa-fw'></i></span>Natural Language Processing</a></div><div class=menu-toggle id=menu-toggle-mobile><span></span><span></span><span></span></div></div><div class=menu id=menu-mobile><div class=search-wrapper><div class="search mobile" id=search-mobile><input type=text placeholder=搜索文章标题或内容... id=search-input-mobile>
+<a href=# onclick=return!1 class="search-button search-toggle" id=search-toggle-mobile title=搜索><i class="fas fa-search fa-fw"></i></a>
+<a href=# onclick=return!1 class="search-button search-clear" id=search-clear-mobile title=清空><i class="fas fa-times-circle fa-fw"></i></a>
+<span class="search-button search-loading" id=search-loading-mobile><i class="fas fa-spinner fa-fw fa-spin"></i></span></div><a href=# onclick=return!1 class=search-cancel id=search-cancel-mobile>取消</a></div><a class=menu-item href=/posts/ title>文章</a><a class=menu-item href=/tags/ title>标签</a><a class=menu-item href=/categories/ title>分类</a><a class=menu-item href=/charge/ title>充电</a><a class=menu-item href=/friends/ title>朋友萌</a><a class=menu-item href=/collection/ title>收藏</a><a class=menu-item href=/copyright/ title>版权</a><a class=menu-item href=/about/ title>关于我</a><a class=menu-item href=https://github.com/dp0d title=GitHub rel="noopener noreffer" target=_blank><i class='fab fa-github fa-fw'></i></a><a href=# onclick=return!1 class="menu-item theme-select" title=切换主题>
+<i class="fas fa-adjust fa-fw"></i>
+<select class=color-theme-select id=theme-select-mobile title=切换主题><option value=light>浅色</option><option value=dark>深色</option><option value=black>黑色</option><option value=auto>跟随系统</option></select></a></div></div></header><div class="search-dropdown desktop"><div id=search-dropdown-desktop></div></div><div class="search-dropdown mobile"><div id=search-dropdown-mobile></div></div><main class=main><div class=container><div class=toc id=toc-auto><h2 class=toc-title>目录</h2><div class=toc-content id=toc-content-auto><nav id=TableOfContents><ul><li><a href=#什么是k折交叉验证>什么是K折交叉验证？</a></li><li><a href=#model_selection-实现交叉验证数据集划分>model_selection 实现交叉验证数据集划分</a><ul><li><a href=#简单的数据划分不涉及多折>简单的数据划分(不涉及多折)</a></li><li><a href=#kfold>KFold</a><ul><li><a href=#list-data>list data</a></li><li><a href=#pd-data>pd data</a></li></ul></li><li><a href=#stratifiedkfold>StratifiedKFold</a></li><li><a href=#groupkfold>GroupKFold</a><ul><li><a href=#pd-data-1>pd data</a></li></ul></li><li><a href=#stratifiedgroupkfold>StratifiedGroupKFold</a><ul><li><a href=#list-data-1>list data</a></li><li><a href=#pd-data-2>pd data</a></li></ul></li></ul></li></ul></nav></div></div><script>document.getElementsByTagName("main")[0].setAttribute("pageStyle","normal")</script><script>document.getElementsByTagName("main")[0].setAttribute("autoTOC","true")</script><article class="page single"><h1 class="single-title animate__animated animate__flipInX">K折交叉验证</h1><div class=post-meta><div class=post-meta-line><span class=post-author><i class="author fas fa-user-circle fa-fw"></i><a href=https://github.com/dp0d title=Author target=_blank rel="noopener noreffer author" class=author>dp0d</a>
+</span>&nbsp;<span class=post-category>收录于 </span>&nbsp;<span class=post-category>类别 <a href=/categories/machine_learning/><i class="far fa-folder fa-fw"></i>机器学习</a></span>&nbsp;<span class=post-category>和</span>&nbsp;<span class=post-series>系列 <a href=/series/python_data_analysis/><i class="far fa-list-alt fa-fw"></i>Python数据分析</a></span></div><div class=post-meta-line><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2022-06-29>2022-06-29</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime=2022-06-29>2022-06-29</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1660 字&nbsp;
+<i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 4 分钟&nbsp;</div></div><div class="details toc" id=toc-static kept><div class="details-summary toc-title"><span>目录</span>
+<span><i class="details-icon fas fa-angle-right"></i></span></div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents><ul><li><a href=#什么是k折交叉验证>什么是K折交叉验证？</a></li><li><a href=#model_selection-实现交叉验证数据集划分>model_selection 实现交叉验证数据集划分</a><ul><li><a href=#简单的数据划分不涉及多折>简单的数据划分(不涉及多折)</a></li><li><a href=#kfold>KFold</a><ul><li><a href=#list-data>list data</a></li><li><a href=#pd-data>pd data</a></li></ul></li><li><a href=#stratifiedkfold>StratifiedKFold</a></li><li><a href=#groupkfold>GroupKFold</a><ul><li><a href=#pd-data-1>pd data</a></li></ul></li><li><a href=#stratifiedgroupkfold>StratifiedGroupKFold</a><ul><li><a href=#list-data-1>list data</a></li><li><a href=#pd-data-2>pd data</a></li></ul></li></ul></li></ul></nav></div></div><div class=content id=content><h2 id=什么是k折交叉验证 class=headerLink><a href=#%e4%bb%80%e4%b9%88%e6%98%afk%e6%8a%98%e4%ba%a4%e5%8f%89%e9%aa%8c%e8%af%81 class=header-mark></a>什么是K折交叉验证？</h2><p>如果你有五个土豆，你想要教会一个小盆友，这些是土豆，好了，现在你拿出四个土豆让他逐一认识，最后拿出第五个土豆来测试他是否真正地认识了土豆，那么土豆奇形怪状，第五个土豆可以是五个中的任意一个，那么这就让我们拥有了五套方案来教会小朋友如何认识土豆，即用其中的四个做认识学习，剩下的一个作为测试学习成果。这就是一个五折交叉验证的结果，我们可以将每一种学习方案的学习效果（可以是孩子确信第五个土豆是土豆的置信度）加起来取平均来代表这个小盆友学习认识土豆能力的总体评分，从而减小对数据的bias。</p><img src=MD_img/grid_search_cross_validation.png alt=img style=zoom:50%><h2 id=model_selection-实现交叉验证数据集划分 class=headerLink><a href=#model_selection-%e5%ae%9e%e7%8e%b0%e4%ba%a4%e5%8f%89%e9%aa%8c%e8%af%81%e6%95%b0%e6%8d%ae%e9%9b%86%e5%88%92%e5%88%86 class=header-mark></a>model_selection 实现交叉验证数据集划分</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=c1># ====================================================</span>
+</span></span><span class=line><span class=cl><span class=c1># Library</span>
+</span></span><span class=line><span class=cl><span class=c1># ====================================================</span>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nn>pandas</span> <span class=k>as</span> <span class=nn>pd</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>sklearn.model_selection</span> <span class=kn>import</span> <span class=n>train_test_split</span><span class=p>,</span> <span class=n>KFold</span><span class=p>,</span> <span class=n>GroupKFold</span><span class=p>,</span> <span class=n>StratifiedKFold</span><span class=p>,</span> <span class=n>StratifiedGroupKFold</span> 
+</span></span></code></pre></td></tr></table></div></div><h3 id=简单的数据划分不涉及多折 class=headerLink><a href=#%e7%ae%80%e5%8d%95%e7%9a%84%e6%95%b0%e6%8d%ae%e5%88%92%e5%88%86%e4%b8%8d%e6%b6%89%e5%8f%8a%e5%a4%9a%e6%8a%98 class=header-mark></a>简单的数据划分(不涉及多折)</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=n>df</span> <span class=o>=</span> <span class=n>pd</span><span class=o>.</span><span class=n>DataFrame</span><span class=p>({</span><span class=s2>&#34;featrues&#34;</span><span class=p>:</span> <span class=p>[</span><span class=s2>&#34;long&#34;</span><span class=p>,</span> <span class=s2>&#34;high&#34;</span><span class=p>,</span> <span class=s2>&#34;long&#34;</span><span class=p>,</span> <span class=s2>&#34;short&#34;</span><span class=p>,</span> <span class=s2>&#34;big&#34;</span><span class=p>,</span> <span class=s2>&#34;small&#34;</span><span class=p>],</span> <span class=s2>&#34;labels&#34;</span><span class=p>:</span> <span class=p>[</span><span class=s2>&#34;1&#34;</span><span class=p>,</span> <span class=s2>&#34;1&#34;</span><span class=p>,</span> <span class=s2>&#34;1&#34;</span><span class=p>,</span> <span class=s2>&#34;0&#34;</span><span class=p>,</span> <span class=s2>&#34;1&#34;</span><span class=p>,</span> <span class=s2>&#34;0&#34;</span><span class=p>]})</span>
+</span></span><span class=line><span class=cl><span class=n>train</span><span class=p>,</span> <span class=n>test</span> <span class=o>=</span> <span class=n>train_test_split</span><span class=p>(</span><span class=n>df</span><span class=p>,</span> <span class=n>train_size</span><span class=o>=</span><span class=mf>0.9</span><span class=p>,</span> <span class=n>shuffle</span><span class=o>=</span><span class=kc>True</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>train</span>
+</span></span></code></pre></td></tr></table></div></div><p>out:</p><blockquote><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-markdown data-lang=markdown><span class=line><span class=cl>	featrues	labels
+</span></span><span class=line><span class=cl>4	big	1
+</span></span><span class=line><span class=cl>0	long	1
+</span></span><span class=line><span class=cl>5	small	0
+</span></span><span class=line><span class=cl>2	long	1
+</span></span><span class=line><span class=cl>1	high	1
+</span></span></code></pre></td></tr></table></div></div></blockquote><h3 id=kfold class=headerLink><a href=#kfold class=header-mark></a>KFold</h3><h4 id=list-data class=headerLink><a href=#list-data class=header-mark></a>list data</h4><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=n>X</span> <span class=o>=</span> <span class=p>[</span><span class=s2>&#34;a&#34;</span><span class=p>,</span> <span class=s2>&#34;b&#34;</span><span class=p>,</span> <span class=s2>&#34;c&#34;</span><span class=p>,</span> <span class=s2>&#34;d&#34;</span><span class=p>]</span>
+</span></span><span class=line><span class=cl><span class=c1># n_splits=2 代表分成两折</span>
+</span></span><span class=line><span class=cl><span class=n>kf</span> <span class=o>=</span> <span class=n>KFold</span><span class=p>(</span><span class=n>n_splits</span><span class=o>=</span><span class=mi>2</span><span class=p>,</span> <span class=n>shuffle</span><span class=o>=</span><span class=kc>True</span><span class=p>,</span> <span class=n>random_state</span><span class=o>=</span><span class=mi>42</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=k>for</span> <span class=n>train</span><span class=p>,</span> <span class=n>test</span> <span class=ow>in</span> <span class=n>kf</span><span class=o>.</span><span class=n>split</span><span class=p>(</span><span class=n>X</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>    <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;</span><span class=si>%s</span><span class=s2> </span><span class=si>%s</span><span class=s2>&#34;</span> <span class=o>%</span> <span class=p>(</span><span class=n>train</span><span class=p>,</span> <span class=n>test</span><span class=p>))</span>
+</span></span></code></pre></td></tr></table></div></div><p>out:</p><blockquote><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>[0 2] [1 3]
+</span></span><span class=line><span class=cl>[1 3] [0 2]
+</span></span></code></pre></td></tr></table></div></div></blockquote><h4 id=pd-data class=headerLink><a href=#pd-data class=header-mark></a>pd data</h4><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=n>df</span> <span class=o>=</span> <span class=n>pd</span><span class=o>.</span><span class=n>DataFrame</span><span class=p>({</span><span class=s2>&#34;featrues&#34;</span><span class=p>:</span> <span class=p>[</span><span class=s2>&#34;long&#34;</span><span class=p>,</span> <span class=s2>&#34;high&#34;</span><span class=p>,</span> <span class=s2>&#34;long&#34;</span><span class=p>,</span> <span class=s2>&#34;short&#34;</span><span class=p>,</span> <span class=s2>&#34;big&#34;</span><span class=p>,</span> <span class=s2>&#34;small&#34;</span><span class=p>],</span> <span class=s2>&#34;labels&#34;</span><span class=p>:</span> <span class=p>[</span><span class=s2>&#34;1&#34;</span><span class=p>,</span> <span class=s2>&#34;1&#34;</span><span class=p>,</span> <span class=s2>&#34;1&#34;</span><span class=p>,</span> <span class=s2>&#34;0&#34;</span><span class=p>,</span> <span class=s2>&#34;1&#34;</span><span class=p>,</span> <span class=s2>&#34;0&#34;</span><span class=p>]})</span>
+</span></span><span class=line><span class=cl><span class=nb>print</span><span class=p>(</span><span class=n>df</span><span class=o>.</span><span class=n>head</span><span class=p>())</span>
+</span></span></code></pre></td></tr></table></div></div><p>out:</p><blockquote><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>  featrues labels
+</span></span><span class=line><span class=cl>0     long      1
+</span></span><span class=line><span class=cl>1     high      1
+</span></span><span class=line><span class=cl>2     long      1
+</span></span><span class=line><span class=cl>3    short      0
+</span></span><span class=line><span class=cl>4      big      1
+</span></span></code></pre></td></tr></table></div></div></blockquote><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=n>kf</span> <span class=o>=</span> <span class=n>KFold</span><span class=p>(</span><span class=n>n_splits</span><span class=o>=</span><span class=mi>4</span><span class=p>,</span> <span class=n>shuffle</span><span class=o>=</span><span class=kc>True</span><span class=p>,</span> <span class=n>random_state</span><span class=o>=</span><span class=mi>42</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=k>for</span> <span class=n>train</span><span class=p>,</span> <span class=n>test</span> <span class=ow>in</span> <span class=n>kf</span><span class=o>.</span><span class=n>split</span><span class=p>(</span><span class=n>df</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>    <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;</span><span class=si>%s</span><span class=s2> </span><span class=si>%s</span><span class=s2>&#34;</span> <span class=o>%</span> <span class=p>(</span><span class=n>train</span><span class=p>,</span> <span class=n>test</span><span class=p>))</span>
+</span></span></code></pre></td></tr></table></div></div><p>out:</p><blockquote><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>[2 3 4 5] [0 1]
+</span></span><span class=line><span class=cl>[0 1 3 4] [2 5]
+</span></span><span class=line><span class=cl>[0 1 2 3 5] [4]
+</span></span><span class=line><span class=cl>[0 1 2 4 5] [3]
+</span></span></code></pre></td></tr></table></div></div></blockquote><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=c1># 新建一列</span>
+</span></span><span class=line><span class=cl><span class=n>df</span><span class=p>[</span><span class=s1>&#39;fold&#39;</span><span class=p>]</span> <span class=o>=</span> <span class=o>-</span><span class=mi>1</span>
+</span></span><span class=line><span class=cl><span class=c1># 给split的每一折用enumerate遍历编号，比如这里是0,1,2,3</span>
+</span></span><span class=line><span class=cl><span class=k>for</span> <span class=n>idx</span><span class=p>,</span> <span class=p>(</span><span class=n>train</span><span class=p>,</span> <span class=n>test</span><span class=p>)</span> <span class=ow>in</span> <span class=nb>enumerate</span><span class=p>(</span><span class=n>kf</span><span class=o>.</span><span class=n>split</span><span class=p>(</span><span class=n>df</span><span class=p>)):</span>
+</span></span><span class=line><span class=cl>    <span class=nb>print</span><span class=p>(</span><span class=n>idx</span><span class=p>,</span> <span class=n>train</span><span class=p>,</span> <span class=n>test</span><span class=p>)</span>
+</span></span></code></pre></td></tr></table></div></div><p>out:</p><blockquote><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>0 [2 3 4 5] [0 1]
+</span></span><span class=line><span class=cl>1 [0 1 3 4] [2 5]
+</span></span><span class=line><span class=cl>2 [0 1 2 3 5] [4]
+</span></span><span class=line><span class=cl>3 [0 1 2 4 5] [3]
+</span></span></code></pre></td></tr></table></div></div></blockquote><p>为每一折的数据行打标记如下(完整示例)</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=n>df</span> <span class=o>=</span> <span class=n>pd</span><span class=o>.</span><span class=n>DataFrame</span><span class=p>({</span><span class=s2>&#34;featrues&#34;</span><span class=p>:</span> <span class=p>[</span><span class=s2>&#34;long&#34;</span><span class=p>,</span> <span class=s2>&#34;high&#34;</span><span class=p>,</span> <span class=s2>&#34;long&#34;</span><span class=p>,</span> <span class=s2>&#34;short&#34;</span><span class=p>,</span> <span class=s2>&#34;big&#34;</span><span class=p>,</span> <span class=s2>&#34;small&#34;</span><span class=p>],</span> <span class=s2>&#34;labels&#34;</span><span class=p>:</span> <span class=p>[</span><span class=s2>&#34;1&#34;</span><span class=p>,</span> <span class=s2>&#34;1&#34;</span><span class=p>,</span> <span class=s2>&#34;1&#34;</span><span class=p>,</span> <span class=s2>&#34;0&#34;</span><span class=p>,</span> <span class=s2>&#34;1&#34;</span><span class=p>,</span> <span class=s2>&#34;0&#34;</span><span class=p>]})</span>
+</span></span><span class=line><span class=cl><span class=n>df</span><span class=p>[</span><span class=s1>&#39;fold&#39;</span><span class=p>]</span> <span class=o>=</span> <span class=o>-</span><span class=mi>1</span>
+</span></span><span class=line><span class=cl><span class=n>kf</span> <span class=o>=</span> <span class=n>KFold</span><span class=p>(</span><span class=n>n_splits</span><span class=o>=</span><span class=mi>4</span><span class=p>,</span> <span class=n>shuffle</span><span class=o>=</span><span class=kc>True</span><span class=p>,</span> <span class=n>random_state</span><span class=o>=</span><span class=mi>42</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=k>for</span> <span class=n>idx</span><span class=p>,</span> <span class=p>(</span><span class=n>train</span><span class=p>,</span> <span class=n>test</span><span class=p>)</span> <span class=ow>in</span> <span class=nb>enumerate</span><span class=p>(</span><span class=n>kf</span><span class=o>.</span><span class=n>split</span><span class=p>(</span><span class=n>df</span><span class=p>)):</span>
+</span></span><span class=line><span class=cl>    <span class=n>df</span><span class=o>.</span><span class=n>loc</span><span class=p>[</span><span class=n>test</span><span class=p>,</span><span class=s1>&#39;fold&#39;</span><span class=p>]</span> <span class=o>=</span> <span class=n>idx</span>
+</span></span><span class=line><span class=cl><span class=nb>print</span><span class=p>(</span><span class=n>df</span><span class=o>.</span><span class=n>head</span><span class=p>())</span>
+</span></span></code></pre></td></tr></table></div></div><p>out:</p><blockquote><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>  featrues labels  fold
+</span></span><span class=line><span class=cl>0     long      1     0
+</span></span><span class=line><span class=cl>1     high      1     0
+</span></span><span class=line><span class=cl>2     long      1     1
+</span></span><span class=line><span class=cl>3    short      0     3
+</span></span><span class=line><span class=cl>4      big      1     2
+</span></span></code></pre></td></tr></table></div></div></blockquote><h3 id=stratifiedkfold class=headerLink><a href=#stratifiedkfold class=header-mark></a>StratifiedKFold</h3><p>按标签比例来划分每一折的验证集和训练集，观察下列数据的标签，容易得到，在未划分数据集之前，标签比例为"1": &ldquo;0&rdquo; &mdash;> 2:1</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=n>df</span> <span class=o>=</span> <span class=n>pd</span><span class=o>.</span><span class=n>DataFrame</span><span class=p>({</span><span class=s2>&#34;featrues&#34;</span><span class=p>:</span> <span class=p>[</span><span class=s2>&#34;long&#34;</span><span class=p>,</span> <span class=s2>&#34;high&#34;</span><span class=p>,</span> <span class=s2>&#34;long&#34;</span><span class=p>,</span> <span class=s2>&#34;short&#34;</span><span class=p>,</span> <span class=s2>&#34;big&#34;</span><span class=p>,</span> <span class=s2>&#34;small&#34;</span><span class=p>],</span> <span class=s2>&#34;labels&#34;</span><span class=p>:</span> <span class=p>[</span><span class=s2>&#34;1&#34;</span><span class=p>,</span> <span class=s2>&#34;1&#34;</span><span class=p>,</span> <span class=s2>&#34;1&#34;</span><span class=p>,</span> <span class=s2>&#34;0&#34;</span><span class=p>,</span> <span class=s2>&#34;1&#34;</span><span class=p>,</span> <span class=s2>&#34;0&#34;</span><span class=p>]})</span> 
+</span></span><span class=line><span class=cl><span class=n>df</span><span class=p>[</span><span class=s1>&#39;fold&#39;</span><span class=p>]</span> <span class=o>=</span> <span class=o>-</span><span class=mi>1</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>skf</span> <span class=o>=</span> <span class=n>StratifiedKFold</span><span class=p>(</span><span class=n>n_splits</span><span class=o>=</span><span class=mi>2</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=k>for</span> <span class=n>idx</span><span class=p>,</span> <span class=p>(</span><span class=n>train</span><span class=p>,</span> <span class=n>test</span><span class=p>)</span> <span class=ow>in</span> <span class=nb>enumerate</span><span class=p>(</span><span class=n>skf</span><span class=o>.</span><span class=n>split</span><span class=p>(</span><span class=n>X</span><span class=o>=</span><span class=n>df</span><span class=p>,</span> <span class=n>y</span><span class=o>=</span><span class=n>df</span><span class=p>[</span><span class=s2>&#34;labels&#34;</span><span class=p>])):</span>
+</span></span><span class=line><span class=cl>    <span class=n>df</span><span class=o>.</span><span class=n>loc</span><span class=p>[</span><span class=n>test</span><span class=p>,</span><span class=s1>&#39;fold&#39;</span><span class=p>]</span> <span class=o>=</span> <span class=n>idx</span>
+</span></span><span class=line><span class=cl><span class=nb>print</span><span class=p>(</span><span class=n>df</span><span class=p>)</span>
+</span></span></code></pre></td></tr></table></div></div><p>out:</p><blockquote><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>  featrues labels  fold
+</span></span><span class=line><span class=cl>0     long      1     0
+</span></span><span class=line><span class=cl>1     high      1     0
+</span></span><span class=line><span class=cl>2     long      1     1
+</span></span><span class=line><span class=cl>3    short      0     0
+</span></span><span class=line><span class=cl>4      big      1     1
+</span></span><span class=line><span class=cl>5    small      0     1
+</span></span></code></pre></td></tr></table></div></div></blockquote><p>可以看到，分折之后，第0折中，标签"1":&ldquo;0&rdquo; 也呈现为2:1的比例，第1折也是如此。</p><h3 id=groupkfold class=headerLink><a href=#groupkfold class=header-mark></a>GroupKFold</h3><h4 id=pd-data-1 class=headerLink><a href=#pd-data-1 class=header-mark></a>pd data</h4><p>按照group列的值来分折，也就是说，group列内的值的种类需要大于等于n_splits的值。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=n>df</span> <span class=o>=</span> <span class=n>pd</span><span class=o>.</span><span class=n>DataFrame</span><span class=p>({</span><span class=s2>&#34;featrues&#34;</span><span class=p>:</span> <span class=p>[</span><span class=s2>&#34;long&#34;</span><span class=p>,</span> <span class=s2>&#34;high&#34;</span><span class=p>,</span> <span class=s2>&#34;long&#34;</span><span class=p>,</span> <span class=s2>&#34;short&#34;</span><span class=p>,</span> <span class=s2>&#34;big&#34;</span><span class=p>,</span> <span class=s2>&#34;small&#34;</span><span class=p>],</span> <span class=s2>&#34;labels&#34;</span><span class=p>:</span> <span class=p>[</span><span class=s2>&#34;1&#34;</span><span class=p>,</span> <span class=s2>&#34;2&#34;</span><span class=p>,</span> <span class=s2>&#34;1&#34;</span><span class=p>,</span> <span class=s2>&#34;0&#34;</span><span class=p>,</span> <span class=s2>&#34;1&#34;</span><span class=p>,</span> <span class=s2>&#34;0&#34;</span><span class=p>]})</span> <span class=c1># label有三类值，可以用这个作为group列，也可以自己定义新建group列</span>
+</span></span><span class=line><span class=cl><span class=n>df</span><span class=p>[</span><span class=s1>&#39;fold&#39;</span><span class=p>]</span> <span class=o>=</span> <span class=o>-</span><span class=mi>1</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>gkf</span> <span class=o>=</span> <span class=n>GroupKFold</span><span class=p>(</span><span class=n>n_splits</span><span class=o>=</span><span class=mi>2</span><span class=p>)</span> <span class=c1># n_splits要满足 2 &lt;= n_splits &lt;= group列中的唯一值数量</span>
+</span></span><span class=line><span class=cl><span class=k>for</span> <span class=n>idx</span><span class=p>,</span> <span class=p>(</span><span class=n>train</span><span class=p>,</span> <span class=n>test</span><span class=p>)</span> <span class=ow>in</span> <span class=nb>enumerate</span><span class=p>(</span><span class=n>gkf</span><span class=o>.</span><span class=n>split</span><span class=p>(</span><span class=n>X</span><span class=o>=</span><span class=n>df</span><span class=p>,</span> <span class=n>y</span><span class=o>=</span><span class=n>df</span><span class=p>[</span><span class=s2>&#34;labels&#34;</span><span class=p>],</span> <span class=n>groups</span><span class=o>=</span><span class=n>df</span><span class=p>[</span><span class=s2>&#34;labels&#34;</span><span class=p>])):</span>
+</span></span><span class=line><span class=cl>    <span class=n>df</span><span class=o>.</span><span class=n>loc</span><span class=p>[</span><span class=n>test</span><span class=p>,</span><span class=s1>&#39;fold&#39;</span><span class=p>]</span> <span class=o>=</span> <span class=n>idx</span>
+</span></span><span class=line><span class=cl><span class=nb>print</span><span class=p>(</span><span class=n>df</span><span class=o>.</span><span class=n>head</span><span class=p>())</span>
+</span></span></code></pre></td></tr></table></div></div><p>out:</p><blockquote><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>  featrues labels  fold
+</span></span><span class=line><span class=cl>0     long      1     0
+</span></span><span class=line><span class=cl>1     high      2     1
+</span></span><span class=line><span class=cl>2     long      1     0
+</span></span><span class=line><span class=cl>3    short      0     1
+</span></span><span class=line><span class=cl>4      big      1     0
+</span></span></code></pre></td></tr></table></div></div></blockquote><h3 id=stratifiedgroupkfold class=headerLink><a href=#stratifiedgroupkfold class=header-mark></a>StratifiedGroupKFold</h3><h4 id=list-data-1 class=headerLink><a href=#list-data-1 class=header-mark></a>list data</h4><p>此方法结合了StratifiedKFold和GroupKFold，在按group进行分折的同时尽量保证每一折分出的数据接近划分前的标签分布(自然，剩下的也是由其他折组成，也自然符合标签的数据分布)。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=kn>from</span> <span class=nn>sklearn.model_selection</span> <span class=kn>import</span> <span class=n>StratifiedGroupKFold</span>
+</span></span><span class=line><span class=cl><span class=n>X</span> <span class=o>=</span> <span class=nb>list</span><span class=p>(</span><span class=nb>range</span><span class=p>(</span><span class=mi>18</span><span class=p>))</span>
+</span></span><span class=line><span class=cl><span class=n>y</span> <span class=o>=</span> <span class=p>[</span><span class=mi>1</span><span class=p>]</span> <span class=o>*</span> <span class=mi>6</span> <span class=o>+</span> <span class=p>[</span><span class=mi>0</span><span class=p>]</span> <span class=o>*</span> <span class=mi>12</span>
+</span></span><span class=line><span class=cl><span class=n>groups</span> <span class=o>=</span> <span class=p>[</span><span class=mi>1</span><span class=p>,</span> <span class=mi>2</span><span class=p>,</span> <span class=mi>3</span><span class=p>,</span> <span class=mi>3</span><span class=p>,</span> <span class=mi>4</span><span class=p>,</span> <span class=mi>4</span><span class=p>,</span> <span class=mi>1</span><span class=p>,</span> <span class=mi>1</span><span class=p>,</span> <span class=mi>2</span><span class=p>,</span> <span class=mi>2</span><span class=p>,</span> <span class=mi>3</span><span class=p>,</span> <span class=mi>4</span><span class=p>,</span> <span class=mi>5</span><span class=p>,</span> <span class=mi>5</span><span class=p>,</span> <span class=mi>5</span><span class=p>,</span> <span class=mi>6</span><span class=p>,</span> <span class=mi>6</span><span class=p>,</span> <span class=mi>6</span><span class=p>]</span>
+</span></span><span class=line><span class=cl><span class=n>sgkf</span> <span class=o>=</span> <span class=n>StratifiedGroupKFold</span><span class=p>(</span><span class=n>n_splits</span><span class=o>=</span><span class=mi>3</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=k>for</span> <span class=n>train</span><span class=p>,</span> <span class=n>test</span> <span class=ow>in</span> <span class=n>sgkf</span><span class=o>.</span><span class=n>split</span><span class=p>(</span><span class=n>X</span><span class=p>,</span> <span class=n>y</span><span class=p>,</span> <span class=n>groups</span><span class=o>=</span><span class=n>groups</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>	<span class=nb>print</span><span class=p>(</span><span class=s2>&#34;</span><span class=si>%s</span><span class=s2> </span><span class=si>%s</span><span class=s2>&#34;</span> <span class=o>%</span> <span class=p>(</span><span class=n>train</span><span class=p>,</span> <span class=n>test</span><span class=p>))</span>
+</span></span></code></pre></td></tr></table></div></div><p>out:</p><blockquote><img src=MD_img/image-20220629213145386.png alt=image-20220629213145386 style=zoom:50%></blockquote><p>实践说明。</p><p>在目前的实现中，大多数情况下不可能实现完全洗牌。当shuffle=True时，会发生以下情况。</p><p>所有的group都被打乱了。</p><p>使用稳定的排序法，按照类的标准偏差对组进行排序。</p><p>排序后的组被迭代，并分配给每一折。</p><p>这意味着只有具有相同的类分布标准差的组才会被打乱，这在每个组只有一个类时可能很有用。</p><p>该算法贪婪地将每个组分配到n_splits测试集中的一个，选择测试集，使各测试集的类分布差异最小。组的分配从类别频率方差最大的组到最小的组进行，也就是说，在一个或几个类别上达到峰值的大组被首先分配。</p><p>这种分法在某种意义上是次优的，它可能产生不平衡的分法，即使完美的分层是可能的。如果你在每个组中的类的分布相对接近，使用GroupKFold会更好。</p><h4 id=pd-data-2 class=headerLink><a href=#pd-data-2 class=header-mark></a>pd data</h4><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=n>df</span> <span class=o>=</span> <span class=n>pd</span><span class=o>.</span><span class=n>DataFrame</span><span class=p>({</span><span class=s2>&#34;featrues&#34;</span><span class=p>:</span> <span class=p>[</span><span class=s2>&#34;long&#34;</span><span class=p>,</span> <span class=s2>&#34;high&#34;</span><span class=p>,</span> <span class=s2>&#34;long&#34;</span><span class=p>,</span> <span class=s2>&#34;short&#34;</span><span class=p>,</span> <span class=s2>&#34;big&#34;</span><span class=p>,</span> <span class=s2>&#34;small&#34;</span><span class=p>],</span> <span class=s2>&#34;labels&#34;</span><span class=p>:</span> <span class=p>[</span><span class=s2>&#34;1&#34;</span><span class=p>,</span> <span class=s2>&#34;1&#34;</span><span class=p>,</span> <span class=s2>&#34;1&#34;</span><span class=p>,</span> <span class=s2>&#34;0&#34;</span><span class=p>,</span> <span class=s2>&#34;1&#34;</span><span class=p>,</span> <span class=s2>&#34;0&#34;</span><span class=p>]})</span> 
+</span></span><span class=line><span class=cl><span class=n>df</span><span class=p>[</span><span class=s1>&#39;fold&#39;</span><span class=p>]</span> <span class=o>=</span> <span class=o>-</span><span class=mi>1</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>sgkf</span> <span class=o>=</span> <span class=n>StratifiedGroupKFold</span><span class=p>(</span><span class=n>n_splits</span><span class=o>=</span><span class=mi>2</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=k>for</span> <span class=n>idx</span><span class=p>,</span> <span class=p>(</span><span class=n>train</span><span class=p>,</span> <span class=n>test</span><span class=p>)</span> <span class=ow>in</span> <span class=nb>enumerate</span><span class=p>(</span><span class=n>sgkf</span><span class=o>.</span><span class=n>split</span><span class=p>(</span><span class=n>X</span><span class=o>=</span><span class=n>df</span><span class=p>,</span> <span class=n>y</span><span class=o>=</span><span class=n>df</span><span class=p>[</span><span class=s2>&#34;labels&#34;</span><span class=p>],</span> <span class=n>groups</span><span class=o>=</span><span class=n>df</span><span class=p>[</span><span class=s2>&#34;labels&#34;</span><span class=p>])):</span>
+</span></span><span class=line><span class=cl>    <span class=n>df</span><span class=o>.</span><span class=n>loc</span><span class=p>[</span><span class=n>test</span><span class=p>,</span><span class=s1>&#39;fold&#39;</span><span class=p>]</span> <span class=o>=</span> <span class=n>idx</span>
+</span></span><span class=line><span class=cl><span class=nb>print</span><span class=p>(</span><span class=n>df</span><span class=p>)</span>
+</span></span></code></pre></td></tr></table></div></div><blockquote><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>  featrues labels  fold
+</span></span><span class=line><span class=cl>0     long      1     0
+</span></span><span class=line><span class=cl>1     high      1     0
+</span></span><span class=line><span class=cl>2     long      1     0
+</span></span><span class=line><span class=cl>3    short      0     1
+</span></span><span class=line><span class=cl>4      big      1     0
+</span></span><span class=line><span class=cl>5    small      0     1
+</span></span></code></pre></td></tr></table></div></div></blockquote><p>更多详见<a href=https://scikit-learn.org/stable/modules/cross_validation.html#k-fold target=_blank rel="noopener noreffer">官方文档</a></p></div><div class=sponsor><div class=sponsor-avatar><img class=lazyload data-src=/images/logo.png data-srcset="/images/logo.png, /images/logo.png 1.5x, /images/logo.png 2x" data-sizes=auto alt=/images/logo.png title=/images/logo.png></div><p class=sponsor-bio><em>如果你觉得这篇文章对你有所帮助，欢迎赞赏~</em></p><a href=/images/buymeacoffee.jpg title=Sponsor target=_blank class=sponsor-button rel="noopener noreferrer"><i class="far fa-heart fa-fw icon" style=color:#ec6cb9></i>
+<span>赞赏</span></a></div><div class=post-footer id=post-footer><div class=post-info><div class=post-info-line><div class=post-info-mod><span>更新于 2022-06-29</span></div><div class=post-info-license></div></div><div class=post-info-line><div class=post-info-md><span><a class=link-to-mardown href=/kfold_cross_validation/index.md target=_blank rel="noopener noreferrer">阅读原始文档</a>
+</span><span>|&nbsp;<a class=link-to-report href="https://github.com/dp0d/dp0d.github.io/issues/new?title=[bug]%20K%E6%8A%98%E4%BA%A4%E5%8F%89%E9%AA%8C%E8%AF%81&body=|Field|Value|%0A|-|-|%0A|Title|K%E6%8A%98%E4%BA%A4%E5%8F%89%E9%AA%8C%E8%AF%81|%0A|Url|https://dp0d.github.io/kfold_cross_validation/|%0A|Filename|https://github.com/dp0d/dp0d.github.io/posts/2022/Kfold_cross_validation/index.md|" target=_blank rel="noopener noreferrer">报告问题</a></span></div><div class=post-info-share><span><a href=# onclick=return!1 title="分享到 Twitter" data-sharer=twitter data-url=https://dp0d.github.io/kfold_cross_validation/ data-title=K折交叉验证 data-hashtags=py><i class="fab fa-twitter fa-fw"></i></a><a href=# onclick=return!1 title="分享到 Facebook" data-sharer=facebook data-url=https://dp0d.github.io/kfold_cross_validation/ data-hashtag=py><i class="fab fa-facebook-square fa-fw"></i></a><a href=# onclick=return!1 title="分享到 微博" data-sharer=weibo data-url=https://dp0d.github.io/kfold_cross_validation/ data-title=K折交叉验证><i class="fab fa-weibo fa-fw"></i></a><a href=# onclick=return!1 title="分享到 Telegram" data-sharer=telegram data-url=https://dp0d.github.io/kfold_cross_validation/ data-title=K折交叉验证 data-web><i class="fab fa-telegram-plane fa-fw"></i></a></span></div></div></div><div class=post-info-more><section class=post-tags><i class="fas fa-tags fa-fw"></i>&nbsp;<a href=/tags/py/>Python</a></section><section><span><a href=javascript:void(0); onclick=window.history.back()>返回</a></span>&nbsp;|&nbsp;<span><a href=/>主页</a></span></section></div><div class=post-nav><a href=/kaggle/ class=prev rel=prev title=Kaggle使用介绍><i class="fas fa-angle-left fa-fw"></i>Kaggle使用介绍</a>
+<a href=/bravo_processbar/ class=next rel=next title=炫酷的processbar>炫酷的processbar<i class="fas fa-angle-right fa-fw"></i></a></div></div><div id=comments><div id=giscus></div><noscript>Please enable JavaScript to view the comments powered by <a href=https://giscus.app/>giscus</a>.</noscript></div></article></div></main><footer class=footer><div class=footer-container><div class=footer-line><i class="far fa-copyright fa-fw"></i><span itemprop=copyrightYear>2022 - 2023</span><span class=author itemprop=copyrightHolder>&nbsp;<a href=https://github.com/dp0d target=_blank rel="noopener noreferrer">dp0d</a></span>&nbsp;|&nbsp;<span class=license><a rel="license external nofollow noopener noreffer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span><span class=icp-splitter>&nbsp;|&nbsp;</span><br class=icp-br><span class=icp><a href=https://beian.miit.gov.cn/ target=_blank>赣ICP备2022002313号-1</a></span></div><div class=footer-line></div><div class=footer-line></div></div><script>"serviceWorker"in navigator&&(navigator.serviceWorker.register("/sw.min.js",{scope:"/"}).then(function(){}),navigator.serviceWorker.ready.then(function(){}))</script></footer></div><div id=fixed-buttons><a href=#back-to-top id=back-to-top-button class=fixed-button title=回到顶部><i class="fas fa-arrow-up fa-fw"></i>
+</a><a href=# id=view-comments class=fixed-button title=查看评论><i class="fas fa-comment fa-fw"></i></a></div><div class=assets><script type=text/javascript src=/lib/object-fit-images/ofi.min.js></script><script type=text/javascript src=/lib/autocomplete/autocomplete.min.js></script><script type=text/javascript src=/lib/fuse/fuse.min.js></script><script type=text/javascript src=/lib/lazysizes/lazysizes.min.js></script><script type=text/javascript src=/lib/tablesort/tablesort.min.js></script><script type=text/javascript src=/lib/topbar/topbar.min.js></script><script type=text/javascript src=/lib/pjax/pjax.min.js></script><script type=text/javascript src=/js/theme.min.js defer></script></div><div class=pjax-assets><script type=text/javascript>window.config={code:{copyTitle:"复制到剪贴板",maxShownLines:100},comment:{giscus:{darkTheme:"dark",dataCategory:"General",dataCategoryId:"DIC_kwDOHB3uW84COZbL",dataEmitMetadata:"0",dataInputPosition:"top",dataLang:"zh-CN",dataMapping:"title",dataReactionsEnabled:"1",dataRepo:"dp0d/dp0d.github.io",dataRepoId:"R_kgDOHB3uWw",lightTheme:"light"}},lightGallery:{actualSize:!1,exThumbImage:"data-thumbnail",hideBarsDelay:2e3,selector:".lightgallery",speed:400,thumbContHeight:80,thumbWidth:80,thumbnail:!0},math:{delimiters:[{display:!0,left:"$$",right:"$$"},{display:!0,left:"\\[",right:"\\]"},{display:!1,left:"$",right:"$"},{display:!1,left:"\\(",right:"\\)"}],strict:!1},search:{distance:100,findAllMatches:!1,fuseIndexURL:"/index.json",highlightTag:"em",ignoreFieldNorm:!1,ignoreLocation:!0,isCaseSensitive:!1,location:0,maxResultLength:10,minMatchCharLength:2,noResultsFound:"没有找到结果",snippetLength:50,threshold:.1,type:"fuse",useExtendedSearch:!1},sharerjs:!0,table:{sort:!0},twemoji:!0}</script><script type=text/javascript src=/js/giscus.min.js defer></script><script type=text/javascript src=/lib/twemoji/twemoji.min.js defer></script><script type=text/javascript src=/js/twemoji.min.js defer></script><script type=text/javascript src=/lib/lightgallery/lightgallery.min.js></script><script type=text/javascript src=/lib/lightgallery/lg-thumbnail.min.js></script><script type=text/javascript src=/lib/lightgallery/lg-zoom.min.js></script><script type=text/javascript src=/lib/clipboard/clipboard.min.js></script><script type=text/javascript src=/lib/sharer/sharer.min.js></script><script type=text/javascript src=/lib/katex/katex.min.js defer></script><script type=text/javascript src=/lib/katex/auto-render.min.js defer></script><script type=text/javascript src=/lib/katex/copy-tex.min.js defer></script><script type=text/javascript src=/lib/katex/mhchem.min.js defer></script><script type=text/javascript src=/js/katex.min.js defer></script><link rel=stylesheet href=/lib/lightgallery/lightgallery.min.css><link rel=stylesheet href=/lib/katex/katex.min.css><link rel=preload as=style onload='this.onload=null,this.rel="stylesheet"' href=/lib/katex/copy-tex.min.css><noscript><link rel=stylesheet href=/lib/katex/copy-tex.min.css></noscript></div></body></html>

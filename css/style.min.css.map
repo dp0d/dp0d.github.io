@@ -1,7 +1,7 @@
 {
 	"version": 3,
 	"file": "style.min.css",
-	"sourceRoot": "/Users/oliver/Public/其他/MyBlog/dp0d",
+	"sourceRoot": "/home/runner/work/dp0d.github.io/dp0d.github.io",
 	"sources": [
 		"themes/DoIt/assets/css/style.scss",
 		"themes/DoIt/assets/css/_variables.scss",

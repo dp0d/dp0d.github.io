@@ -1,281 +1,32 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="robots" content="noodp" />
-    <title class="pjax-title">变分推断 - dp0d&#39;s blog</title><meta name="Description" content="dp0d&#39;s blog,where to share life as well as technology of nlp."><meta property="og:title" content="变分推断" />
-<meta property="og:description" content="1.变分函数微分（非严格）$$ dy = f(x_1&#43;dx)-f(x_1) $$ $dy$是$y$的微分，也就是函数的微分，是指的$x$变化了一个极小值引起的因变量函数的变化。 泛函泛函" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://dp0d.github.io/variational_inference/" /><meta property="og:image" content="https://dp0d.github.io/images/logo.png"/><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2022-09-15T21:29:55+08:00" />
-<meta property="article:modified_time" content="2022-09-15T21:29:55+08:00" /><meta property="og:site_name" content="dp0d&#39;s blog" />
-
-<meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:image" content="https://dp0d.github.io/images/logo.png"/>
-
-<meta name="twitter:title" content="变分推断"/>
-<meta name="twitter:description" content="1.变分函数微分（非严格）$$ dy = f(x_1&#43;dx)-f(x_1) $$ $dy$是$y$的微分，也就是函数的微分，是指的$x$变化了一个极小值引起的因变量函数的变化。 泛函泛函"/>
-<meta name="application-name" content="dp0d&#39;s blog">
-<meta name="apple-mobile-web-app-title" content="dp0d&#39;s blog">
-
-<meta name="theme-color" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://dp0d.github.io/variational_inference/" /><link rel="prev" href="https://dp0d.github.io/pretrain_model/" /><link rel="next" href="https://dp0d.github.io/package_manager/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/fontawesome-free/all.min.css">
-        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/animate/animate.min.css">
-        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript>
-    
-    
-    
-    <script type="application/ld+json">
-    {
-        "@context": "http://schema.org",
-        "@type": "BlogPosting",
-        "headline": "变分推断",
-        "inLanguage": "zh-CN",
-        "mainEntityOfPage": {
-            "@type": "WebPage",
-            "@id": "https:\/\/dp0d.github.io\/variational_inference\/"
-        },"image": ["https:\/\/dp0d.github.io\/images\/logo.png"],"genre": "posts","wordcount":  3411 ,
-        "url": "https:\/\/dp0d.github.io\/variational_inference\/","datePublished": "2022-09-15T21:29:55+08:00","dateModified": "2022-09-15T21:29:55+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
-            "@type": "Organization",
-            "name": "dp0d","logo": "https:\/\/dp0d.github.io\/images\/logo.png"},"author": {
-                "@type": "Person",
-                "name": "dp0d"
-            },"description": ""
-    }
-    </script></head>
-
-<body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">
-        function setTheme(theme) {document.body.setAttribute('theme', theme);}
-        function saveTheme(theme) {window.localStorage && localStorage.setItem('theme', theme);}
-        function getMeta(metaName) {const metas = document.getElementsByTagName('meta'); for (let i = 0; i < metas.length; i++) if (metas[i].getAttribute('name') === metaName) return metas[i]; return '';}
-        if (window.localStorage && localStorage.getItem('theme')) {let theme = localStorage.getItem('theme');theme === 'light' || theme === 'dark' || theme === 'black' ? setTheme(theme) : (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light')); } else { if ('auto' === 'light' || 'auto' === 'dark' || 'auto' === 'black') setTheme('auto'), saveTheme('auto'); else saveTheme('auto'), window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light');}
-        let metaColors = {'light': '#f8f8f8','dark': '#252627','black': '#000000'}
-        getMeta('theme-color').content = metaColors[document.body.getAttribute('theme')];
-    </script>
-    <div id="back-to-top"></div>
-    <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
-    <div class="header-wrapper">
-        <div class="header-title">
-            <a href="/" title="dp0d&#39;s blog"><span class="header-title-pre"><i class='far fa-edit fa-fw'></i></span>Natural Language Processing</a>
-        </div>
-        <div class="menu">
-            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/charge/"> 充电 </a><a class="menu-item" href="/friends/"> 朋友萌 </a><a class="menu-item" href="/collection/"> 收藏 </a><a class="menu-item" href="/copyright/"> 版权 </a><a class="menu-item" href="/about/"> 关于我 </a><a class="menu-item" href="https://github.com/dp0d" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
-                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
-                        <a href="#" onclick="return false;" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
-                            <i class="fas fa-search fa-fw"></i>
-                        </a>
-                        <a href="#" onclick="return false;" class="search-button search-clear" id="search-clear-desktop" title="清空">
-                            <i class="fas fa-times-circle fa-fw"></i>
-                        </a>
-                        <span class="search-button search-loading" id="search-loading-desktop">
-                            <i class="fas fa-spinner fa-fw fa-spin"></i>
-                        </span>
-                    </span><a href="#" onclick="return false;" class="menu-item theme-select" title="切换主题">
-                    <i class="fas fa-adjust fa-fw"></i>
-                    <select class="color-theme-select" id="theme-select-desktop" title="切换主题">
-                        <option value="light">浅色</option>
-                        <option value="dark">深色</option>
-                        <option value="black">黑色</option>
-                        <option value="auto">跟随系统</option>
-                    </select>
-                </a></div>
-        </div>
-    </div>
-</header><header class="mobile" id="header-mobile">
-    <div class="header-container">
-        <div class="header-wrapper">
-            <div class="header-title">
-                <a href="/" title="dp0d&#39;s blog"><span class="header-title-pre"><i class='far fa-edit fa-fw'></i></span>Natural Language Processing</a>
-            </div>
-            <div class="menu-toggle" id="menu-toggle-mobile">
-                <span></span><span></span><span></span>
-            </div>
-        </div>
-        <div class="menu" id="menu-mobile"><div class="search-wrapper">
-                    <div class="search mobile" id="search-mobile">
-                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
-                        <a href="#" onclick="return false;" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
-                            <i class="fas fa-search fa-fw"></i>
-                        </a>
-                        <a href="#" onclick="return false;" class="search-button search-clear" id="search-clear-mobile" title="清空">
-                            <i class="fas fa-times-circle fa-fw"></i>
-                        </a>
-                        <span class="search-button search-loading" id="search-loading-mobile">
-                            <i class="fas fa-spinner fa-fw fa-spin"></i>
-                        </span>
-                    </div>
-                    <a href="#" onclick="return false;" class="search-cancel" id="search-cancel-mobile">
-                        取消
-                    </a>
-                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/charge/" title="">充电</a><a class="menu-item" href="/friends/" title="">朋友萌</a><a class="menu-item" href="/collection/" title="">收藏</a><a class="menu-item" href="/copyright/" title="">版权</a><a class="menu-item" href="/about/" title="">关于我</a><a class="menu-item" href="https://github.com/dp0d" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i></a><a href="#" onclick="return false;" class="menu-item theme-select" title="切换主题">
-                <i class="fas fa-adjust fa-fw"></i>
-                <select class="color-theme-select" id="theme-select-mobile" title="切换主题">
-                    <option value="light">浅色</option>
-                    <option value="dark">深色</option>
-                    <option value="black">黑色</option>
-                    <option value="auto">跟随系统</option>
-                </select>
-            </a></div>
-    </div>
-</header>
-<div class="search-dropdown desktop">
-    <div id="search-dropdown-desktop"></div>
-</div>
-<div class="search-dropdown mobile">
-    <div id="search-dropdown-mobile"></div>
-</div>
-<main class="main">
-            <div class="container"><div class="toc" id="toc-auto">
-        <h2 class="toc-title">目录</h2>
-        <div class="toc-content" id="toc-content-auto"><nav id="TableOfContents">
-  <ul>
-    <li><a href="#1变分函数">1.变分函数</a>
-      <ul>
-        <li><a href="#微分非严格">微分（非严格）</a></li>
-        <li><a href="#泛函">泛函</a></li>
-        <li><a href="#变分实质上是泛函的变分">变分（实质上是泛函的变分）</a></li>
-      </ul>
-    </li>
-    <li><a href="#2平均场理论">2.平均场理论</a></li>
-    <li><a href="#3机器学习分类研究方法">3.机器学习分类（研究方法）</a>
-      <ul>
-        <li><a href="#贝叶斯派学习的过程">贝叶斯派学习的过程</a>
-          <ul>
-            <li><a href="#贝叶斯推断inference">贝叶斯推断（Inference）</a></li>
-            <li><a href="#贝叶斯决策">贝叶斯决策</a></li>
-          </ul>
-        </li>
-      </ul>
-    </li>
-    <li><a href="#变分推断variational-inference">变分推断(Variational Inference)</a></li>
-    <li><a href="#随机梯度变分推断-stochastic-gradient-vi-sgvi">随机梯度变分推断 (Stochastic Gradient VI, SGVI)</a>
-      <ul>
-        <li><a href="#reparameterization-trick">Reparameterization Trick</a></li>
-      </ul>
-    </li>
-    <li><a href="#变分自编码器vae">变分自编码器VAE</a>
-      <ul>
-        <li>
-          <ul>
-            <li><a href="#问题场景">问题场景</a></li>
-          </ul>
-        </li>
-      </ul>
-    </li>
-    <li><a href="#参考资料">参考资料</a></li>
-  </ul>
-</nav></div>
-    </div><script>document.getElementsByTagName("main")[0].setAttribute("pageStyle", "normal")</script><script>document.getElementsByTagName("main")[0].setAttribute("autoTOC", "true")</script><article class="page single"><h1 class="single-title animate__animated animate__flipInX">变分推断</h1><div class="post-meta">
-            <div class="post-meta-line">
-                <span class="post-author"><i class="author fas fa-user-circle fa-fw"></i><a href="https://github.com/dp0d" title="Author" target="_blank" rel="noopener noreffer author" class="author">dp0d</a>
-                </span>&nbsp;<span class="post-category">收录于 </span>&nbsp;<span class="post-category">类别 <a href="/categories/machine_learning/"><i class="far fa-folder fa-fw"></i>机器学习</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-09-15">2022-09-15</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2022-09-15">2022-09-15</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 3411 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 7 分钟&nbsp;</div>
-        </div><div class="details toc" id="toc-static"  kept="">
-                <div class="details-summary toc-title">
-                    <span>目录</span>
-                    <span><i class="details-icon fas fa-angle-right"></i></span>
-                </div>
-                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
-  <ul>
-    <li><a href="#1变分函数">1.变分函数</a>
-      <ul>
-        <li><a href="#微分非严格">微分（非严格）</a></li>
-        <li><a href="#泛函">泛函</a></li>
-        <li><a href="#变分实质上是泛函的变分">变分（实质上是泛函的变分）</a></li>
-      </ul>
-    </li>
-    <li><a href="#2平均场理论">2.平均场理论</a></li>
-    <li><a href="#3机器学习分类研究方法">3.机器学习分类（研究方法）</a>
-      <ul>
-        <li><a href="#贝叶斯派学习的过程">贝叶斯派学习的过程</a>
-          <ul>
-            <li><a href="#贝叶斯推断inference">贝叶斯推断（Inference）</a></li>
-            <li><a href="#贝叶斯决策">贝叶斯决策</a></li>
-          </ul>
-        </li>
-      </ul>
-    </li>
-    <li><a href="#变分推断variational-inference">变分推断(Variational Inference)</a></li>
-    <li><a href="#随机梯度变分推断-stochastic-gradient-vi-sgvi">随机梯度变分推断 (Stochastic Gradient VI, SGVI)</a>
-      <ul>
-        <li><a href="#reparameterization-trick">Reparameterization Trick</a></li>
-      </ul>
-    </li>
-    <li><a href="#变分自编码器vae">变分自编码器VAE</a>
-      <ul>
-        <li>
-          <ul>
-            <li><a href="#问题场景">问题场景</a></li>
-          </ul>
-        </li>
-      </ul>
-    </li>
-    <li><a href="#参考资料">参考资料</a></li>
-  </ul>
-</nav></div>
-            </div><div class="content" id="content"><h2 id="1变分函数" class="headerLink">
-    <a href="#1%e5%8f%98%e5%88%86%e5%87%bd%e6%95%b0" class="header-mark"></a>1.变分函数</h2><h3 id="微分非严格" class="headerLink">
-    <a href="#%e5%be%ae%e5%88%86%e9%9d%9e%e4%b8%a5%e6%a0%bc" class="header-mark"></a>微分（非严格）</h3><p>$$
+<!doctype html><html lang=zh-CN><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=robots content="noodp"><title class=pjax-title>变分推断 - dp0d's blog</title><meta name=Description content="dp0d's blog,where to share life as well as technology of nlp."><meta property="og:title" content="变分推断"><meta property="og:description" content="1.变分函数 微分（非严格）$$ dy = f(x_1+dx)-f(x_1) $$ $dy$是$y$的微分，也就是函数的微分，是指的$x$变化了一个极小值引起的因变量函数的变化。 泛函泛函"><meta property="og:type" content="article"><meta property="og:url" content="https://dp0d.github.io/variational_inference/"><meta property="og:image" content="https://dp0d.github.io/images/logo.png"><meta property="article:section" content="posts"><meta property="article:published_time" content="2022-09-15T21:29:55+08:00"><meta property="article:modified_time" content="2022-09-15T21:29:55+08:00"><meta property="og:site_name" content="dp0d's blog"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://dp0d.github.io/images/logo.png"><meta name=twitter:title content="变分推断"><meta name=twitter:description content="1.变分函数 微分（非严格）$$ dy = f(x_1+dx)-f(x_1) $$ $dy$是$y$的微分，也就是函数的微分，是指的$x$变化了一个极小值引起的因变量函数的变化。 泛函泛函"><meta name=application-name content="dp0d's blog"><meta name=apple-mobile-web-app-title content="dp0d's blog"><meta name=theme-color content="#f8f8f8"><meta name=msapplication-TileColor content="#da532c"><link rel="shortcut icon" type=image/x-icon href=/favicon.ico><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://dp0d.github.io/variational_inference/><link rel=prev href=https://dp0d.github.io/pretrain_model/><link rel=next href=https://dp0d.github.io/package_manager/><link rel=stylesheet href=/lib/normalize/normalize.min.css><link rel=stylesheet href=/css/style.min.css><link rel=preload as=style onload='this.onload=null,this.rel="stylesheet"' href=/lib/fontawesome-free/all.min.css><noscript><link rel=stylesheet href=/lib/fontawesome-free/all.min.css></noscript><link rel=preload as=style onload='this.onload=null,this.rel="stylesheet"' href=/lib/animate/animate.min.css><noscript><link rel=stylesheet href=/lib/animate/animate.min.css></noscript><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"变分推断","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/dp0d.github.io\/variational_inference\/"},"image":["https:\/\/dp0d.github.io\/images\/logo.png"],"genre":"posts","wordcount":3421,"url":"https:\/\/dp0d.github.io\/variational_inference\/","datePublished":"2022-09-15T21:29:55+08:00","dateModified":"2022-09-15T21:29:55+08:00","license":"This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher":{"@type":"Organization","name":"dp0d","logo":"https:\/\/dp0d.github.io\/images\/logo.png"},"author":{"@type":"Person","name":"dp0d"},"description":""}</script></head><body header-desktop=fixed header-mobile=auto><script type=text/javascript>function setTheme(e){document.body.setAttribute("theme",e)}function saveTheme(e){window.localStorage&&localStorage.setItem("theme",e)}function getMeta(e){const t=document.getElementsByTagName("meta");for(let n=0;n<t.length;n++)if(t[n].getAttribute("name")===e)return t[n];return""}if(window.localStorage&&localStorage.getItem("theme")){let e=localStorage.getItem("theme");e==="light"||e==="dark"||e==="black"?setTheme(e):setTheme(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")}else"auto"==="light"||"auto"==="dark"||"auto"==="black"?(setTheme("auto"),saveTheme("auto")):(saveTheme("auto"),setTheme(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"));let metaColors={light:"#f8f8f8",dark:"#252627",black:"#000000"};getMeta("theme-color").content=metaColors[document.body.getAttribute("theme")]</script><div id=back-to-top></div><div id=mask></div><div class=wrapper><header class=desktop id=header-desktop><div class=header-wrapper><div class=header-title><a href=/ title="dp0d's blog"><span class=header-title-pre><i class='far fa-edit fa-fw'></i></span>Natural Language Processing</a></div><div class=menu><div class=menu-inner><a class=menu-item href=/posts/>文章 </a><a class=menu-item href=/tags/>标签 </a><a class=menu-item href=/categories/>分类 </a><a class=menu-item href=/charge/>充电 </a><a class=menu-item href=/friends/>朋友萌 </a><a class=menu-item href=/collection/>收藏 </a><a class=menu-item href=/copyright/>版权 </a><a class=menu-item href=/about/>关于我 </a><a class=menu-item href=https://github.com/dp0d title=GitHub rel="noopener noreffer" target=_blank><i class='fab fa-github fa-fw'></i> </a><span class="menu-item delimiter"></span><span class="menu-item search" id=search-desktop>
+<input type=text placeholder=搜索文章标题或内容... id=search-input-desktop>
+<a href=# onclick=return!1 class="search-button search-toggle" id=search-toggle-desktop title=搜索><i class="fas fa-search fa-fw"></i></a>
+<a href=# onclick=return!1 class="search-button search-clear" id=search-clear-desktop title=清空><i class="fas fa-times-circle fa-fw"></i></a>
+<span class="search-button search-loading" id=search-loading-desktop><i class="fas fa-spinner fa-fw fa-spin"></i></span>
+</span><a href=# onclick=return!1 class="menu-item theme-select" title=切换主题><i class="fas fa-adjust fa-fw"></i>
+<select class=color-theme-select id=theme-select-desktop title=切换主题><option value=light>浅色</option><option value=dark>深色</option><option value=black>黑色</option><option value=auto>跟随系统</option></select></a></div></div></div></header><header class=mobile id=header-mobile><div class=header-container><div class=header-wrapper><div class=header-title><a href=/ title="dp0d's blog"><span class=header-title-pre><i class='far fa-edit fa-fw'></i></span>Natural Language Processing</a></div><div class=menu-toggle id=menu-toggle-mobile><span></span><span></span><span></span></div></div><div class=menu id=menu-mobile><div class=search-wrapper><div class="search mobile" id=search-mobile><input type=text placeholder=搜索文章标题或内容... id=search-input-mobile>
+<a href=# onclick=return!1 class="search-button search-toggle" id=search-toggle-mobile title=搜索><i class="fas fa-search fa-fw"></i></a>
+<a href=# onclick=return!1 class="search-button search-clear" id=search-clear-mobile title=清空><i class="fas fa-times-circle fa-fw"></i></a>
+<span class="search-button search-loading" id=search-loading-mobile><i class="fas fa-spinner fa-fw fa-spin"></i></span></div><a href=# onclick=return!1 class=search-cancel id=search-cancel-mobile>取消</a></div><a class=menu-item href=/posts/ title>文章</a><a class=menu-item href=/tags/ title>标签</a><a class=menu-item href=/categories/ title>分类</a><a class=menu-item href=/charge/ title>充电</a><a class=menu-item href=/friends/ title>朋友萌</a><a class=menu-item href=/collection/ title>收藏</a><a class=menu-item href=/copyright/ title>版权</a><a class=menu-item href=/about/ title>关于我</a><a class=menu-item href=https://github.com/dp0d title=GitHub rel="noopener noreffer" target=_blank><i class='fab fa-github fa-fw'></i></a><a href=# onclick=return!1 class="menu-item theme-select" title=切换主题>
+<i class="fas fa-adjust fa-fw"></i>
+<select class=color-theme-select id=theme-select-mobile title=切换主题><option value=light>浅色</option><option value=dark>深色</option><option value=black>黑色</option><option value=auto>跟随系统</option></select></a></div></div></header><div class="search-dropdown desktop"><div id=search-dropdown-desktop></div></div><div class="search-dropdown mobile"><div id=search-dropdown-mobile></div></div><main class=main><div class=container><div class=toc id=toc-auto><h2 class=toc-title>目录</h2><div class=toc-content id=toc-content-auto><nav id=TableOfContents><ul><li><a href=#1变分函数>1.变分函数</a><ul><li><a href=#微分非严格>微分（非严格）</a></li><li><a href=#泛函>泛函</a></li><li><a href=#变分实质上是泛函的变分>变分（实质上是泛函的变分）</a></li></ul></li><li><a href=#2平均场理论>2.平均场理论</a></li><li><a href=#3机器学习分类研究方法>3.机器学习分类（研究方法）</a><ul><li><a href=#贝叶斯派学习的过程>贝叶斯派学习的过程</a><ul><li><a href=#贝叶斯推断inference>贝叶斯推断（Inference）</a></li><li><a href=#贝叶斯决策>贝叶斯决策</a></li></ul></li></ul></li><li><a href=#变分推断variational-inference>变分推断(Variational Inference)</a></li><li><a href=#随机梯度变分推断-stochastic-gradient-vi-sgvi>随机梯度变分推断 (Stochastic Gradient VI, SGVI)</a><ul><li><a href=#reparameterization-trick>Reparameterization Trick</a></li></ul></li><li><a href=#变分自编码器vae>变分自编码器VAE</a><ul><li><ul><li><a href=#问题场景>问题场景</a></li></ul></li></ul></li><li><a href=#参考资料>参考资料</a></li></ul></nav></div></div><script>document.getElementsByTagName("main")[0].setAttribute("pageStyle","normal")</script><script>document.getElementsByTagName("main")[0].setAttribute("autoTOC","true")</script><article class="page single"><h1 class="single-title animate__animated animate__flipInX">变分推断</h1><div class=post-meta><div class=post-meta-line><span class=post-author><i class="author fas fa-user-circle fa-fw"></i><a href=https://github.com/dp0d title=Author target=_blank rel="noopener noreffer author" class=author>dp0d</a>
+</span>&nbsp;<span class=post-category>收录于 </span>&nbsp;<span class=post-category>类别 <a href=/categories/machine_learning/><i class="far fa-folder fa-fw"></i>机器学习</a></span></div><div class=post-meta-line><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2022-09-15>2022-09-15</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime=2022-09-15>2022-09-15</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 3421 字&nbsp;
+<i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 7 分钟&nbsp;</div></div><div class="details toc" id=toc-static kept><div class="details-summary toc-title"><span>目录</span>
+<span><i class="details-icon fas fa-angle-right"></i></span></div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents><ul><li><a href=#1变分函数>1.变分函数</a><ul><li><a href=#微分非严格>微分（非严格）</a></li><li><a href=#泛函>泛函</a></li><li><a href=#变分实质上是泛函的变分>变分（实质上是泛函的变分）</a></li></ul></li><li><a href=#2平均场理论>2.平均场理论</a></li><li><a href=#3机器学习分类研究方法>3.机器学习分类（研究方法）</a><ul><li><a href=#贝叶斯派学习的过程>贝叶斯派学习的过程</a><ul><li><a href=#贝叶斯推断inference>贝叶斯推断（Inference）</a></li><li><a href=#贝叶斯决策>贝叶斯决策</a></li></ul></li></ul></li><li><a href=#变分推断variational-inference>变分推断(Variational Inference)</a></li><li><a href=#随机梯度变分推断-stochastic-gradient-vi-sgvi>随机梯度变分推断 (Stochastic Gradient VI, SGVI)</a><ul><li><a href=#reparameterization-trick>Reparameterization Trick</a></li></ul></li><li><a href=#变分自编码器vae>变分自编码器VAE</a><ul><li><ul><li><a href=#问题场景>问题场景</a></li></ul></li></ul></li><li><a href=#参考资料>参考资料</a></li></ul></nav></div></div><div class=content id=content><h2 id=1变分函数 class=headerLink><a href=#1%e5%8f%98%e5%88%86%e5%87%bd%e6%95%b0 class=header-mark></a>1.变分函数</h2><h3 id=微分非严格 class=headerLink><a href=#%e5%be%ae%e5%88%86%e9%9d%9e%e4%b8%a5%e6%a0%bc class=header-mark></a>微分（非严格）</h3><p>$$
 dy = f(x_1+dx)-f(x_1)
-$$</p>
-<p>$dy$是$y$的微分，也就是函数的微分，是指的$x$变化了一个极小值引起的因变量函数的变化。</p>
-<h3 id="泛函" class="headerLink">
-    <a href="#%e6%b3%9b%e5%87%bd" class="header-mark"></a>泛函</h3><p>泛函指的是，因变量为函数的函数。</p>
-<table>
-<thead>
-<tr>
-<th>函数</th>
-<th>泛函</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>$f(x_0) = y_0$</td>
-<td>$\phi(f_{\theta_0}(x))=y_0$</td>
-</tr>
-<tr>
-<td>当自变量为一个特定值，函数加工的结果对应特定值</td>
-<td>当自变量为一个特定的函数（可以理解为特定的分布）如$y=x$，泛函加工为一个特定的值</td>
-</tr>
-</tbody>
-</table>
-<h3 id="变分实质上是泛函的变分" class="headerLink">
-    <a href="#%e5%8f%98%e5%88%86%e5%ae%9e%e8%b4%a8%e4%b8%8a%e6%98%af%e6%b3%9b%e5%87%bd%e7%9a%84%e5%8f%98%e5%88%86" class="header-mark"></a>变分（实质上是泛函的变分）</h3><p>变分指的是，当自变量函数做出微小变化$y \rarr y + \delta y$时（可以理解为分布发生微小变化，如$y=x$变为$y=1.00001*x,y=x + 0.0001$），泛函的函数值变化了$\delta J$,这个变化值就是泛函的变分。</p>
-<h2 id="2平均场理论" class="headerLink">
-    <a href="#2%e5%b9%b3%e5%9d%87%e5%9c%ba%e7%90%86%e8%ae%ba" class="header-mark"></a>2.平均场理论</h2><p>$$
+$$</p><p>$dy$是$y$的微分，也就是函数的微分，是指的$x$变化了一个极小值引起的因变量函数的变化。</p><h3 id=泛函 class=headerLink><a href=#%e6%b3%9b%e5%87%bd class=header-mark></a>泛函</h3><p>泛函指的是，因变量为函数的函数。</p><table><thead><tr><th>函数</th><th>泛函</th></tr></thead><tbody><tr><td>$f(x_0) = y_0$</td><td>$\phi(f_{\theta_0}(x))=y_0$</td></tr><tr><td>当自变量为一个特定值，函数加工的结果对应特定值</td><td>当自变量为一个特定的函数（可以理解为特定的分布）如$y=x$，泛函加工为一个特定的值</td></tr></tbody></table><h3 id=变分实质上是泛函的变分 class=headerLink><a href=#%e5%8f%98%e5%88%86%e5%ae%9e%e8%b4%a8%e4%b8%8a%e6%98%af%e6%b3%9b%e5%87%bd%e7%9a%84%e5%8f%98%e5%88%86 class=header-mark></a>变分（实质上是泛函的变分）</h3><p>变分指的是，当自变量函数做出微小变化$y \rarr y + \delta y$时（可以理解为分布发生微小变化，如$y=x$变为$y=1.00001*x,y=x + 0.0001$），泛函的函数值变化了$\delta J$,这个变化值就是泛函的变分。</p><h2 id=2平均场理论 class=headerLink><a href=#2%e5%b9%b3%e5%9d%87%e5%9c%ba%e7%90%86%e8%ae%ba class=header-mark></a>2.平均场理论</h2><p>$$
 q(x)=\prod_iq(x_i)
-$$</p>
-<h2 id="3机器学习分类研究方法" class="headerLink">
-    <a href="#3%e6%9c%ba%e5%99%a8%e5%ad%a6%e4%b9%a0%e5%88%86%e7%b1%bb%e7%a0%94%e7%a9%b6%e6%96%b9%e6%b3%95" class="header-mark"></a>3.机器学习分类（研究方法）</h2><div class="mermaid" id="id-1"></div><h3 id="贝叶斯派学习的过程" class="headerLink">
-    <a href="#%e8%b4%9d%e5%8f%b6%e6%96%af%e6%b4%be%e5%ad%a6%e4%b9%a0%e7%9a%84%e8%bf%87%e7%a8%8b" class="header-mark"></a>贝叶斯派学习的过程</h3><p>贝叶斯学习认为模型$p(x|\theta)$中的参数$\theta$不是一个确定的未知参数，而是一个随机变量，假设为$\theta 服从 p(\theta|\lambda)$，所以，需要通过贝叶斯定理求得后验$p(\theta|x)=\frac{p(x|\theta)p(\theta|\lambda)}{p(x)}$。</p>
-<h4 id="贝叶斯推断inference" class="headerLink">
-    <a href="#%e8%b4%9d%e5%8f%b6%e6%96%af%e6%8e%a8%e6%96%adinference" class="header-mark"></a>贝叶斯推断（Inference）</h4><p>需要计算$p(\theta|x)$的值，抽样很多样本，使用期望来近似，贝叶斯公式中$p(x|\theta)$是数据的似然和$p(\theta|\lambda)$ 是参数的先验分布，$p(x)$通过$\int_{\theta} p(x|\theta)p(\theta|\lambda)d\lambda$得到。</p>
-<div class="mermaid" id="id-2"></div><h4 id="贝叶斯决策" class="headerLink">
-    <a href="#%e8%b4%9d%e5%8f%b6%e6%96%af%e5%86%b3%e7%ad%96" class="header-mark"></a>贝叶斯决策</h4><p>通过原有样本$X$来推断N个新的样本$\hat x$，即
+$$</p><h2 id=3机器学习分类研究方法 class=headerLink><a href=#3%e6%9c%ba%e5%99%a8%e5%ad%a6%e4%b9%a0%e5%88%86%e7%b1%bb%e7%a0%94%e7%a9%b6%e6%96%b9%e6%b3%95 class=header-mark></a>3.机器学习分类（研究方法）</h2><div class=mermaid id=id-1></div><h3 id=贝叶斯派学习的过程 class=headerLink><a href=#%e8%b4%9d%e5%8f%b6%e6%96%af%e6%b4%be%e5%ad%a6%e4%b9%a0%e7%9a%84%e8%bf%87%e7%a8%8b class=header-mark></a>贝叶斯派学习的过程</h3><p>贝叶斯学习认为模型$p(x|\theta)$中的参数$\theta$不是一个确定的未知参数，而是一个随机变量，假设为$\theta 服从 p(\theta|\lambda)$，所以，需要通过贝叶斯定理求得后验$p(\theta|x)=\frac{p(x|\theta)p(\theta|\lambda)}{p(x)}$。</p><h4 id=贝叶斯推断inference class=headerLink><a href=#%e8%b4%9d%e5%8f%b6%e6%96%af%e6%8e%a8%e6%96%adinference class=header-mark></a>贝叶斯推断（Inference）</h4><p>需要计算$p(\theta|x)$的值，抽样很多样本，使用期望来近似，贝叶斯公式中$p(x|\theta)$是数据的似然和$p(\theta|\lambda)$ 是参数的先验分布，$p(x)$通过$\int_{\theta} p(x|\theta)p(\theta|\lambda)d\lambda$得到。</p><div class=mermaid id=id-2></div><h4 id=贝叶斯决策 class=headerLink><a href=#%e8%b4%9d%e5%8f%b6%e6%96%af%e5%86%b3%e7%ad%96 class=header-mark></a>贝叶斯决策</h4><p>通过原有样本$X$来推断N个新的样本$\hat x$，即
 $$
 p(\hat x|X)=\int_\theta p(\hat x,\theta|X)d\theta
 =\int_\theta p(\hat x|\theta)\cdot p(\theta|X)d\theta
 =E_{\theta|X}[p(\hat x|\theta)]
-$$</p>
-<h2 id="变分推断variational-inference" class="headerLink">
-    <a href="#%e5%8f%98%e5%88%86%e6%8e%a8%e6%96%advariational-inference" class="header-mark"></a>变分推断(Variational Inference)</h2>
-
-使用ELBO来替代，含有隐变量的概率模型中，观测数据的对数概率$\log_{\theta} p(x)$
-
+$$</p><h2 id=变分推断variational-inference class=headerLink><a href=#%e5%8f%98%e5%88%86%e6%8e%a8%e6%96%advariational-inference class=header-mark></a>变分推断(Variational Inference)</h2>使用ELBO来替代，含有隐变量的概率模型中，观测数据的对数概率$\log_{\theta} p(x)$
 参数设定如下
-
-$X$ :   Observed data
-
-$Z$ :   latent variable + parameter
-
-$(X,Z)$ :  complete data + parameter
-
+$X$ : Observed data
+$Z$ : latent variable + parameter
+$(X,Z)$ : complete data + parameter
 由于$x$是观测数据，$q(z|x)$简写为$q(z)$
-
 根据贝叶斯定理
 $$
 p(z|x) = \frac{p(x|z)p(z)}{p(x)} = \frac{p(x,z)}{p(x)}
@@ -288,45 +39,30 @@ $$
 $$
 左边=\int_z q(z)\log p(x)dz = \log p(x)
 $$
-
 $$
 右边=\int q(z)\log \frac{p(x,z)}{q(z)}dz - \int q(z) \log \frac {p(z|x)}{q(z)}dz
 $$
-
 $$
 右边=\underbrace{\int q(z)\log \frac{p(x,z)}{q(z)}dz}_{ELBO(evidence\;lower\;bound)} + \underbrace{\int q(z) \log \frac {q(z)}{p(z|x)}}_{KL(q||p)}dz
 $$
-
 $$
 右边=\underbrace{\mathcal{L}(q)}_{关于q的变分}+\underbrace{KL(q||p)}_{\geqslant 0}
 $$
-
 其中$\mathcal{L}(q)$是用来定义ELBO项的函数，用以说明其输入是一个$q$函数，$q$函数是我们随意找的一个概率密度函数，所以$\mathcal{L}(q)$是关于$q$的变分，变分推断来自于此。
-
- 说明一下，当X固定时，右边的和固定，而由于KL散度的性质，$KL(q||p)$恒大于零，所以$\mathcal{L}(q)$最大就是$\log p(x)$。
-
+说明一下，当X固定时，右边的和固定，而由于KL散度的性质，$KL(q||p)$恒大于零，所以$\mathcal{L}(q)$最大就是$\log p(x)$。
 转为变分推断的关键问题，后验$p(z|x)$无法求得，所以需要使用$q(z)$来近似它，即使得$q(z)\approx p(z|x)$。此时$KL(q||p)$最小，趋近于零。反过来思考，当找到一个$\tilde {q(z)}$使得变分$\mathcal{L}(q)$达到最大时，也能让$KL(q||p)$达到最小值，即使得$\tilde {q(z)}\approx p(z|x)$，形式化表达如下。
 $$
-\tilde {q(z)} = \mathop{\arg\max}_{q(z)}\ \ \mathcal{L}(q)\ \  \Rightarrow\ \  \tilde {q(z)}\approx p(z|x)
+\tilde {q(z)} = \mathop{\arg\max}_{q(z)}\ \ \mathcal{L}(q)\ \ \Rightarrow\ \ \tilde {q(z)}\approx p(z|x)
 $$
 平均场理论
 $$
 q(z) = \prod_{i=1}^{M}q(z_i)
-$$
-
-
-<h2 id="随机梯度变分推断-stochastic-gradient-vi-sgvi" class="headerLink">
-    <a href="#%e9%9a%8f%e6%9c%ba%e6%a2%af%e5%ba%a6%e5%8f%98%e5%88%86%e6%8e%a8%e6%96%ad-stochastic-gradient-vi-sgvi" class="header-mark"></a>随机梯度变分推断 (Stochastic Gradient VI, SGVI)</h2>
-$$
+$$<h2 id=随机梯度变分推断-stochastic-gradient-vi-sgvi class=headerLink><a href=#%e9%9a%8f%e6%9c%ba%e6%a2%af%e5%ba%a6%e5%8f%98%e5%88%86%e6%8e%a8%e6%96%ad-stochastic-gradient-vi-sgvi class=header-mark></a>随机梯度变分推断 (Stochastic Gradient VI, SGVI)</h2>$$
 \log p_\theta(X) = \log \prod_{i=1}^N p_{\theta}(x^i)=\sum_{i=1}^N\log p_{\theta}(x^i)
 $$
-
 $$
 \log p_{\theta}(x^i) = \underbrace{ELBO}_{\mathcal L(q)} + \underbrace{KL(q||p)}_{\geqslant 0}) \geqslant \mathcal L(q)
 $$
-
-
-
 需要求解的目标函数是
 $$
 \tilde {q(z)} = \mathop{\arg\min}_{q(z)}\ \ KL(q||p) =\mathop{\arg\max}_{q(z)}\ \ \mathcal{L}(q)
@@ -335,241 +71,111 @@ $$
 $$
 \log p_{\theta}(x^i) = \underbrace{ELBO}_{\mathcal L(\phi)} + \underbrace{KL(q||p)}_{\geqslant 0}) \geqslant \mathcal L(\phi)
 $$
-
 $$
 ELBO = E_{q_{\phi}(z)}[\log \frac{p_{\theta}(x^i,z)}{q_{\phi}(z)}]
 $$
-
-
-
 那么我们想要最大化$ELBO$时，$q(z)$分布的参数$\phi$形式化表达为
 $$
-\hat \phi =\mathop{\arg\max}_{\phi}  \ \mathcal L(\phi)
+\hat \phi =\mathop{\arg\max}_{\phi} \ \mathcal L(\phi)
 $$
 使用梯度随机梯度上升策略，需要求得$\mathcal L(\phi)$对$\phi$的梯度如下。
-
-
 $$
 \begin{equation}
 \begin{aligned}
-
 \nabla_{\phi} \mathcal L(\phi) &= \nabla_{\phi}E_{q_{\phi}}[\log p_{\theta}(x^i,z)-\log q_{\phi}(z)] \\
 &=\nabla_{\phi}\int q_{\phi}[\log p_{\theta}(x^i,z)-\log q_{\phi}(z)]dz \\
-&=\int \nabla_{\phi}q_{\phi}\cdot[\log p_{\theta}(x^i,z)-\log q_{\phi}(z)]dz + 
+&=\int \nabla_{\phi}q_{\phi}\cdot[\log p_{\theta}(x^i,z)-\log q_{\phi}(z)]dz +
 \int q_{\phi}\nabla_{\phi}[\log p_{\theta}(x^i,z)-\log q_{\phi}(z)]dz \\
-
 &=\int q_{\phi}\cdot\nabla_{\phi}\log q_{\phi}\cdot[\log p_{\theta}(x^i,z)-\log q_{\phi}(z)]dz + 0 \\
-
 &=E_{q_{\phi}}[\nabla_{\phi}\log q_{\phi}\cdot[\log p_{\theta}(x^i,z)-\log q_{\phi}(z)]
-
 \end{aligned}
 \end{equation}
 $$
-
-
 如果使用蒙特卡罗的方式，梯度$\nabla_{\phi} \mathcal L(\phi)$，即期望$E_{q_{\phi}}[\nabla_{\phi}\log q_{\phi}\cdot[\log p_{\theta}(x^i,z)-\log q_{\phi}(z)]$可以通过从$q_{\phi}(z)中采样L个z$得到，即
 $$
 z^{(l)} \backsim q_{\phi}(z),\quad l=1,2,\cdots,L \\
 \nabla_{\phi} \mathcal L(\phi)\approx \frac{1}{L}\sum_{l=1}^L \nabla_{\phi}\log q_{\phi}(z^i)\cdot[\log p_{\theta}(x^i,z)-\log q_{\phi}(z)]
 $$
-而$E_{q_{\phi}}[\underbrace{\nabla_{\phi}\log q_{\phi}}_{high\  variance}\cdot[\log p_{\theta}(x^i,z)-\log q_{\phi}(z)]$在采样时，由于log函数的性质，当$q_{\phi}(z)\ \rightarrow \ 0$时，其中的$\nabla_{\phi}\log q_{\phi}$项会带来高方差问题。这导致了采样需要的样本量巨大，且误差较大，甚至可以认为无法采样。因此，无法采用蒙特卡洛方式来近似梯度$\nabla_{\phi} \mathcal L(\phi)$。
-
-故现在需要降低梯度表达的方差，即Variance Reduction问题。使用重参数化技巧（Reparameterization Trick）。
-
-
-<h3 id="reparameterization-trick" class="headerLink">
-    <a href="#reparameterization-trick" class="header-mark"></a>Reparameterization Trick</h3>
-
-目的是将随机变量$z$和$\phi$的关系解耦，将$z$的随机成分转移到$\epsilon$。
-
+而$E_{q_{\phi}}[\underbrace{\nabla_{\phi}\log q_{\phi}}_{high\ variance}\cdot[\log p_{\theta}(x^i,z)-\log q_{\phi}(z)]$在采样时，由于log函数的性质，当$q_{\phi}(z)\ \rightarrow \ 0$时，其中的$\nabla_{\phi}\log q_{\phi}$项会带来高方差问题。这导致了采样需要的样本量巨大，且误差较大，甚至可以认为无法采样。因此，无法采用蒙特卡洛方式来近似梯度$\nabla_{\phi} \mathcal L(\phi)$。
+故现在需要降低梯度表达的方差，即Variance Reduction问题。使用重参数化技巧（Reparameterization Trick）。<h3 id=reparameterization-trick class=headerLink><a href=#reparameterization-trick class=header-mark></a>Reparameterization Trick</h3>目的是将随机变量$z$和$\phi$的关系解耦，将$z$的随机成分转移到$\epsilon$。
 假设$z=g_{\phi}(\epsilon,x^i)$ ，$\epsilon \backsim p(\epsilon)$，$z\backsim q_{\phi}(z|x^i)$，则由于$\int q_{\phi}(z|x^i)dz = \int p(\epsilon)d\epsilon = 1$，可以得出$|q_{\phi}(z|x^i)dz|=|p(\epsilon)\cdot d\epsilon|$。
-
 故梯度可以进行如下表达
-
-
 $$
 \begin{equation}
 \begin{aligned}
-
 \nabla_{\phi} \mathcal L(\phi) &= \nabla_{\phi}\underline{E_{q_{\phi}}}[\log p_{\theta}(x^i,z)-\log q_{\phi}(z)] \\
-
 &=\nabla_{\phi}\int[\log p_{\theta}(x^i,z)-\log q_{\phi}(z)]\underline{q_{\phi}dz} \\
-
 &=\nabla_{\phi}\int[\log p_{\theta}(x^i,z)-\log q_{\phi}(z)]\underline{p(\epsilon)d\epsilon} \\
-
 &=\nabla_{\phi}\underline{E_{p(\epsilon)}}[\log p_{\theta}(x^i,z)-\log q_{\phi}(z)] \\
-
 &=E_{p(\epsilon)}[\nabla_{\phi}(\log p_{\theta}(x^i,z)-\log q_{\phi}(z))] \\
-
 带入z=g_{\phi}(\epsilon,x^i)得， \\
-
 &=E_{p(\epsilon)}[\nabla_z(\log p_{\theta}(x^i,z)-\log q_{\phi}(z))\cdot \underline{\nabla_{\phi}z}] \\
-
 &=E_{p(\epsilon)}[\nabla_z(\log p_{\theta}(x^i,z)-\log q_{\phi}(z))\cdot \underline{\nabla_{\phi}g_{\phi}(\epsilon,x^i)}]
-
-
-
 \end{aligned}
 \end{equation}
 $$
-
-
 此时，便可以采用蒙特卡罗采样来近似梯度$\nabla_{\phi} \mathcal L(\phi)$，期望即是均值。
-
 假设进行$L$次采样，$\epsilon^{(l)}\sim p(\epsilon),\ \ l=1,2,\cdots,L$。
-
-
 $$
 \nabla_{\phi} \mathcal L(\phi) \approx \widetilde {\nabla_{\phi} \mathcal L(\phi)}=
-
 \frac{1}{L} \sum_{l=1}^L\nabla_z(\log p_{\theta}(x^i,z)-\log q_{\phi}(z))\cdot \nabla_{\phi}g_{\phi}(\epsilon^{(l)},x^i)
 $$
-
-
 SGVI训练过程如下
-
-
 $$
 \phi^{(t+1)} \leftarrow \phi^{(t)} + \lambda^{(t)} \cdot \widetilde {\nabla_{\phi} \mathcal L(\phi)}f
-$$
-
-<h2 id="变分自编码器vae" class="headerLink">
-    <a href="#%e5%8f%98%e5%88%86%e8%87%aa%e7%bc%96%e7%a0%81%e5%99%a8vae" class="header-mark"></a>变分自编码器VAE</h2><h4 id="问题场景" class="headerLink">
-    <a href="#%e9%97%ae%e9%a2%98%e5%9c%ba%e6%99%af" class="header-mark"></a>问题场景</h4>
-
-假设数据集$X=\{x^{(i)}\}^N_{i=1}$服从$N$ i.i.d.。该集合中的数据由某些随机过程生成而来，过程中含有无法观测的连续随机变量$\bf z$。这个随机过程包含两个步骤，首先，从先验分布$p_{\theta ^*}(\bf z)$中生成一个$\bf z^{(i)}$。步骤二是从条件分布$p_{\theta ^*}(\bf x |\bf z)$中采样$\bf x^{(i)}$。假设$p_{\theta ^*}(\bf z)$和$p_{\theta ^*}(\bf x |\bf z)$来自$p_{\theta}(\bf z)$和$p_{\theta}(\bf x |\bf z)$的参数家族，并且他们的表达在提及$\theta$和$z$时都是可微的。这个过程的许多部分都是对我们不可见的：不论是真实的参数$\theta ^*$还是隐变量$z^{(i)}$都是未知的。
-
-
-<p>隐变量模型 Latent Variable Model</p>
-<div class="mermaid" id="id-3"></div>
-
-GMM 混合高斯模型，有限个高斯模型混合$z$~Categorical Dist
-
+$$<h2 id=变分自编码器vae class=headerLink><a href=#%e5%8f%98%e5%88%86%e8%87%aa%e7%bc%96%e7%a0%81%e5%99%a8vae class=header-mark></a>变分自编码器VAE</h2><h4 id=问题场景 class=headerLink><a href=#%e9%97%ae%e9%a2%98%e5%9c%ba%e6%99%af class=header-mark></a>问题场景</h4>假设数据集$X=\{x^{(i)}\}^N_{i=1}$服从$N$ i.i.d.。该集合中的数据由某些随机过程生成而来，过程中含有无法观测的连续随机变量$\bf z$。这个随机过程包含两个步骤，首先，从先验分布$p_{\theta ^*}(\bf z)$中生成一个$\bf z^{(i)}$。步骤二是从条件分布$p_{\theta ^*}(\bf x |\bf z)$中采样$\bf x^{(i)}$。假设$p_{\theta ^*}(\bf z)$和$p_{\theta ^*}(\bf x |\bf z)$来自$p_{\theta}(\bf z)$和$p_{\theta}(\bf x |\bf z)$的参数家族，并且他们的表达在提及$\theta$和$z$时都是可微的。这个过程的许多部分都是对我们不可见的：不论是真实的参数$\theta ^*$还是隐变量$z^{(i)}$都是未知的。<p>隐变量模型 Latent Variable Model</p><div class=mermaid id=id-3></div>GMM 混合高斯模型，有限个高斯模型混合$z$~Categorical Dist
 VAE 无限个（infinite）高斯模型混合: $z \sim N(0,\bf I) $，$x|z \sim N(\mu_{\theta}(z),\sum_{\theta}(z))$，得到如下建模，
 $$
 p_{\theta}(x) = \int_zp_{\theta}(x,z)dz \ = \ \int_z p(z)\cdot p_{\theta}(x|z)dz
 $$
 其中$p_{\theta}(x)$为intractable。
-
 如果需要使用VAE生成一个样本，先从$p(z)$中采样一个$z^i$，然后使用$p_{\theta}(x|z)$（实际采用一个神经网络来逼近，即Decoder）来得到$x^i $。
-
 由变分推断可知
 $$
 \log p(x) = ELBO + KL(q_{\phi}(z|x)||p_{\theta}(z|x))
 $$
 优化目标如下
-
-
 $$
 \begin{equation}
 \begin{aligned}
-
 <\hat \theta,\hat \phi> &= \mathop{\arg\min}_{<\theta, \phi>}\ KL(q_{\phi}(z|x)||p_{\theta}(z|x)) \\
-
 &=\mathop{\arg\max}_{<\theta, \phi>}\ ELBO \\
-
 &=\mathop{\arg\max}_{<\theta, \phi>}\ E_{q_{\phi}(z|x)}[\log p_{\theta}(x,z)]+H[q_{\phi}] \\
-
 &=\mathop{\arg\max}_{<\theta, \phi>}\ E_{q_{\phi}(z|x)}[\log p_{\theta}(x,z)-\log q_{\phi}(z|x)] \\
-
 &=\mathop{\arg\max}_{<\theta, \phi>}\ E_{q_{\phi}(z|x)}[\log p_{\theta}(x|z)+\log p(z)-\log q_{\phi}(z|x)] \\
-
 &=\mathop{\arg\max}_{<\theta, \phi>}\ E_{q_{\phi}(z|x)}[\log p_{\theta}(x|z)]+\int q_{\phi}(z|x)\frac{\log p(z)}{\log q_{\phi}(z|x)}dz \\
-
 &=\mathop{\arg\max}_{<\theta, \phi>}\underbrace{\ E_{q_{\phi}(z|x)}[\log p_{\theta}(x|z)]}_{真正的目标函数}-\underbrace{KL(q_{\phi}(z|x)||p(z))}_{看做正则化项，使编码器不坍缩}
-
-
 \end{aligned}
 \end{equation}
-$$
-
-<p>使用SGVI进行训练，重参数化技巧可以如下实现</p>
-<div class="mermaid" id="id-4"></div>
-
-$\epsilon$可以看做采样的噪声，$\epsilon \backsim N(0,\bf I)$。假设$z|x \backsim N(\mu_{\phi}(x),\Sigma_{\phi}(x))$则
-
-
+$$<p>使用SGVI进行训练，重参数化技巧可以如下实现</p><div class=mermaid id=id-4></div>$\epsilon$可以看做采样的噪声，$\epsilon \backsim N(0,\bf I)$。假设$z|x \backsim N(\mu_{\phi}(x),\Sigma_{\phi}(x))$则
 $$
 z=\mu_{\phi}(x)+\Sigma_{\phi}^{\frac{1}{2}}(x)\cdot \epsilon
-$$
+$$<h2 id=参考资料 class=headerLink><a href=#%e5%8f%82%e8%80%83%e8%b5%84%e6%96%99 class=header-mark></a>参考资料</h2><p><a href="https://www.bilibili.com/video/BV1DW41167vr?p=1&amp;vd_source=309d79182a0075ce59fbfe1a028281fd" target=_blank rel="noopener noreffer">https://www.bilibili.com/video/BV1DW41167vr?p=1&vd_source=309d79182a0075ce59fbfe1a028281fd</a></p><p><a href="https://www.bilibili.com/video/BV1G34y1t7Dy/?p=2&amp;spm_id_from=pageDriver&amp;vd_source=309d79182a0075ce59fbfe1a028281fd" target=_blank rel="noopener noreffer">https://www.bilibili.com/video/BV1G34y1t7Dy/?p=2&spm_id_from=pageDriver&vd_source=309d79182a0075ce59fbfe1a028281fd</a></p><p><a href=https://zhuanlan.zhihu.com/p/345597656 target=_blank rel="noopener noreffer">https://zhuanlan.zhihu.com/p/345597656</a></p></div><div class=sponsor><div class=sponsor-avatar><img class=lazyload data-src=/images/logo.png data-srcset="/images/logo.png, /images/logo.png 1.5x, /images/logo.png 2x" data-sizes=auto alt=/images/logo.png title=/images/logo.png></div><p class=sponsor-bio><em>如果你觉得这篇文章对你有所帮助，欢迎赞赏~</em></p><a href=/images/buymeacoffee.jpg title=Sponsor target=_blank class=sponsor-button rel="noopener noreferrer"><i class="far fa-heart fa-fw icon" style=color:#ec6cb9></i>
+<span>赞赏</span></a></div><div class=post-footer id=post-footer><div class=post-info><div class=post-info-line><div class=post-info-mod><span>更新于 2022-09-15</span></div><div class=post-info-license></div></div><div class=post-info-line><div class=post-info-md><span><a class=link-to-mardown href=/variational_inference/index.md target=_blank rel="noopener noreferrer">阅读原始文档</a>
+</span><span>|&nbsp;<a class=link-to-report href="https://github.com/dp0d/dp0d.github.io/issues/new?title=[bug]%20%E5%8F%98%E5%88%86%E6%8E%A8%E6%96%AD&body=|Field|Value|%0A|-|-|%0A|Title|%E5%8F%98%E5%88%86%E6%8E%A8%E6%96%AD|%0A|Url|https://dp0d.github.io/variational_inference/|%0A|Filename|https://github.com/dp0d/dp0d.github.io/posts/2022/Variational_Inference/index.md|" target=_blank rel="noopener noreferrer">报告问题</a></span></div><div class=post-info-share><span><a href=# onclick=return!1 title="分享到 Twitter" data-sharer=twitter data-url=https://dp0d.github.io/variational_inference/ data-title=变分推断><i class="fab fa-twitter fa-fw"></i></a><a href=# onclick=return!1 title="分享到 Facebook" data-sharer=facebook data-url=https://dp0d.github.io/variational_inference/><i class="fab fa-facebook-square fa-fw"></i></a><a href=# onclick=return!1 title="分享到 微博" data-sharer=weibo data-url=https://dp0d.github.io/variational_inference/ data-title=变分推断><i class="fab fa-weibo fa-fw"></i></a><a href=# onclick=return!1 title="分享到 Telegram" data-sharer=telegram data-url=https://dp0d.github.io/variational_inference/ data-title=变分推断 data-web><i class="fab fa-telegram-plane fa-fw"></i></a></span></div></div></div><div class=post-info-more><section class=post-tags></section><section><span><a href=javascript:void(0); onclick=window.history.back()>返回</a></span>&nbsp;|&nbsp;<span><a href=/>主页</a></span></section></div><div class=post-nav><a href=/pretrain_model/ class=prev rel=prev title=预训练模型的对比><i class="fas fa-angle-left fa-fw"></i>预训练模型的对比</a>
+<a href=/package_manager/ class=next rel=next title=Linux下的包管理工具介绍>Linux下的包管理工具介绍<i class="fas fa-angle-right fa-fw"></i></a></div></div><div id=comments><div id=giscus></div><noscript>Please enable JavaScript to view the comments powered by <a href=https://giscus.app/>giscus</a>.</noscript></div></article></div></main><footer class=footer><div class=footer-container><div class=footer-line><i class="far fa-copyright fa-fw"></i><span itemprop=copyrightYear>2022 - 2023</span><span class=author itemprop=copyrightHolder>&nbsp;<a href=https://github.com/dp0d target=_blank rel="noopener noreferrer">dp0d</a></span>&nbsp;|&nbsp;<span class=license><a rel="license external nofollow noopener noreffer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span><span class=icp-splitter>&nbsp;|&nbsp;</span><br class=icp-br><span class=icp><a href=https://beian.miit.gov.cn/ target=_blank>赣ICP备2022002313号-1</a></span></div><div class=footer-line></div><div class=footer-line></div></div><script>"serviceWorker"in navigator&&(navigator.serviceWorker.register("/sw.min.js",{scope:"/"}).then(function(){}),navigator.serviceWorker.ready.then(function(){}))</script></footer></div><div id=fixed-buttons><a href=#back-to-top id=back-to-top-button class=fixed-button title=回到顶部><i class="fas fa-arrow-up fa-fw"></i>
+</a><a href=# id=view-comments class=fixed-button title=查看评论><i class="fas fa-comment fa-fw"></i></a></div><div class=assets><script type=text/javascript src=/lib/object-fit-images/ofi.min.js></script><script type=text/javascript src=/lib/autocomplete/autocomplete.min.js></script><script type=text/javascript src=/lib/fuse/fuse.min.js></script><script type=text/javascript src=/lib/lazysizes/lazysizes.min.js></script><script type=text/javascript src=/lib/tablesort/tablesort.min.js></script><script type=text/javascript src=/lib/topbar/topbar.min.js></script><script type=text/javascript src=/lib/pjax/pjax.min.js></script><script type=text/javascript src=/js/theme.min.js defer></script></div><div class=pjax-assets><script type=text/javascript>window.config={code:{copyTitle:"复制到剪贴板",maxShownLines:100},comment:{giscus:{darkTheme:"dark",dataCategory:"General",dataCategoryId:"DIC_kwDOHB3uW84COZbL",dataEmitMetadata:"0",dataInputPosition:"top",dataLang:"zh-CN",dataMapping:"title",dataReactionsEnabled:"1",dataRepo:"dp0d/dp0d.github.io",dataRepoId:"R_kgDOHB3uWw",lightTheme:"light"}},data:{"id-1":`graph LR
+
+A[第一种分类]-->A1("参数化方法（parametric），参数固定")
+A[第一种分类]-->A2("非参数化方法（Nonparametric），模型的参数随着训练数据而变化，如最近邻方法，参数量与近邻数量相关。")
 
 
-<h2 id="参考资料" class="headerLink">
-    <a href="#%e5%8f%82%e8%80%83%e8%b5%84%e6%96%99" class="header-mark"></a>参考资料</h2><p><a href="https://www.bilibili.com/video/BV1DW41167vr?p=1&amp;vd_source=309d79182a0075ce59fbfe1a028281fd" target="_blank" rel="noopener noreffer">https://www.bilibili.com/video/BV1DW41167vr?p=1&vd_source=309d79182a0075ce59fbfe1a028281fd</a></p>
-<p><a href="https://www.bilibili.com/video/BV1G34y1t7Dy/?p=2&amp;spm_id_from=pageDriver&amp;vd_source=309d79182a0075ce59fbfe1a028281fd" target="_blank" rel="noopener noreffer">https://www.bilibili.com/video/BV1G34y1t7Dy/?p=2&spm_id_from=pageDriver&vd_source=309d79182a0075ce59fbfe1a028281fd</a></p>
-<p><a href="https://zhuanlan.zhihu.com/p/345597656" target="_blank" rel="noopener noreffer">https://zhuanlan.zhihu.com/p/345597656</a></p>
-</div>
+B[第二种分类]-->B1("判别模型（Discriminate Models），不管x，只关注目标y")
+B[第二种分类]-->B2("生成模型（Generate Models），假设x服从p（x）,是从其生成（采样）出来的，关注x携带的信息")
 
-        <div class="sponsor">
-        <div class="sponsor-avatar"><img
-        class="lazyload"
-        data-src="/images/logo.png"
-        data-srcset="/images/logo.png, /images/logo.png 1.5x, /images/logo.png 2x"
-        data-sizes="auto"
-        alt="/images/logo.png"
-        title="/images/logo.png"></div><p class="sponsor-bio"><em>如果你觉得这篇文章对你有所帮助，欢迎赞赏~</em></p><a href="/images/buymeacoffee.jpg" title="Sponsor" target="_blank" class="sponsor-button" rel="noopener noreferrer">
-                <i class="far fa-heart fa-fw icon" style="color: #ec6cb9;"></i>
-                <span>赞赏</span>
-            </a></div><div class="post-footer" id="post-footer">
-    <div class="post-info">
-        <div class="post-info-line">
-            <div class="post-info-mod">
-                <span>更新于 2022-09-15</span>
-            </div>
-            <div class="post-info-license"></div>
-        </div>
-        <div class="post-info-line">
-            <div class="post-info-md"><span><a class="link-to-mardown" href=/variational_inference/index.md target="_blank" rel="noopener noreferrer">阅读原始文档</a>
-                    </span><span>|&nbsp;<a class="link-to-report" href=https://github.com/dp0d/dp0d.github.io/issues/new?title=[bug]%20%E5%8F%98%E5%88%86%E6%8E%A8%E6%96%AD&body=|Field|Value|%0A|-|-|%0A|Title|%E5%8F%98%E5%88%86%E6%8E%A8%E6%96%AD|%0A|Url|https://dp0d.github.io/variational_inference/|%0A|Filename|https://github.com/dp0d/dp0d.github.io/posts/2022/Variational_Inference/index.md| target="_blank" rel="noopener noreferrer">报告问题</a>
-                    </span></div>
-            <div class="post-info-share">
-                <span><a href="#" onclick="return false;" title="分享到 Twitter" data-sharer="twitter" data-url="https://dp0d.github.io/variational_inference/" data-title="变分推断"><i class="fab fa-twitter fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Facebook" data-sharer="facebook" data-url="https://dp0d.github.io/variational_inference/"><i class="fab fa-facebook-square fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 微博" data-sharer="weibo" data-url="https://dp0d.github.io/variational_inference/" data-title="变分推断"><i class="fab fa-weibo fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Telegram" data-sharer="telegram" data-url="https://dp0d.github.io/variational_inference/" data-title="变分推断" data-web><i class="fab fa-telegram-plane fa-fw"></i></a></span>
-            </div>
-        </div>
-    </div>
+C[第三种分类]-->C1("频率派（Frequency），最小二乘估计，最大似然估计，用数据估计模型参数，p(x|a)，a是一个未知的常数，是一个优化问题")
+C[第三种分类]-->C2("贝叶斯派（Bayesian）,将p(x|a)里的a看做随机变量，a~p(a),需要求的是后验p(a|x)=p(x|a)p(a)/p(x)，是一个积分问题")`,"id-2":`graph LR
 
-    <div class="post-info-more">
-        <section class="post-tags"></section>
-        <section>
-            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
-        </section>
-    </div>
+A[inference]-->A1(精确推断)
+A-->A2(近似推断)
+A2-->A21(确定性近似)-->A211("变分推断（Variational Inference）")
+A2-->A22(随机近似)-->A221("蒙特卡洛采样（MCMC），吉布斯采样")`,"id-3":`graph TB
+z--"生成(Decoder)  p(x|z,#theta;)"-->x
+x--"推断(Encoder)  p(z|x,#phi;)"-->z`,"id-4":`graph LR
 
-    <div class="post-nav"><a href="/pretrain_model/" class="prev" rel="prev" title="预训练模型的对比"><i class="fas fa-angle-left fa-fw"></i>预训练模型的对比</a>
-            <a href="/package_manager/" class="next" rel="next" title="Linux下的包管理工具介绍">Linux下的包管理工具介绍<i class="fas fa-angle-right fa-fw"></i></a></div>
-</div>
-<div id="comments"><div id="giscus"></div><noscript>
-                Please enable JavaScript to view the comments powered by <a href="https://giscus.app/">giscus</a>.
-            </noscript></div></article></div>
-        </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2022 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/dp0d" target="_blank" rel="noopener noreferrer">dp0d</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
-                    <span class="icp"><a href="https://beian.miit.gov.cn/" target="_blank">赣ICP备2022002313号-1</a></span></div>
-            <div class="footer-line"></div>
-            <div class="footer-line">
-            </div>
-        </div><script>
-                    if('serviceWorker' in navigator) {
-                        navigator.serviceWorker
-                            .register('/sw.min.js', { scope: '/' })
-                            .then(function(registration) {
-                            });
-                
-                        navigator.serviceWorker
-                            .ready
-                            .then(function(registration) {
-                            });
-                    }
-                </script></footer></div>
-
-    <div id="fixed-buttons"><a href="#back-to-top" id="back-to-top-button" class="fixed-button" title="回到顶部">
-            <i class="fas fa-arrow-up fa-fw"></i>
-        </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
-            <i class="fas fa-comment fa-fw"></i>
-        </a>
-    </div><div class="assets"><script type="text/javascript" src="/lib/object-fit-images/ofi.min.js"></script><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/fuse/fuse.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/tablesort/tablesort.min.js"></script><script type="text/javascript" src="/lib/topbar/topbar.min.js"></script><script type="text/javascript" src="/lib/pjax/pjax.min.js"></script><script type="text/javascript" src="/js/theme.min.js" defer></script></div>
-
-<div class="pjax-assets"><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":100},"comment":{"giscus":{"darkTheme":"dark","dataCategory":"General","dataCategoryId":"DIC_kwDOHB3uW84COZbL","dataEmitMetadata":"0","dataInputPosition":"top","dataLang":"zh-CN","dataMapping":"title","dataReactionsEnabled":"1","dataRepo":"dp0d/dp0d.github.io","dataRepoId":"R_kgDOHB3uWw","lightTheme":"light"}},"data":{"id-1":"graph LR\n\nA[第一种分类]--\u003eA1(\"参数化方法（parametric），参数固定\")\nA[第一种分类]--\u003eA2(\"非参数化方法（Nonparametric），模型的参数随着训练数据而变化，如最近邻方法，参数量与近邻数量相关。\")\n\n\nB[第二种分类]--\u003eB1(\"判别模型（Discriminate Models），不管x，只关注目标y\")\nB[第二种分类]--\u003eB2(\"生成模型（Generate Models），假设x服从p（x）,是从其生成（采样）出来的，关注x携带的信息\")\n\nC[第三种分类]--\u003eC1(\"频率派（Frequency），最小二乘估计，最大似然估计，用数据估计模型参数，p(x|a)，a是一个未知的常数，是一个优化问题\")\nC[第三种分类]--\u003eC2(\"贝叶斯派（Bayesian）,将p(x|a)里的a看做随机变量，a~p(a),需要求的是后验p(a|x)=p(x|a)p(a)/p(x)，是一个积分问题\")","id-2":"graph LR\n\nA[inference]--\u003eA1(精确推断)\nA--\u003eA2(近似推断)\nA2--\u003eA21(确定性近似)--\u003eA211(\"变分推断（Variational Inference）\")\nA2--\u003eA22(随机近似)--\u003eA221(\"蒙特卡洛采样（MCMC），吉布斯采样\")","id-3":"graph TB\nz--\"生成(Decoder)  p(x|z,#theta;)\"--\u003ex\nx--\"推断(Encoder)  p(z|x,#phi;)\"--\u003ez","id-4":"graph LR\n\nA(x)--\u003eNN[NN*]--\u003eU(\"#mu;\")\nU--\u003eZ(z)\nNN--\u003eS(\"#sum;\")\nS--\u003eD((\"·\"))\nE(\"#epsilon;\")--\u003eD\nD--\u003eZ"},"lightGallery":{"actualSize":false,"exThumbImage":"data-thumbnail","hideBarsDelay":2000,"selector":".lightgallery","speed":400,"thumbContHeight":80,"thumbWidth":80,"thumbnail":true},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"mermaid":true,"search":{"distance":100,"findAllMatches":false,"fuseIndexURL":"/index.json","highlightTag":"em","ignoreFieldNorm":false,"ignoreLocation":true,"isCaseSensitive":false,"location":0,"maxResultLength":10,"minMatchCharLength":2,"noResultsFound":"没有找到结果","snippetLength":50,"threshold":0.1,"type":"fuse","useExtendedSearch":false},"sharerjs":true,"table":{"sort":true},"twemoji":true};</script><script type="text/javascript" src="/js/giscus.min.js" defer></script><script type="text/javascript" src="/lib/twemoji/twemoji.min.js" defer></script><script type="text/javascript" src="/js/twemoji.min.js" defer></script><script type="text/javascript" src="/lib/lightgallery/lightgallery.min.js"></script><script type="text/javascript" src="/lib/lightgallery/lg-thumbnail.min.js"></script><script type="text/javascript" src="/lib/lightgallery/lg-zoom.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js" defer></script><script type="text/javascript" src="/lib/katex/auto-render.min.js" defer></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js" defer></script><script type="text/javascript" src="/lib/katex/mhchem.min.js" defer></script><script type="text/javascript" src="/js/katex.min.js" defer></script><script type="text/javascript" src="/lib/mermaid/mermaid.min.js" defer></script><script type="text/javascript" src="/js/mermaid.min.js" defer></script><link rel="stylesheet" href="/lib/lightgallery/lightgallery.min.css"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/katex/copy-tex.min.css">
-        <noscript><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"></noscript><link rel="stylesheet" href="/lib/mermaid/mermaid.min.css"></div>
-</body>
-
-</html>
+A(x)-->NN[NN*]-->U("#mu;")
+U-->Z(z)
+NN-->S("#sum;")
+S-->D(("·"))
+E("#epsilon;")-->D
+D-->Z`},lightGallery:{actualSize:!1,exThumbImage:"data-thumbnail",hideBarsDelay:2e3,selector:".lightgallery",speed:400,thumbContHeight:80,thumbWidth:80,thumbnail:!0},math:{delimiters:[{display:!0,left:"$$",right:"$$"},{display:!0,left:"\\[",right:"\\]"},{display:!1,left:"$",right:"$"},{display:!1,left:"\\(",right:"\\)"}],strict:!1},mermaid:!0,search:{distance:100,findAllMatches:!1,fuseIndexURL:"/index.json",highlightTag:"em",ignoreFieldNorm:!1,ignoreLocation:!0,isCaseSensitive:!1,location:0,maxResultLength:10,minMatchCharLength:2,noResultsFound:"没有找到结果",snippetLength:50,threshold:.1,type:"fuse",useExtendedSearch:!1},sharerjs:!0,table:{sort:!0},twemoji:!0}</script><script type=text/javascript src=/js/giscus.min.js defer></script><script type=text/javascript src=/lib/twemoji/twemoji.min.js defer></script><script type=text/javascript src=/js/twemoji.min.js defer></script><script type=text/javascript src=/lib/lightgallery/lightgallery.min.js></script><script type=text/javascript src=/lib/lightgallery/lg-thumbnail.min.js></script><script type=text/javascript src=/lib/lightgallery/lg-zoom.min.js></script><script type=text/javascript src=/lib/clipboard/clipboard.min.js></script><script type=text/javascript src=/lib/sharer/sharer.min.js></script><script type=text/javascript src=/lib/katex/katex.min.js defer></script><script type=text/javascript src=/lib/katex/auto-render.min.js defer></script><script type=text/javascript src=/lib/katex/copy-tex.min.js defer></script><script type=text/javascript src=/lib/katex/mhchem.min.js defer></script><script type=text/javascript src=/js/katex.min.js defer></script><script type=text/javascript src=/lib/mermaid/mermaid.min.js defer></script><script type=text/javascript src=/js/mermaid.min.js defer></script><link rel=stylesheet href=/lib/lightgallery/lightgallery.min.css><link rel=stylesheet href=/lib/katex/katex.min.css><link rel=preload as=style onload='this.onload=null,this.rel="stylesheet"' href=/lib/katex/copy-tex.min.css><noscript><link rel=stylesheet href=/lib/katex/copy-tex.min.css></noscript><link rel=stylesheet href=/lib/mermaid/mermaid.min.css></div></body></html>

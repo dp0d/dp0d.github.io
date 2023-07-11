@@ -1,500 +1,221 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="robots" content="noodp" />
-    <title class="pjax-title">Pyecharts的简单使用 - dp0d&#39;s blog</title><meta name="Description" content="dp0d&#39;s blog,where to share life as well as technology of nlp."><meta property="og:title" content="Pyecharts的简单使用" />
-<meta property="og:description" content="简介pyecharts 的呈现十分美观，尽量搭配jupyternotebook使用，jupyterlab上的显示尚有瑕疵。在使用中，可以将ju" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://dp0d.github.io/pyecharts/" /><meta property="og:image" content="https://dp0d.github.io/images/logo.png"/><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2022-07-08T09:29:45+08:00" />
-<meta property="article:modified_time" content="2022-07-08T09:29:45+08:00" /><meta property="og:site_name" content="dp0d&#39;s blog" />
-<meta property="og:see_also" content="https://dp0d.github.io/kfold_cross_validation/" /><meta property="og:see_also" content="https://dp0d.github.io/pandas/" />
-
-<meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:image" content="https://dp0d.github.io/images/logo.png"/>
-
-<meta name="twitter:title" content="Pyecharts的简单使用"/>
-<meta name="twitter:description" content="简介pyecharts 的呈现十分美观，尽量搭配jupyternotebook使用，jupyterlab上的显示尚有瑕疵。在使用中，可以将ju"/>
-<meta name="application-name" content="dp0d&#39;s blog">
-<meta name="apple-mobile-web-app-title" content="dp0d&#39;s blog">
-
-<meta name="theme-color" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://dp0d.github.io/pyecharts/" /><link rel="prev" href="https://dp0d.github.io/bravo_processbar/" /><link rel="next" href="https://dp0d.github.io/tensor/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/fontawesome-free/all.min.css">
-        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/animate/animate.min.css">
-        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript>
-    
-    
-    
-    <script type="application/ld+json">
-    {
-        "@context": "http://schema.org",
-        "@type": "BlogPosting",
-        "headline": "Pyecharts的简单使用",
-        "inLanguage": "zh-CN",
-        "mainEntityOfPage": {
-            "@type": "WebPage",
-            "@id": "https:\/\/dp0d.github.io\/pyecharts\/"
-        },"image": ["https:\/\/dp0d.github.io\/images\/logo.png"],"genre": "posts","keywords": "py","wordcount":  748 ,
-        "url": "https:\/\/dp0d.github.io\/pyecharts\/","datePublished": "2022-07-08T09:29:45+08:00","dateModified": "2022-07-08T09:29:45+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
-            "@type": "Organization",
-            "name": "dp0d","logo": "https:\/\/dp0d.github.io\/images\/logo.png"},"author": {
-                "@type": "Person",
-                "name": "dp0d"
-            },"description": ""
-    }
-    </script></head>
-
-<body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">
-        function setTheme(theme) {document.body.setAttribute('theme', theme);}
-        function saveTheme(theme) {window.localStorage && localStorage.setItem('theme', theme);}
-        function getMeta(metaName) {const metas = document.getElementsByTagName('meta'); for (let i = 0; i < metas.length; i++) if (metas[i].getAttribute('name') === metaName) return metas[i]; return '';}
-        if (window.localStorage && localStorage.getItem('theme')) {let theme = localStorage.getItem('theme');theme === 'light' || theme === 'dark' || theme === 'black' ? setTheme(theme) : (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light')); } else { if ('auto' === 'light' || 'auto' === 'dark' || 'auto' === 'black') setTheme('auto'), saveTheme('auto'); else saveTheme('auto'), window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light');}
-        let metaColors = {'light': '#f8f8f8','dark': '#252627','black': '#000000'}
-        getMeta('theme-color').content = metaColors[document.body.getAttribute('theme')];
-    </script>
-    <div id="back-to-top"></div>
-    <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
-    <div class="header-wrapper">
-        <div class="header-title">
-            <a href="/" title="dp0d&#39;s blog"><span class="header-title-pre"><i class='far fa-edit fa-fw'></i></span>Natural Language Processing</a>
-        </div>
-        <div class="menu">
-            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/charge/"> 充电 </a><a class="menu-item" href="/friends/"> 朋友萌 </a><a class="menu-item" href="/collection/"> 收藏 </a><a class="menu-item" href="/copyright/"> 版权 </a><a class="menu-item" href="/about/"> 关于我 </a><a class="menu-item" href="https://github.com/dp0d" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
-                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
-                        <a href="#" onclick="return false;" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
-                            <i class="fas fa-search fa-fw"></i>
-                        </a>
-                        <a href="#" onclick="return false;" class="search-button search-clear" id="search-clear-desktop" title="清空">
-                            <i class="fas fa-times-circle fa-fw"></i>
-                        </a>
-                        <span class="search-button search-loading" id="search-loading-desktop">
-                            <i class="fas fa-spinner fa-fw fa-spin"></i>
-                        </span>
-                    </span><a href="#" onclick="return false;" class="menu-item theme-select" title="切换主题">
-                    <i class="fas fa-adjust fa-fw"></i>
-                    <select class="color-theme-select" id="theme-select-desktop" title="切换主题">
-                        <option value="light">浅色</option>
-                        <option value="dark">深色</option>
-                        <option value="black">黑色</option>
-                        <option value="auto">跟随系统</option>
-                    </select>
-                </a></div>
-        </div>
-    </div>
-</header><header class="mobile" id="header-mobile">
-    <div class="header-container">
-        <div class="header-wrapper">
-            <div class="header-title">
-                <a href="/" title="dp0d&#39;s blog"><span class="header-title-pre"><i class='far fa-edit fa-fw'></i></span>Natural Language Processing</a>
-            </div>
-            <div class="menu-toggle" id="menu-toggle-mobile">
-                <span></span><span></span><span></span>
-            </div>
-        </div>
-        <div class="menu" id="menu-mobile"><div class="search-wrapper">
-                    <div class="search mobile" id="search-mobile">
-                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
-                        <a href="#" onclick="return false;" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
-                            <i class="fas fa-search fa-fw"></i>
-                        </a>
-                        <a href="#" onclick="return false;" class="search-button search-clear" id="search-clear-mobile" title="清空">
-                            <i class="fas fa-times-circle fa-fw"></i>
-                        </a>
-                        <span class="search-button search-loading" id="search-loading-mobile">
-                            <i class="fas fa-spinner fa-fw fa-spin"></i>
-                        </span>
-                    </div>
-                    <a href="#" onclick="return false;" class="search-cancel" id="search-cancel-mobile">
-                        取消
-                    </a>
-                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/charge/" title="">充电</a><a class="menu-item" href="/friends/" title="">朋友萌</a><a class="menu-item" href="/collection/" title="">收藏</a><a class="menu-item" href="/copyright/" title="">版权</a><a class="menu-item" href="/about/" title="">关于我</a><a class="menu-item" href="https://github.com/dp0d" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i></a><a href="#" onclick="return false;" class="menu-item theme-select" title="切换主题">
-                <i class="fas fa-adjust fa-fw"></i>
-                <select class="color-theme-select" id="theme-select-mobile" title="切换主题">
-                    <option value="light">浅色</option>
-                    <option value="dark">深色</option>
-                    <option value="black">黑色</option>
-                    <option value="auto">跟随系统</option>
-                </select>
-            </a></div>
-    </div>
-</header>
-<div class="search-dropdown desktop">
-    <div id="search-dropdown-desktop"></div>
-</div>
-<div class="search-dropdown mobile">
-    <div id="search-dropdown-mobile"></div>
-</div>
-<main class="main">
-            <div class="container"><div class="toc" id="toc-auto">
-        <h2 class="toc-title">目录</h2>
-        <div class="toc-content" id="toc-content-auto"><nav id="TableOfContents">
-  <ul>
-    <li><a href="#简介">简介</a></li>
-    <li><a href="#使用">使用</a></li>
-    <li><a href="#图例基于pyecharts191">图例(基于pyecharts1.9.1)</a>
-      <ul>
-        <li><a href="#直方图">直方图</a></li>
-        <li><a href="#折线图">折线图</a></li>
-        <li><a href="#散点图">散点图</a></li>
-      </ul>
-    </li>
-  </ul>
-</nav></div>
-    </div><script>document.getElementsByTagName("main")[0].setAttribute("pageStyle", "normal")</script><script>document.getElementsByTagName("main")[0].setAttribute("autoTOC", "true")</script><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Pyecharts的简单使用</h1><h2 class="single-subtitle">pyecharts是echarts的python调用，由开源爱好者维护</h2><div class="post-meta">
-            <div class="post-meta-line">
-                <span class="post-author"><i class="author fas fa-user-circle fa-fw"></i><a href="https://github.com/dp0d" title="Author" target="_blank" rel="noopener noreffer author" class="author">dp0d</a>
-                </span>&nbsp;<span class="post-category">收录于 </span>&nbsp;<span class="post-category">类别 <a href="/categories/tutorial/"><i class="far fa-folder fa-fw"></i>教程</a></span>&nbsp;<span class="post-category">和</span>&nbsp;<span class="post-series">系列 <a href="/series/python_data_analysis/"><i class="far fa-list-alt fa-fw"></i>Python数据分析</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-07-08">2022-07-08</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2022-07-08">2022-07-08</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 748 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 2 分钟&nbsp;</div>
-        </div><div class="details toc" id="toc-static"  kept="">
-                <div class="details-summary toc-title">
-                    <span>目录</span>
-                    <span><i class="details-icon fas fa-angle-right"></i></span>
-                </div>
-                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
-  <ul>
-    <li><a href="#简介">简介</a></li>
-    <li><a href="#使用">使用</a></li>
-    <li><a href="#图例基于pyecharts191">图例(基于pyecharts1.9.1)</a>
-      <ul>
-        <li><a href="#直方图">直方图</a></li>
-        <li><a href="#折线图">折线图</a></li>
-        <li><a href="#散点图">散点图</a></li>
-      </ul>
-    </li>
-  </ul>
-</nav></div>
-            </div><div class="content" id="content"><h2 id="简介" class="headerLink">
-    <a href="#%e7%ae%80%e4%bb%8b" class="header-mark"></a>简介</h2><p>pyecharts 的呈现十分美观，尽量搭配jupyternotebook使用，jupyterlab上的显示尚有瑕疵。在使用中，可以将jupyternotebook转为html来静态保存pyecharts的图像，做可视化分析，神秘代码如下</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">jupyter nbconvert --to html --no-input data_analy_4.ipynb
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>会生成一个data_analy_4.html，它里面仅仅包含md和输出部分，code部分会被隐藏。</p>
-<h2 id="使用" class="headerLink">
-    <a href="#%e4%bd%bf%e7%94%a8" class="header-mark"></a>使用</h2><p>作为python的第三方库使用即可，pip install pyecharts</p>
-<h2 id="图例基于pyecharts191" class="headerLink">
-    <a href="#%e5%9b%be%e4%be%8b%e5%9f%ba%e4%ba%8epyecharts191" class="header-mark"></a>图例(基于pyecharts1.9.1)</h2><div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># =============</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># Library</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># =============</span>
-</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">pyecharts.charts</span> <span class="kn">import</span> <span class="n">Bar</span><span class="p">,</span><span class="n">Line</span><span class="p">,</span><span class="n">Tab</span><span class="p">,</span> <span class="n">Grid</span><span class="p">,</span><span class="n">Scatter</span>
-</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">pyecharts</span> <span class="kn">import</span> <span class="n">options</span> <span class="k">as</span> <span class="n">opts</span>
-</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">pyecharts.globals</span> <span class="kn">import</span> <span class="n">ThemeType</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h3 id="直方图" class="headerLink">
-    <a href="#%e7%9b%b4%e6%96%b9%e5%9b%be" class="header-mark"></a>直方图</h3><img src="MD_img/image-20220708100653412.png" alt="image-20220708100653412" style="zoom: 50%;" />
-<blockquote>
-<p>神秘代码</p>
-</blockquote>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">x_data</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">]</span>
-</span></span><span class="line"><span class="cl"><span class="n">y_data</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.804</span><span class="p">,</span> <span class="mf">0.882</span><span class="p">,</span> <span class="mf">0.906</span><span class="p">,</span> <span class="mf">0.934</span><span class="p">,</span> <span class="mf">0.958</span><span class="p">,</span> <span class="mf">0.964</span><span class="p">,</span> <span class="mf">0.972</span><span class="p">,</span> <span class="mf">0.976</span><span class="p">,</span> <span class="mf">0.976</span><span class="p">,</span> <span class="mf">0.976</span><span class="p">]</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">bar</span> <span class="o">=</span> <span class="p">(</span>
-</span></span><span class="line"><span class="cl">    <span class="n">Bar</span><span class="p">(</span><span class="n">init_opts</span><span class="o">=</span><span class="n">opts</span><span class="o">.</span><span class="n">InitOpts</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="s1">&#39;400px&#39;</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="s1">&#39;400px&#39;</span><span class="p">,</span> <span class="n">theme</span><span class="o">=</span><span class="n">ThemeType</span><span class="o">.</span><span class="n">DARK</span><span class="p">))</span>
-</span></span><span class="line"><span class="cl">    <span class="o">.</span><span class="n">add_xaxis</span><span class="p">(</span><span class="n">x_data</span><span class="p">,)</span>
-</span></span><span class="line"><span class="cl">    <span class="o">.</span><span class="n">add_yaxis</span><span class="p">(</span><span class="s2">&#34;top_k准确率&#34;</span><span class="p">,</span> <span class="n">y_data</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">    <span class="o">.</span><span class="n">set_global_opts</span><span class="p">(</span>
-</span></span><span class="line"><span class="cl">        <span class="n">xaxis_opts</span><span class="o">=</span><span class="n">opts</span><span class="o">.</span><span class="n">AxisOpts</span><span class="p">(</span>
-</span></span><span class="line"><span class="cl">                        <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Top_K&#39;</span>
-</span></span><span class="line"><span class="cl">                    <span class="p">),</span>
-</span></span><span class="line"><span class="cl">        <span class="n">yaxis_opts</span><span class="o">=</span><span class="n">opts</span><span class="o">.</span><span class="n">AxisOpts</span><span class="p">(</span>
-</span></span><span class="line"><span class="cl">                        <span class="n">name</span><span class="o">=</span><span class="s1">&#39;ACC&#39;</span>
-</span></span><span class="line"><span class="cl">                    <span class="p">),</span>
-</span></span><span class="line"><span class="cl">    <span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="p">)</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">bar</span><span class="o">.</span><span class="n">render_notebook</span><span class="p">()</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h3 id="折线图" class="headerLink">
-    <a href="#%e6%8a%98%e7%ba%bf%e5%9b%be" class="header-mark"></a>折线图</h3><img src="MD_img/image-20220708100754323.png" alt="image-20220708100754323" style="zoom: 67%;" />
-<blockquote>
-<p>神秘代码</p>
-</blockquote>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">x_data</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">]</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># 需要注意pyecharts的折线图中x轴的数据需要转为str类型，否则图像会出现偏移</span>
-</span></span><span class="line"><span class="cl"><span class="n">x_data</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">x_data</span><span class="p">]</span>
-</span></span><span class="line"><span class="cl"><span class="n">y_data</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.804</span><span class="p">,</span> <span class="mf">0.882</span><span class="p">,</span> <span class="mf">0.906</span><span class="p">,</span> <span class="mf">0.934</span><span class="p">,</span> <span class="mf">0.958</span><span class="p">,</span> <span class="mf">0.964</span><span class="p">,</span> <span class="mf">0.972</span><span class="p">,</span> <span class="mf">0.976</span><span class="p">,</span> <span class="mf">0.976</span><span class="p">,</span> <span class="mf">0.976</span><span class="p">]</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">line</span> <span class="o">=</span> <span class="p">(</span>
-</span></span><span class="line"><span class="cl">    <span class="n">Line</span><span class="p">(</span><span class="n">init_opts</span><span class="o">=</span><span class="n">opts</span><span class="o">.</span><span class="n">InitOpts</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="s1">&#39;400px&#39;</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="s1">&#39;400px&#39;</span><span class="p">,</span> <span class="n">theme</span><span class="o">=</span><span class="n">ThemeType</span><span class="o">.</span><span class="n">DARK</span><span class="p">))</span>
-</span></span><span class="line"><span class="cl">    <span class="o">.</span><span class="n">add_xaxis</span><span class="p">(</span><span class="n">x_data</span><span class="p">,)</span>
-</span></span><span class="line"><span class="cl">    <span class="o">.</span><span class="n">add_yaxis</span><span class="p">(</span><span class="s2">&#34;top_k准确率&#34;</span><span class="p">,</span> <span class="n">y_data</span><span class="p">,</span> <span class="n">is_smooth</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">is_symbol_show</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">    <span class="o">.</span><span class="n">set_global_opts</span><span class="p">(</span>
-</span></span><span class="line"><span class="cl">        <span class="n">xaxis_opts</span><span class="o">=</span><span class="n">opts</span><span class="o">.</span><span class="n">AxisOpts</span><span class="p">(</span>
-</span></span><span class="line"><span class="cl">                        <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Top_K&#39;</span>
-</span></span><span class="line"><span class="cl">                    <span class="p">),</span>
-</span></span><span class="line"><span class="cl">        <span class="n">yaxis_opts</span><span class="o">=</span><span class="n">opts</span><span class="o">.</span><span class="n">AxisOpts</span><span class="p">(</span>
-</span></span><span class="line"><span class="cl">                        <span class="n">name</span><span class="o">=</span><span class="s1">&#39;ACC&#39;</span>
-</span></span><span class="line"><span class="cl">                    <span class="p">),</span>
-</span></span><span class="line"><span class="cl">    <span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="p">)</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">line</span><span class="o">.</span><span class="n">render_notebook</span><span class="p">()</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h3 id="散点图" class="headerLink">
-    <a href="#%e6%95%a3%e7%82%b9%e5%9b%be" class="header-mark"></a>散点图</h3><img src="MD_img/image-20220708101904017.png" alt="image-20220708101904017" style="zoom:67%;" />
-<blockquote>
-<p>神秘代码</p>
-</blockquote>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span><span class="lnt">25
-</span><span class="lnt">26
-</span><span class="lnt">27
-</span><span class="lnt">28
-</span><span class="lnt">29
-</span><span class="lnt">30
-</span><span class="lnt">31
-</span><span class="lnt">32
-</span><span class="lnt">33
-</span><span class="lnt">34
-</span><span class="lnt">35
-</span><span class="lnt">36
-</span><span class="lnt">37
-</span><span class="lnt">38
-</span><span class="lnt">39
-</span><span class="lnt">40
-</span><span class="lnt">41
-</span><span class="lnt">42
-</span><span class="lnt">43
-</span><span class="lnt">44
-</span><span class="lnt">45
-</span><span class="lnt">46
-</span><span class="lnt">47
-</span><span class="lnt">48
-</span><span class="lnt">49
-</span><span class="lnt">50
-</span><span class="lnt">51
-</span><span class="lnt">52
-</span><span class="lnt">53
-</span><span class="lnt">54
-</span><span class="lnt">55
-</span><span class="lnt">56
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">x_lis</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">]</span>
-</span></span><span class="line"><span class="cl"><span class="n">y_lis</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># 设置散点图</span>
-</span></span><span class="line"><span class="cl"><span class="n">s</span><span class="o">=</span><span class="n">Scatter</span><span class="p">(</span><span class="n">init_opts</span><span class="o">=</span><span class="n">opts</span><span class="o">.</span><span class="n">InitOpts</span><span class="p">(</span>
-</span></span><span class="line"><span class="cl">                <span class="n">width</span><span class="o">=</span><span class="s2">&#34;300px&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">                <span class="n">height</span><span class="o">=</span><span class="s2">&#34;300px&#34;</span>
-</span></span><span class="line"><span class="cl">                <span class="p">)</span>
-</span></span><span class="line"><span class="cl">         <span class="p">)</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">s</span><span class="o">.</span><span class="n">add_xaxis</span><span class="p">(</span><span class="n">x_lis</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="n">s</span><span class="o">.</span><span class="n">add_yaxis</span><span class="p">(</span><span class="s2">&#34;标签&#34;</span><span class="p">,</span><span class="n">y_lis</span><span class="p">,</span> <span class="n">label_opts</span><span class="o">=</span><span class="n">opts</span><span class="o">.</span><span class="n">LabelOpts</span><span class="p">(</span><span class="n">is_show</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># max_interval 指定坐标轴间隔</span>
-</span></span><span class="line"><span class="cl"><span class="n">s</span><span class="o">.</span><span class="n">set_global_opts</span><span class="p">(</span>
-</span></span><span class="line"><span class="cl">    <span class="n">title_opts</span><span class="o">=</span><span class="n">opts</span><span class="o">.</span><span class="n">TitleOpts</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&#34;散点图&#34;</span><span class="p">),</span>
-</span></span><span class="line"><span class="cl">    <span class="n">xaxis_opts</span><span class="o">=</span><span class="n">opts</span><span class="o">.</span><span class="n">AxisOpts</span><span class="p">(</span>
-</span></span><span class="line"><span class="cl">            <span class="n">type_</span><span class="o">=</span><span class="s1">&#39;value&#39;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">            <span class="n">splitline_opts</span><span class="o">=</span><span class="n">opts</span><span class="o">.</span><span class="n">SplitLineOpts</span><span class="p">(</span><span class="n">is_show</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
-</span></span><span class="line"><span class="cl">            <span class="n">max_interval</span><span class="o">=</span><span class="mi">1</span>
-</span></span><span class="line"><span class="cl">            
-</span></span><span class="line"><span class="cl">    <span class="p">),</span>
-</span></span><span class="line"><span class="cl">    <span class="n">yaxis_opts</span><span class="o">=</span><span class="n">opts</span><span class="o">.</span><span class="n">AxisOpts</span><span class="p">(</span>
-</span></span><span class="line"><span class="cl">            <span class="n">splitline_opts</span><span class="o">=</span><span class="n">opts</span><span class="o">.</span><span class="n">SplitLineOpts</span><span class="p">(</span><span class="n">is_show</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
-</span></span><span class="line"><span class="cl">            <span class="n">axistick_opts</span><span class="o">=</span><span class="n">opts</span><span class="o">.</span><span class="n">AxisTickOpts</span><span class="p">(</span><span class="n">is_show</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">length</span><span class="o">=</span><span class="mi">10</span><span class="p">),</span>
-</span></span><span class="line"><span class="cl">            <span class="n">max_interval</span><span class="o">=</span><span class="mi">1</span>
-</span></span><span class="line"><span class="cl">    <span class="p">),</span>
-</span></span><span class="line"><span class="cl"><span class="p">)</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># 设置参考线</span>
-</span></span><span class="line"><span class="cl"><span class="n">line1</span> <span class="o">=</span> <span class="p">(</span>
-</span></span><span class="line"><span class="cl">    <span class="n">Line</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">    <span class="o">.</span><span class="n">add_xaxis</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">])</span>
-</span></span><span class="line"><span class="cl">    <span class="o">.</span><span class="n">add_yaxis</span><span class="p">(</span>
-</span></span><span class="line"><span class="cl">        <span class="s2">&#34;&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">        <span class="nb">list</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">]),</span>
-</span></span><span class="line"><span class="cl">        <span class="n">label_opts</span><span class="o">=</span><span class="n">opts</span><span class="o">.</span><span class="n">LabelOpts</span><span class="p">(</span><span class="n">is_show</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
-</span></span><span class="line"><span class="cl">    <span class="p">)</span>
-</span></span><span class="line"><span class="cl">    <span class="o">.</span><span class="n">set_global_opts</span><span class="p">(</span>
-</span></span><span class="line"><span class="cl">        <span class="n">xaxis_opts</span><span class="o">=</span><span class="n">opts</span><span class="o">.</span><span class="n">AxisOpts</span><span class="p">(</span>
-</span></span><span class="line"><span class="cl">            <span class="n">type_</span><span class="o">=</span><span class="s1">&#39;value&#39;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">        <span class="p">)</span>
-</span></span><span class="line"><span class="cl">    <span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="p">)</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># 设置overlap</span>
-</span></span><span class="line"><span class="cl"><span class="n">overlap_1</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">overlap</span><span class="p">(</span><span class="n">line1</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="n">grid</span> <span class="o">=</span> <span class="p">(</span>
-</span></span><span class="line"><span class="cl">    <span class="n">Grid</span><span class="p">(</span><span class="n">init_opts</span><span class="o">=</span><span class="n">opts</span><span class="o">.</span><span class="n">InitOpts</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="s2">&#34;300px&#34;</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="s2">&#34;300px&#34;</span><span class="p">))</span>
-</span></span><span class="line"><span class="cl">    <span class="o">.</span><span class="n">add</span><span class="p">(</span>
-</span></span><span class="line"><span class="cl">        <span class="n">overlap_1</span><span class="p">,</span> <span class="n">grid_opts</span><span class="o">=</span><span class="n">opts</span><span class="o">.</span><span class="n">GridOpts</span><span class="p">(),</span> <span class="n">is_control_axis_index</span><span class="o">=</span><span class="kc">True</span>
-</span></span><span class="line"><span class="cl">    <span class="p">)</span>
-</span></span><span class="line"><span class="cl">    <span class="o">.</span><span class="n">render_notebook</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">    
-</span></span><span class="line"><span class="cl"><span class="p">)</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">grid</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>更多图例</p>
-<p><a href="https://pyecharts.org/#/" target="_blank" rel="noopener noreffer">https://pyecharts.org/#/</a></p>
-</div>
-
-        <div class="sponsor">
-        <div class="sponsor-avatar"><img
-        class="lazyload"
-        data-src="/images/logo.png"
-        data-srcset="/images/logo.png, /images/logo.png 1.5x, /images/logo.png 2x"
-        data-sizes="auto"
-        alt="/images/logo.png"
-        title="/images/logo.png"></div><p class="sponsor-bio"><em>如果你觉得这篇文章对你有所帮助，欢迎赞赏~</em></p><a href="/images/buymeacoffee.jpg" title="Sponsor" target="_blank" class="sponsor-button" rel="noopener noreferrer">
-                <i class="far fa-heart fa-fw icon" style="color: #ec6cb9;"></i>
-                <span>赞赏</span>
-            </a></div><div class="post-footer" id="post-footer">
-    <div class="post-info">
-        <div class="post-info-line">
-            <div class="post-info-mod">
-                <span>更新于 2022-07-08</span>
-            </div>
-            <div class="post-info-license"></div>
-        </div>
-        <div class="post-info-line">
-            <div class="post-info-md"><span><a class="link-to-mardown" href=/pyecharts/index.md target="_blank" rel="noopener noreferrer">阅读原始文档</a>
-                    </span><span>|&nbsp;<a class="link-to-report" href=https://github.com/dp0d/dp0d.github.io/issues/new?title=[bug]%20Pyecharts%E7%9A%84%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8&body=|Field|Value|%0A|-|-|%0A|Title|Pyecharts%E7%9A%84%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8|%0A|Url|https://dp0d.github.io/pyecharts/|%0A|Filename|https://github.com/dp0d/dp0d.github.io/posts/2022/pyecharts/index.md| target="_blank" rel="noopener noreferrer">报告问题</a>
-                    </span></div>
-            <div class="post-info-share">
-                <span><a href="#" onclick="return false;" title="分享到 Twitter" data-sharer="twitter" data-url="https://dp0d.github.io/pyecharts/" data-title="Pyecharts的简单使用" data-hashtags="py"><i class="fab fa-twitter fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Facebook" data-sharer="facebook" data-url="https://dp0d.github.io/pyecharts/" data-hashtag="py"><i class="fab fa-facebook-square fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 微博" data-sharer="weibo" data-url="https://dp0d.github.io/pyecharts/" data-title="Pyecharts的简单使用"><i class="fab fa-weibo fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Telegram" data-sharer="telegram" data-url="https://dp0d.github.io/pyecharts/" data-title="Pyecharts的简单使用" data-web><i class="fab fa-telegram-plane fa-fw"></i></a></span>
-            </div>
-        </div>
-    </div>
-
-    <div class="post-info-more">
-        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/py/">Python</a></section>
-        <section>
-            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
-        </section>
-    </div>
-
-    <div class="post-nav"><a href="/bravo_processbar/" class="prev" rel="prev" title="炫酷的processbar"><i class="fas fa-angle-left fa-fw"></i>炫酷的processbar</a>
-            <a href="/tensor/" class="next" rel="next" title="Tensor的简单使用">Tensor的简单使用<i class="fas fa-angle-right fa-fw"></i></a></div>
-</div>
-<div id="comments"><div id="giscus"></div><noscript>
-                Please enable JavaScript to view the comments powered by <a href="https://giscus.app/">giscus</a>.
-            </noscript></div></article></div>
-        </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2022 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/dp0d" target="_blank" rel="noopener noreferrer">dp0d</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
-                    <span class="icp"><a href="https://beian.miit.gov.cn/" target="_blank">赣ICP备2022002313号-1</a></span></div>
-            <div class="footer-line"></div>
-            <div class="footer-line">
-            </div>
-        </div><script>
-                    if('serviceWorker' in navigator) {
-                        navigator.serviceWorker
-                            .register('/sw.min.js', { scope: '/' })
-                            .then(function(registration) {
-                            });
-                
-                        navigator.serviceWorker
-                            .ready
-                            .then(function(registration) {
-                            });
-                    }
-                </script></footer></div>
-
-    <div id="fixed-buttons"><a href="#back-to-top" id="back-to-top-button" class="fixed-button" title="回到顶部">
-            <i class="fas fa-arrow-up fa-fw"></i>
-        </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
-            <i class="fas fa-comment fa-fw"></i>
-        </a>
-    </div><div class="assets"><script type="text/javascript" src="/lib/object-fit-images/ofi.min.js"></script><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/fuse/fuse.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/tablesort/tablesort.min.js"></script><script type="text/javascript" src="/lib/topbar/topbar.min.js"></script><script type="text/javascript" src="/lib/pjax/pjax.min.js"></script><script type="text/javascript" src="/js/theme.min.js" defer></script></div>
-
-<div class="pjax-assets"><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":100},"comment":{"giscus":{"darkTheme":"dark","dataCategory":"General","dataCategoryId":"DIC_kwDOHB3uW84COZbL","dataEmitMetadata":"0","dataInputPosition":"top","dataLang":"zh-CN","dataMapping":"title","dataReactionsEnabled":"1","dataRepo":"dp0d/dp0d.github.io","dataRepoId":"R_kgDOHB3uWw","lightTheme":"light"}},"lightGallery":{"actualSize":false,"exThumbImage":"data-thumbnail","hideBarsDelay":2000,"selector":".lightgallery","speed":400,"thumbContHeight":80,"thumbWidth":80,"thumbnail":true},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"distance":100,"findAllMatches":false,"fuseIndexURL":"/index.json","highlightTag":"em","ignoreFieldNorm":false,"ignoreLocation":true,"isCaseSensitive":false,"location":0,"maxResultLength":10,"minMatchCharLength":2,"noResultsFound":"没有找到结果","snippetLength":50,"threshold":0.1,"type":"fuse","useExtendedSearch":false},"sharerjs":true,"table":{"sort":true},"twemoji":true};</script><script type="text/javascript" src="/js/giscus.min.js" defer></script><script type="text/javascript" src="/lib/twemoji/twemoji.min.js" defer></script><script type="text/javascript" src="/js/twemoji.min.js" defer></script><script type="text/javascript" src="/lib/lightgallery/lightgallery.min.js"></script><script type="text/javascript" src="/lib/lightgallery/lg-thumbnail.min.js"></script><script type="text/javascript" src="/lib/lightgallery/lg-zoom.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js" defer></script><script type="text/javascript" src="/lib/katex/auto-render.min.js" defer></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js" defer></script><script type="text/javascript" src="/lib/katex/mhchem.min.js" defer></script><script type="text/javascript" src="/js/katex.min.js" defer></script><link rel="stylesheet" href="/lib/lightgallery/lightgallery.min.css"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/katex/copy-tex.min.css">
-        <noscript><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"></noscript></div>
-</body>
-
-</html>
+<!doctype html><html lang=zh-CN><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=robots content="noodp"><title class=pjax-title>Pyecharts的简单使用 - dp0d's blog</title><meta name=Description content="dp0d's blog,where to share life as well as technology of nlp."><meta property="og:title" content="Pyecharts的简单使用"><meta property="og:description" content="简介pyecharts 的呈现十分美观，尽量搭配jupyternotebook使用，jupyterlab上的显示尚有瑕疵。在使用中，可以将ju"><meta property="og:type" content="article"><meta property="og:url" content="https://dp0d.github.io/pyecharts/"><meta property="og:image" content="https://dp0d.github.io/images/logo.png"><meta property="article:section" content="posts"><meta property="article:published_time" content="2022-07-08T09:29:45+08:00"><meta property="article:modified_time" content="2022-07-08T09:29:45+08:00"><meta property="og:site_name" content="dp0d's blog"><meta property="og:see_also" content="https://dp0d.github.io/kfold_cross_validation/"><meta property="og:see_also" content="https://dp0d.github.io/pandas/"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://dp0d.github.io/images/logo.png"><meta name=twitter:title content="Pyecharts的简单使用"><meta name=twitter:description content="简介pyecharts 的呈现十分美观，尽量搭配jupyternotebook使用，jupyterlab上的显示尚有瑕疵。在使用中，可以将ju"><meta name=application-name content="dp0d's blog"><meta name=apple-mobile-web-app-title content="dp0d's blog"><meta name=theme-color content="#f8f8f8"><meta name=msapplication-TileColor content="#da532c"><link rel="shortcut icon" type=image/x-icon href=/favicon.ico><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://dp0d.github.io/pyecharts/><link rel=prev href=https://dp0d.github.io/bravo_processbar/><link rel=next href=https://dp0d.github.io/tensor/><link rel=stylesheet href=/lib/normalize/normalize.min.css><link rel=stylesheet href=/css/style.min.css><link rel=preload as=style onload='this.onload=null,this.rel="stylesheet"' href=/lib/fontawesome-free/all.min.css><noscript><link rel=stylesheet href=/lib/fontawesome-free/all.min.css></noscript><link rel=preload as=style onload='this.onload=null,this.rel="stylesheet"' href=/lib/animate/animate.min.css><noscript><link rel=stylesheet href=/lib/animate/animate.min.css></noscript><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"Pyecharts的简单使用","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/dp0d.github.io\/pyecharts\/"},"image":["https:\/\/dp0d.github.io\/images\/logo.png"],"genre":"posts","keywords":"py","wordcount":748,"url":"https:\/\/dp0d.github.io\/pyecharts\/","datePublished":"2022-07-08T09:29:45+08:00","dateModified":"2022-07-08T09:29:45+08:00","license":"This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher":{"@type":"Organization","name":"dp0d","logo":"https:\/\/dp0d.github.io\/images\/logo.png"},"author":{"@type":"Person","name":"dp0d"},"description":""}</script></head><body header-desktop=fixed header-mobile=auto><script type=text/javascript>function setTheme(e){document.body.setAttribute("theme",e)}function saveTheme(e){window.localStorage&&localStorage.setItem("theme",e)}function getMeta(e){const t=document.getElementsByTagName("meta");for(let n=0;n<t.length;n++)if(t[n].getAttribute("name")===e)return t[n];return""}if(window.localStorage&&localStorage.getItem("theme")){let e=localStorage.getItem("theme");e==="light"||e==="dark"||e==="black"?setTheme(e):setTheme(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")}else"auto"==="light"||"auto"==="dark"||"auto"==="black"?(setTheme("auto"),saveTheme("auto")):(saveTheme("auto"),setTheme(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"));let metaColors={light:"#f8f8f8",dark:"#252627",black:"#000000"};getMeta("theme-color").content=metaColors[document.body.getAttribute("theme")]</script><div id=back-to-top></div><div id=mask></div><div class=wrapper><header class=desktop id=header-desktop><div class=header-wrapper><div class=header-title><a href=/ title="dp0d's blog"><span class=header-title-pre><i class='far fa-edit fa-fw'></i></span>Natural Language Processing</a></div><div class=menu><div class=menu-inner><a class=menu-item href=/posts/>文章 </a><a class=menu-item href=/tags/>标签 </a><a class=menu-item href=/categories/>分类 </a><a class=menu-item href=/charge/>充电 </a><a class=menu-item href=/friends/>朋友萌 </a><a class=menu-item href=/collection/>收藏 </a><a class=menu-item href=/copyright/>版权 </a><a class=menu-item href=/about/>关于我 </a><a class=menu-item href=https://github.com/dp0d title=GitHub rel="noopener noreffer" target=_blank><i class='fab fa-github fa-fw'></i> </a><span class="menu-item delimiter"></span><span class="menu-item search" id=search-desktop>
+<input type=text placeholder=搜索文章标题或内容... id=search-input-desktop>
+<a href=# onclick=return!1 class="search-button search-toggle" id=search-toggle-desktop title=搜索><i class="fas fa-search fa-fw"></i></a>
+<a href=# onclick=return!1 class="search-button search-clear" id=search-clear-desktop title=清空><i class="fas fa-times-circle fa-fw"></i></a>
+<span class="search-button search-loading" id=search-loading-desktop><i class="fas fa-spinner fa-fw fa-spin"></i></span>
+</span><a href=# onclick=return!1 class="menu-item theme-select" title=切换主题><i class="fas fa-adjust fa-fw"></i>
+<select class=color-theme-select id=theme-select-desktop title=切换主题><option value=light>浅色</option><option value=dark>深色</option><option value=black>黑色</option><option value=auto>跟随系统</option></select></a></div></div></div></header><header class=mobile id=header-mobile><div class=header-container><div class=header-wrapper><div class=header-title><a href=/ title="dp0d's blog"><span class=header-title-pre><i class='far fa-edit fa-fw'></i></span>Natural Language Processing</a></div><div class=menu-toggle id=menu-toggle-mobile><span></span><span></span><span></span></div></div><div class=menu id=menu-mobile><div class=search-wrapper><div class="search mobile" id=search-mobile><input type=text placeholder=搜索文章标题或内容... id=search-input-mobile>
+<a href=# onclick=return!1 class="search-button search-toggle" id=search-toggle-mobile title=搜索><i class="fas fa-search fa-fw"></i></a>
+<a href=# onclick=return!1 class="search-button search-clear" id=search-clear-mobile title=清空><i class="fas fa-times-circle fa-fw"></i></a>
+<span class="search-button search-loading" id=search-loading-mobile><i class="fas fa-spinner fa-fw fa-spin"></i></span></div><a href=# onclick=return!1 class=search-cancel id=search-cancel-mobile>取消</a></div><a class=menu-item href=/posts/ title>文章</a><a class=menu-item href=/tags/ title>标签</a><a class=menu-item href=/categories/ title>分类</a><a class=menu-item href=/charge/ title>充电</a><a class=menu-item href=/friends/ title>朋友萌</a><a class=menu-item href=/collection/ title>收藏</a><a class=menu-item href=/copyright/ title>版权</a><a class=menu-item href=/about/ title>关于我</a><a class=menu-item href=https://github.com/dp0d title=GitHub rel="noopener noreffer" target=_blank><i class='fab fa-github fa-fw'></i></a><a href=# onclick=return!1 class="menu-item theme-select" title=切换主题>
+<i class="fas fa-adjust fa-fw"></i>
+<select class=color-theme-select id=theme-select-mobile title=切换主题><option value=light>浅色</option><option value=dark>深色</option><option value=black>黑色</option><option value=auto>跟随系统</option></select></a></div></div></header><div class="search-dropdown desktop"><div id=search-dropdown-desktop></div></div><div class="search-dropdown mobile"><div id=search-dropdown-mobile></div></div><main class=main><div class=container><div class=toc id=toc-auto><h2 class=toc-title>目录</h2><div class=toc-content id=toc-content-auto><nav id=TableOfContents><ul><li><a href=#简介>简介</a></li><li><a href=#使用>使用</a></li><li><a href=#图例基于pyecharts191>图例(基于pyecharts1.9.1)</a><ul><li><a href=#直方图>直方图</a></li><li><a href=#折线图>折线图</a></li><li><a href=#散点图>散点图</a></li></ul></li></ul></nav></div></div><script>document.getElementsByTagName("main")[0].setAttribute("pageStyle","normal")</script><script>document.getElementsByTagName("main")[0].setAttribute("autoTOC","true")</script><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Pyecharts的简单使用</h1><h2 class=single-subtitle>pyecharts是echarts的python调用，由开源爱好者维护</h2><div class=post-meta><div class=post-meta-line><span class=post-author><i class="author fas fa-user-circle fa-fw"></i><a href=https://github.com/dp0d title=Author target=_blank rel="noopener noreffer author" class=author>dp0d</a>
+</span>&nbsp;<span class=post-category>收录于 </span>&nbsp;<span class=post-category>类别 <a href=/categories/tutorial/><i class="far fa-folder fa-fw"></i>教程</a></span>&nbsp;<span class=post-category>和</span>&nbsp;<span class=post-series>系列 <a href=/series/python_data_analysis/><i class="far fa-list-alt fa-fw"></i>Python数据分析</a></span></div><div class=post-meta-line><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2022-07-08>2022-07-08</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime=2022-07-08>2022-07-08</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 748 字&nbsp;
+<i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 2 分钟&nbsp;</div></div><div class="details toc" id=toc-static kept><div class="details-summary toc-title"><span>目录</span>
+<span><i class="details-icon fas fa-angle-right"></i></span></div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents><ul><li><a href=#简介>简介</a></li><li><a href=#使用>使用</a></li><li><a href=#图例基于pyecharts191>图例(基于pyecharts1.9.1)</a><ul><li><a href=#直方图>直方图</a></li><li><a href=#折线图>折线图</a></li><li><a href=#散点图>散点图</a></li></ul></li></ul></nav></div></div><div class=content id=content><h2 id=简介 class=headerLink><a href=#%e7%ae%80%e4%bb%8b class=header-mark></a>简介</h2><p>pyecharts 的呈现十分美观，尽量搭配jupyternotebook使用，jupyterlab上的显示尚有瑕疵。在使用中，可以将jupyternotebook转为html来静态保存pyecharts的图像，做可视化分析，神秘代码如下</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>jupyter nbconvert --to html --no-input data_analy_4.ipynb
+</span></span></code></pre></td></tr></table></div></div><p>会生成一个data_analy_4.html，它里面仅仅包含md和输出部分，code部分会被隐藏。</p><h2 id=使用 class=headerLink><a href=#%e4%bd%bf%e7%94%a8 class=header-mark></a>使用</h2><p>作为python的第三方库使用即可，pip install pyecharts</p><h2 id=图例基于pyecharts191 class=headerLink><a href=#%e5%9b%be%e4%be%8b%e5%9f%ba%e4%ba%8epyecharts191 class=header-mark></a>图例(基于pyecharts1.9.1)</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=c1># =============</span>
+</span></span><span class=line><span class=cl><span class=c1># Library</span>
+</span></span><span class=line><span class=cl><span class=c1># =============</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>pyecharts.charts</span> <span class=kn>import</span> <span class=n>Bar</span><span class=p>,</span><span class=n>Line</span><span class=p>,</span><span class=n>Tab</span><span class=p>,</span> <span class=n>Grid</span><span class=p>,</span><span class=n>Scatter</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>pyecharts</span> <span class=kn>import</span> <span class=n>options</span> <span class=k>as</span> <span class=n>opts</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>pyecharts.globals</span> <span class=kn>import</span> <span class=n>ThemeType</span>
+</span></span></code></pre></td></tr></table></div></div><h3 id=直方图 class=headerLink><a href=#%e7%9b%b4%e6%96%b9%e5%9b%be class=header-mark></a>直方图</h3><img src=MD_img/image-20220708100653412.png alt=image-20220708100653412 style=zoom:50%><blockquote><p>神秘代码</p></blockquote><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=n>x_data</span> <span class=o>=</span> <span class=p>[</span><span class=mi>1</span><span class=p>,</span> <span class=mi>2</span><span class=p>,</span> <span class=mi>3</span><span class=p>,</span> <span class=mi>4</span><span class=p>,</span> <span class=mi>5</span><span class=p>,</span> <span class=mi>6</span><span class=p>,</span> <span class=mi>7</span><span class=p>,</span> <span class=mi>8</span><span class=p>,</span> <span class=mi>9</span><span class=p>,</span> <span class=mi>10</span><span class=p>]</span>
+</span></span><span class=line><span class=cl><span class=n>y_data</span> <span class=o>=</span> <span class=p>[</span><span class=mf>0.804</span><span class=p>,</span> <span class=mf>0.882</span><span class=p>,</span> <span class=mf>0.906</span><span class=p>,</span> <span class=mf>0.934</span><span class=p>,</span> <span class=mf>0.958</span><span class=p>,</span> <span class=mf>0.964</span><span class=p>,</span> <span class=mf>0.972</span><span class=p>,</span> <span class=mf>0.976</span><span class=p>,</span> <span class=mf>0.976</span><span class=p>,</span> <span class=mf>0.976</span><span class=p>]</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>bar</span> <span class=o>=</span> <span class=p>(</span>
+</span></span><span class=line><span class=cl>    <span class=n>Bar</span><span class=p>(</span><span class=n>init_opts</span><span class=o>=</span><span class=n>opts</span><span class=o>.</span><span class=n>InitOpts</span><span class=p>(</span><span class=n>width</span><span class=o>=</span><span class=s1>&#39;400px&#39;</span><span class=p>,</span> <span class=n>height</span><span class=o>=</span><span class=s1>&#39;400px&#39;</span><span class=p>,</span> <span class=n>theme</span><span class=o>=</span><span class=n>ThemeType</span><span class=o>.</span><span class=n>DARK</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>    <span class=o>.</span><span class=n>add_xaxis</span><span class=p>(</span><span class=n>x_data</span><span class=p>,)</span>
+</span></span><span class=line><span class=cl>    <span class=o>.</span><span class=n>add_yaxis</span><span class=p>(</span><span class=s2>&#34;top_k准确率&#34;</span><span class=p>,</span> <span class=n>y_data</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=o>.</span><span class=n>set_global_opts</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>        <span class=n>xaxis_opts</span><span class=o>=</span><span class=n>opts</span><span class=o>.</span><span class=n>AxisOpts</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>                        <span class=n>name</span><span class=o>=</span><span class=s1>&#39;Top_K&#39;</span>
+</span></span><span class=line><span class=cl>                    <span class=p>),</span>
+</span></span><span class=line><span class=cl>        <span class=n>yaxis_opts</span><span class=o>=</span><span class=n>opts</span><span class=o>.</span><span class=n>AxisOpts</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>                        <span class=n>name</span><span class=o>=</span><span class=s1>&#39;ACC&#39;</span>
+</span></span><span class=line><span class=cl>                    <span class=p>),</span>
+</span></span><span class=line><span class=cl>    <span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>bar</span><span class=o>.</span><span class=n>render_notebook</span><span class=p>()</span>
+</span></span></code></pre></td></tr></table></div></div><h3 id=折线图 class=headerLink><a href=#%e6%8a%98%e7%ba%bf%e5%9b%be class=header-mark></a>折线图</h3><img src=MD_img/image-20220708100754323.png alt=image-20220708100754323 style=zoom:67%><blockquote><p>神秘代码</p></blockquote><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=n>x_data</span> <span class=o>=</span> <span class=p>[</span><span class=mi>1</span><span class=p>,</span> <span class=mi>2</span><span class=p>,</span> <span class=mi>3</span><span class=p>,</span> <span class=mi>4</span><span class=p>,</span> <span class=mi>5</span><span class=p>,</span> <span class=mi>6</span><span class=p>,</span> <span class=mi>7</span><span class=p>,</span> <span class=mi>8</span><span class=p>,</span> <span class=mi>9</span><span class=p>,</span> <span class=mi>10</span><span class=p>]</span>
+</span></span><span class=line><span class=cl><span class=c1># 需要注意pyecharts的折线图中x轴的数据需要转为str类型，否则图像会出现偏移</span>
+</span></span><span class=line><span class=cl><span class=n>x_data</span> <span class=o>=</span> <span class=p>[</span><span class=nb>str</span><span class=p>(</span><span class=n>x</span><span class=p>)</span> <span class=k>for</span> <span class=n>x</span> <span class=ow>in</span> <span class=n>x_data</span><span class=p>]</span>
+</span></span><span class=line><span class=cl><span class=n>y_data</span> <span class=o>=</span> <span class=p>[</span><span class=mf>0.804</span><span class=p>,</span> <span class=mf>0.882</span><span class=p>,</span> <span class=mf>0.906</span><span class=p>,</span> <span class=mf>0.934</span><span class=p>,</span> <span class=mf>0.958</span><span class=p>,</span> <span class=mf>0.964</span><span class=p>,</span> <span class=mf>0.972</span><span class=p>,</span> <span class=mf>0.976</span><span class=p>,</span> <span class=mf>0.976</span><span class=p>,</span> <span class=mf>0.976</span><span class=p>]</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>line</span> <span class=o>=</span> <span class=p>(</span>
+</span></span><span class=line><span class=cl>    <span class=n>Line</span><span class=p>(</span><span class=n>init_opts</span><span class=o>=</span><span class=n>opts</span><span class=o>.</span><span class=n>InitOpts</span><span class=p>(</span><span class=n>width</span><span class=o>=</span><span class=s1>&#39;400px&#39;</span><span class=p>,</span> <span class=n>height</span><span class=o>=</span><span class=s1>&#39;400px&#39;</span><span class=p>,</span> <span class=n>theme</span><span class=o>=</span><span class=n>ThemeType</span><span class=o>.</span><span class=n>DARK</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>    <span class=o>.</span><span class=n>add_xaxis</span><span class=p>(</span><span class=n>x_data</span><span class=p>,)</span>
+</span></span><span class=line><span class=cl>    <span class=o>.</span><span class=n>add_yaxis</span><span class=p>(</span><span class=s2>&#34;top_k准确率&#34;</span><span class=p>,</span> <span class=n>y_data</span><span class=p>,</span> <span class=n>is_smooth</span><span class=o>=</span><span class=kc>False</span><span class=p>,</span> <span class=n>is_symbol_show</span><span class=o>=</span><span class=kc>True</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=o>.</span><span class=n>set_global_opts</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>        <span class=n>xaxis_opts</span><span class=o>=</span><span class=n>opts</span><span class=o>.</span><span class=n>AxisOpts</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>                        <span class=n>name</span><span class=o>=</span><span class=s1>&#39;Top_K&#39;</span>
+</span></span><span class=line><span class=cl>                    <span class=p>),</span>
+</span></span><span class=line><span class=cl>        <span class=n>yaxis_opts</span><span class=o>=</span><span class=n>opts</span><span class=o>.</span><span class=n>AxisOpts</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>                        <span class=n>name</span><span class=o>=</span><span class=s1>&#39;ACC&#39;</span>
+</span></span><span class=line><span class=cl>                    <span class=p>),</span>
+</span></span><span class=line><span class=cl>    <span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>line</span><span class=o>.</span><span class=n>render_notebook</span><span class=p>()</span>
+</span></span></code></pre></td></tr></table></div></div><h3 id=散点图 class=headerLink><a href=#%e6%95%a3%e7%82%b9%e5%9b%be class=header-mark></a>散点图</h3><img src=MD_img/image-20220708101904017.png alt=image-20220708101904017 style=zoom:67%><blockquote><p>神秘代码</p></blockquote><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span><span class=lnt>49
+</span><span class=lnt>50
+</span><span class=lnt>51
+</span><span class=lnt>52
+</span><span class=lnt>53
+</span><span class=lnt>54
+</span><span class=lnt>55
+</span><span class=lnt>56
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=n>x_lis</span> <span class=o>=</span> <span class=p>[</span><span class=mi>1</span><span class=p>,</span> <span class=mi>2</span><span class=p>,</span> <span class=mi>3</span><span class=p>,</span> <span class=mi>4</span><span class=p>,</span> <span class=mi>5</span><span class=p>,</span> <span class=mi>6</span><span class=p>,</span> <span class=mi>7</span><span class=p>,</span> <span class=mi>8</span><span class=p>,</span> <span class=mi>9</span><span class=p>,</span> <span class=mi>10</span><span class=p>]</span>
+</span></span><span class=line><span class=cl><span class=n>y_lis</span> <span class=o>=</span> <span class=p>[</span><span class=mi>2</span><span class=p>,</span> <span class=mi>2</span><span class=p>,</span> <span class=mi>3</span><span class=p>,</span> <span class=mi>4</span><span class=p>,</span> <span class=mi>5</span><span class=p>,</span> <span class=mi>3</span><span class=p>,</span> <span class=mi>7</span><span class=p>,</span> <span class=mi>8</span><span class=p>,</span> <span class=mi>9</span><span class=p>,</span> <span class=mi>5</span><span class=p>]</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 设置散点图</span>
+</span></span><span class=line><span class=cl><span class=n>s</span><span class=o>=</span><span class=n>Scatter</span><span class=p>(</span><span class=n>init_opts</span><span class=o>=</span><span class=n>opts</span><span class=o>.</span><span class=n>InitOpts</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>                <span class=n>width</span><span class=o>=</span><span class=s2>&#34;300px&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>                <span class=n>height</span><span class=o>=</span><span class=s2>&#34;300px&#34;</span>
+</span></span><span class=line><span class=cl>                <span class=p>)</span>
+</span></span><span class=line><span class=cl>         <span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>s</span><span class=o>.</span><span class=n>add_xaxis</span><span class=p>(</span><span class=n>x_lis</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>s</span><span class=o>.</span><span class=n>add_yaxis</span><span class=p>(</span><span class=s2>&#34;标签&#34;</span><span class=p>,</span><span class=n>y_lis</span><span class=p>,</span> <span class=n>label_opts</span><span class=o>=</span><span class=n>opts</span><span class=o>.</span><span class=n>LabelOpts</span><span class=p>(</span><span class=n>is_show</span><span class=o>=</span><span class=kc>True</span><span class=p>))</span>
+</span></span><span class=line><span class=cl><span class=c1># max_interval 指定坐标轴间隔</span>
+</span></span><span class=line><span class=cl><span class=n>s</span><span class=o>.</span><span class=n>set_global_opts</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>    <span class=n>title_opts</span><span class=o>=</span><span class=n>opts</span><span class=o>.</span><span class=n>TitleOpts</span><span class=p>(</span><span class=n>title</span><span class=o>=</span><span class=s2>&#34;散点图&#34;</span><span class=p>),</span>
+</span></span><span class=line><span class=cl>    <span class=n>xaxis_opts</span><span class=o>=</span><span class=n>opts</span><span class=o>.</span><span class=n>AxisOpts</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>            <span class=n>type_</span><span class=o>=</span><span class=s1>&#39;value&#39;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>            <span class=n>splitline_opts</span><span class=o>=</span><span class=n>opts</span><span class=o>.</span><span class=n>SplitLineOpts</span><span class=p>(</span><span class=n>is_show</span><span class=o>=</span><span class=kc>True</span><span class=p>),</span>
+</span></span><span class=line><span class=cl>            <span class=n>max_interval</span><span class=o>=</span><span class=mi>1</span>
+</span></span><span class=line><span class=cl>            
+</span></span><span class=line><span class=cl>    <span class=p>),</span>
+</span></span><span class=line><span class=cl>    <span class=n>yaxis_opts</span><span class=o>=</span><span class=n>opts</span><span class=o>.</span><span class=n>AxisOpts</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>            <span class=n>splitline_opts</span><span class=o>=</span><span class=n>opts</span><span class=o>.</span><span class=n>SplitLineOpts</span><span class=p>(</span><span class=n>is_show</span><span class=o>=</span><span class=kc>True</span><span class=p>),</span>
+</span></span><span class=line><span class=cl>            <span class=n>axistick_opts</span><span class=o>=</span><span class=n>opts</span><span class=o>.</span><span class=n>AxisTickOpts</span><span class=p>(</span><span class=n>is_show</span><span class=o>=</span><span class=kc>True</span><span class=p>,</span><span class=n>length</span><span class=o>=</span><span class=mi>10</span><span class=p>),</span>
+</span></span><span class=line><span class=cl>            <span class=n>max_interval</span><span class=o>=</span><span class=mi>1</span>
+</span></span><span class=line><span class=cl>    <span class=p>),</span>
+</span></span><span class=line><span class=cl><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 设置参考线</span>
+</span></span><span class=line><span class=cl><span class=n>line1</span> <span class=o>=</span> <span class=p>(</span>
+</span></span><span class=line><span class=cl>    <span class=n>Line</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>    <span class=o>.</span><span class=n>add_xaxis</span><span class=p>([</span><span class=mi>0</span><span class=p>,</span><span class=mi>10</span><span class=p>])</span>
+</span></span><span class=line><span class=cl>    <span class=o>.</span><span class=n>add_yaxis</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=nb>list</span><span class=p>([</span><span class=mi>0</span><span class=p>,</span><span class=mi>10</span><span class=p>]),</span>
+</span></span><span class=line><span class=cl>        <span class=n>label_opts</span><span class=o>=</span><span class=n>opts</span><span class=o>.</span><span class=n>LabelOpts</span><span class=p>(</span><span class=n>is_show</span><span class=o>=</span><span class=kc>False</span><span class=p>),</span>
+</span></span><span class=line><span class=cl>    <span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=o>.</span><span class=n>set_global_opts</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>        <span class=n>xaxis_opts</span><span class=o>=</span><span class=n>opts</span><span class=o>.</span><span class=n>AxisOpts</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>            <span class=n>type_</span><span class=o>=</span><span class=s1>&#39;value&#39;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 设置overlap</span>
+</span></span><span class=line><span class=cl><span class=n>overlap_1</span> <span class=o>=</span> <span class=n>s</span><span class=o>.</span><span class=n>overlap</span><span class=p>(</span><span class=n>line1</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>grid</span> <span class=o>=</span> <span class=p>(</span>
+</span></span><span class=line><span class=cl>    <span class=n>Grid</span><span class=p>(</span><span class=n>init_opts</span><span class=o>=</span><span class=n>opts</span><span class=o>.</span><span class=n>InitOpts</span><span class=p>(</span><span class=n>width</span><span class=o>=</span><span class=s2>&#34;300px&#34;</span><span class=p>,</span> <span class=n>height</span><span class=o>=</span><span class=s2>&#34;300px&#34;</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>    <span class=o>.</span><span class=n>add</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>        <span class=n>overlap_1</span><span class=p>,</span> <span class=n>grid_opts</span><span class=o>=</span><span class=n>opts</span><span class=o>.</span><span class=n>GridOpts</span><span class=p>(),</span> <span class=n>is_control_axis_index</span><span class=o>=</span><span class=kc>True</span>
+</span></span><span class=line><span class=cl>    <span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=o>.</span><span class=n>render_notebook</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>    
+</span></span><span class=line><span class=cl><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>grid</span>
+</span></span></code></pre></td></tr></table></div></div><p>更多图例</p><p><a href=https://pyecharts.org/#/ target=_blank rel="noopener noreffer">https://pyecharts.org/#/</a></p></div><div class=sponsor><div class=sponsor-avatar><img class=lazyload data-src=/images/logo.png data-srcset="/images/logo.png, /images/logo.png 1.5x, /images/logo.png 2x" data-sizes=auto alt=/images/logo.png title=/images/logo.png></div><p class=sponsor-bio><em>如果你觉得这篇文章对你有所帮助，欢迎赞赏~</em></p><a href=/images/buymeacoffee.jpg title=Sponsor target=_blank class=sponsor-button rel="noopener noreferrer"><i class="far fa-heart fa-fw icon" style=color:#ec6cb9></i>
+<span>赞赏</span></a></div><div class=post-footer id=post-footer><div class=post-info><div class=post-info-line><div class=post-info-mod><span>更新于 2022-07-08</span></div><div class=post-info-license></div></div><div class=post-info-line><div class=post-info-md><span><a class=link-to-mardown href=/pyecharts/index.md target=_blank rel="noopener noreferrer">阅读原始文档</a>
+</span><span>|&nbsp;<a class=link-to-report href="https://github.com/dp0d/dp0d.github.io/issues/new?title=[bug]%20Pyecharts%E7%9A%84%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8&body=|Field|Value|%0A|-|-|%0A|Title|Pyecharts%E7%9A%84%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8|%0A|Url|https://dp0d.github.io/pyecharts/|%0A|Filename|https://github.com/dp0d/dp0d.github.io/posts/2022/pyecharts/index.md|" target=_blank rel="noopener noreferrer">报告问题</a></span></div><div class=post-info-share><span><a href=# onclick=return!1 title="分享到 Twitter" data-sharer=twitter data-url=https://dp0d.github.io/pyecharts/ data-title=Pyecharts的简单使用 data-hashtags=py><i class="fab fa-twitter fa-fw"></i></a><a href=# onclick=return!1 title="分享到 Facebook" data-sharer=facebook data-url=https://dp0d.github.io/pyecharts/ data-hashtag=py><i class="fab fa-facebook-square fa-fw"></i></a><a href=# onclick=return!1 title="分享到 微博" data-sharer=weibo data-url=https://dp0d.github.io/pyecharts/ data-title=Pyecharts的简单使用><i class="fab fa-weibo fa-fw"></i></a><a href=# onclick=return!1 title="分享到 Telegram" data-sharer=telegram data-url=https://dp0d.github.io/pyecharts/ data-title=Pyecharts的简单使用 data-web><i class="fab fa-telegram-plane fa-fw"></i></a></span></div></div></div><div class=post-info-more><section class=post-tags><i class="fas fa-tags fa-fw"></i>&nbsp;<a href=/tags/py/>Python</a></section><section><span><a href=javascript:void(0); onclick=window.history.back()>返回</a></span>&nbsp;|&nbsp;<span><a href=/>主页</a></span></section></div><div class=post-nav><a href=/bravo_processbar/ class=prev rel=prev title=炫酷的processbar><i class="fas fa-angle-left fa-fw"></i>炫酷的processbar</a>
+<a href=/tensor/ class=next rel=next title=Tensor的简单使用>Tensor的简单使用<i class="fas fa-angle-right fa-fw"></i></a></div></div><div id=comments><div id=giscus></div><noscript>Please enable JavaScript to view the comments powered by <a href=https://giscus.app/>giscus</a>.</noscript></div></article></div></main><footer class=footer><div class=footer-container><div class=footer-line><i class="far fa-copyright fa-fw"></i><span itemprop=copyrightYear>2022 - 2023</span><span class=author itemprop=copyrightHolder>&nbsp;<a href=https://github.com/dp0d target=_blank rel="noopener noreferrer">dp0d</a></span>&nbsp;|&nbsp;<span class=license><a rel="license external nofollow noopener noreffer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span><span class=icp-splitter>&nbsp;|&nbsp;</span><br class=icp-br><span class=icp><a href=https://beian.miit.gov.cn/ target=_blank>赣ICP备2022002313号-1</a></span></div><div class=footer-line></div><div class=footer-line></div></div><script>"serviceWorker"in navigator&&(navigator.serviceWorker.register("/sw.min.js",{scope:"/"}).then(function(){}),navigator.serviceWorker.ready.then(function(){}))</script></footer></div><div id=fixed-buttons><a href=#back-to-top id=back-to-top-button class=fixed-button title=回到顶部><i class="fas fa-arrow-up fa-fw"></i>
+</a><a href=# id=view-comments class=fixed-button title=查看评论><i class="fas fa-comment fa-fw"></i></a></div><div class=assets><script type=text/javascript src=/lib/object-fit-images/ofi.min.js></script><script type=text/javascript src=/lib/autocomplete/autocomplete.min.js></script><script type=text/javascript src=/lib/fuse/fuse.min.js></script><script type=text/javascript src=/lib/lazysizes/lazysizes.min.js></script><script type=text/javascript src=/lib/tablesort/tablesort.min.js></script><script type=text/javascript src=/lib/topbar/topbar.min.js></script><script type=text/javascript src=/lib/pjax/pjax.min.js></script><script type=text/javascript src=/js/theme.min.js defer></script></div><div class=pjax-assets><script type=text/javascript>window.config={code:{copyTitle:"复制到剪贴板",maxShownLines:100},comment:{giscus:{darkTheme:"dark",dataCategory:"General",dataCategoryId:"DIC_kwDOHB3uW84COZbL",dataEmitMetadata:"0",dataInputPosition:"top",dataLang:"zh-CN",dataMapping:"title",dataReactionsEnabled:"1",dataRepo:"dp0d/dp0d.github.io",dataRepoId:"R_kgDOHB3uWw",lightTheme:"light"}},lightGallery:{actualSize:!1,exThumbImage:"data-thumbnail",hideBarsDelay:2e3,selector:".lightgallery",speed:400,thumbContHeight:80,thumbWidth:80,thumbnail:!0},math:{delimiters:[{display:!0,left:"$$",right:"$$"},{display:!0,left:"\\[",right:"\\]"},{display:!1,left:"$",right:"$"},{display:!1,left:"\\(",right:"\\)"}],strict:!1},search:{distance:100,findAllMatches:!1,fuseIndexURL:"/index.json",highlightTag:"em",ignoreFieldNorm:!1,ignoreLocation:!0,isCaseSensitive:!1,location:0,maxResultLength:10,minMatchCharLength:2,noResultsFound:"没有找到结果",snippetLength:50,threshold:.1,type:"fuse",useExtendedSearch:!1},sharerjs:!0,table:{sort:!0},twemoji:!0}</script><script type=text/javascript src=/js/giscus.min.js defer></script><script type=text/javascript src=/lib/twemoji/twemoji.min.js defer></script><script type=text/javascript src=/js/twemoji.min.js defer></script><script type=text/javascript src=/lib/lightgallery/lightgallery.min.js></script><script type=text/javascript src=/lib/lightgallery/lg-thumbnail.min.js></script><script type=text/javascript src=/lib/lightgallery/lg-zoom.min.js></script><script type=text/javascript src=/lib/clipboard/clipboard.min.js></script><script type=text/javascript src=/lib/sharer/sharer.min.js></script><script type=text/javascript src=/lib/katex/katex.min.js defer></script><script type=text/javascript src=/lib/katex/auto-render.min.js defer></script><script type=text/javascript src=/lib/katex/copy-tex.min.js defer></script><script type=text/javascript src=/lib/katex/mhchem.min.js defer></script><script type=text/javascript src=/js/katex.min.js defer></script><link rel=stylesheet href=/lib/lightgallery/lightgallery.min.css><link rel=stylesheet href=/lib/katex/katex.min.css><link rel=preload as=style onload='this.onload=null,this.rel="stylesheet"' href=/lib/katex/copy-tex.min.css><noscript><link rel=stylesheet href=/lib/katex/copy-tex.min.css></noscript></div></body></html>
