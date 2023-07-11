@@ -12,6 +12,13 @@
     </author><guid>https://dp0d.github.io/clashtun/</guid>
     <description><![CDATA[首先理解TUN模式，这是一个真正意义上的全局的代理模式，它会在你的网络适配器中新建一个Clash专用的，可以理解为软路由中转网卡，开启TUN]]></description>
 </item><item>
+    <title>wandb——深度学习的优秀伴侣</title>
+    <link>https://dp0d.github.io/wandb/</link>
+    <pubDate>Tue, 22 Nov 2022 19:54:39 &#43;0800</pubDate><author>
+        <name>dp0d</name>
+    </author><guid>https://dp0d.github.io/wandb/</guid>
+    <description><![CDATA[安装1 pip install wandb 记录实验结果1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 import wandb import argparse parser.add_argument(&#34;--train_batch_size&#34;, default=100, type=int) parser.add_argument(&#34;--test_batch_size&#34;, default=100, type=int) parser.add_argument(&#34;--num_epochs&#34;, default=60, type=int) parser.add_argument(&#34;-lr&#34;, &#34;--learning_rate&#34;, default=0.0005, type=float) args = parser.parse_args() # 设置随机种子 seed_everthing(2022) # 初始化wandb wandb.init(project=&#34;project_name&#34;, entity=&#34;dp0d&#34;) #]]></description>
+</item><item>
     <title>记一次前后端分离的开发部署实践</title>
     <link>https://dp0d.github.io/full_stack_development/</link>
     <pubDate>Sat, 23 Jul 2022 10:22:12 &#43;0800</pubDate><author>

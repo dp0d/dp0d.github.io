@@ -2,18 +2,19 @@
     xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     ><url>
-            <loc>https://dp0d.github.io/categories/</loc><lastmod>2023-04-05T11:33:14&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://dp0d.github.io/</loc><lastmod>2023-04-05T11:33:14&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://dp0d.github.io/posts/</loc><lastmod>2023-04-05T11:33:14&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://dp0d.github.io/tags/</loc><lastmod>2023-04-05T11:33:14&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://dp0d.github.io/clashtun/</loc><lastmod>2023-04-05T11:33:14&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://dp0d.github.io/tags/win/</loc><lastmod>2023-04-05T11:33:14&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://dp0d.github.io/tags/tools/</loc><lastmod>2023-04-05T11:33:14&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://dp0d.github.io/categories/tutorial/</loc><lastmod>2023-04-05T11:33:14&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://dp0d.github.io/categories/</loc><lastmod>2023-07-11T15:04:51&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://dp0d.github.io/</loc><lastmod>2023-07-11T15:04:51&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://dp0d.github.io/posts/</loc><lastmod>2023-07-11T15:04:51&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://dp0d.github.io/bert_embedding_and_mimaximization/</loc><lastmod>2023-07-11T15:04:51&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://dp0d.github.io/categories/paper_reading/</loc><lastmod>2023-07-11T15:04:51&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://dp0d.github.io/tags/</loc><lastmod>2023-04-05T11:33:14&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://dp0d.github.io/clashtun/</loc><lastmod>2023-04-05T11:33:14&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://dp0d.github.io/tags/win/</loc><lastmod>2023-04-05T11:33:14&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://dp0d.github.io/tags/tools/</loc><lastmod>2023-04-05T11:33:14&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://dp0d.github.io/categories/tutorial/</loc><lastmod>2023-04-05T11:33:14&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://dp0d.github.io/confusion_matrix/</loc><lastmod>2022-11-30T10:50:18&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://dp0d.github.io/public/posts/2022/confusion_matrix/</loc><lastmod>2022-11-30T10:45:47&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://dp0d.github.io/public/</loc><lastmod>2022-11-30T10:45:47&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
-            <loc>https://dp0d.github.io/categories/tutorial-machine_learning/</loc><lastmod>2022-11-22T19:54:39&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://dp0d.github.io/wandb/</loc><lastmod>2022-11-22T19:54:39&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://dp0d.github.io/package_manager/</loc><lastmod>2022-11-06T10:10:12&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://dp0d.github.io/variational_inference/</loc><lastmod>2022-09-15T21:29:55&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
@@ -43,7 +44,6 @@
             <loc>https://dp0d.github.io/series/jupyter/</loc><lastmod>2022-05-22T21:52:26&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://dp0d.github.io/jupyter/</loc><lastmod>2022-05-22T21:52:26&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://dp0d.github.io/py_project_env/</loc><lastmod>2022-05-20T14:43:54&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
-            <loc>https://dp0d.github.io/categories/event/</loc><lastmod>2022-05-19T09:33:48&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://dp0d.github.io/production_catastrophe/</loc><lastmod>2022-05-19T09:33:48&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://dp0d.github.io/deep_learning_optimize/</loc><lastmod>2022-05-18T15:20:58&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://dp0d.github.io/python_using/</loc><lastmod>2022-05-18T09:26:19&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
