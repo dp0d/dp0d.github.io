@@ -25,5 +25,12 @@
         <name>dp0d</name>
     </author><guid>https://dp0d.github.io/py_project_env/</guid>
     <description><![CDATA[说明通常，我们在项目中，需要把代码文件作为一个包来用，比如代码文件是code文件夹，如果使用Pycharm等IDE，只需要在里面加入一个空的]]></description>
+</item><item>
+    <title>记一次生产事故</title>
+    <link>https://dp0d.github.io/production_catastrophe/</link>
+    <pubDate>Thu, 19 May 2022 09:33:48 &#43;0800</pubDate><author>
+        <name>dp0d</name>
+    </author><guid>https://dp0d.github.io/production_catastrophe/</guid>
+    <description><![CDATA[今天是2022年5月19日，忙碌了一上午的小弟激动地开始train了，结果，本来五分钟一轮的乖儿子， 变成了两个多小时，What？！！儿子感冒]]></description>
 </item></channel>
 </rss>
