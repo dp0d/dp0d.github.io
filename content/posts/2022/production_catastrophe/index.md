@@ -7,7 +7,7 @@ lastmod: 2022-05-19T09:33:48+08:00
 description: ""
 
 tags: [linux] # env linux mac py tools win
-categories: [event] # tutorial
+categories: [technology_log] # tutorial
 series: []
 
 toc:

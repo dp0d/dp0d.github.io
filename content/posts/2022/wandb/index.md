@@ -7,7 +7,7 @@ lastmod: 2022-11-22T19:54:39+08:00
 description: ""
 
 tags: [tools] # env linux mac py tools win task
-categories: [tutorial， machine_learning] # tutorial, technology_log, machine_learning, nlp
+categories: [tutorial] # tutorial, technology_log, machine_learning, nlp
 series: [] # python_data_analysis, jupyter, data_science_contest
 
 toc:
