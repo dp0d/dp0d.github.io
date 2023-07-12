@@ -95,7 +95,7 @@ $$
 $$
 $b_i$ 和$B$表示对于特定文档而言不是唯一对应的，这使得互信息难以评估。
 
-最近，有许多方法被踢出用来估计互信息，如MINE，infoNCE，Jensen-Shannon divergence estimator (JSDE)，其中JSDE对负样本数量较不敏感，于是本文使用JSDE来估计互信息并优化它。具体而言，互信息可以通过最小化如下公式来估计：
+最近，有许多方法被提出用来估计互信息，如MINE，infoNCE，Jensen-Shannon divergence estimator (JSDE)，其中JSDE对负样本数量较不敏感，于是本文使用JSDE来估计互信息并优化它。具体而言，互信息可以通过最小化如下公式来估计：
 
 {{< math >}}
 $$
