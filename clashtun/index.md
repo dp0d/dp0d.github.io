@@ -209,5 +209,5 @@ https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist.txt
 
 
 
-可以看到，在规则中，需要代理的网站大部分走了自动选择下的节点，而某GPT走了我们设置的US节点。
+可以看到，在规则中，需要代理的网站大部分走了自动选择下的节点，而某GPT网站走了我们设置的US节点。
 
