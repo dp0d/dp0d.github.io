@@ -173,7 +173,13 @@ https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist.txt
 
 #### 某GPT更换节点设置方法
 
-当某GPT挂了时，按照Proxy SwitchyOmega插件方式二设置，并尝试切换不同地域节点即可。
+当某GPT挂了时，按照Proxy SwitchyOmega插件方式二设置，并尝试切换不同地域节点。
 
 ![image-20230714093836126](MD_img/image-20230714093836126.png)
+
+注意，在更换完节点之后，需要**关闭浏览器**或者**在clash for windows客户端中断开维持的TCP连接**，这样才能实际更换代理节点。
+
+![image-20230714104747988](MD_img/image-20230714104747988.png)
+
+然后重新访问某GPT即可。
 
