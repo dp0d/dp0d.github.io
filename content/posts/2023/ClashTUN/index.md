@@ -159,7 +159,9 @@ https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist.txt
 
 **分流成功**
 
-> 另外，如果对于规则里某些网站你希望手动设置他**走代理**或者**不走代理**，可以直接使用如下方式
+#### 手动指定某个域名走或不走代理
+
+> 如果对于规则里某些网站你希望手动设置他**走代理**或者**不走代理**，可以使用如下方式
 
 打开浏览器，点击Proxy SwitchyOmega插件
 
