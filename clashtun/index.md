@@ -183,3 +183,5 @@ https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist.txt
 
 然后重新访问某GPT即可。
 
+如果想要GPT每次访问都是使用US节点，可以使用方式一来设置代理，并手动改写Clash for windows客户端配置文件（待更新）。
+
