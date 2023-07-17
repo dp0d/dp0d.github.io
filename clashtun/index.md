@@ -193,7 +193,7 @@ https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist.txt
 
 ![image-20230714112515778](MD_img/image-20230714112515778.png)
 
-接下来找到Rules配置，添加以下一行即可，保存并刷新clash配置文件（双击配置文件图标即可）
+接下来找到Rules配置，添加以下一行即可（也可以更换成openai.com范围更广），保存并刷新clash配置文件（双击配置文件图标即可）
 
 ![image-20230714112629330](MD_img/image-20230714112629330.png)
 
