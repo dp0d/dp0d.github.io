@@ -1,5 +1,5 @@
 ---
-draft: false
+draft: true
 title: "《Efficient Document Retrieval by End-to-End Refining and Quantizing BERT Embedding with Contrastive Product Quantization》阅读笔记"
 subtitle: ""
 date: 2023-07-17T15:05:19+08:00
