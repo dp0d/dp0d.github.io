@@ -81,3 +81,20 @@ We no longer need to fear arguments, confrontations or any kind of problems with
 ——查理·卓别林
 
 (dp0d译)
+
+
+
+##  八股文
+
+[计算机网络](pdf/计算机网络八股.pdf)
+
+[Java](pdf/Java.pdf)
+
+[Kafka](pdf/Kafka.pdf)
+
+[MySQL](pdf/MySQL.pdf)
+
+[Redis](pdf/Redis.pdf)
+
+[spring](pdf/spring.pdf)
+
