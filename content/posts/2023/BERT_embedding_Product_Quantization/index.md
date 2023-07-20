@@ -328,7 +328,11 @@ $$
 
 ### Asymmetric distance computation (ADC)
 
-<img src="MD_img/image-20230720200441474.png" alt="image-20230720200441474" style="zoom: 25%;" />
+<div text-align="center">
+
+<img src="MD_img/image-20230720200441474.png" alt="image-20230720200441474" style="zoom: 67%;" />
+
+</div>
 
 在非对称距离估计中，数据库中的向量$y$表示为$q(y)$，但是查询向量$x$不被编码。原始欧几里得距离$d(x,y)$被估计为$\tilde{d}\bigl(x,y\bigr)\ \triangleq d\bigl(x,q\bigl(y\bigr)\bigr)$
 
@@ -344,7 +348,7 @@ $$
 
 ### Symmetric distance computation (SDC)
 
-<img src="MD_img/image-20230720230753090.png" alt="image-20230720230753090" style="zoom:25%;" />
+<img src="MD_img/image-20230720230753090.png" alt="image-20230720230753090" style="zoom: 67%;" />
 
 对称距离计算中查询向量$x$和$y$都需要表示为对应的质心（码词）$q(x)$ 和$q(y)$。欧几里德距离$d(x,y)$被估计为$\tilde{d}\bigl(x,y\bigr)\ \triangleq d\bigl(x,q\bigl(y\bigr)\bigr)$。即原始向量距离衡量用量化后的距离替代
 
@@ -358,7 +362,7 @@ $$
 
 查询效率对比如下
 
-<img src="MD_img/image-20230720210548749.png" alt="image-20230720210548749" style="zoom: 25%;" />
+<img src="MD_img/image-20230720210548749.png" alt="image-20230720210548749" style="zoom: 67%;" />
 
 本文中采用的是ADC方法，即非对称方法，注意如果检索到的文档具有相同的标签，则认为它们与查询相关。
 
@@ -367,3 +371,9 @@ $$
 ![image-20230720224619400](MD_img/image-20230720224619400.png)
 
 其中AEPQ是在本文基础上，让量化后的哈希码重构BERT嵌入。CSH是遵循NASH假设，二值码通过多元伯努利分布采样得到。
+
+
+
+## 码词初始化
+
+<img src="MD_img/image-20230720232139557.png" alt="image-20230720232139557" style="zoom:67%;" />
