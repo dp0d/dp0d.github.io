@@ -149,11 +149,11 @@ $$
 $$
 {{< /math >}}
 
-映射函数$g(\cdot)$可以是flow-based mapping（[Li et al., 2020](https://aclanthology.org/2020.emnlp-main.733.pdf)，383+cite）或者是[SimCSE](http://dx.doi.org/10.18653/v1/2021.emnlp-main.552)。然后对$\tilde{z}(x)$进行标准的乘积量化。
+映射函数$g(\cdot)$，可以是flow-based mapping（[Li et al., 2020](https://aclanthology.org/2020.emnlp-main.733.pdf)，383+cite）或者是[SimCSE](http://dx.doi.org/10.18653/v1/2021.emnlp-main.552)。然后对$\tilde{z}(x)$进行标准的乘积量化。
 
 ### 基于对比乘积量化实现的端到端的细化和量化方法
 
-首先将原始BERT嵌入$z(x)$分成$M$节$z^m(x)\in \mathbb R^{D/M}, m=1,2,\cdots,M$。然后通过映射函数获得每一节的语义更为丰富的嵌入
+首先将原始BERT嵌入$z(x)$分成$M$节$z^m(x)\in \mathbb R^{D/M}, m=1,2,\cdots,M$。然后通过映射函数获得每一节的语义更为丰富的嵌入， $g_{\theta}^m(\cdot)$同时还完成了维数变换，让$\tilde{z}^m(x)$和$\boldsymbol c_{i}^m$等维。
 
 {{< math >}}
 $$
