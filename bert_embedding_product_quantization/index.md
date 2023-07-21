@@ -318,7 +318,8 @@ $$
 
 ### Asymmetric distance computation (ADC)
 
-<div text-align="center">
+<div style="text-align: center;">
+
 
 <img src="MD_img/image-20230720200441474.png" alt="image-20230720200441474" style="zoom: 67%;" />
 
@@ -356,7 +357,11 @@ $$
 
 查询效率对比如下
 
-<img src="MD_img/image-20230720210548749.png" alt="image-20230720210548749" style="zoom: 33%;" />
+<div style="text-align: center;">
+
+<img src="MD_img/image-20230720210548749.png" alt="image-20230720210548749" style="zoom: 40%;" />
+
+</div>
 
 本文中采用的是ADC方法，即非对称方法，注意如果检索到的文档具有相同的标签，则认为它们与查询相关。
 
