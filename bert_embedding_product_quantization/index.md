@@ -338,7 +338,11 @@ $$
 
 ### Symmetric distance computation (SDC)
 
+<div style="text-align: center;">
+
 <img src="MD_img/image-20230720230753090.png" alt="image-20230720230753090" style="zoom: 67%;" />
+
+</div>
 
 对称距离计算中查询向量$x$和$y$都需要表示为对应的质心（码词）$q(x)$ 和$q(y)$。欧几里德距离$d(x,y)$被估计为$\tilde{d}\bigl(x,y\bigr)\ \triangleq d\bigl(x,q\bigl(y\bigr)\bigr)$。即原始向量距离衡量用量化后的距离替代
 
@@ -352,7 +356,7 @@ $$
 
 查询效率对比如下
 
-<img src="MD_img/image-20230720210548749.png" alt="image-20230720210548749" style="zoom: 67%;" />
+<img src="MD_img/image-20230720210548749.png" alt="image-20230720210548749" style="zoom: 33%;" />
 
 本文中采用的是ADC方法，即非对称方法，注意如果检索到的文档具有相同的标签，则认为它们与查询相关。
 
