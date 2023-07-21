@@ -358,7 +358,6 @@ $$
 查询效率对比如下
 
 <div style="text-align: center;">
-
 <img src="MD_img/image-20230720210548749.png" alt="image-20230720210548749" style="zoom: 40%;" />
 
 </div>
@@ -373,7 +372,27 @@ $$
 
 
 
-## 码词初始化
+## ## 实现细节
 
-<img src="MD_img/image-20230720232139557.png" alt="image-20230720232139557" style="zoom:67%;" />
+### 码词初始化
+
+<div style="text-align: center;">
+
+<img src="MD_img/image-20230720232139557.png" alt="image-20230720232139557" style="zoom: 33%;" />
+
+</div>
+
+## 原始嵌入维数转化及refine网络
+
+<div style="text-align: center;">
+
+<img src="MD_img/image-20230721104103212.png" alt="image-20230721104103212" style="zoom: 33%;" />
+
+​           and
+
+<img src="MD_img/image-20230721104015201.png" alt="image-20230721104015201" style="zoom:33%;" />
+
+​        and
+
+<img src="MD_img/image-20230721104215075.png" alt="image-20230721104215075" style="zoom:33%;" />
 
